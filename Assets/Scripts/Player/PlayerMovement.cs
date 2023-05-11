@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -12,11 +13,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Camera _cameraPlayer;
     [Header("[PlayerStats]")]
     [SerializeField] private PlayerStats _playerStats;
+    [Header("[AttackPoint]")]
+    [SerializeField] private Transform _attackPoint;
+    [Header("[AttackRange]")]
+    [SerializeField] private float _attackRange = 0.5f;
+    [Header("[EnemyLayers]")]
+    [SerializeField] private LayerMask _enemyLayers;
 
     private Vector3 _moveVector;
     private float _speed;
-    private readonly float maxVectorValue = 1f;
-    private readonly float minVectorValue = 0.0f;
+    private bool _isAllowAttack = true;
+    private IEnumerator _makeDamage;
+
+    private readonly float _maxVectorValue = 1f;
+    private readonly float _minVectorValue = 0.0f;
+    private readonly float _attackRate = 1.5f;
 
     enum TransitionParametr
     {
@@ -37,9 +48,50 @@ public class PlayerMovement : MonoBehaviour
         Movement();
     }
 
-    public void Attack() 
+    public void Attack()
     {
-        //_animator.SetFloat(TransitionParametr.Attack.ToString(), true);
+        if (_isAllowAttack == true)
+        {
+            _isAllowAttack = false;
+
+            if (_makeDamage != null)
+            {
+                StopCoroutine(_makeDamage);
+            }
+
+            _makeDamage = AttackRate();
+            StartCoroutine(_makeDamage);
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (_attackPoint == null)
+        {
+            return;
+        }
+        else
+        {
+            Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
+        }
+    }
+
+    private IEnumerator AttackRate()
+    {
+        _animator.SetTrigger(TransitionParametr.Attack.ToString());
+        Collider[] coliderEnemy = Physics.OverlapSphere(_attackPoint.position, _attackRange, _enemyLayers);
+
+        foreach (Collider collider in coliderEnemy)
+        {
+            collider.GetComponent<Enemy>().TakeDamage(10);
+        }
+
+        yield return new WaitForSeconds(_attackRate);
+        _isAllowAttack = true;
     }
 
     private void Movement()
@@ -52,9 +104,9 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetFloat(TransitionParametr.Vertical.ToString(), _moveVector.z);
         _animator.SetFloat(TransitionParametr.Speed.ToString(), _moveVector.sqrMagnitude);
 
-        if (Vector3.Angle(Vector3.forward, _moveVector) > maxVectorValue || Vector3.Angle(Vector3.forward, _moveVector) == minVectorValue)
+        if (Vector3.Angle(Vector3.forward, _moveVector) > _maxVectorValue || Vector3.Angle(Vector3.forward, _moveVector) == _minVectorValue)
         {
-            Vector3 direct = Vector3.RotateTowards(transform.forward, _moveVector, _speed, minVectorValue);
+            Vector3 direct = Vector3.RotateTowards(transform.forward, _moveVector, _speed, _minVectorValue);
             transform.rotation = Quaternion.LookRotation(direct);
         }
 
