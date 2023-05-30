@@ -84,9 +84,16 @@ public class PlayerStats : MonoBehaviour
 
     private void GenerateLevelPlayer(int level)
     {
-        for (int i = 0; i < level; i++)
+        if (_levels.Count == 0)
         {
-            _levels.Add(i, _maxExperience + _maxExperience * i);
+            for (int i = 0; i < level; i++)
+            {
+                _levels.Add(i, _maxExperience + _maxExperience * i);
+            }
+        }
+        else
+        {
+            return;
         }
     }
 }
