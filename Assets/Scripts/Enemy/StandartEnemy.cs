@@ -1,4 +1,1 @@
-public class StandartEnemy : Enemy
-{
-
-}
+public class StandartEnemy : Enemy { }

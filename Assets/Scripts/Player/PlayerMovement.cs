@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     private readonly float _maxVectorValue = 1f;
     private readonly float _minVectorValue = 0.0f;
-    private readonly float _attackRate = 1.5f;
+    private readonly float _attackRate = 1.0f;
 
     enum TransitionParametr
     {
@@ -83,14 +83,14 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator AttackRate()
     {
         _animator.SetTrigger(TransitionParametr.Attack.ToString());
+        yield return new WaitForSeconds(_attackRate);
+
         Collider[] coliderEnemy = Physics.OverlapSphere(_attackPoint.position, _attackRange, _enemyLayers);
 
         foreach (Collider collider in coliderEnemy)
         {
-            collider.GetComponent<Enemy>().TakeDamage(10);
+            collider.GetComponent<Enemy>().TakeDamage(_playerStats.PlayerDamage);
         }
-
-        yield return new WaitForSeconds(_attackRate);
         _isAllowAttack = true;
     }
 

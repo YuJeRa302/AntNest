@@ -1085,14 +1085,16 @@ MonoBehaviour:
   Animator: {fileID: 2819447205665847095}
   EnemyUi: {fileID: 5384448381514905124}
   _enemy: {fileID: 2819447205665847083}
+  _id: 3
   _level: 3
-  _name: Black Spider
+  _name: "\u0427\u0435\u0440\u043D\u044B\u0439 \u041F\u0430\u0443\u043A"
   _damage: 35
   _health: 350
   _goldReward: 500
   _experienceReward: 500
   _speed: 1
   _navMeshAgent: {fileID: 2819447205665847093}
+  _enemySprite: {fileID: 21300000, guid: a235258c2513a404280995f725f6cc42, type: 3}
 --- !u!54 &2819447205665847092
 Rigidbody:
   m_ObjectHideFlags: 0

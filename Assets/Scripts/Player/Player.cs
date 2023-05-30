@@ -3,17 +3,31 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
+    [Header("[Wallet]")]
+    [SerializeField] private Wallet _wallet;
     [Header("[Player Stats]")]
     [SerializeField] private PlayerStats _playerStats;
     [Header("[Player Movement]")]
     [SerializeField] private PlayerMovement _playerMovement;
+    [Header("[Player Equipment]")]
+    [SerializeField] private PlayerEquipment _playerEquipment;
+    [Header("[Player Achievements]")]
+    [SerializeField] private PlayerAchievements _playerAchievements;
 
     private readonly int _minHealth = 0;
+    private readonly UnityEvent<int> _healthBarUpdate = new();
+    private readonly UnityEvent _playerDie = new();
+    private readonly int _maxHealth = 100;
     private int _currentHealth = 0;
-    private int _playerArmor = 0;
-    private int _maxHealth = 100;
-    private UnityEvent<int> _healthBarUpdate = new UnityEvent<int>();
-    private UnityEvent _playerDie = new UnityEvent();
+
+    public int Coins => _wallet.GiveCoin();
+    public int PlayerLevel => _playerStats.PlayerLevel;
+    public int PlayerExperience => _playerStats.Experience;
+    public int PlayerMaxHealth => _maxHealth;
+    public PlayerStats PlayerStats => _playerStats;
+    public PlayerAchievements PlayerAchievements => _playerAchievements;
+    public PlayerEquipment PlayerEquipment => _playerEquipment;
+    public Wallet Wallet => _wallet;
 
     public event UnityAction<int> ChangedHealth
     {
@@ -27,7 +41,7 @@ public class Player : MonoBehaviour
         remove => _playerDie.RemoveListener(value);
     }
 
-    private void Start()
+    private void Awake()
     {
         _currentHealth = _maxHealth;
     }
@@ -36,7 +50,7 @@ public class Player : MonoBehaviour
     {
         if (_currentHealth > 0)
         {
-            _currentHealth = Mathf.Clamp(_currentHealth - (damage - _playerArmor), _minHealth, _maxHealth);
+            _currentHealth = Mathf.Clamp(_currentHealth - (damage - _playerStats.PlayerArmor), _minHealth, _maxHealth);
             _healthBarUpdate.Invoke(_currentHealth);
         }
         else
@@ -45,14 +59,23 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void UpdateArmor(int value)
+    public void Heal()
     {
-        _playerArmor += value;
+        if (_playerStats.CountHealthPotion > 0 && _currentHealth != _maxHealth)
+        {
+            _currentHealth = Mathf.Clamp(_currentHealth + _playerStats.Heal(), _minHealth, _maxHealth);
+            _healthBarUpdate.Invoke(_currentHealth);
+        }
+        else
+        {
+            return;
+        }
     }
 
-    public void UpdateMaxHealth(int value)
+    public void BuyConsumables(int value)
     {
-        _maxHealth += value;
+        _wallet.Buy(value);
+        _playerStats.TakePotion();
     }
 
     public void Recover()

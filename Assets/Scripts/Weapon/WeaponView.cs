@@ -1,30 +1,31 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 public class WeaponView : MonoBehaviour
 {
-    [SerializeField] private Text _nameItem;
-    [SerializeField] private Text _priceItem;
+    [SerializeField] private TMP_Text _nameItem;
+    [SerializeField] private TMP_Text _priceItem;
     [SerializeField] private Image _iconItem;
     [SerializeField] private Image _coinIcon;
-    [SerializeField] private Button _sellButton;
+    [SerializeField] private Button _buyButton;
     [SerializeField] private Image _isBayed;
 
     private Weapon _weapon;
 
-    public event UnityAction<Weapon, WeaponView> SellButtonClick;
+    public event UnityAction<Weapon, WeaponView> BuyButtonClick;
 
     private void OnEnable()
     {
-        _sellButton.onClick.AddListener(OnButtonClick);
-        _sellButton.onClick.AddListener(TryLockItem);
+        _buyButton.onClick.AddListener(OnButtonClick);
+        _buyButton.onClick.AddListener(TryLockItem);
     }
 
     private void OnDisable()
     {
-        _sellButton.onClick.RemoveListener(OnButtonClick);
-        _sellButton.onClick.RemoveListener(TryLockItem);
+        _buyButton.onClick.RemoveListener(OnButtonClick);
+        _buyButton.onClick.RemoveListener(TryLockItem);
     }
 
     public void Render(Weapon weapon)
@@ -39,13 +40,13 @@ public class WeaponView : MonoBehaviour
     {
         if (_weapon.IsBayed)
         {
-            _sellButton.gameObject.SetActive(false);
+            _buyButton.gameObject.SetActive(false);
             _isBayed.gameObject.SetActive(true);
         }
     }
 
     public void OnButtonClick()
     {
-        SellButtonClick?.Invoke(_weapon, this);
+        BuyButtonClick?.Invoke(_weapon, this);
     }
 }

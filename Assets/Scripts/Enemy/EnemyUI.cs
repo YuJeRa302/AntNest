@@ -10,6 +10,8 @@ public class EnemyUI : MonoBehaviour
     [SerializeField] private Enemy _enemy;
     [Header("[Enemy Level]")]
     [SerializeField] private TMP_Text _level;
+    [Header("[Enemy Sprite]")]
+    [SerializeField] private Image _sprite;
 
     private Camera _playerCamera;
 
@@ -17,6 +19,7 @@ public class EnemyUI : MonoBehaviour
     {
         _playerCamera = FindObjectOfType<Camera>();
         _level.text = _enemy.Level.ToString();
+        _sprite.sprite = _enemy.Sprite;
     }
 
     private void LateUpdate()
