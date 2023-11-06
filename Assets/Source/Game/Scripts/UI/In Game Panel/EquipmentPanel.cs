@@ -97,26 +97,41 @@ public class EquipmentPanel : ShopPanel
     protected override void Filling(Player player)
     {
         _playerEquipment = player.GetComponent<PlayerEquipment>();
+        Player = player;
 
-        if (_weapons != null)
+        if (_weapons == null)
         {
-            return;
-        }
-        else
-        {
-            Player = player;
             _weapons = _playerEquipment.GetListWeapon();
             _armors = _playerEquipment.GetListArmor();
+            AddEquipment(_weapons, _armors);
+        }
 
-            for (int i = 1; i < _weapons.Count; i++)
-            {
-                AddWeapon(_weapons[i]);
-            }
+        TryUnlockBuyButton();
+    }
 
-            for (int i = 1; i < _armors.Count; i++)
-            {
-                AddArmor(_armors[i]);
-            }
+    private void AddEquipment(List<Weapon> weapons, List<Armor> armors)
+    {
+        for (int i = 1; i < weapons.Count; i++)
+        {
+            AddWeapon(weapons[i]);
+        }
+
+        for (int i = 1; i < armors.Count; i++)
+        {
+            AddArmor(armors[i]);
+        }
+    }
+
+    private void TryUnlockBuyButton()
+    {
+        for (int i = 0; i < _weaponContainer.transform.childCount; i++)
+        {
+            _weaponContainer.transform.GetChild(i).GetComponent<WeaponView>().TryUnlockBuyButton(Player);
+        }
+
+        for (int i = 0; i < _armorContainer.transform.childCount; i++)
+        {
+            _armorContainer.transform.GetChild(i).GetComponent<ArmorView>().TryUnlockBuyButton(Player);
         }
     }
 }

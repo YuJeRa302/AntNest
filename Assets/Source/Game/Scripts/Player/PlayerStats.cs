@@ -27,6 +27,7 @@ public class PlayerStats : MonoBehaviour
     private int _currentHealthPotion = 2;
     private int _currentExperience = 0;
     private int _hitCount;
+    private int _score = 0;
 
     public float Speed => _speed;
     public int PlayerLevel => _currentLevel;
@@ -37,13 +38,15 @@ public class PlayerStats : MonoBehaviour
     public int AbilityPoints => _abilityPoints;
     public int AbilityArmor => _abilityArmor;
     public int AbilityDamage => _abilityDamage;
+    public int Score => _score;
 
-    public void Initialized(int level, int experience)
+    public void Initialized(int level, int experience, int score)
     {
         GenerateLevelPlayer(_maxPlayerLevel);
         _levels.TryGetValue(_currentLevel, out int value);
         _currentLevel = (level == 0) ? _currentLevel : level;
         _currentExperience = (experience == 0) ? _currentExperience : experience;
+        _score = score;
         UpdatePlayerLevel(_currentLevel, value, _currentExperience, _currentHealthPotion);
     }
 
@@ -121,6 +124,11 @@ public class PlayerStats : MonoBehaviour
     public void UpdatePlayerStats(int armor, int damage)
     {
         _playerUI.UpdatePlayerStats(armor, damage);
+    }
+
+    public void UpdatePlayerScore(int score)
+    {
+        _score += score;
     }
 
     private void UpdatePlayerLevel(int currentLevel, int generateExperienceValue, int currentExperience, int currentHealthPotion)

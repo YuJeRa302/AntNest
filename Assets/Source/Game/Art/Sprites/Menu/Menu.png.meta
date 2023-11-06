@@ -620,7 +620,7 @@ TextureImporter:
         width: 590
         height: 590
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -628,6 +628,48 @@ TextureImporter:
       bones: []
       spriteID: b1b0f62b2aee59841b44b7ce952d3781
       internalID: 196595924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Menu_24
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 1219
+        width: 550
+        height: 550
+      alignment: 9
+      pivot: {x: 0.49999973, y: 0.50000024}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c6cee52b722c8e4198f721c438b3b69
+      internalID: 2007441626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Menu_25
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 1219
+        width: 550
+        height: 550
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 308f9e76f1d44bb419ca9459d84a486e
+      internalID: 950825272
       vertices: []
       indices: 
       edges: []
@@ -644,6 +686,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Menu_3: 642158870
+      Menu_24: 2007441626
       Menu_20: 1509235680
       Menu_10: 1162698055
       Menu_15: -817851402
@@ -667,6 +710,7 @@ TextureImporter:
       Menu_21: 360094168
       Menu_5: -506275963
       Menu_4: -1071990097
+      Menu_25: 950825272
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

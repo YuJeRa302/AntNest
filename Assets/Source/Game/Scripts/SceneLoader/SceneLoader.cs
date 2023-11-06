@@ -11,8 +11,8 @@ public class SceneLoader : MonoBehaviour, ISceneLoadHandler<LoadConfig>
 
     public void OnSceneLoaded(LoadConfig loadConfig)
     {
+        _levelParameters.Initialized(loadConfig);
         _levelSounds.SetValueVolume(loadConfig.AmbientVolume);
         _buttonFX.SetValueVolume(loadConfig.InterfaceVolume);
-        _levelParameters.Initialized(loadConfig);
     }
 }

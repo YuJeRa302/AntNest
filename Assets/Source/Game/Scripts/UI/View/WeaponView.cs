@@ -14,6 +14,7 @@ public class WeaponView : MonoBehaviour
     [SerializeField] private Image _isBayed;
     [SerializeField] private Image _isCurrentWeapon;
     [SerializeField] private Text _itemDamage;
+    [SerializeField] private Text _levelItem;
     [Header("[Name]")]
     [SerializeField] private LeanLocalizedText _name;
 
@@ -29,6 +30,8 @@ public class WeaponView : MonoBehaviour
         _priceItem.text = weapon.Price.ToString();
         _iconItem.sprite = weapon.ItemIcon;
         _itemDamage.text = weapon.Damage.ToString();
+        _levelItem.text = weapon.WeaponLevel.ToString();
+        _buyButton.interactable = false;
     }
 
     public void TryLockItem()
@@ -70,5 +73,11 @@ public class WeaponView : MonoBehaviour
     private void SetCurrent(bool state)
     {
         _isCurrentWeapon.gameObject.SetActive(state);
+    }
+
+    public void TryUnlockBuyButton(Player player)
+    {
+        if (player.PlayerLevel >= _weapon.WeaponLevel) _buyButton.interactable = true;
+        else return;
     }
 }

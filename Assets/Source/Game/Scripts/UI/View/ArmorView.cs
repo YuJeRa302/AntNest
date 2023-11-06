@@ -14,6 +14,7 @@ public class ArmorView : MonoBehaviour
     [SerializeField] private Image _isBayed;
     [SerializeField] private Image _isCurrentArmor;
     [SerializeField] private Text _armorItem;
+    [SerializeField] private Text _levelItem;
     [Header("[Name]")]
     [SerializeField] private LeanLocalizedText _name;
 
@@ -29,6 +30,8 @@ public class ArmorView : MonoBehaviour
         _iconItem.sprite = armor.ItemIcon;
         _armorItem.text = armor.ItemArmor.ToString();
         _name.TranslationName = armor.Name;
+        _levelItem.text = armor.ArmorLevel.ToString();
+        _buyButton.interactable = false;
     }
 
     public void TryLockItem()
@@ -70,5 +73,11 @@ public class ArmorView : MonoBehaviour
     private void SetCurrent(bool state)
     {
         _isCurrentArmor.gameObject.SetActive(state);
+    }
+
+    public void TryUnlockBuyButton(Player player)
+    {
+        if (player.PlayerStats.PlayerLevel >= _armor.ArmorLevel) _buyButton.interactable = true;
+        else return;
     }
 }

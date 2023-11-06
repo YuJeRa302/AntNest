@@ -11,6 +11,7 @@ public abstract class Enemy : EnemyMovement
     [SerializeField] private int _health;
     [SerializeField] private int _goldReward;
     [SerializeField] private int _experienceReward;
+    [SerializeField] private int _score;
     [SerializeField] private float _speed;
     [Header("[Enemy Tag Name]")]
     [SerializeField] private string _tagName;
@@ -44,6 +45,7 @@ public abstract class Enemy : EnemyMovement
     public int Health => _health;
     public int GoldReward => _goldReward;
     public int ExperienceReward => _experienceReward;
+    public int Score => _score;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public Sprite Sprite => _enemySprite;
     public int AbilityDamage => _abilityDamage;

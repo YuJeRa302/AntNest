@@ -1,5 +1,5 @@
 using UnityEngine;
-using YG;
+using Agava.YandexGames;
 
 public class Rewards : MonoBehaviour
 {
@@ -25,34 +25,21 @@ public class Rewards : MonoBehaviour
     public void OpenRewardAd(int reward)
     {
         _player = FindObjectOfType<Player>();
-        YandexGame.RewVideoShow(reward);
+#if UNITY_WEBGL && !UNITY_EDITOR
+    VideoAd.Show();
+#endif
+        MultiplyPlayerReward(reward);
     }
 
     public void OpenFullScreenAd()
     {
-        YandexGame.FullscreenShow();
-    }
-
-    private void Start()
-    {
-        YandexGame.CloseFullAdEvent += ClosedFullScreenAd;
-    }
-
-    private void OnEnable() => YandexGame.RewardVideoEvent += Rewarded;
-    private void OnDisable() => YandexGame.RewardVideoEvent -= Rewarded;
-
-    private void Rewarded(int reward)
-    {
-        MultiplyPlayerReward(reward);
+#if UNITY_WEBGL && !UNITY_EDITOR
+    InterstitialAd.Show();
+#endif
     }
 
     private void MultiplyPlayerReward(int reward)
     {
         if (reward == 1) _player.Wallet.TakeCoin(_levelParameters.CountMoneyEarned);
-    }
-
-    public void ClosedFullScreenAd()
-    {
-        _isClosedFullScreenAd = true;
     }
 }

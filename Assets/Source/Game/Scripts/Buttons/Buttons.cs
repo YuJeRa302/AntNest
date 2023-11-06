@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using IJunior.TypedScenes;
-using System.Threading.Tasks;
 using Lean.Localization;
+using System.Collections;
 
 public class Buttons : MonoBehaviour
 {
@@ -37,6 +37,8 @@ public class Buttons : MonoBehaviour
     [SerializeField] private Animator[] _animators;
 
     private readonly int _zeroWave = 0;
+
+    private AsyncOperation _load;
 
     enum TransitionParametr
     {
@@ -123,30 +125,32 @@ public class Buttons : MonoBehaviour
         switch (sceneName)
         {
             case Desert._sceneName:
-                LoadScreenLevel(Desert.LoadAsync(loadConfig));
+                StartCoroutine(LoadScreenLevel(Desert.LoadAsync(loadConfig)));
                 break;
             case Forest._sceneName:
-                LoadScreenLevel(Forest.LoadAsync(loadConfig));
+                StartCoroutine(LoadScreenLevel(Forest.LoadAsync(loadConfig)));
                 break;
             case Cave._sceneName:
-                LoadScreenLevel(Cave.LoadAsync(loadConfig));
+                StartCoroutine(LoadScreenLevel(Cave.LoadAsync(loadConfig)));
                 break;
         }
     }
 
-    private async void LoadScreenLevel(AsyncOperation asyncOperation)
+    private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)
     {
-        _canvasLoader.gameObject.SetActive(true);
-        asyncOperation.allowSceneActivation = false;
+        if (_load != null) yield break;
 
-        while (asyncOperation.progress < 0.9f)
+        _load = asyncOperation;
+        _load.allowSceneActivation = false;
+        _canvasLoader.gameObject.SetActive(true);
+
+        while (_load.progress < 0.9f)
         {
-            await Task.Yield();
+            yield return null;
         }
 
-        await Task.Delay(2000);
-        _canvasLoader.gameObject.SetActive(false);
-        asyncOperation.allowSceneActivation = true;
+        _load.allowSceneActivation = true;
+        _load = null;
     }
 
     private void ChangeColor(bool isStandart, bool isEndless)

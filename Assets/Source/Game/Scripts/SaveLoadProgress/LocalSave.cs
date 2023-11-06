@@ -81,6 +81,6 @@ public class LocalSave : MonoBehaviour
     private void SetConfigParameters(string language, int playerCoins, int playerLevel, int playerExperience)
     {
         _loadConfig.SetCurrentLanguage(language);
-        _loadConfig.SetPlayerParameters(playerCoins, playerLevel, playerExperience);
+        //_loadConfig.SetPlayerParameters(playerCoins, playerLevel, playerExperience);
     }
 }

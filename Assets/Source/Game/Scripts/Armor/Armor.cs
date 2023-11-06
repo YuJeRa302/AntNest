@@ -8,6 +8,7 @@ public abstract class Armor : MonoBehaviour
     [SerializeField] private int _price;
     [SerializeField] private bool _isBayed;
     [SerializeField] private int _armor;
+    [SerializeField] private int _armorLevel;
     [Header("[Name]")]
     [SerializeField] private string _name;
 
@@ -15,6 +16,7 @@ public abstract class Armor : MonoBehaviour
     public Sprite ItemIcon => _sprite;
     public string Name => _name;
     public int Price => _price;
+    public int ArmorLevel => _armorLevel;
     public bool IsBayed => _isBayed;
 
     public event UnityAction<bool> OnChangeState;

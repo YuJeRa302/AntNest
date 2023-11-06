@@ -36,21 +36,17 @@ public class LevelParameters : MonoBehaviour
     public int IndexEndlessWave => _indexEndlessWave;
     public Player Player => _player;
 
-    private void Start()
-    {
-        _player.PlayerEquipment.ShowHideEquipment();
-    }
-
     public void OnEnemyDie(Enemy enemy)
     {
         _countKillEnemy++;
         _countMoneyEarned += enemy.GoldReward;
         _countExp += enemy.ExperienceReward;
         _player.PlayerStats.OnEnemyDie(enemy);
-        enemy.Dying -= OnEnemyDie;
-        _currentCountEnemy++;
-        TrySpawnNextWave();
+        _player.PlayerStats.UpdatePlayerScore(enemy.Score);
         _levelUI.UpdateEnemyKillCount(_countKillEnemy);
+        _currentCountEnemy++;
+        enemy.Dying -= OnEnemyDie;
+        TrySpawnNextWave();
     }
 
     public void EnabledDisabledPlayer(bool state)
@@ -103,7 +99,7 @@ public class LevelParameters : MonoBehaviour
 
     private void SetEndlessSpawn()
     {
-        if (_currentCountEnemy == _levels.Wave[_indexEndlessWave].CountEnemy)
+        if (_currentCountEnemy == _levels.Wave[_indexEndlessWave].CountEnemy + _currentWave)
         {
             _currentWave++;
             _levelSpawn.SpawnNextWave(_levels.Wave, _currentWave);
@@ -150,7 +146,7 @@ public class LevelParameters : MonoBehaviour
         _isPlayerAlive = true;
         _player.PlayerDie += OnPlayerDie;
         _player.Wallet.Initialized(_loadConfig.PlayerCoins);
-        _player.PlayerStats.Initialized(_loadConfig.PlayerLevel, _loadConfig.PlayerExperience);
+        _player.PlayerStats.Initialized(_loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore);
     }
 
     private void LevelSpawnEntity()

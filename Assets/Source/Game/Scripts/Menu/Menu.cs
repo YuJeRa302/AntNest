@@ -1,25 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
 
 public class Menu : MonoBehaviour
 {
     [Header("[MenuView]")]
-    [SerializeField] private MenuView _menuView;
+    [SerializeField] private MenuPanel _menuPanel;
     [Header("[Sound]")]
     [SerializeField] private AudioSource _ambientSounds;
     [SerializeField] private AudioSource _buttonFX;
     [Header("[SaveProgress]")]
     [SerializeField] private SaveProgress _saveProgress;
-
-    private LoadConfig _config;
+    [Header("[Config]")]
+    [SerializeField] private LoadConfig _config;
 
     public LoadConfig LoadConfig => _config;
 
     public void ApplyChanges()
     {
-        _config.SetSoundParameters(_menuView.ButtonFXSlider, _menuView.ButtonFXSlider);
-        SetValueVolume(_menuView.AmbientSoundsSlider, _menuView.ButtonFXSlider);
+        _config.SetSoundParameters(_menuPanel.ButtonFXSlider, _menuPanel.ButtonFXSlider);
+        SetValueVolume(_menuPanel.AmbientSoundsSlider, _menuPanel.ButtonFXSlider);
     }
 
     public void SetSoundValue()
@@ -30,32 +29,23 @@ public class Menu : MonoBehaviour
 
     public void GetLoad()
     {
-        _config = Resources.Load<LoadConfig>("LevelConfig/LevelConfig");
-        _menuView.AmbientSoundsSlider.value = _config.AmbientVolume;
-        _menuView.ButtonFXSlider.value = _config.InterfaceVolume;
+        _menuPanel.AmbientSoundsSlider.value = _config.AmbientVolume;
+        _menuPanel.ButtonFXSlider.value = _config.InterfaceVolume;
         _ambientSounds.Play();
-       // _saveProgress.GetLoad(_config);
+        _saveProgress.GetLoad(_config);
     }
 
     public void Initialized()
     {
-        if (YandexGame.SDKEnabled == true) GetLoad();
+        _menuPanel.gameObject.SetActive(true);
+        GetLoad();
         SetStateMuteButton(false);
     }
-
-    private void Awake()
-    {
-        YandexGame.Instance.InitializationSDK();
-    }
-
-    private void OnEnable() => YandexGame.GetDataEvent += GetLoad;
-
-    private void OnDisable() => YandexGame.GetDataEvent -= GetLoad;
 
     private void SetStateMuteButton(bool state)
     {
         _ambientSounds.mute = state;
-        _menuView.SetMuteButtonImage(state);
+        _menuPanel.SetMuteButtonImage(state);
     }
 
     private void SetValueVolume(Slider ambientSoundsSlider, Slider buttonFXSlider)

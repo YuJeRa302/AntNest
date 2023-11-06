@@ -5144,7 +5144,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 202058dc7ca65f749bcf3ad07974a3fd, type: 3}
     m_FontSize: 12
     m_FontStyle: 0
     m_BestFit: 1
@@ -5401,7 +5401,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 202058dc7ca65f749bcf3ad07974a3fd, type: 3}
     m_FontSize: 7
     m_FontStyle: 0
     m_BestFit: 0
@@ -10344,6 +10344,7 @@ MonoBehaviour:
   _health: 110
   _goldReward: 35
   _experienceReward: 30
+  _score: 45
   _speed: 1
   _tagName: Cactus
   _abilityDamage: 2
@@ -15558,7 +15559,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -633872970, guid: ead86b92c865e944eadab7a6c6f79514, type: 3}
+  m_Sprite: {fileID: -233262891, guid: 78cddcb7597c45f4fadca13f5d8b4606, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

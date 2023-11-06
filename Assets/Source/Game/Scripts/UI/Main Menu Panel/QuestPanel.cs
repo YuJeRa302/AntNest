@@ -4,7 +4,7 @@ using UnityEngine;
 public class QuestPanel : Panels
 {
     [Header("[Level Buttons]")]
-    [SerializeField] private List<Buttons> _buttonsGameLocation;
+    [SerializeField] private List<Buttons> _buttons;
     [Header("[Containers]")]
     [SerializeField] private GameObject _buttonsContainer;
     [Header("[QuestPanelView]")]
@@ -12,7 +12,6 @@ public class QuestPanel : Panels
     [Header("[CanvasLoader]")]
     [SerializeField] private CanvasLoader _canvasLoader;
 
-    private readonly int _minCountButtons = 0;
     private readonly int _indexShift = 1;
 
     public QuestPanelView QuestPanelView => _questPanelView;
@@ -20,8 +19,9 @@ public class QuestPanel : Panels
     public void Initialized(LoadConfig loadConfig)
     {
         _questPanelView.Initialized(loadConfig.PlayerCoins, loadConfig.PlayerLevel);
-        UpdateParameters(loadConfig, _buttonsGameLocation);
-        Load();
+        UpdateParameters(loadConfig, _buttons);
+        UnlockNewLevel(_buttons);
+        Load(_buttons);
     }
 
     private void UpdateParameters(LoadConfig loadConfig, List<Buttons> buttons)
@@ -41,19 +41,32 @@ public class QuestPanel : Panels
         }
 
         buttons[0].SetButtonState(true);
-        UnlockNew(buttons);
     }
 
-    private void Load()
+    private void UnlockNewLevel(List<Buttons> buttons)
     {
-        if (_buttonsContainer.transform.childCount == _minCountButtons)
+        for (int i = 0; i < buttons.Count - _indexShift; i++)
         {
-            foreach (var button in _buttonsGameLocation)
-            {
-                Instantiate(button, _buttonsContainer.transform);
-            }
+            if (buttons[i].IsLevelComplete) buttons[i + _indexShift].SetButtonState(true);
         }
-        else return;
+    }
+
+    private void Load(List<Buttons> buttons)
+    {
+        Clear();
+
+        foreach (var button in buttons)
+        {
+            Instantiate(button, _buttonsContainer.transform);
+        }
+    }
+
+    private void Clear()
+    {
+        for (int i = 0; i < _buttonsContainer.transform.childCount; i++)
+        {
+            Destroy(_buttonsContainer.transform.GetChild(i).gameObject);
+        }
     }
 
     private void SetParameters(LoadConfig loadConfig, Buttons buttons)
@@ -63,13 +76,5 @@ public class QuestPanel : Panels
         buttons.GetCanvasLoader(_canvasLoader);
         buttons.SetButtonState(false);
         buttons.SetImage();
-    }
-
-    private void UnlockNew(List<Buttons> buttons)
-    {
-        for (int index = 0; index < buttons.Count - _indexShift; index++)
-        {
-            if (buttons[index].IsLevelComplete == true) buttons[index + _indexShift].SetButtonState(true);
-        }
     }
 }

@@ -8,6 +8,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] private int _price;
     [SerializeField] private bool _isBayed;
     [SerializeField] private int _damage;
+    [SerializeField] private int _weaponLevel;
     [Header("[Name]")]
     [SerializeField] private string _name;
 
@@ -16,6 +17,7 @@ public abstract class Weapon : MonoBehaviour
     public string Name => _name;
     public int Price => _price;
     public bool IsBayed => _isBayed;
+    public int WeaponLevel => _weaponLevel;
 
     public event UnityAction<bool> OnChangeState;
 

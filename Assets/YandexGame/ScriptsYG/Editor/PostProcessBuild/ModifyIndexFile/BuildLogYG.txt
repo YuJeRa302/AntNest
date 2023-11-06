@@ -1,2 +1,0 @@
-Build path: D:/Project(Unity)/GitHub/TestProject/test1
-Build number: 28

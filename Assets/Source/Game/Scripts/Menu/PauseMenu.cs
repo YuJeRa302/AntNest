@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using YG;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -28,6 +27,8 @@ public class PauseMenu : MonoBehaviour
     private readonly float _resumeTimeValue = 1f;
     private readonly float _pauseTimeValue = 0f;
     private readonly string _menuScene = "Menu";
+
+    private AsyncOperation _load;
 
     public PauseMenuView PauseMenuView => _pauseMenuView;
     public RewardView RewardView => _rewardView;
@@ -56,12 +57,12 @@ public class PauseMenu : MonoBehaviour
     public void CloseRewardPanel()
     {
         UpdatePlayerStats();
-        LoadScreenLevel(SceneManager.LoadSceneAsync(_menuScene));
+        StartCoroutine(LoadScreenLevel(SceneManager.LoadSceneAsync(_menuScene)));
     }
 
     public void ExiteGame()
     {
-        LoadScreenLevel(SceneManager.LoadSceneAsync(_menuScene));
+        StartCoroutine(LoadScreenLevel(SceneManager.LoadSceneAsync(_menuScene)));
     }
 
     public void SetSoundValue()
@@ -93,31 +94,34 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = value;
     }
 
-    private async void LoadScreenLevel(AsyncOperation asyncOperation)
+    private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)
     {
+        if (_load != null) yield break;
+
+        _load = asyncOperation;
+        _load.allowSceneActivation = false;
         _canvasLoader.gameObject.SetActive(true);
-        asyncOperation.allowSceneActivation = false;
         _rewards.OpenFullScreenAd();
 
-        if (_rewards.IsClosedFullScreenAd == true)
+        while (_load.progress < 0.9f)
         {
-            while (asyncOperation.progress < 0.9f)
-            {
-                await Task.Yield();
-            }
+            yield return null;
         }
 
-        await Task.Delay(2000);
-        _canvasLoader.gameObject.SetActive(false);
-        asyncOperation.allowSceneActivation = true;
+        _load.allowSceneActivation = true;
+        _load = null;
     }
 
-    private void UpdatePlayerStats() 
+    private void UpdatePlayerStats()
     {
         var level = _levelParameters.LoadConfig.Levels.IsComplete ? _levelParameters.Player.PlayerLevel : 0;
-        _saveProgress.Save(_levelParameters.LoadConfig.Language, _levelParameters.Player.Wallet.GiveCoin(), level,
-            _levelParameters.Player.PlayerStats.Experience, _levelParameters.Levels.LevelId, _levelParameters.Levels.IsComplete);
-        YandexGame.NewLeaderboardScores(_leaderboard, _levelParameters.CountMoneyEarned);
+        _saveProgress.Save(_levelParameters.LoadConfig.Language,
+            _levelParameters.Player.Wallet.GiveCoin(), level,
+            _levelParameters.Player.PlayerStats.Experience,
+            _levelParameters.Player.PlayerStats.Score,
+            _levelParameters.LoadConfig.IsFirstSession,
+            _levelParameters.Levels.LevelId,
+            _levelParameters.Levels.IsComplete);
         _rewardView.CloseRewardPanel();
     }
 }

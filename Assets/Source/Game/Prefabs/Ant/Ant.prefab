@@ -483,7 +483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9096756433872126266
 RectTransform:
   m_ObjectHideFlags: 0
@@ -570,6 +570,7 @@ MonoBehaviour:
   _price: 1000
   _isBayed: 0
   _damage: 40
+  _weaponLevel: 3
   _name: IronWeapon
 --- !u!222 &910157156060429933
 CanvasRenderer:
@@ -785,8 +786,6 @@ GameObject:
   - component: {fileID: 919416000340551486}
   - component: {fileID: 919416000340551485}
   - component: {fileID: 7960845047596034899}
-  - component: {fileID: 3351909428128705154}
-  - component: {fileID: 2627826746504148078}
   m_Layer: 0
   m_Name: WoodAxe
   m_TagString: Untagged
@@ -880,6 +879,7 @@ MonoBehaviour:
   _price: 100
   _isBayed: 1
   _damage: 15
+  _weaponLevel: 0
   _name: 
 --- !u!222 &7960845047596034899
 CanvasRenderer:
@@ -889,54 +889,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712097431941039851}
   m_CullTransparentMesh: 1
---- !u!114 &3351909428128705154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712097431941039851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: "\u0414\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u0439\u044B\u0439"
---- !u!114 &2627826746504148078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712097431941039851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ee4021ce59f313499a5cab041f02aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  translationName: Axe Wood
-  FallbackText: "\u0414\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u0439\u044B\u0439"
 --- !u!1 &1721334001146875215
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,7 +2136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2561274562026854640
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2271,6 +2223,7 @@ MonoBehaviour:
   _price: 150
   _isBayed: 0
   _damage: 25
+  _weaponLevel: 2
   _name: BronzeWeapon
 --- !u!222 &2601189120689677155
 CanvasRenderer:
@@ -3906,6 +3859,7 @@ MonoBehaviour:
   _weapon: []
   _armor: []
   _wallet: {fileID: 7762064549988829401}
+  _playerStats: {fileID: 7762064549988829405}
 --- !u!136 &7858064222498955249
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4924,6 +4878,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7597173455443938265}
     m_Modifications:
     - target: {fileID: 6349796707835967920, guid: d36cd9e15c9a5ae449dbba4735693955, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6349796707835967920, guid: d36cd9e15c9a5ae449dbba4735693955, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
@@ -4939,6 +4897,10 @@ PrefabInstance:
       propertyPath: _sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0196823027c0cea43b525883ef4943e2, type: 3}
+    - target: {fileID: 6349796707835967921, guid: d36cd9e15c9a5ae449dbba4735693955, type: 3}
+      propertyPath: _armorLevel
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6349796707835967926, guid: d36cd9e15c9a5ae449dbba4735693955, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -4989,7 +4951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6349796707835967927, guid: d36cd9e15c9a5ae449dbba4735693955, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6349796707835967927, guid: d36cd9e15c9a5ae449dbba4735693955, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5223,6 +5185,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7597173455443938265}
     m_Modifications:
     - target: {fileID: 3791114138269755270, guid: b929351b4bbad6440b309722599438bf, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791114138269755270, guid: b929351b4bbad6440b309722599438bf, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
@@ -5302,7 +5268,9 @@ PrefabInstance:
       propertyPath: FallbackText
       value: "\u0414\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u044B\u0439"
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8199506202871884107, guid: b929351b4bbad6440b309722599438bf, type: 3}
+    - {fileID: 7384238332117816441, guid: b929351b4bbad6440b309722599438bf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b929351b4bbad6440b309722599438bf, type: 3}
 --- !u!224 &939737892521285957 stripped
 RectTransform:
@@ -5474,6 +5442,10 @@ PrefabInstance:
       propertyPath: _sprite
       value: 
       objectReference: {fileID: 21300000, guid: 20e6201487c96e24f9406d57bc78305a, type: 3}
+    - target: {fileID: 841033134666935212, guid: 869fa86c79dd8ba418b69e1f692d09ee, type: 3}
+      propertyPath: _armorLevel
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 841033134666935213, guid: 869fa86c79dd8ba418b69e1f692d09ee, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -5524,11 +5496,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 841033134666935214, guid: 869fa86c79dd8ba418b69e1f692d09ee, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 841033134666935214, guid: 869fa86c79dd8ba418b69e1f692d09ee, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 841033134666935219, guid: 869fa86c79dd8ba418b69e1f692d09ee, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 841033134666935219, guid: 869fa86c79dd8ba418b69e1f692d09ee, type: 3}
       propertyPath: m_CastShadows

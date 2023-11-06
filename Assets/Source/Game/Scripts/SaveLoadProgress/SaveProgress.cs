@@ -1,52 +1,101 @@
 using UnityEngine;
-using YG;
+using Agava.YandexGames;
 
 public class SaveProgress : MonoBehaviour
 {
-    public void Save(string language, int playerCoins, int playerLevel, int playerExperience, int levelId, bool levelState)
-    {
-        YandexGame.savesData.language = language;
-        YandexGame.savesData.PlayerCoins = playerCoins;
-        YandexGame.savesData.PlayerLevel = playerLevel;
-        YandexGame.savesData.PlayerExperience = playerExperience;
-        YandexGame.savesData.PlayerCompleteLevels = new();
+    private string _key = "antHill";
 
-        if (YandexGame.savesData.PlayerCompleteLevels != null)
+    public void Save(string language, int playerCoins, int playerLevel, int playerExperience, int score, bool isFirstSession, int levelId, bool levelState)
+    {
+        string _hashKey = null;
+        SaveModel data = null;
+
+        if (PlayerAccount.IsAuthorized == true)
         {
-            var keys = YandexGame.savesData.PlayerCompleteLevels.Keys;
+            PlayerAccount.GetCloudSaveData((data) => _key = data);
+            data = JsonUtility.FromJson<SaveModel>(_key);
+        }
+        else
+        {
+            if (UnityEngine.PlayerPrefs.HasKey(_key))
+            {
+                _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
+                data = JsonUtility.FromJson<SaveModel>(_hashKey);
+            }
+            else return;
+        }
+
+        SaveModel newData = new()
+        {
+            Language = language,
+            PlayerCoins = playerCoins,
+            PlayerLevel = playerLevel,
+            PlayerExperience = playerExperience,
+            IsFirstSession = isFirstSession,
+            PlayerScore = score,
+            PlayerCompleteLevels = new(),
+        };
+
+        newData.PlayerCompleteLevels.Add(levelId, levelState);
+
+        if (data != null)
+        {
+            var keys = data.PlayerCompleteLevels.Keys;
 
             foreach (int key in keys)
             {
-                if (key != levelId)
+                if (!newData.PlayerCompleteLevels.ContainsKey(key))
                 {
-                    YandexGame.savesData.PlayerCompleteLevels.Add(levelId, levelState);
-                }
-                else
-                {
-                    if (levelState == true)
-                    {
-                        YandexGame.savesData.PlayerCompleteLevels[key] = levelState;
-                    }
+                    data.PlayerCompleteLevels.TryGetValue(key, out bool value);
+                    newData.PlayerCompleteLevels.Add(key, value);
                 }
             }
         }
-        else YandexGame.savesData.PlayerCompleteLevels.Add(levelId, levelState);
 
-        YandexGame.SaveProgress();
+        string json = JsonUtility.ToJson(newData);
+
+        if (PlayerAccount.IsAuthorized == false)
+        {
+            UnityEngine.PlayerPrefs.SetString(_key, json);
+            UnityEngine.PlayerPrefs.Save();
+        }
+        else PlayerAccount.SetCloudSaveData(json);
     }
-
-    public void Load() => YandexGame.LoadProgress();
 
     public void GetLoad(LoadConfig loadConfig)
     {
-        if (YandexGame.savesData.PlayerCompleteLevels != null) loadConfig.UpdateListPlayerLevels(YandexGame.savesData.PlayerCompleteLevels);
-        SetConfigParameters(YandexGame.savesData.language, YandexGame.savesData.PlayerCoins,
-            YandexGame.savesData.PlayerLevel, YandexGame.savesData.PlayerExperience, loadConfig);
+        string _hashKey = null;
+        SaveModel data = null;
+
+        if (PlayerAccount.IsAuthorized == true)
+        {
+            PlayerAccount.GetCloudSaveData((data) => _key = data);
+
+            if (_key != null) data = JsonUtility.FromJson<SaveModel>(_key);
+            else return;
+        }
+        else
+        {
+            if (UnityEngine.PlayerPrefs.HasKey(_key))
+            {
+                _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
+                data = JsonUtility.FromJson<SaveModel>(_hashKey);
+            }
+            else return;
+        }
+
+        if (data != null)
+        {
+            if (data.PlayerCompleteLevels != null) loadConfig.UpdateListPlayerLevels(data.PlayerCompleteLevels);
+
+            SetConfigParameters(data.Language, data.PlayerCoins, data.PlayerLevel, data.PlayerExperience, data.PlayerScore, data.IsFirstSession, loadConfig);
+        }
+        else return;
     }
 
-    private void SetConfigParameters(string language, int playerCoins, int playerLevel, int playerExperience, LoadConfig loadConfig)
+    private void SetConfigParameters(string language, int playerCoins, int playerLevel, int playerExperience, int score, bool isFirstSession, LoadConfig loadConfig)
     {
         loadConfig.SetCurrentLanguage(language);
-        loadConfig.SetPlayerParameters(playerCoins, playerLevel, playerExperience);
+        loadConfig.SetPlayerParameters(playerCoins, playerLevel, playerExperience, score, isFirstSession);
     }
 }

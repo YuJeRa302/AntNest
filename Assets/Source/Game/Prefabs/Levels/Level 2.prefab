@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelId: 1
   _nameScene: Desert
-  _isComplete: 1
+  _isComplete: 0
   _wave:
   - {fileID: 2442752812101130733, guid: 64274c1384c801d41b9a3168d5732e77, type: 3}
   - {fileID: 2442752812101130733, guid: 1ed28bdfe7a82144094ebc27901330aa, type: 3}

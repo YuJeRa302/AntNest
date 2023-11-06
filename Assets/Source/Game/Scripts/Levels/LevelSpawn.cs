@@ -12,6 +12,7 @@ public class LevelSpawn : MonoBehaviour
 
     private readonly int _delaySpawn = 15;
 
+    private int _currentCountEnemy = 0;
     private IEnumerator _spawnEnemy;
     private IEnumerator _spawnWave;
     private Player _player;
@@ -47,8 +48,15 @@ public class LevelSpawn : MonoBehaviour
         {
             _levelParameters.WavePanelView.SetWaveName(index);
 
-            if (_levelParameters.Levels.IsStandart == true) _spawnWave = SpawnWave(wave, index);
-            else _spawnWave = SpawnWave(wave, _levelParameters.IndexEndlessWave);
+            if (_levelParameters.Levels.IsStandart == true)
+            {
+                _spawnWave = SpawnWave(wave, index);
+            }
+            else
+            {
+                _currentCountEnemy += index;
+                _spawnWave = SpawnWave(wave, _levelParameters.IndexEndlessWave);
+            }
 
             StartCoroutine(_spawnWave);
         }
@@ -66,7 +74,7 @@ public class LevelSpawn : MonoBehaviour
     private IEnumerator SpawnWave(Wave[] wave, int index)
     {
         yield return new WaitForSeconds(wave[index].DelaySpawn);
-        _spawnEnemy = SpawnEnemy(wave[index].EnemyPrefab, wave[index].CountEnemy);
+        _spawnEnemy = SpawnEnemy(wave[index].EnemyPrefab, wave[index].CountEnemy + _currentCountEnemy);
         StartCoroutine(_spawnEnemy);
 
         if (_spawnWave != null) StopCoroutine(_spawnWave);
@@ -78,6 +86,7 @@ public class LevelSpawn : MonoBehaviour
         {
             CreateEnemy(enemy);
             countEnemy--;
+
             yield return new WaitForSeconds(_delaySpawn);
         }
 

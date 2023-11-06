@@ -39,7 +39,7 @@ public class PlayerEquipment : MonoBehaviour
     {
         _currentWeapon.SetState(false);
         weapon.SetState(true);
-        _currentWeapon = weapon; 
+        _currentWeapon = weapon;
         _playerStats.UpdatePlayerStats(_currentArmor.ItemArmor, weapon.Damage);
     }
 
@@ -66,19 +66,6 @@ public class PlayerEquipment : MonoBehaviour
         AddItemToList();
         _currentWeapon = _weapon[0];
         _currentArmor = _armor[0];
-    }
-
-    public void ShowHideEquipment()
-    {
-        for (int i = 1; i < _weapon.Count; i++)
-        {
-            _weapon[i].gameObject.SetActive(false);
-        }
-
-        for (int i = 1; i < _armor.Count; i++)
-        {
-            _armor[i].gameObject.SetActive(false);
-        }
     }
 
     public void IncreaseArmor(int armor)
