@@ -5,8 +5,6 @@ public class EnemyMovement : MonoBehaviour
 {
     [Header("[Animator]")]
     [SerializeField] protected Animator Animator;
-    [Header("[UI]")]
-    [SerializeField] protected EnemyUI EnemyUi;
     [Header("[Enemy]")]
     [SerializeField] private Enemy _enemy;
 

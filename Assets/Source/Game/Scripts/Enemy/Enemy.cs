@@ -15,23 +15,12 @@ public abstract class Enemy : EnemyMovement
     [SerializeField] private float _speed;
     [Header("[Enemy Tag Name]")]
     [SerializeField] private string _tagName;
-    [Header("[Ability Damage]")]
-    [SerializeField] private int _abilityDamage;
     [Header("[Enemy NavMeshAgent]")]
     [SerializeField] private NavMeshAgent _navMeshAgent;
-    [Header("[Enemy Sprite]")]
-    [SerializeField] private Sprite _enemySprite;
-    [Header("[Enemy Effects]")]
-    [SerializeField] private ParticleSystem _hit;
-    [SerializeField] private ParticleSystem _ability;
-    [SerializeField] private ParticleSystem _dieEffect;
-    [Header("[Health Threshold]")]
-    [SerializeField] private int _healthThreshold;
-    [Header("[Audio Source]")]
-    [SerializeField] private AudioSource _audioSource;
-    [Header("[Audio Clip]")]
-    [SerializeField] private AudioClip _audioClipDie;
-    [SerializeField] private AudioClip _hitPlayer;
+    [Header("[Enemy View]")]
+    [SerializeField] private EnemyView _enemyView;
+    [Header("[Enemy Sound]")]
+    [SerializeField] private EnemySound _enemySound;
 
     private readonly int _minHealth = 0;
     private readonly UnityEvent<int> _healthBarUpdate = new();
@@ -47,11 +36,11 @@ public abstract class Enemy : EnemyMovement
     public int ExperienceReward => _experienceReward;
     public int Score => _score;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
-    public Sprite Sprite => _enemySprite;
-    public int AbilityDamage => _abilityDamage;
-    public AudioClip HitPlayer => _hitPlayer;
-    public AudioSource AudioSource => _audioSource;
+    public Sprite Sprite => _enemyView.Sprite;
+    public AudioClip HitPlayer => _enemySound.HitPlayer;
+    public AudioSource AudioSource => _enemySound.AudioSource;
     public string TagEnemy => _tagName;
+    public EnemyView EnemyView => _enemyView;
 
     public event UnityAction<int> ChangedHealth
     {
@@ -74,38 +63,24 @@ public abstract class Enemy : EnemyMovement
 
     public void TakeDamage(int damage)
     {
-        CastAbility();
         TakeHit();
         _health = Mathf.Clamp(_health - damage, _minHealth, _health);
         _healthBarUpdate.Invoke(Health);
-        _hit.Play();
+        _enemyView.Hit.Play();
     }
 
     protected virtual void Start()
     {
-        EnemyUi.SetSliderValue(Health);
         Target = FindObjectOfType<Player>();
-        _audioSource.volume = FindObjectOfType<LevelParameters>().LoadConfig.AmbientVolume;
-    }
-
-    private void CastAbility()
-    {
-        if (_health < _healthThreshold)
-        {
-            if (_ability != null)
-            {
-                _ability.gameObject.SetActive(true);
-                _ability.Play();
-            }
-        }
-        else return;
+        _enemyView.SetSliderValue(Health);
+        _enemySound.AudioSource.volume = FindObjectOfType<LevelParameters>().LoadConfig.AmbientVolume;
     }
 
     private void SetDyingParameters()
     {
         IsDead = true;
-        _dieEffect.Play();
-        _hit.gameObject.SetActive(false);
-        _audioSource.PlayOneShot(_audioClipDie);
+        _enemyView.DieEffect.Play();
+        _enemyView.Hit.gameObject.SetActive(false);
+        _enemySound.AudioSource.PlayOneShot(_enemySound.AudioClipDie);
     }
 }

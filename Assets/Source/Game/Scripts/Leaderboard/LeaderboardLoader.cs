@@ -51,53 +51,28 @@ public class LeaderboardLoader : MonoBehaviour
 
     public void Open()
     {
-        if (PlayerAccount.IsAuthorized == true)
-        {
-            PlayerAccount.RequestPersonalProfileDataPermission();
-            OpenLeaderBoard();
-        }
-        else _dialogPanel.ShowPanel();
+        if (PlayerAccount.IsAuthorized == true) PlayerAccount.RequestPersonalProfileDataPermission();
+
+        if (PlayerAccount.IsAuthorized == false) return;
+
+        OnSuccessLoad();
     }
 
     public void Authorize()
     {
         PlayerAccount.Authorize();
 
-        if (PlayerAccount.IsAuthorized == true)
-        {
-            OpenLeaderBoard();
-        }
-        else return;
+        if (PlayerAccount.IsAuthorized == true) PlayerAccount.RequestPersonalProfileDataPermission();
+
+        if (PlayerAccount.IsAuthorized == false) return;
+
+        OnSuccessLoad();
     }
 
-    private void OpenLeaderBoard()
+    private void OnSuccessLoad()
     {
-        SetLeaderboardValue(LeaderboardName, _config.PlayerScore);
+        SetPlayer(_config.PlayerScore);
         Fill();
         _leaderboardView.Open();
-    }
-
-    private void SetLeaderboardValue(string leaderboard, int newScore)
-    {
-        int oldScore = 0;
-        string name = null;
-
-        Leaderboard.GetEntries(leaderboard, (result) =>
-        {
-            foreach (var entry in result.entries)
-            {
-                name = entry.player.publicName;
-
-                if (string.IsNullOrEmpty(name)) name = "Anonymous";
-
-                oldScore = entry.score;
-            }
-        });
-
-        if (oldScore > newScore)
-        {
-            Leaderboard.SetScore(leaderboard, oldScore);
-        }
-        else Leaderboard.SetScore(leaderboard, newScore);
     }
 }

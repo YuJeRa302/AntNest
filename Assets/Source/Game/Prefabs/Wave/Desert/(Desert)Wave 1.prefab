@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _nameWave: 1
-  _countEnemy: 2
+  _countEnemy: 3
   _delaySpawn: 15
   _prefabEnemy: {fileID: 7948567476314781474, guid: 88e53799fb80dfd498a0477e0f8d5744, type: 3}

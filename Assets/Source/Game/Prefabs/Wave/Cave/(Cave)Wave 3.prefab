@@ -47,4 +47,4 @@ MonoBehaviour:
   _nameWave: 3
   _countEnemy: 2
   _delaySpawn: 15
-  _prefabEnemy: {fileID: 2428827483349715505, guid: 01c6cd35e3527874eb4ffbded11b70b3, type: 3}
+  _prefabEnemy: {fileID: 5093283100403709827, guid: f5bf01d94d705d2418d0a54faba8224b, type: 3}

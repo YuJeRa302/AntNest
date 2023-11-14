@@ -1432,8 +1432,8 @@ MonoBehaviour:
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 0
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillClockwise: 0
+  m_FillOrigin: 2
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1135312636352567175
@@ -2517,6 +2517,7 @@ Transform:
   - {fileID: 8399327567654451161}
   - {fileID: 4452454637603209295}
   - {fileID: 8050582811577350390}
+  - {fileID: 1411517743819936227}
   - {fileID: 7490149293003032435}
   m_Father: {fileID: 6579283653709203231}
   m_RootOrder: 4
@@ -2533,7 +2534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 806f0696300aeac44a0e17efee222854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLanguage: ru
+  currentLanguage: tr
   detectLanguage: 1
   defaultLanguage: 
   saveLoad: 1
@@ -3634,9 +3635,9 @@ GameObject:
   - component: {fileID: 3061899076656580126}
   - component: {fileID: 4680767661644442999}
   - component: {fileID: 2676054464008296669}
-  - component: {fileID: 6112802361614139159}
+  - component: {fileID: 7070625992307162237}
   m_Layer: 5
-  m_Name: TranslateText
+  m_Name: NumberWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3659,7 +3660,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 151.4, y: 250}
+  m_AnchoredPosition: {x: 156.79904, y: 250}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4680767661644442999
@@ -3677,13 +3678,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3105012983649512096}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.8051772, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.8051772, b: 1, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -3694,30 +3695,36 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 202058dc7ca65f749bcf3ad07974a3fd, type: 3}
     m_FontSize: 14
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 14
-    m_MaxSize: 108
+    m_MaxSize: 85
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0412\u043E\u043B\u043D\u0430"
---- !u!114 &6112802361614139159
-MonoBehaviour:
+  m_Text: 
+--- !u!95 &7070625992307162237
+Animator:
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3105012983649512096}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ee4021ce59f313499a5cab041f02aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  translationName: Wave
-  FallbackText: "\u0412\u043E\u043B\u043D\u0430"
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 939a17d0c0510b344bc147c24514915f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3150467661772650118
 GameObject:
   m_ObjectHideFlags: 0
@@ -4707,6 +4714,7 @@ GameObject:
   - component: {fileID: 4621616745668469604}
   - component: {fileID: 8469082915889028299}
   - component: {fileID: 3180598146756680714}
+  - component: {fileID: 7579528159147016075}
   m_Layer: 5
   m_Name: WaveText
   m_TagString: Untagged
@@ -4731,8 +4739,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 250}
-  m_SizeDelta: {x: 350, y: 100}
+  m_AnchoredPosition: {x: -54, y: 250}
+  m_SizeDelta: {x: 240, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4621616745668469604
 CanvasRenderer:
@@ -4775,7 +4783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.8051772, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.8051772, b: 1, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4795,7 +4803,21 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: Dalga
+--- !u!114 &7579528159147016075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3689009063174621891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ee4021ce59f313499a5cab041f02aba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  translationName: Wave
+  FallbackText: Dalga
 --- !u!1 &3890711590278403334
 GameObject:
   m_ObjectHideFlags: 0
@@ -6338,6 +6360,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   translationName: Weapon
   FallbackText: "\u041E\u0440\u0443\u0436\u0438\u0435"
+--- !u!1 &5780908879299607088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1411517743819936227}
+  - component: {fileID: 5612941288120980394}
+  m_Layer: 0
+  m_Name: Loading
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1411517743819936227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5780908879299607088}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -960, y: -540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4084762235943934251}
+  m_RootOrder: 26
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5612941288120980394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5780908879299607088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: en
+    Text: Loading...
+    Object: {fileID: 0}
+  - Language: tr
+    Text: "Y\xFCkleniyor..."
+    Object: {fileID: 0}
+  - Language: ru
+    Text: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430..."
+    Object: {fileID: 0}
 --- !u!1 &5860283290324958894
 GameObject:
   m_ObjectHideFlags: 0
@@ -9961,7 +10038,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6579283653022200755}
-  - component: {fileID: 8421956056621265017}
+  - component: {fileID: 6171221665961670791}
   m_Layer: 5
   m_Name: Main UI
   m_TagString: Untagged
@@ -9998,7 +10075,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8421956056621265017
+--- !u!114 &6171221665961670791
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10007,7 +10084,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6579283653022200754}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc40e863bae8e9b44927ba85d46a7775, type: 3}
+  m_Script: {fileID: 11500000, guid: 56fef396ada3b6540b1195655772b203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6579283653053810677
@@ -15489,7 +15566,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4084762235943934251}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2515798682630155696
 MonoBehaviour:
@@ -16581,9 +16658,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cd5aede2eb4ff946b0ea0237dead913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameWave: {fileID: 3180598146756680714}
-  _translateText: {fileID: 2676054464008296669}
-  _animator: {fileID: 8469082915889028299}
+  _numberWave: {fileID: 2676054464008296669}
+  _waveText: {fileID: 7579528159147016075}
+  _animatorTextWave: {fileID: 8469082915889028299}
+  _animatorNumberWave: {fileID: 7070625992307162237}
 --- !u!1 &8748207248096969542
 GameObject:
   m_ObjectHideFlags: 0

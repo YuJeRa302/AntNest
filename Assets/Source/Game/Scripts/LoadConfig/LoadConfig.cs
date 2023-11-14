@@ -15,7 +15,6 @@ public class LoadConfig : ScriptableObject
     [SerializeField] private bool _isFirstSession;
     [SerializeField] private int _playerScore;
 
-    private List<Achievements> _achievements;
     private Levels _loadLevel;
     private string _language;
     private Sprite _languageSprite;
@@ -28,7 +27,6 @@ public class LoadConfig : ScriptableObject
     public int PlayerLevel => _playerLevel;
     public int PlayerScore => _playerScore;
     public int PlayerExperience => _playerExperience;
-    public List<Achievements> Achievements => _achievements;
     public string Language => _language;
     public Sprite LanguageSprite => _languageSprite;
     public Dictionary<int, bool> PlayerLevels => _playerLevels;
@@ -67,11 +65,6 @@ public class LoadConfig : ScriptableObject
     public void UpdateListPlayerLevels(Dictionary<int, bool> playerLevels)
     {
         _playerLevels = playerLevels;
-    }
-
-    public void SetPlayerAchievements(List<Achievements> achievements)
-    {
-        _achievements = new List<Achievements>(achievements);
     }
 
     public void SetSessionState(bool state)

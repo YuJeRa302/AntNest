@@ -6,7 +6,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"D:/Project(Unity)/GitHub/TestProject/testLoad1;D:/Project(Unity)/GitHub/TestProject/test;D:/Project(Unity)/GitHub/TestProject/test7;D:/Project(Unity)/GitHub/TestProject/test6;D:/Project(Unity)/GitHub/TestProject/test5;D:/Project(Unity)/GitHub/TestProject/test4;D:/Project(Unity)/GitHub/TestProject/test3;D:/Project(Unity)/GitHub/TestProject/test2;D:/Project(Unity)/GitHub/TestProject/test1;D:/Project(Unity)/GitHub/TestProject/test11\"}"
+                "value": "{\"m_Value\":\"D:/Project(Unity)/GitHub/TestProject/test3;D:/Project(Unity)/GitHub/TestProject/AntHill1;D:/Project(Unity)/GitHub/TestProject/test2;D:/Project(Unity)/GitHub/TestProject/testReq3;D:/Project(Unity)/GitHub/TestProject/testReq2;D:/Project(Unity)/GitHub/TestProject/testReq;D:/Project(Unity)/GitHub/TestProject/testLoad4;D:/Project(Unity)/GitHub/TestProject/testLoad3;D:/Project(Unity)/GitHub/TestProject/testLoad2;D:/Project(Unity)/GitHub/TestProject/testLoad1\"}"
             },
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",

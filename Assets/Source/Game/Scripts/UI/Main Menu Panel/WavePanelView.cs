@@ -4,10 +4,10 @@ using UnityEngine.UI;
 public class WavePanelView : MonoBehaviour
 {
     [Header("[Name Wave]")]
-    [SerializeField] private Text _nameWave;
-    [SerializeField] private Text _translateText;
+    [SerializeField] private Text _numberWave;
     [Header("[Animator]")]
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _animatorTextWave;
+    [SerializeField] private Animator _animatorNumberWave;
 
     enum TransitionParametr
     {
@@ -16,12 +16,14 @@ public class WavePanelView : MonoBehaviour
 
     public void SetWaveName(int numberWave)
     {
-        SetText(_nameWave, _translateText, numberWave, _animator);
+        SetText(numberWave);
     }
 
-    private void SetText(Text waveText, Text translateText, int numberWave, Animator animator)
+    private void SetText(int numberWave)
     {
-        waveText.text = translateText.text + " " + ++numberWave;
-        animator.SetTrigger(TransitionParametr.Take.ToString());
+        var wave = ++numberWave;
+        _numberWave.text = wave.ToString();
+        _animatorTextWave.SetTrigger(TransitionParametr.Take.ToString());
+        _animatorNumberWave.SetTrigger(TransitionParametr.Take.ToString());
     }
 }

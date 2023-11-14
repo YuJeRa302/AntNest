@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1747327917629962778}
   - component: {fileID: 7194938797419932005}
   - component: {fileID: 6852391464825710431}
+  - component: {fileID: 360250615523316195}
   m_Layer: 0
   m_Name: LevelScripts
   m_TagString: Untagged
@@ -50,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelSpawn: {fileID: 0}
   _runeSpawn: {fileID: 0}
-  _levelUI: {fileID: 0}
+  _levelView: {fileID: 0}
   _wavePanelView: {fileID: 0}
   _pauseMenu: {fileID: 1747327917629962773}
 --- !u!114 &1747327917629962773
@@ -66,14 +67,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pauseMenuView: {fileID: 0}
+  _pauseMenuSound: {fileID: 0}
   _rewardView: {fileID: 0}
   _levelParameters: {fileID: 1747327917629962775}
-  _ambientSounds: {fileID: 0}
-  _buttonFX: {fileID: 0}
   _canvasLoader: {fileID: 0}
   _saveProgress: {fileID: 7194938797419932005}
-  _mainUiView: {fileID: 0}
   _rewards: {fileID: 6852391464825710431}
+  _playerInterfaceView: {fileID: 0}
   _leaderboard: Leaderboard
 --- !u!114 &1747327917629962778
 MonoBehaviour:
@@ -116,6 +116,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coinMultiplier: 2
   _levelParameters: {fileID: 1747327917629962775}
-  _audioSource: {fileID: 0}
-  _audioClipWin: {fileID: 8300000, guid: a45114329ea718945b70c60591a18fb1, type: 3}
-  _audioClipLose: {fileID: 8300000, guid: c590f093ddf2c3742b3a200d759d4743, type: 3}
+  _rewardsSound: {fileID: 0}
+--- !u!114 &360250615523316195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747327917629962774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab26010e17f86dc4e9655908aa344293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

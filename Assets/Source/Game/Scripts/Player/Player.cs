@@ -11,8 +11,6 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerMovement _playerMovement;
     [Header("[Player Equipment]")]
     [SerializeField] private PlayerEquipment _playerEquipment;
-    [Header("[Player Achievements]")]
-    [SerializeField] private PlayerAchievements _playerAchievements;
     [Header("[Player Effects]")]
     [SerializeField] private PlayerEffects _playerEffects;
     [Header("[Player Sound]")]
@@ -30,7 +28,6 @@ public class Player : MonoBehaviour
     public int PlayerMaxHealth => _maxHealth;
     public int PlayerCurrentHealth => _currentHealth;
     public PlayerStats PlayerStats => _playerStats;
-    public PlayerAchievements PlayerAchievements => _playerAchievements;
     public PlayerEquipment PlayerEquipment => _playerEquipment;
     public PlayerEffects PlayerEffects => _playerEffects;
     public PlayerSound PlayerSounds => _playerSound;
@@ -55,10 +52,15 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (_currentHealth > 0)
+        if (_currentHealth > _minHealth)
         {
-            if (_playerStats.AbilityArmor > 0) _playerStats.UpdateArmor();
-            _currentHealth = Mathf.Clamp(_currentHealth - (damage - _playerStats.PlayerArmor), _minHealth, _maxHealth);
+            var currentDamage = damage - _playerStats.PlayerArmor;
+
+            if (currentDamage < _minHealth) currentDamage = _minHealth;
+
+            if (_playerStats.AbilityArmor > _minHealth) _playerStats.UpdateArmor();
+
+            _currentHealth = Mathf.Clamp(_currentHealth - currentDamage, _minHealth, _maxHealth);
             _healthBarUpdate.Invoke(_currentHealth);
         }
         else _playerDie.Invoke();

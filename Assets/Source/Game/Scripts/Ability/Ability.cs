@@ -33,7 +33,7 @@ public abstract class Ability : MonoBehaviour
 
     private readonly string _maxLevel = "MAX";
 
-    private IEnumerator _delay;
+    private Coroutine _delay;
 
     public ParticleSystem Effect => _effect;
     public Sprite AbilityIcon => _sprite;
@@ -50,7 +50,7 @@ public abstract class Ability : MonoBehaviour
 
     public void Buy()
     {
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
         UpdateAbility(++_currentLevel);
         _isBayed = true;
     }
@@ -92,31 +92,18 @@ public abstract class Ability : MonoBehaviour
     {
         SetAbilityParameters(delay);
 
-        if (_delay != null)
-        {
-            StopCoroutine(_delay);
-        }
+        if (_delay != null) StopCoroutine(_delay);
 
-        _delay = Delay(delay);
-        StartCoroutine(_delay);
+        _delay = StartCoroutine(Delay(delay));
     }
 
     private void Start()
     {
-        _delay = Delay(_currentDelay);
+        _delay = StartCoroutine(Delay(_currentDelay));
         Player = FindObjectOfType<Player>();
     }
 
     private IEnumerator Delay(float delay)
-    {
-        StartCoroutine(CoolDownAnimation(delay));
-        yield return new WaitForSeconds(delay);
-
-        StopCoroutine(CoolDownAnimation(delay));
-        UpdateAbility(false, 0);
-    }
-
-    private IEnumerator CoolDownAnimation(float delay)
     {
         float animationTime = delay;
 
@@ -126,6 +113,8 @@ public abstract class Ability : MonoBehaviour
             _coolDown.fillAmount = animationTime / delay;
             yield return null;
         }
+
+        UpdateAbility(false, 0);
     }
 
     private void UpdateAbility(bool state, float delay)

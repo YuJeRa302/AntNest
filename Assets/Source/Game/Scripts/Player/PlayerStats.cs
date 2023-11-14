@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     [Header("[PlayerUI]")]
-    [SerializeField] private PlayerUI _playerUI;
+    [SerializeField] private PlayerView _playerUI;
     [Header("[Wallet]")]
     [SerializeField] private Wallet _wallet;
     [Header("[Player]")]
@@ -16,11 +16,11 @@ public class PlayerStats : MonoBehaviour
     [Header("[Healing Value]")]
     [SerializeField] private int _healing = 20;
 
-    private readonly int _maxExperience = 100;
-    private ParticleSystem _abilityEffect;
     private readonly Dictionary<int, int> _levels = new();
+    private readonly int _maxExperience = 100;
     private readonly int _minPoints = 0;
-    private int _abilityPoints = 2;
+
+    private int _abilityPoints = 0;
     private int _abilityArmor = 0;
     private int _abilityDamage = 0;
     private int _currentLevel = 0;
@@ -28,6 +28,7 @@ public class PlayerStats : MonoBehaviour
     private int _currentExperience = 0;
     private int _hitCount;
     private int _score = 0;
+    private ParticleSystem _abilityEffect;
 
     public float Speed => _speed;
     public int PlayerLevel => _currentLevel;
@@ -48,6 +49,7 @@ public class PlayerStats : MonoBehaviour
         _currentExperience = (experience == 0) ? _currentExperience : experience;
         _score = score;
         UpdatePlayerLevel(_currentLevel, value, _currentExperience, _currentHealthPotion);
+        GetNewPointAblility(level);
     }
 
     public void OnEnemyDie(Enemy enemy)
@@ -146,7 +148,6 @@ public class PlayerStats : MonoBehaviour
             {
                 var difference = _currentExperience - value;
                 _currentLevel++;
-                _abilityPoints++;
                 _currentExperience = difference;
                 _playerUI.ChangeLevel(_currentLevel);
                 _levels.TryGetValue(_currentLevel, out int currentValue);
@@ -166,5 +167,13 @@ public class PlayerStats : MonoBehaviour
             }
         }
         else return;
+    }
+
+    private void GetNewPointAblility(int level)
+    {
+        for (int i = 0; i < level; i++)
+        {
+            ++_abilityPoints;
+        }
     }
 }

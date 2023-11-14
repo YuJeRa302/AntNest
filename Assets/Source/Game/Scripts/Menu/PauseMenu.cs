@@ -6,21 +6,20 @@ public class PauseMenu : MonoBehaviour
 {
     [Header("[PauseMenuView]")]
     [SerializeField] private PauseMenuView _pauseMenuView;
+    [Header("[PauseMenuSound]")]
+    [SerializeField] private PauseMenuSound _pauseMenuSound;
     [Header("[RewardView]")]
     [SerializeField] private RewardView _rewardView;
     [Header("[LevelParameters]")]
     [SerializeField] private LevelParameters _levelParameters;
-    [Header("[Sound]")]
-    [SerializeField] private AudioSource _ambientSounds;
-    [SerializeField] private AudioSource _buttonFX;
     [Header("[CanvasLoader]")]
     [SerializeField] private CanvasLoader _canvasLoader;
     [Header("[SaveProgress]")]
     [SerializeField] private SaveProgress _saveProgress;
-    [Header("[MainUI]")]
-    [SerializeField] private MainUiView _mainUiView;
     [Header("[Rewards]")]
     [SerializeField] private Rewards _rewards;
+    [Header("[PlayerInterfaceView]")]
+    [SerializeField] private PlayerInterfaceView _playerInterfaceView;
     [Header("[Name Leaderboard]")]
     [SerializeField] private string _leaderboard;
 
@@ -40,7 +39,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
-        _mainUiView.gameObject.SetActive(true);
+        _playerInterfaceView.gameObject.SetActive(true);
         _pauseMenuView.ResumeGame();
         SetTimeScale(_resumeTimeValue);
         SetActiveStateEntity(true);
@@ -48,7 +47,7 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseGame()
     {
-        _mainUiView.gameObject.SetActive(false);
+        _playerInterfaceView.gameObject.SetActive(false);
         _pauseMenuView.PauseGame();
         SetTimeScale(_pauseTimeValue);
         SetActiveStateEntity(false);
@@ -67,7 +66,7 @@ public class PauseMenu : MonoBehaviour
 
     public void SetSoundValue()
     {
-        var state = _ambientSounds.mute != true;
+        var state = _pauseMenuSound.AudioSourceAmbient.mute != true;
         SetStateMuteButton(state);
     }
 
@@ -78,8 +77,7 @@ public class PauseMenu : MonoBehaviour
 
     private void SetStateMuteButton(bool state)
     {
-        _ambientSounds.mute = state;
-        _buttonFX.mute = state;
+        _pauseMenuSound.SetStateMute(state);
         _pauseMenuView.SetMuteButtonImage(state);
     }
 

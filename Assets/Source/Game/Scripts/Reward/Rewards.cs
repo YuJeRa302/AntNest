@@ -7,20 +7,15 @@ public class Rewards : MonoBehaviour
     [SerializeField] private int _coinMultiplier = 2;
     [Header("[Level Parameters]")]
     [SerializeField] private LevelParameters _levelParameters;
-    [Header("[Audio Source]")]
-    [SerializeField] private AudioSource _audioSource;
-    [Header("[Audio Clip]")]
-    [SerializeField] private AudioClip _audioClipWin;
-    [SerializeField] private AudioClip _audioClipLose;
+    [Header("[Rewards Sound]")]
+    [SerializeField] private RewardsSound _rewardsSound;
 
     private Player _player;
-    private bool _isClosedFullScreenAd = false;
 
     public int CoinMultiplier => _coinMultiplier;
-    public bool IsClosedFullScreenAd => _isClosedFullScreenAd;
-    public AudioClip AudioClipWin => _audioClipWin;
-    public AudioClip AudioClipLose => _audioClipLose;
-    public AudioSource AudioSource => _audioSource;
+    public AudioClip AudioClipWin => _rewardsSound.AudioClipWin;
+    public AudioClip AudioClipLose => _rewardsSound.AudioClipLose;
+    public AudioSource AudioSource => _rewardsSound.AudioSource;
 
     public void OpenRewardAd(int reward)
     {

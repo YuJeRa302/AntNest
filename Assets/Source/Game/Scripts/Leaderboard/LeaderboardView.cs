@@ -44,6 +44,15 @@ public class LeaderboardView : MonoBehaviour
             Destroy(element);
         }
 
+        ClearContainer();
         _leaderboardElements = new List<LeaderboardElement>();
+    }
+
+    private void ClearContainer()
+    {
+        for (int i = 0; i < _container.transform.childCount; i++)
+        {
+            Destroy(_container.transform.GetChild(i).gameObject);
+        }
     }
 }

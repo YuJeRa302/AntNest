@@ -4,26 +4,13 @@ using Agava.YandexGames;
 public class SaveProgress : MonoBehaviour
 {
     private string _key = "antHill";
+    private SaveModel data = null;
 
     public void Save(string language, int playerCoins, int playerLevel, int playerExperience, int score, bool isFirstSession, int levelId, bool levelState)
     {
-        string _hashKey = null;
-        SaveModel data = null;
-
-        if (PlayerAccount.IsAuthorized == true)
-        {
-            PlayerAccount.GetCloudSaveData((data) => _key = data);
-            data = JsonUtility.FromJson<SaveModel>(_key);
-        }
-        else
-        {
-            if (UnityEngine.PlayerPrefs.HasKey(_key))
-            {
-                _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
-                data = JsonUtility.FromJson<SaveModel>(_hashKey);
-            }
-            else return;
-        }
+#if UNITY_WEBGL && !UNITY_EDITOR
+if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+#endif
 
         SaveModel newData = new()
         {
@@ -64,25 +51,10 @@ public class SaveProgress : MonoBehaviour
 
     public void GetLoad(LoadConfig loadConfig)
     {
-        string _hashKey = null;
         SaveModel data = null;
-
-        if (PlayerAccount.IsAuthorized == true)
-        {
-            PlayerAccount.GetCloudSaveData((data) => _key = data);
-
-            if (_key != null) data = JsonUtility.FromJson<SaveModel>(_key);
-            else return;
-        }
-        else
-        {
-            if (UnityEngine.PlayerPrefs.HasKey(_key))
-            {
-                _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
-                data = JsonUtility.FromJson<SaveModel>(_hashKey);
-            }
-            else return;
-        }
+#if UNITY_WEBGL && !UNITY_EDITOR
+if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+#endif
 
         if (data != null)
         {
@@ -97,5 +69,20 @@ public class SaveProgress : MonoBehaviour
     {
         loadConfig.SetCurrentLanguage(language);
         loadConfig.SetPlayerParameters(playerCoins, playerLevel, playerExperience, score, isFirstSession);
+    }
+
+    private void OnSuccessLoad(string json)
+    {
+        data = JsonUtility.FromJson<SaveModel>(json);
+    }
+
+    private void OnErrorLoad(string message)
+    {
+        if (UnityEngine.PlayerPrefs.HasKey(_key))
+        {
+            string _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
+            data = JsonUtility.FromJson<SaveModel>(_hashKey);
+        }
+        else return;
     }
 }

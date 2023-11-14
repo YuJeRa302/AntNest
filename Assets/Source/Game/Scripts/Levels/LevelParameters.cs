@@ -7,7 +7,7 @@ public class LevelParameters : MonoBehaviour
     [Header("[Runes Spawn]")]
     [SerializeField] private RuneSpawn _runeSpawn;
     [Header("[LevelUI]")]
-    [SerializeField] private LevelUI _levelUI;
+    [SerializeField] private LevelView _levelView;
     [Header("[WavePanelView]")]
     [SerializeField] private WavePanelView _wavePanelView;
     [Header("[PauseMenu]")]
@@ -43,7 +43,7 @@ public class LevelParameters : MonoBehaviour
         _countExp += enemy.ExperienceReward;
         _player.PlayerStats.OnEnemyDie(enemy);
         _player.PlayerStats.UpdatePlayerScore(enemy.Score);
-        _levelUI.UpdateEnemyKillCount(_countKillEnemy);
+        _levelView.UpdateEnemyKillCount(_countKillEnemy);
         _currentCountEnemy++;
         enemy.Dying -= OnEnemyDie;
         TrySpawnNextWave();
@@ -135,8 +135,11 @@ public class LevelParameters : MonoBehaviour
 
     private void LoadSceneUi()
     {
-        _levelUI.LoadLevelUi(_levels.NameScene, _levels.NameEnemy,
-            _levels.Sprite, _levels.Wave[0].EnemyPrefab.Sprite, _countKillEnemy);
+        _levelView.Initialized(_levels.NameScene,
+            _levels.NameEnemy,
+            _levels.Sprite,
+            _levels.Wave[0].EnemyPrefab.Sprite,
+            _countKillEnemy);
     }
 
     private void LoadPlayerStats()

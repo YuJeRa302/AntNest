@@ -51,9 +51,9 @@ public class ChangeLanguage : Panels
 
     private void OnInitialized()
     {
-        //#if UNITY_WEBGL && !UNITY_EDITOR
-        //        YandexGamesSdk.GameReady();
-        //#endif
+#if UNITY_WEBGL && !UNITY_EDITOR
+                YandexGamesSdk.GameReady();
+#endif
         if (_loadConfig.IsFirstSession == false)
         {
             gameObject.SetActive(_loadConfig.IsFirstSession);
