@@ -17,22 +17,6 @@ public class GuidPanel : Panels
     [Header("[Close Button]")]
     [SerializeField] private Button _closeButton;
 
-    private void OnEnable()
-    {
-        _playerButton.onClick.AddListener(ShowPlayerGuide);
-        _shopButton.onClick.AddListener(ShowShopGuide);
-        _enemyButton.onClick.AddListener(ShowEnemyGuide);
-        _closeButton.onClick.AddListener(Close);
-    }
-
-    private void OnDisable()
-    {
-        _playerButton.onClick.RemoveListener(ShowPlayerGuide);
-        _shopButton.onClick.RemoveListener(ShowShopGuide);
-        _enemyButton.onClick.RemoveListener(ShowEnemyGuide);
-        _closeButton.onClick.RemoveListener(Close);
-    }
-
     public void ShowPlayerGuide()
     {
         HideAllGuide();
@@ -55,6 +39,22 @@ public class GuidPanel : Panels
     {
         _menuPanel.gameObject.SetActive(true);
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        _playerButton.onClick.AddListener(ShowPlayerGuide);
+        _shopButton.onClick.AddListener(ShowShopGuide);
+        _enemyButton.onClick.AddListener(ShowEnemyGuide);
+        _closeButton.onClick.AddListener(Close);
+    }
+
+    private void OnDisable()
+    {
+        _playerButton.onClick.RemoveListener(ShowPlayerGuide);
+        _shopButton.onClick.RemoveListener(ShowShopGuide);
+        _enemyButton.onClick.RemoveListener(ShowEnemyGuide);
+        _closeButton.onClick.RemoveListener(Close);
     }
 
     private void HideAllGuide()

@@ -3,16 +3,10 @@ using UnityEngine;
 
 public class SceneLoader : MonoBehaviour, ISceneLoadHandler<LoadConfig>
 {
-    [Header("[Audio Source]")]
-    [SerializeField] private LevelSounds _levelSounds;
-    [SerializeField] private ButtonFX _buttonFX;
-    [Header("[LevelParameters]")]
-    [SerializeField] private LevelParameters _levelParameters;
+    [SerializeField] private LevelInizialisator _levelInizialisator;
 
     public void OnSceneLoaded(LoadConfig loadConfig)
     {
-        _levelParameters.Initialized(loadConfig);
-        _levelSounds.SetValueVolume(loadConfig.AmbientVolume);
-        _buttonFX.SetValueVolume(loadConfig.InterfaceVolume);
+        _levelInizialisator.Initialize(loadConfig);
     }
 }

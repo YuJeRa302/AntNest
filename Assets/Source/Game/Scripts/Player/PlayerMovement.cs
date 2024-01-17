@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private readonly float _maxVectorValue = 1f;
+    private readonly float _minVectorValue = 0.0f;
+    private readonly float _attackRate = 1.0f;
+
     [Header("[Controller]")]
     [SerializeField] private CharacterController _characterController;
     [Header("[Animator]")]
@@ -25,10 +29,6 @@ public class PlayerMovement : MonoBehaviour
     private bool _isAllowAttack = true;
     private IEnumerator _makeDamage;
 
-    private readonly float _maxVectorValue = 1f;
-    private readonly float _minVectorValue = 0.0f;
-    private readonly float _attackRate = 1.0f;
-
     enum TransitionParametr
     {
         Horizontal,
@@ -40,16 +40,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Attack()
     {
-        if (_isAllowAttack == true)
-        {
-            SetAttackParameters();
-        }
+        if (_isAllowAttack == true) SetAttackParameters();
         else return;
-    }
-
-    private void Start()
-    {
-        _speed = _player.PlayerStats.Speed;
     }
 
     private void Update()
@@ -57,12 +49,14 @@ public class PlayerMovement : MonoBehaviour
         Movement();
     }
 
+    private void Start()
+    {
+        _speed = _player.PlayerStats.Speed;
+    }
+
     private void OnDrawGizmosSelected()
     {
-        if (_attackPoint == null)
-        {
-            return;
-        }
+        if (_attackPoint == null) return;
         else Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
     }
 
@@ -76,9 +70,9 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetTrigger(TransitionParametr.Attack.ToString());
         _player.PlayerSounds.AudioSourceAxe.PlayOneShot(_player.PlayerSounds.AxeSound);
         yield return new WaitForSeconds(_attackRate);
-
         FindAttackedEnemy();
-        if (_player.PlayerStats.AbilityDamage > 0) _player.PlayerStats.UpdateDamage();
+
+        if (_player.PlayerStats.PlayerDamage.AbilityDamage > 0) _player.PlayerStats.PlayerDamage.UpdateWeapon();
         _isAllowAttack = true;
     }
 
@@ -106,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (Collider collider in coliderEnemy)
         {
-            if (collider.TryGetComponent<Enemy>(out Enemy enemy)) enemy.TakeDamage(_player.PlayerStats.PlayerDamage);
+            if (collider.TryGetComponent<Enemy>(out Enemy enemy)) enemy.TakeDamage(_player.PlayerStats.PlayerDamage.CurrentWeapon.Damage);
         }
     }
 

@@ -1,6 +1,6 @@
 using Lean.Localization;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class WeaponView : MonoBehaviour
@@ -20,8 +20,8 @@ public class WeaponView : MonoBehaviour
 
     private Weapon _weapon;
 
-    public event UnityAction<Weapon, WeaponView> BuyButtonClick;
-    public event UnityAction<Weapon> ChangeWeaponButtonClick;
+    public event Action<Weapon, WeaponView> BuyButtonClick;
+    public event Action<Weapon> ChangeWeaponButtonClick;
 
     public void Render(Weapon weapon)
     {
@@ -77,7 +77,7 @@ public class WeaponView : MonoBehaviour
 
     public void TryUnlockBuyButton(Player player)
     {
-        if (player.PlayerLevel >= _weapon.WeaponLevel) _buyButton.interactable = true;
+        if (player.PlayerStats.Level >= _weapon.WeaponLevel) _buyButton.interactable = true;
         else return;
     }
 }

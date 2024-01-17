@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public abstract class Weapon : MonoBehaviour
 {
@@ -19,7 +19,7 @@ public abstract class Weapon : MonoBehaviour
     public bool IsBayed => _isBayed;
     public int WeaponLevel => _weaponLevel;
 
-    public event UnityAction<bool> OnChangeState;
+    public event Action<bool> OnChangeState;
 
     public void Increase(int damage)
     {

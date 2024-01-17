@@ -21,7 +21,7 @@ public class PlayerSound : MonoBehaviour
     public AudioSource AudioPlayerState => _audioPlayerState;
     public AudioSource AudioPlayerAbility => _audioPlayerAbility;
 
-    public void Initialized(float value)
+    public void Initialize(float value)
     {
         _audioSourceAxe.volume = value;
         _audioStep.volume = value;

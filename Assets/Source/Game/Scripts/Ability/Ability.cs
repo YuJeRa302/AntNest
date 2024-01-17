@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public abstract class Ability : MonoBehaviour
 {
+    protected Player Player;
+    protected bool IsUseAbility = false;
+
+    private readonly string _maxLevel = "MAX";
+
     [Header("[Ability View]")]
     [SerializeField] private Sprite _sprite;
     [SerializeField] private Sprite _abilityValueSprite;
@@ -28,11 +33,7 @@ public abstract class Ability : MonoBehaviour
     [Header("[Sound]")]
     [SerializeField] private AudioClip _sound;
 
-    protected Player Player;
-    protected bool IsUseAbility = false;
-
-    private readonly string _maxLevel = "MAX";
-
+    private float _animationTime;
     private Coroutine _delay;
 
     public ParticleSystem Effect => _effect;
@@ -43,10 +44,11 @@ public abstract class Ability : MonoBehaviour
     public float CurrentDelay => _currentDelay;
     public int CurrentAbilityValue => _currentAbilityValue;
     public int CurrentLevel => _currentLevel;
+    public int MaxLevel => _abilityLevels.Count;
     public bool IsBayed => _isBayed;
-    public List<AbilityLevel> AbilityLevels => _abilityLevels;
     public string Description => _description;
     public string Name => _name;
+    public float AnimationTime => _animationTime;
 
     public void Buy()
     {
@@ -86,15 +88,23 @@ public abstract class Ability : MonoBehaviour
         }
     }
 
-    public virtual void Use() { }
+    public void ResumeCooldown(float delay)
+    {
+        if (gameObject.activeSelf == true)
+        {
+            if (_delay != null) StopCoroutine(_delay);
+
+            _delay = StartCoroutine(Delay(delay));
+        }
+        else return;
+    }
+
+    protected virtual void Use() { }
 
     protected void ApplyAbility(float delay)
     {
         SetAbilityParameters(delay);
-
-        if (_delay != null) StopCoroutine(_delay);
-
-        _delay = StartCoroutine(Delay(delay));
+        ResumeCooldown(delay);
     }
 
     private void Start()
@@ -105,12 +115,12 @@ public abstract class Ability : MonoBehaviour
 
     private IEnumerator Delay(float delay)
     {
-        float animationTime = delay;
+        _animationTime = delay;
 
-        while (animationTime > 0)
+        while (_animationTime > 0)
         {
-            animationTime -= Time.deltaTime;
-            _coolDown.fillAmount = animationTime / delay;
+            _animationTime -= Time.deltaTime;
+            _coolDown.fillAmount = _animationTime / delay;
             yield return null;
         }
 

@@ -10600,7 +10600,7 @@ MonoBehaviour:
   _enemy: {fileID: 2428827483349715505}
   _id: 4
   _level: 4
-  _damage: 9
+  _damage: 13
   _health: 350
   _goldReward: 1000
   _experienceReward: 200

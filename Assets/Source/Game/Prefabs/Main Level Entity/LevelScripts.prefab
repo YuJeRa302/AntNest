@@ -9,12 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1747327917629962772}
-  - component: {fileID: 1747327917629962775}
-  - component: {fileID: 1747327917629962773}
   - component: {fileID: 1747327917629962778}
+  - component: {fileID: 4778112847805690482}
+  - component: {fileID: 7297858956163358945}
   - component: {fileID: 7194938797419932005}
-  - component: {fileID: 6852391464825710431}
   - component: {fileID: 360250615523316195}
+  - component: {fileID: 7355126008103609782}
+  - component: {fileID: 972409558029132792}
   m_Layer: 0
   m_Name: LevelScripts
   m_TagString: Untagged
@@ -37,44 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1747327917629962775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747327917629962774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b16da956fbad6164ebeec8065c0e11c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _levelSpawn: {fileID: 0}
-  _runeSpawn: {fileID: 0}
-  _levelView: {fileID: 0}
-  _wavePanelView: {fileID: 0}
-  _pauseMenu: {fileID: 1747327917629962773}
---- !u!114 &1747327917629962773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747327917629962774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 421857d955565664dab9a48d43ce22b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pauseMenuView: {fileID: 0}
-  _pauseMenuSound: {fileID: 0}
-  _rewardView: {fileID: 0}
-  _levelParameters: {fileID: 1747327917629962775}
-  _canvasLoader: {fileID: 0}
-  _saveProgress: {fileID: 7194938797419932005}
-  _rewards: {fileID: 6852391464825710431}
-  _playerInterfaceView: {fileID: 0}
-  _leaderboard: Leaderboard
 --- !u!114 &1747327917629962778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,9 +50,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b56c178097ca748b35c0bacac3e896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelSounds: {fileID: 0}
-  _buttonFX: {fileID: 0}
-  _levelParameters: {fileID: 1747327917629962775}
+  _levelInizialisator: {fileID: 4778112847805690482}
+--- !u!114 &4778112847805690482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747327917629962774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7febc4bf3da14394c81f6a4aa98a38c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelObserver: {fileID: 7297858956163358945}
+  _soundController: {fileID: 0}
+  _levelView: {fileID: 0}
+--- !u!114 &7297858956163358945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747327917629962774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7b0a879d82a154a98c9ae1a804b675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemySpawner: {fileID: 0}
+  _saveProgress: {fileID: 0}
+  _player: {fileID: 0}
+  _panels: []
+  _soundButton: {fileID: 0}
+  _pauseGameButton: {fileID: 0}
+  _resumeGameButton: {fileID: 0}
+  _closeGameButton: {fileID: 0}
 --- !u!114 &7194938797419932005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,21 +98,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9de89b1eb794cca4d9ca50d333352a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6852391464825710431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1747327917629962774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fdb790aee58e2943a7f45a74d23080c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _coinMultiplier: 2
-  _levelParameters: {fileID: 1747327917629962775}
-  _rewardsSound: {fileID: 0}
 --- !u!114 &360250615523316195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,3 +110,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab26010e17f86dc4e9655908aa344293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7355126008103609782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747327917629962774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b140473e666be04f9fb3b922917ec61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnPoint: {fileID: 0}
+  _delayEnemySpawn: 15
+  _levelObserver: {fileID: 0}
+--- !u!114 &972409558029132792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747327917629962774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 983bd13c9d34b904b923c96ff866d022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ambientAudioSource: {fileID: 0}
+  _interfaceAudioSource: {fileID: 0}
+  _levelObserver: {fileID: 7297858956163358945}

@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class RuneSpawn : MonoBehaviour
 {
+    private readonly System.Random rnd = new();
+    private readonly Vector3 _fixRotation = new(-90, 0, 0);
+
     [Header("[Spawn Position]")]
     [SerializeField] private Transform[] _position;
     [Header("[List Runes]")]
     [SerializeField] private Rune[] _listRunes;
 
-    private readonly System.Random rnd = new();
-    private readonly Vector3 _fixRotation = new(-90, 0, 0);
-    
-    public void Initialized()
+    public void Initialize()
     {
         var childrenTransform = gameObject.GetComponentInChildren<Transform>();
         _position = new Transform[childrenTransform.childCount];

@@ -1,6 +1,6 @@
 using Lean.Localization;
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ArmorView : MonoBehaviour
@@ -20,8 +20,8 @@ public class ArmorView : MonoBehaviour
 
     private Armor _armor;
 
-    public event UnityAction<Armor, ArmorView> BuyButtonClick;
-    public event UnityAction<Armor> ChangeArmorButtonClick;
+    public event Action<Armor, ArmorView> BuyButtonClick;
+    public event Action<Armor> ChangeArmorButtonClick;
 
     public void Render(Armor armor)
     {
@@ -77,7 +77,7 @@ public class ArmorView : MonoBehaviour
 
     public void TryUnlockBuyButton(Player player)
     {
-        if (player.PlayerStats.PlayerLevel >= _armor.ArmorLevel) _buyButton.interactable = true;
+        if (player.PlayerStats.Level >= _armor.ArmorLevel) _buyButton.interactable = true;
         else return;
     }
 }

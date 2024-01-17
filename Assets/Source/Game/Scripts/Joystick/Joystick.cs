@@ -4,15 +4,18 @@ using UnityEngine.UI;
 
 public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
-    private Image _joystickBackgorund;
-    private Image _joystick;
-    private Vector2 _inputVector;
+    private readonly string _axisHorizontal = "Horizontal";
+    private readonly string _axisVertical = "Vertical";
+    private readonly int _nullValue = 0;
+    private readonly int _multiplier = 2;
+    private readonly float _defaultValueMagnitude = 1.0f;
 
-    private void Start()
-    {
-        _joystickBackgorund = GetComponent<Image>();
-        _joystick = transform.GetChild(0).GetComponent<Image>();
-    }
+    [Header("[JoystickBackgorund;]")]
+    [SerializeField] private Image _joystickBackgorund;
+    [Header("[Joystick]")]
+    [SerializeField] private Image _joystick;
+
+    private Vector2 _inputVector;
 
     public virtual void OnPointerDown(PointerEventData pointerEventData)
     {
@@ -31,19 +34,19 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
         {
             position.x /= _joystickBackgorund.rectTransform.sizeDelta.x;
             position.y /= _joystickBackgorund.rectTransform.sizeDelta.y;
-            _inputVector = new Vector2(position.x * 2, position.y * 2);
-            _inputVector = (_inputVector.magnitude > 1.0f) ? _inputVector.normalized : _inputVector;
-            _joystick.rectTransform.anchoredPosition = new Vector2(_inputVector.x * (_joystickBackgorund.rectTransform.sizeDelta.x / 2), _inputVector.y * (_joystickBackgorund.rectTransform.sizeDelta.y / 2));
+            _inputVector = new Vector2(position.x * _multiplier, position.y * _multiplier);
+            _inputVector = (_inputVector.magnitude > _defaultValueMagnitude) ? _inputVector.normalized : _inputVector;
+            _joystick.rectTransform.anchoredPosition = new Vector2(_inputVector.x * (_joystickBackgorund.rectTransform.sizeDelta.x / _multiplier), _inputVector.y * (_joystickBackgorund.rectTransform.sizeDelta.y / _multiplier));
         }
     }
 
     public float GetHorizontalValue()
     {
-        return _inputVector.x != 0 ? _inputVector.x : Input.GetAxis("Horizontal");
+        return _inputVector.x != _nullValue ? _inputVector.x : Input.GetAxis(_axisHorizontal);
     }
 
     public float GetVerticalValue()
     {
-        return _inputVector.y != 0 ? _inputVector.y : Input.GetAxis("Vertical");
+        return _inputVector.y != _nullValue ? _inputVector.y : Input.GetAxis(_axisVertical);
     }
 }

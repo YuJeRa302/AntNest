@@ -3,32 +3,48 @@ using Agava.WebUtility;
 
 public class FocusObserver : MonoBehaviour
 {
+    private readonly float _pauseValue = 0;
+    private readonly float _resumeValue = 1f;
+
     private void OnEnable()
     {
-        Application.focusChanged += OnInBackgroundChange;
-        WebApplication.InBackgroundChangeEvent += OnInBackgroundChange;
+        Application.focusChanged += OnInBackgroundChangeApp;
+        WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeWeb;
     }
 
     private void OnDisable()
     {
-        Application.focusChanged -= OnInBackgroundChange;
-        WebApplication.InBackgroundChangeEvent -= OnInBackgroundChange;
+        Application.focusChanged -= OnInBackgroundChangeApp;
+        WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeWeb;
     }
 
-    private void OnInBackgroundChange(bool inBackground)
+    private void OnInBackgroundChangeApp(bool inApp)
     {
-        MuteSound(inBackground);
-        PauseGame(inBackground);
+        ChangeFocus(inApp);
     }
 
-    private void MuteSound(bool value)
+    private void OnInBackgroundChangeWeb(bool inBackground)
     {
-        AudioListener.pause = value;
-        AudioListener.volume = value ? 0f : 1f;
+        ChangeFocus(!inBackground);
     }
 
-    private void PauseGame(bool value)
+    private void ChangeFocus(bool state)
     {
-        Time.timeScale = value ? 0 : 1;
+        if (state == true) ResumeGame();
+        else PauseGame();
+    }
+
+    private void PauseGame()
+    {
+        AudioListener.pause = true;
+        AudioListener.volume = _pauseValue;
+        Time.timeScale = _pauseValue;
+    }
+
+    private void ResumeGame()
+    {
+        AudioListener.pause = false;
+        AudioListener.volume = _resumeValue;
+        Time.timeScale = _resumeValue;
     }
 }

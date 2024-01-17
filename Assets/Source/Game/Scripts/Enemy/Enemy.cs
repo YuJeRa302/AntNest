@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
 public abstract class Enemy : EnemyMovement
 {
+    private readonly int _minHealth = 0;
+    private readonly int _delayDestroy = 1;
+
     [Header("[Enemy Stats]")]
     [SerializeField] private int _id;
     [SerializeField] private int _level;
@@ -22,15 +25,8 @@ public abstract class Enemy : EnemyMovement
     [Header("[Enemy Sound]")]
     [SerializeField] private EnemySound _enemySound;
 
-    private readonly int _minHealth = 0;
-    private readonly UnityEvent<int> _healthBarUpdate = new();
-    private readonly UnityEvent<Enemy> _die = new();
-    private readonly int _delayDestroy = 1;
-
-    public int Id => _id;
     public int Level => _level;
     public int Damage => _damage;
-    public float Speed => _speed;
     public int Health => _health;
     public int GoldReward => _goldReward;
     public int ExperienceReward => _experienceReward;
@@ -42,21 +38,15 @@ public abstract class Enemy : EnemyMovement
     public string TagEnemy => _tagName;
     public EnemyView EnemyView => _enemyView;
 
-    public event UnityAction<int> ChangedHealth
-    {
-        add => _healthBarUpdate.AddListener(value);
-        remove => _healthBarUpdate.RemoveListener(value);
-    }
 
-    public event UnityAction<Enemy> Dying
-    {
-        add => _die.AddListener(value);
-        remove => _die.RemoveListener(value);
-    }
+    public event Action<int> ChangedHealth;
+
+    public event Action<Enemy> Dying;
+
 
     public void Die()
     {
-        _die.Invoke(this);
+        Dying.Invoke(this);
         SetDyingParameters();
         Destroy(gameObject, _delayDestroy);
     }
@@ -65,7 +55,7 @@ public abstract class Enemy : EnemyMovement
     {
         TakeHit();
         _health = Mathf.Clamp(_health - damage, _minHealth, _health);
-        _healthBarUpdate.Invoke(Health);
+        ChangedHealth.Invoke(Health);
         _enemyView.Hit.Play();
     }
 

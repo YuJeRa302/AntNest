@@ -19,7 +19,7 @@ public class LeaderboardView : MonoBehaviour
         foreach (LeaderboardPlayer player in leaderboardPlayers)
         {
             LeaderboardElement leaderboardElementInstance = Instantiate(_leaderboardElementPrefab, _container);
-            leaderboardElementInstance.Initialized(player.Name, player.Rank, player.Score);
+            leaderboardElementInstance.Initialize(player.Name, player.Rank, player.Score);
 
             _leaderboardElements.Add(leaderboardElementInstance);
         }

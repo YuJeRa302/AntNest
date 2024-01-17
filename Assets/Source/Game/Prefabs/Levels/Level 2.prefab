@@ -51,4 +51,5 @@ MonoBehaviour:
   - {fileID: 2442752812101130733, guid: 64274c1384c801d41b9a3168d5732e77, type: 3}
   - {fileID: 2442752812101130733, guid: 1ed28bdfe7a82144094ebc27901330aa, type: 3}
   - {fileID: 2442752812101130733, guid: c86a5e0ba30af034e98af7781f8955a7, type: 3}
+  - {fileID: 2442752812101130733, guid: 75a3c440b7fa5cc49ade97819f20f37f, type: 3}
   _sprite: {fileID: 21300000, guid: faf3ed7d7729c56428cebc28749eb0db, type: 3}

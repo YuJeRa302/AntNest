@@ -3,17 +3,18 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    protected Player Target;
+    protected bool IsAttack = false;
+    protected bool IsDead = false;
+
+    private readonly float _delay = 1f;
+
     [Header("[Animator]")]
     [SerializeField] protected Animator Animator;
     [Header("[Enemy]")]
     [SerializeField] private Enemy _enemy;
 
-    protected Player Target;
-    protected bool IsAttack = false;
-    protected bool IsDead = false;
-
     private IEnumerator _makeDamage;
-    private readonly float _delay = 1f;
 
     enum TransitionParametr
     {
@@ -62,7 +63,7 @@ public class EnemyMovement : MonoBehaviour
 
         while (IsAttack == true)
         {
-            player.TakeDamage(_enemy.Damage);
+            player.PlayerStats.PlayerHealth.TakeDamage(_enemy.Damage);
             yield return waitForSeconds;
         }
     }
@@ -83,7 +84,6 @@ public class EnemyMovement : MonoBehaviour
             if (collision.TryGetComponent<Player>(out Player player))
             {
                 Animator.Play(TransitionParametr.Attack.ToString());
-
                 OnAttack(player);
             }
         }

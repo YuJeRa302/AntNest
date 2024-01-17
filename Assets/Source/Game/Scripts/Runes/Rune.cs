@@ -5,13 +5,10 @@ public class Rune : MonoBehaviour
     [Header("[Containers]")]
     [SerializeField] private ParticleSystem[] Particles;
     [SerializeField] private Runes rune;
-    [Header("[Audio Source]")]
     [SerializeField] private AudioSource _audioSource;
-    [Header("[Audio Clip]")]
     [SerializeField] private AudioClip _audioClip;
-
-    private readonly int _coins = 50;
-    private readonly int _healing = 20;
+    [SerializeField] private int _healing = 20;
+    [SerializeField] private int _coins = 50;
 
     enum Runes
     {
@@ -23,7 +20,7 @@ public class Rune : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Player player))
         {
-            if (player.PlayerCurrentHealth < player.PlayerMaxHealth || rune != Runes.Healing)
+            if (player.PlayerStats.PlayerHealth.CurrentHealth < player.PlayerStats.PlayerHealth.MaxHealth || rune != Runes.Healing)
             {
                 TakeRune(rune, player);
                 Destroy(gameObject, 0.38f);
@@ -44,10 +41,10 @@ public class Rune : MonoBehaviour
         switch (rune)
         {
             case Runes.Healing:
-                player.GetComponent<Player>().TakeHealRune(_healing);
+                player.PlayerStats.PlayerHealth.TakeHealRune(_healing);
                 break;
             case Runes.Gold:
-                player.GetComponent<Player>().Wallet.TakeCoin(_coins);
+                player.Wallet.TakeCoins(_coins);
                 break;
         }
     }

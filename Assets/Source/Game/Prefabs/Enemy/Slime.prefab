@@ -24540,8 +24540,8 @@ MonoBehaviour:
   _enemy: {fileID: 5093283100403709827}
   _id: 5
   _level: 5
-  _damage: 5
-  _health: 160
+  _damage: 20
+  _health: 200
   _goldReward: 85
   _experienceReward: 30
   _score: 100

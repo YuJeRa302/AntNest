@@ -31,16 +31,6 @@ public class EnemyView : MonoBehaviour
     public Image CoolDownImage => _coolDownImage;
     public Sprite CancelSprite => _cancelSprite;
 
-    private void Start()
-    {
-        Initialized();
-    }
-
-    private void LateUpdate()
-    {
-        transform.LookAt(_playerCamera.transform);
-    }
-
     public void SetSliderValue(int value)
     {
         _sliderHP.maxValue = value;
@@ -58,6 +48,16 @@ public class EnemyView : MonoBehaviour
         _level.text = _enemy.Level.ToString();
         _health.text = _enemy.Health.ToString();
         _image.sprite = _sprite;
+    }
+
+    private void Start()
+    {
+        Initialized();
+    }
+
+    private void LateUpdate()
+    {
+        transform.LookAt(_playerCamera.transform);
     }
 
     private void OnEnable()

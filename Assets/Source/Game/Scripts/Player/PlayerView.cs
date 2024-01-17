@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class PlayerView : MonoBehaviour
 {
+    private readonly string _nameExperienceParametr = "XP";
+    private readonly string _nameGoldParametr = "G";
+
     [Header("[Sliders]")]
     [SerializeField] private Slider _sliderHP;
     [SerializeField] private Slider _sliderXP;
@@ -21,22 +24,9 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private Text _playerDamage;
     [SerializeField] private Text _playerArmor;
 
-    private const string _nameExperienceParametr = "XP";
-    private const string _nameGoldParametr = "G";
-
     enum TransitionParametr
     {
         Take
-    }
-
-    private void OnEnable()
-    {
-        _player.ChangedHealth += OnChangeHealth;
-    }
-
-    private void OnDisable()
-    {
-        _player.ChangedHealth -= OnChangeHealth;
     }
 
     public void ChangeLevel(int value)
@@ -73,17 +63,27 @@ public class PlayerView : MonoBehaviour
 
     public void SetDefaultParameters(int maxValueSlider, int experience)
     {
-        _sliderHP.maxValue = _player.PlayerMaxHealth;
-        _sliderHP.value = _player.PlayerMaxHealth;
+        _sliderHP.maxValue = _player.PlayerStats.PlayerHealth.MaxHealth;
+        _sliderHP.value = _player.PlayerStats.PlayerHealth.MaxHealth;
         _sliderXP.maxValue = maxValueSlider;
         _sliderXP.value = experience;
-        UpdatePlayerStats(_player.PlayerStats.PlayerArmor, _player.PlayerStats.PlayerDamage);
+        UpdatePlayerStats();
     }
 
-    public void UpdatePlayerStats(int armor, int damage)
+    public void UpdatePlayerStats()
     {
-        _playerArmor.text = armor.ToString();
-        _playerDamage.text = damage.ToString();
+        _playerArmor.text = _player.PlayerStats.Armor.ToString();
+        _playerDamage.text = _player.PlayerStats.Daamge.ToString();
+    }
+
+    private void OnEnable()
+    {
+        _player.PlayerStats.PlayerHealth.ChangedHealth += OnChangeHealth;
+    }
+
+    private void OnDisable()
+    {
+        _player.PlayerStats.PlayerHealth.ChangedHealth -= OnChangeHealth;
     }
 
     private void SetTextStats(Text template, string text, string nameStats, Animator animator)

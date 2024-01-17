@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public abstract class Armor : MonoBehaviour
 {
@@ -19,7 +19,7 @@ public abstract class Armor : MonoBehaviour
     public int ArmorLevel => _armorLevel;
     public bool IsBayed => _isBayed;
 
-    public event UnityAction<bool> OnChangeState;
+    public event Action<bool> OnChangeState;
 
     public void Increase(int armor)
     {

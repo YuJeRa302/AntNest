@@ -7,65 +7,59 @@ public class PlayerEquipment : MonoBehaviour
     [SerializeField] private Transform _weponsTransform;
     [SerializeField] private Transform _armorsTransform;
     [Header("[Weapon]")]
-    [SerializeField] private List<Weapon> _weapon;
+    [SerializeField] private List<Equipment> _weapon;
     [Header("[Armor]")]
-    [SerializeField] private List<Armor> _armor;
+    [SerializeField] private List<Equipment> _armor;
     [Header("[Wallet]")]
     [SerializeField] private Wallet _wallet;
     [Header("[PlayerStats]")]
     [SerializeField] private PlayerStats _playerStats;
+    //сделать отдельный скрипт под оружие отдельный под армор
+    private Equipment _currentWeapon;
+    private Equipment _currentArmor;
 
-    private Weapon _currentWeapon;
-    private Armor _currentArmor;
-
-    public Weapon CurrentWeapon => _currentWeapon;
-    public Armor CurrentArmor => _currentArmor;
+    public Equipment CurrentWeapon => _currentWeapon;
+    public Equipment CurrentArmor => _currentArmor;
     public int CountWeapon => _weapon.Count;
     public int CountArmor => _armor.Count;
 
-    public void BuyWeapon(Weapon weapon)
+    public void Initialized()
     {
-        _wallet.Buy(weapon.Price);
-        _weapon.Add(weapon);
+        AddItemToList(_weponsTransform, _armorsTransform, _weapon, _armor);
+
+        _currentWeapon = _weapon[0];
+        _currentArmor = _armor[0];
     }
 
-    public void BuyArmor(Armor armor)
+    public void BuyEquipment(Equipment equipment)
     {
-        _wallet.Buy(armor.Price);
-        _armor.Add(armor);
+        _wallet.Buy(equipment.Price);
+
+        if (equipment is Axe1) _weapon.Add(equipment);
+        else _armor.Add(equipment);
+    }
+    public void ChangeCurrentEquipment(Equipment equipment)
+    {
+        if (equipment is Axe1) ChangeEquipment(equipment, ref _currentWeapon);
+        else ChangeEquipment(equipment, ref _currentArmor);
     }
 
-    public void ChangeCurrentWeapon(Weapon weapon)
+    private void ChangeEquipment(Equipment newEquipment, ref Equipment currentequipment)
     {
-        _currentWeapon.SetState(false);
-        weapon.SetState(true);
-        _currentWeapon = weapon;
-        _playerStats.UpdatePlayerStats(_currentArmor.ItemArmor, weapon.Damage);
+        currentequipment.SetState(false);
+        newEquipment.SetState(true);
+        currentequipment = newEquipment;
+       // _playerStats.UpdatePlayerStats(currentequipment.Value, currentequipment.Value);
     }
 
-    public void ChangeCurrentArmor(Armor armor)
-    {
-        _currentArmor.SetState(false);
-        armor.SetState(true);
-        _currentArmor = armor;
-        _playerStats.UpdatePlayerStats(_currentArmor.ItemArmor, _currentWeapon.Damage);
-    }
-
-    public List<Weapon> GetListWeapon()
+    public List<Equipment> GetListWeapon()
     {
         return _weapon;
     }
 
-    public List<Armor> GetListArmor()
+    public List<Equipment> GetListArmor()
     {
         return _armor;
-    }
-
-    public void Initialized()
-    {
-        AddItemToList();
-        _currentWeapon = _weapon[0];
-        _currentArmor = _armor[0];
     }
 
     public void IncreaseArmor(int armor)
@@ -88,16 +82,17 @@ public class PlayerEquipment : MonoBehaviour
         _currentWeapon.Decrease(armor);
     }
 
-    private void AddItemToList()
+    private void AddItem(Transform container, List<Equipment> equipment)
     {
-        for (int i = 0; i < _weponsTransform.childCount; i++)
+        for (int i = 0; i < container.childCount; i++)
         {
-            _weapon.Add(_weponsTransform.GetChild(i).GetComponent<Axe>());
+            equipment.Add(container.GetChild(i).GetComponent<Equipment>());
         }
+    }
 
-        for (int i = 0; i < _armorsTransform.childCount; i++)
-        {
-            _armor.Add(_armorsTransform.GetChild(i).GetComponent<Helmet>());
-        }
+    private void AddItemToList(Transform containerWeapon, Transform containerArmor, List<Equipment> weapon, List<Equipment> armor)
+    {
+        AddItem(containerWeapon, weapon);
+        AddItem(containerArmor, armor);
     }
 }

@@ -1,27 +1,15 @@
 using UnityEngine;
-using UnityEngine.UI;
 using IJunior.TypedScenes;
-using Lean.Localization;
 using System.Collections;
+
+[RequireComponent(typeof(ButtonsView))]
 
 public class Buttons : MonoBehaviour
 {
-    [Header("[Name Level]")]
-    [SerializeField] private LeanLocalizedText _nameLevel;
-    [Header("[Level Image]")]
-    [SerializeField] private Image _levelImage;
-    [Header("[UnlockLevel Image]")]
-    [SerializeField] private Image _unlockImage;
-    [Header("[Sprite]")]
-    [SerializeField] private Sprite _acceptSprite;
-    [SerializeField] private Sprite _cancelSprite;
+    private readonly int _zeroWave = 0;
+
     [Header("[Level Prefab]")]
     [SerializeField] private Levels _level;
-    [Header("[Button]")]
-    [SerializeField] private Button _buttonAccept;
-    [Header("[Button Select Mode]")]
-    [SerializeField] private Button _standartModeButton;
-    [SerializeField] private Button _endlessModeButton;
     [Header("[Config]")]
     [SerializeField] private LoadConfig _loadConfig;
     [Header("[CanvasLoader]")]
@@ -35,8 +23,8 @@ public class Buttons : MonoBehaviour
     [SerializeField] private string _hintsText;
     [Header("[Buttons Animator]")]
     [SerializeField] private Animator[] _animators;
-
-    private readonly int _zeroWave = 0;
+    [Header("[Buttons View]")]
+    [SerializeField] private ButtonsView _buttonsView;
 
     private AsyncOperation _load;
 
@@ -46,33 +34,13 @@ public class Buttons : MonoBehaviour
     }
 
     public bool IsLevelComplete => _level.IsComplete;
-    public int Level => _level.LevelId;
     public Levels Levels => _level;
+    public ButtonsView ButtonsView => _buttonsView;
 
-    public void SetImage()
-    {
-        _unlockImage.sprite = _level.IsComplete == true ? _acceptSprite : _cancelSprite;
-    }
-
-    public void SetButtonState(bool state)
-    {
-        _buttonAccept.interactable = state;
-        _standartModeButton.interactable = state;
-        _endlessModeButton.interactable = state;
-    }
-
-    public void GetConfig(LoadConfig config)
+    public void GetParameters(LoadConfig config, CanvasLoader canvas, QuestPanel questPanel)
     {
         _loadConfig = config;
-    }
-
-    public void GetCanvasLoader(CanvasLoader canvas)
-    {
         _canvasLoader = canvas;
-    }
-
-    public void GetQuestPanel(QuestPanel questPanel)
-    {
         _questPanel = questPanel;
     }
 
@@ -110,13 +78,12 @@ public class Buttons : MonoBehaviour
     {
         _level.SetModeParameters(isStandart, isEndless);
         _questPanel.QuestPanelView.SetTextValue(description, countWave);
-        ChangeColor(isStandart, isEndless);
+        _buttonsView.ChangeColor(isStandart, isEndless);
     }
 
     private void Start()
     {
-        _levelImage.sprite = _level.Sprite;
-        _nameLevel.TranslationName = _level.NameScene;
+        _buttonsView.Initialize(_level.Sprite, _level.NameScene);
         SetModeParameters(false, false, string.Empty, 0);
     }
 
@@ -151,20 +118,5 @@ public class Buttons : MonoBehaviour
 
         _load.allowSceneActivation = true;
         _load = null;
-    }
-
-    private void ChangeColor(bool isStandart, bool isEndless)
-    {
-        if (isStandart == true)
-        {
-            _standartModeButton.image.color = Color.yellow;
-            _endlessModeButton.image.color = Color.blue;
-        }
-        else if (isEndless == true)
-        {
-            _standartModeButton.image.color = Color.blue;
-            _endlessModeButton.image.color = Color.yellow;
-        }
-        else return;
     }
 }

@@ -19,11 +19,16 @@ public class WavePanelView : MonoBehaviour
         SetText(numberWave);
     }
 
+    public void PlayAnimation()
+    {
+        _animatorTextWave.SetTrigger(TransitionParametr.Take.ToString());
+        _animatorNumberWave.SetTrigger(TransitionParametr.Take.ToString());
+    }
+
     private void SetText(int numberWave)
     {
         var wave = ++numberWave;
         _numberWave.text = wave.ToString();
-        _animatorTextWave.SetTrigger(TransitionParametr.Take.ToString());
-        _animatorNumberWave.SetTrigger(TransitionParametr.Take.ToString());
+        PlayAnimation();
     }
 }

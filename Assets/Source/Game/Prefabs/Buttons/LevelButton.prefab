@@ -366,7 +366,7 @@ MonoBehaviour:
         m_CallState: 2
 --- !u!95 &5926075695760199116
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -383,7 +383,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4842617924150120846
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +522,7 @@ MonoBehaviour:
         m_CallState: 2
 --- !u!95 &2794172489854786200
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -538,7 +539,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7015779480392026668
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,6 +1011,7 @@ GameObject:
   - component: {fileID: 9110167551177091003}
   - component: {fileID: 9110167551177091000}
   - component: {fileID: 9110167551177091001}
+  - component: {fileID: 8369699969130871897}
   m_Layer: 5
   m_Name: LevelButton
   m_TagString: Untagged
@@ -1035,7 +1038,7 @@ RectTransform:
   - {fileID: 1851201969176272053}
   - {fileID: 8410903788374227116}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1136,15 +1139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eefce91a7aff31b479e42165b4a088f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _nameLevel: {fileID: 5804955429742467370}
-  _levelImage: {fileID: 5571816991010390263}
-  _unlockImage: {fileID: 8326948639675222126}
-  _acceptSprite: {fileID: -1935557950, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
-  _cancelSprite: {fileID: -803613565, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
   _level: {fileID: 276758763227148274, guid: e012127252d559d4c8a4d7a9f3d513a1, type: 3}
-  _buttonAccept: {fileID: 8175850027515559818}
-  _standartModeButton: {fileID: 931177425770556451}
-  _endlessModeButton: {fileID: 1276897821874164774}
   _loadConfig: {fileID: 11400000, guid: 75d2504d597f3e34db96d6bbe3f485be, type: 2}
   _canvasLoader: {fileID: 0}
   _questPanel: {fileID: 0}
@@ -1154,3 +1149,24 @@ MonoBehaviour:
   _animators:
   - {fileID: 5926075695760199116}
   - {fileID: 2794172489854786200}
+  _buttonsView: {fileID: 8369699969130871897}
+--- !u!114 &8369699969130871897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110167551177090999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23c2da3d8d807f4889383902d9360ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nameLevel: {fileID: 5804955429742467370}
+  _levelImage: {fileID: 5571816991010390263}
+  _unlockImage: {fileID: 8326948639675222126}
+  _acceptSprite: {fileID: -1935557950, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
+  _cancelSprite: {fileID: -803613565, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
+  _buttonAccept: {fileID: 8175850027515559818}
+  _standartModeButton: {fileID: 931177425770556451}
+  _endlessModeButton: {fileID: 1276897821874164774}

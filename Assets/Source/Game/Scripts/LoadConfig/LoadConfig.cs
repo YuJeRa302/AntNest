@@ -28,7 +28,6 @@ public class LoadConfig : ScriptableObject
     public int PlayerScore => _playerScore;
     public int PlayerExperience => _playerExperience;
     public string Language => _language;
-    public Sprite LanguageSprite => _languageSprite;
     public Dictionary<int, bool> PlayerLevels => _playerLevels;
     public bool IsFirstSession => _isFirstSession;
 

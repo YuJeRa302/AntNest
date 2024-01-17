@@ -19,6 +19,14 @@ public class ChangeLanguage : Panels
     [Header("[CurrentLanguageSprit]")]
     [SerializeField] private Sprite _sprite;
 
+    public void SelectLanguage(string value)
+    {
+        _leanLocalization.SetCurrentLanguage(value);
+        _loadConfig.SetCurrentLanguage(value);
+        _menuPanel.Initialize();
+        _loadConfig.SetSessionState(false);
+    }
+
     private void Awake()
     {
         YandexGamesSdk.CallbackLogging = true;
@@ -31,25 +39,17 @@ public class ChangeLanguage : Panels
         if (YandexGamesSdk.IsInitialized == true) 
         {
             yield return null;
-            OnInitialized();
+            OnInitialize();
         }
-        else yield return YandexGamesSdk.Initialize(OnInitialized);
+        else yield return YandexGamesSdk.Initialize(OnInitialize);
 #endif
 #if UNITY_EDITOR
         yield return null;
-        OnInitialized();
+        OnInitialize();
 #endif
     }
 
-    public void SelectLanguage(string value)
-    {
-        _leanLocalization.SetCurrentLanguage(value);
-        _loadConfig.SetCurrentLanguage(value);
-        _menuPanel.Initialized();
-        _loadConfig.SetSessionState(false);
-    }
-
-    private void OnInitialized()
+    private void OnInitialize()
     {
 #if UNITY_WEBGL && !UNITY_EDITOR
                 YandexGamesSdk.GameReady();
@@ -57,7 +57,7 @@ public class ChangeLanguage : Panels
         if (_loadConfig.IsFirstSession == false)
         {
             gameObject.SetActive(_loadConfig.IsFirstSession);
-            _menuPanel.Initialized();
+            _menuPanel.Initialize();
         }
         else _buttonsLang.SetActive(true);
     }

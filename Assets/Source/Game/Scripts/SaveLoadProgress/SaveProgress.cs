@@ -3,14 +3,14 @@ using Agava.YandexGames;
 
 public class SaveProgress : MonoBehaviour
 {
-    private string _key = "antHill";
-    private SaveModel data = null;
+    private readonly string _key = "antHill";
+
+    private SaveModel _data = null;
+    private LoadConfig _loadConfig;
 
     public void Save(string language, int playerCoins, int playerLevel, int playerExperience, int score, bool isFirstSession, int levelId, bool levelState)
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
-#endif
+        if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
 
         SaveModel newData = new()
         {
@@ -25,15 +25,15 @@ if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccess
 
         newData.PlayerCompleteLevels.Add(levelId, levelState);
 
-        if (data != null)
+        if (_data != null)
         {
-            var keys = data.PlayerCompleteLevels.Keys;
+            var keys = _data.PlayerCompleteLevels.Keys;
 
             foreach (int key in keys)
             {
                 if (!newData.PlayerCompleteLevels.ContainsKey(key))
                 {
-                    data.PlayerCompleteLevels.TryGetValue(key, out bool value);
+                    _data.PlayerCompleteLevels.TryGetValue(key, out bool value);
                     newData.PlayerCompleteLevels.Add(key, value);
                 }
             }
@@ -51,11 +51,13 @@ if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccess
 
     public void GetLoad(LoadConfig loadConfig)
     {
-        SaveModel data = null;
-#if UNITY_WEBGL && !UNITY_EDITOR
-if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
-#endif
+        _loadConfig = loadConfig;
 
+        if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+    }
+
+    private void UpdateConfig(SaveModel data, LoadConfig loadConfig)
+    {
         if (data != null)
         {
             if (data.PlayerCompleteLevels != null) loadConfig.UpdateListPlayerLevels(data.PlayerCompleteLevels);
@@ -73,7 +75,8 @@ if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccess
 
     private void OnSuccessLoad(string json)
     {
-        data = JsonUtility.FromJson<SaveModel>(json);
+        _data = JsonUtility.FromJson<SaveModel>(json);
+        UpdateConfig(_data, _loadConfig);
     }
 
     private void OnErrorLoad(string message)
@@ -81,7 +84,7 @@ if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccess
         if (UnityEngine.PlayerPrefs.HasKey(_key))
         {
             string _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
-            data = JsonUtility.FromJson<SaveModel>(_hashKey);
+            _data = JsonUtility.FromJson<SaveModel>(_hashKey);
         }
         else return;
     }

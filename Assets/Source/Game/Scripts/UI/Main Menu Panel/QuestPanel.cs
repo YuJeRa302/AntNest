@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class QuestPanel : Panels
 {
+    private readonly int _indexShift = 1;
+
     [Header("[Level Buttons]")]
     [SerializeField] private List<Buttons> _buttons;
     [Header("[Containers]")]
@@ -12,13 +14,11 @@ public class QuestPanel : Panels
     [Header("[CanvasLoader]")]
     [SerializeField] private CanvasLoader _canvasLoader;
 
-    private readonly int _indexShift = 1;
-
     public QuestPanelView QuestPanelView => _questPanelView;
 
-    public void Initialized(LoadConfig loadConfig)
+    public void Initialize(LoadConfig loadConfig)
     {
-        _questPanelView.Initialized(loadConfig.PlayerCoins, loadConfig.PlayerLevel);
+        _questPanelView.Initialize(loadConfig.PlayerCoins, loadConfig.PlayerLevel);
         UpdateParameters(loadConfig, _buttons);
         UnlockNewLevel(_buttons);
         Load(_buttons);
@@ -34,20 +34,20 @@ public class QuestPanel : Panels
             {
                 if (loadConfig.PlayerLevels.TryGetValue(index, out bool value))
                 {
-                    buttons[index].SetButtonState(value);
+                    buttons[index].ButtonsView.SetButtonState(value);
                     buttons[index].Levels.SetComplete();
                 }
             }
         }
 
-        buttons[0].SetButtonState(true);
+        buttons[0].ButtonsView.SetButtonState(true);
     }
 
     private void UnlockNewLevel(List<Buttons> buttons)
     {
         for (int i = 0; i < buttons.Count - _indexShift; i++)
         {
-            if (buttons[i].IsLevelComplete) buttons[i + _indexShift].SetButtonState(true);
+            if (buttons[i].IsLevelComplete) buttons[i + _indexShift].ButtonsView.SetButtonState(true);
         }
     }
 
@@ -71,10 +71,8 @@ public class QuestPanel : Panels
 
     private void SetParameters(LoadConfig loadConfig, Buttons buttons)
     {
-        buttons.GetConfig(loadConfig);
-        buttons.GetQuestPanel(gameObject.GetComponent<QuestPanel>());
-        buttons.GetCanvasLoader(_canvasLoader);
-        buttons.SetButtonState(false);
-        buttons.SetImage();
+        buttons.GetParameters(loadConfig, _canvasLoader, this);
+        buttons.ButtonsView.SetButtonState(false);
+        buttons.ButtonsView.SetImage(buttons.IsLevelComplete);
     }
 }

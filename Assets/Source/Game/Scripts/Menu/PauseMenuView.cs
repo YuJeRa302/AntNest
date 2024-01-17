@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PauseMenuView : MonoBehaviour
 {
-    [Header("[ShopPanel]")]
-    [SerializeField] private ShopPanel _shopPanel;
     [Header("[Buttons]")]
     [SerializeField] private Button _resumeButton;
     [Header("[Menu Panel]")]
@@ -24,19 +22,13 @@ public class PauseMenuView : MonoBehaviour
         MuteImageButton.sprite = state == true ? _muteButton : _unmuteButton;
     }
 
-    public void ResumeGame()
+    public void Close()
     {
         gameObject.SetActive(false);
     }
 
-    public void PauseGame()
+    public void Open()
     {
         gameObject.SetActive(true);
-    }
-
-    public void OpenShopPanel()
-    {
-        _shopPanel.gameObject.SetActive(true);
-        gameObject.SetActive(false);
     }
 }

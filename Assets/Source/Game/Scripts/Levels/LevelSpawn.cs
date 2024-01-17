@@ -9,22 +9,24 @@ public class LevelSpawn : MonoBehaviour
     [SerializeField] private Transform _playerSpawn;
     [Header("[LevelParameters]")]
     [SerializeField] private LevelParameters _levelParameters;
+    [Header("[Delay Spawn Enemy]")]
+    [SerializeField] private int _delaySpawn = 15;
 
-    private readonly int _delaySpawn = 15;
-
+    private int _indexWave = 0;
     private int _currentCountEnemy = 0;
     private IEnumerator _spawnEnemy;
     private IEnumerator _spawnWave;
+    private Wave[] _wave;
     private Player _player;
     private CharacterController _characterController;
 
-    public void Initialized(Levels levels, int indexWave)
+    public void Initialize(Levels levels, int indexWave)
     {
         SpawnPlayer();
         SpawnNextWave(levels.Wave, indexWave);
     }
 
-    public void EnabledDisabledEnemy(bool state)
+    public void ChangeEnemiesState(bool state)
     {
         var enemies = FindObjectsOfType<Enemy>();
 
@@ -39,7 +41,7 @@ public class LevelSpawn : MonoBehaviour
         if (_spawnWave != null) StopCoroutine(_spawnWave);
 
         var enemy = FindObjectsOfType<Enemy>();
-        DestroyObjects(enemy);
+        DestroyEnemies(enemy);
     }
 
     public void SpawnNextWave(Wave[] wave, int index)
@@ -50,10 +52,12 @@ public class LevelSpawn : MonoBehaviour
 
             if (_levelParameters.Levels.IsStandart == true)
             {
+                SaveWaveParameters(wave, index);
                 _spawnWave = SpawnWave(wave, index);
             }
             else
             {
+                SaveWaveParameters(wave, _levelParameters.IndexEndlessWave);
                 _currentCountEnemy += index;
                 _spawnWave = SpawnWave(wave, _levelParameters.IndexEndlessWave);
             }
@@ -63,7 +67,24 @@ public class LevelSpawn : MonoBehaviour
         else return;
     }
 
-    private void DestroyObjects(Enemy[] enemy)
+    public void StopSpawn()
+    {
+        if (_spawnWave != null) StopCoroutine(_spawnWave);
+    }
+
+    public void ResumeSpawn()
+    {
+        _spawnWave = SpawnWave(_wave, _indexWave);
+        StartCoroutine(_spawnWave);
+    }
+
+    private void SaveWaveParameters(Wave[] wave, int index)
+    {
+        _wave = wave;
+        _indexWave = index;
+    }
+
+    private void DestroyEnemies(Enemy[] enemy)
     {
         for (int i = 0; i < enemy.Length; i++)
         {
@@ -86,7 +107,6 @@ public class LevelSpawn : MonoBehaviour
         {
             CreateEnemy(enemy);
             countEnemy--;
-
             yield return new WaitForSeconds(_delaySpawn);
         }
 
@@ -105,6 +125,6 @@ public class LevelSpawn : MonoBehaviour
     private void CreateEnemy(Enemy template)
     {
         Enemy enemy = Instantiate(template, new Vector3(_spawnPoint.localPosition.x, _spawnPoint.localPosition.y, _spawnPoint.localPosition.z), new Quaternion(0, 180, 0, 0));
-        enemy.Dying += _levelParameters.OnEnemyDie;
+        //enemy.Dying += _levelParameters.LevelObserver.DyingEnemy;
     }
 }

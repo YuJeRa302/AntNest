@@ -4,15 +4,26 @@ using Lean.Localization;
 
 public class LevelView : MonoBehaviour
 {
-    [Header("[Level]")]
+    [Header("[Level Entities]")]
+    [SerializeField] private LevelObserver _levelObserver;
+    [Header("[UI Entities]")]
     [SerializeField] private LeanLocalizedText _levelName;
     [SerializeField] private Image _imageLevel;
-    [Header("[Enemy]")]
     [SerializeField] private LeanLocalizedText _enemiesName;
     [SerializeField] private Text _enemiesCount;
     [SerializeField] private Image _imageEnemy;
 
-    public void Initialized(string levelName, string enemiesName, Sprite levelSprite, Sprite enemiesSprite, int enemiesCount)
+    private void OnEnable()
+    {
+        _levelObserver.KillCountUpdated += UpdateEnemyKillCount;
+    }
+
+    private void OnDisable()
+    {
+        _levelObserver.KillCountUpdated -= UpdateEnemyKillCount;
+    }
+
+    public void Initialize(string levelName, string enemiesName, Sprite levelSprite, Sprite enemiesSprite, int enemiesCount)
     {
         _levelName.TranslationName = levelName;
         _enemiesName.TranslationName = enemiesName;
@@ -21,7 +32,7 @@ public class LevelView : MonoBehaviour
         _imageEnemy.sprite = enemiesSprite;
     }
 
-    public void UpdateEnemyKillCount(int value)
+    private void UpdateEnemyKillCount(int value)
     {
         _enemiesCount.text = value.ToString();
     }

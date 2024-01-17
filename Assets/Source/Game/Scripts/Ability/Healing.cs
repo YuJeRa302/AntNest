@@ -1,10 +1,10 @@
 public class Healing : Ability
 {
-    public override void Use()
+    protected override void Use()
     {
-        if (IsUseAbility == false && Player.PlayerCurrentHealth < Player.PlayerMaxHealth)
+        if (IsUseAbility == false && Player.PlayerStats.PlayerHealth.CurrentHealth < Player.PlayerStats.PlayerHealth.MaxHealth)
         {
-            Player.ChangeHealth(CurrentAbilityValue);
+            Player.PlayerStats.PlayerHealth.ChangeHealth(CurrentAbilityValue);
             ApplyAbility(CurrentDelay);
         }
         else return;

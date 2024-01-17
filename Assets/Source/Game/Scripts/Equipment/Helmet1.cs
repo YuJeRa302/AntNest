@@ -1,0 +1,1 @@
+public class Helmet1 : Equipment { }

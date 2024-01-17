@@ -46,7 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelId: 2
   _nameScene: Cave
-  _nameLocation: "\u041F\u0435\u0449\u0435\u0440\u0430"
   _isComplete: 0
   _wave:
   - {fileID: 2442752812101130733, guid: c505b371ae8a5294a8c59ea18d14da53, type: 3}

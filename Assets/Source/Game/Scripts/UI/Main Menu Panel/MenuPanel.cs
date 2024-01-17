@@ -20,15 +20,25 @@ public class MenuPanel : Panels
     public Slider ButtonFXSlider => _buttonFXSlider;
     public Image MuteImageButton => _imageButton;
 
+    public void Initialize()
+    {
+        _menu.Initialize();
+        gameObject.SetActive(true);
+    }
+
     public void SetMuteButtonImage(bool state)
     {
         MuteImageButton.sprite = state == true ? _muteButton : _unmuteButton;
     }
 
-    public void Initialized() => _menu.Initialized(); 
+    public void SetSliderValue(float ambientSoundsSlider, float buttonFXSlider)
+    {
+        _ambientSoundsSlider.value = ambientSoundsSlider;
+        _buttonFXSlider.value = buttonFXSlider;
+    }
 
     protected override void UpdateInfo()
     {
-        _questPanel.Initialized(_menu.LoadConfig);
+        _questPanel.Initialize(_menu.LoadConfig);
     }
 }

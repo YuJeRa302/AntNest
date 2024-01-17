@@ -1,0 +1,1 @@
+public class Axe1 : Equipment { }

@@ -35,7 +35,7 @@ public class EnemyAbility : MonoBehaviour
     private void CastAbility(Player player)
     {
         _ability.Play();
-        player.TakeDamage(_damage);
+        player.PlayerStats.PlayerHealth.TakeDamage(_damage);
         UpdateValue(true, 1);
         _enemy.EnemyView.CoolDownImage.sprite = _enemy.EnemyView.CancelSprite;
     }

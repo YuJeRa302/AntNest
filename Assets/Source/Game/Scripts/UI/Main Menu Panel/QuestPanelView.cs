@@ -15,7 +15,7 @@ public class QuestPanelView : MonoBehaviour
     [Header("[Endless Iamge]")]
     [SerializeField] private Image _endlessimage;
 
-    public void Initialized(int coins, int playerLevel)
+    public void Initialize(int coins, int playerLevel)
     {
         _playerGold.text = coins.ToString();
         _playerLevel.text = playerLevel.ToString();

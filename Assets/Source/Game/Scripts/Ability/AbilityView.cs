@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
+using System;
 using Lean.Localization;
 
 public class AbilityView : MonoBehaviour
@@ -18,15 +18,14 @@ public class AbilityView : MonoBehaviour
     [SerializeField] private Text _nextLevelAbilityValue;
     [Header("[Ability Upgrade Stats]")]
     [SerializeField] private GameObject _upgradeStats;
-    [Header("[Description]")]
+    [Header("[LeanLocalizedText]")]
     [SerializeField] private LeanLocalizedText _description;
-    [Header("[Name]")]
     [SerializeField] private LeanLocalizedText _name;
 
     private Ability _ability;
 
-    public event UnityAction<Ability, AbilityView> SellButtonClick;
-    public event UnityAction<Ability, AbilityView> UpgradeButtonClick;
+    public Action<Ability, AbilityView> SellButtonClick;
+    public Action<Ability, AbilityView> UpgradeButtonClick;
 
     private void OnEnable()
     {
@@ -54,25 +53,9 @@ public class AbilityView : MonoBehaviour
         UpdateStats(_ability);
     }
 
-    public void TryLockItem()
+    public void LockedAbility()
     {
-        if (_ability.IsBayed)
-        {
-            _sellButton.gameObject.SetActive(false);
-            _upgradeButton.gameObject.SetActive(true);
-        }
-    }
-
-    public void OnButtonClick()
-    {
-        SellButtonClick?.Invoke(_ability, this);
-        UpdateStats(_ability);
-    }
-
-    public void OnUpgradeButtonClick()
-    {
-        UpgradeButtonClick?.Invoke(_ability, this);
-        UpdateStats(_ability);
+        _sellButton.gameObject.SetActive(false);
     }
 
     public void Hover()
@@ -85,9 +68,25 @@ public class AbilityView : MonoBehaviour
         _upgradeStats.SetActive(false);
     }
 
-    public void LockedAbility()
+    private void TryLockItem()
     {
-        _sellButton.gameObject.SetActive(false);
+        if (_ability.IsBayed)
+        {
+            _sellButton.gameObject.SetActive(false);
+            _upgradeButton.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnButtonClick()
+    {
+        SellButtonClick?.Invoke(_ability, this);
+        UpdateStats(_ability);
+    }
+
+    private void OnUpgradeButtonClick()
+    {
+        UpgradeButtonClick?.Invoke(_ability, this);
+        UpdateStats(_ability);
     }
 
     private void UpdateStats(Ability ability)
