@@ -5,11 +5,8 @@ public class PlayerDamage : MonoBehaviour
 {
     private readonly int _minValue = 0;
 
-    [Header("[Transform]")]
     [SerializeField] private Transform _weaponsTransform;
-    [Header("[Weapon]")]
     [SerializeField] private List<Weapon> _weapons;
-    [Header("[Player]")]
     [SerializeField] private Player _player;
 
     private Weapon _currentWeapon;
@@ -23,12 +20,6 @@ public class PlayerDamage : MonoBehaviour
     {
         AddItemToList();
         _currentWeapon = _weapons[0];
-    }
-
-    public void BuyWeapon(Weapon weapon)
-    {
-        _player.Wallet.Buy(weapon.Price);
-        _weapons.Add(weapon);
     }
 
     public void ChangeCurrentWeapon(Weapon weapon)
@@ -49,7 +40,7 @@ public class PlayerDamage : MonoBehaviour
         _player.PlayerStats.PlayerAbility.SetEffect(effect);
         _hitCount = hitCount;
         _abilityDamage = damage;
-        _currentWeapon.Increase(_abilityDamage);
+         //_currentWeapon.Increase(_abilityDamage);
         _player.PlayerView.UpdatePlayerStats();
     }
 
@@ -63,7 +54,7 @@ public class PlayerDamage : MonoBehaviour
 
     private void Decrease()
     {
-        _currentWeapon.Decrease(_abilityDamage);
+        // _currentWeapon.Decrease(_abilityDamage);
         _abilityDamage = _minValue;
         _player.PlayerStats.PlayerAbility.AbilityEffect.Stop();
         _player.PlayerView.UpdatePlayerStats();
@@ -73,7 +64,7 @@ public class PlayerDamage : MonoBehaviour
     {
         for (int i = 0; i < _weaponsTransform.childCount; i++)
         {
-            _weapons.Add(_weaponsTransform.GetChild(i).GetComponent<Axe>());
+            _weapons.Add(_weaponsTransform.GetChild(i).GetComponent<Weapon>());
         }
     }
 }

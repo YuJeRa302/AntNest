@@ -1,99 +1,86 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class WeaponPanel : Shop
+public class WeaponPanel : ShopTab
 {
-    [SerializeField] private WeaponView _weaponView;
-    [SerializeField] private GameObject _weaponContainer;
-    [SerializeField] private Button _button;
+    //[SerializeField] private Shop _shop;
+    //[SerializeField] private WeaponView _weaponView;
+    //[SerializeField] private GameObject _weaponContainer;
+    //[SerializeField] private Button _button;
 
-    private List<Weapon> _weapons;
-    private List<WeaponView> _weaponViews;
+    //private Player _player;
 
-    private void OnEnable()
-    {
-        _button.onClick.AddListener(OpenShopPanel);
-        LevelObserver.GameClosed += OnCloseGame;
-    }
+    //private void Awake()
+    //{
+    //    _shop.Initialized += OnShopInitialized;
+    //    _shop.PanelClosed += OnCloseShop;
+    //}
 
-    private void OnDisable()
-    {
-        _button.onClick.RemoveListener(OpenShopPanel);
-        LevelObserver.GameClosed -= OnCloseGame;
-    }
+    //private void OnDestroy()
+    //{
+    //    _button.onClick.RemoveListener(OpenShopPanel);
+    //    _shop.Initialized -= OnShopInitialized;
+    //    _shop.PanelClosed -= OnCloseShop;
+    //}
 
-    protected override void Initialized()
-    {
-        if (_weapons == null)
-        {
-            _weapons = Player.PlayerStats.PlayerDamage.GetListWeapon();
-            AddEquipment(_weapons);
-        }
+    //protected override void FillPanel()
+    //{
+    //    _weapons = _player.PlayerStats.PlayerDamage.GetListWeapon();
+    //    AddEquipment(_weapons);
+    //}
 
-        TryUnlockBuyButton();
-    }
+    //private void OnShopInitialized(Player player, LevelObserver levelObserver)
+    //{
+    //    _player = player;
+    //    _button.onClick.AddListener(OpenShopPanel);
+    //    FillPanel();
+    //}
 
-    private void OnBuyWeapon(Weapon weapon, WeaponView weaponView)
-    {
-        TryBuyWeapon(weapon, weaponView);
-    }
+    //private void AddWeapon(Weapon weapon)
+    //{
+    //    var view = Instantiate(_weaponView, _weaponContainer.transform);
+    //    view.BuyButtonClick += OnBuyWeapon;
+    //    view.ChangeWeaponButtonClick += OnChangeWeapon;
+    //    view.Initialize(weapon, _player);
+    //    _weaponViews.Add(view);
+    //}
 
-    private void OnChangeWeapon(Weapon weapon)
-    {
-        Player.PlayerStats.PlayerDamage.ChangeCurrentWeapon(weapon);
-    }
+    //private void AddEquipment(List<Weapon> weapons)
+    //{
+    //    for (int i = 0; i < weapons.Count; i++)
+    //    {
+    //        AddWeapon(weapons[i]);
+    //    }
+    //}
 
-    private void TryBuyWeapon(Weapon weapon, WeaponView weaponView)
-    {
-        if (weapon.Price <= Player.Wallet.GetCoins())
-        {
-            Player.PlayerStats.PlayerDamage.BuyWeapon(weapon);
-            weapon.Buy();
-            weaponView.BuyButtonClick -= OnBuyWeapon;
-            UpdatePlayerStats();
-        }
-        else DialogPanel.Opened?.Invoke();
-    }
+    //private void OnBuyWeapon(Weapon weapon, WeaponView weaponView)
+    //{
+    //    TryBuyWeapon(weapon, weaponView);
+    //}
 
-    private void AddWeapon(Weapon weapon)
-    {
-        var view = Instantiate(_weaponView, _weaponContainer.transform);
-        view.BuyButtonClick += OnBuyWeapon;
-        view.ChangeWeaponButtonClick += OnChangeWeapon;
-        view.Render(weapon);
-        _weaponViews.Add(view);
-    }
+    //private void OnChangeWeapon(Weapon weapon)
+    //{
+    //    _player.PlayerStats.PlayerDamage.ChangeCurrentWeapon(weapon);
+    //}
 
-    private void AddEquipment(List<Weapon> weapons)
-    {
-        for (int i = 1; i < weapons.Count; i++)
-        {
-            AddWeapon(weapons[i]);
-        }
-    }
+    //private void OnCloseShop()
+    //{
+    //    foreach (var view in _weaponViews)
+    //    {
+    //        view.BuyButtonClick -= OnBuyWeapon;
+    //        view.ChangeWeaponButtonClick -= OnChangeWeapon;
+    //        Destroy(view.gameObject);
+    //    }
 
-    private void TryUnlockBuyButton()
-    {
-        foreach (var view in _weaponViews)
-        {
-            view.TryUnlockBuyButton(Player);
-        }
-        //for (int i = 0; i < _weaponContainer.transform.childCount; i++)
-        //{
-        //    _weaponContainer.transform.GetChild(i).GetComponent<WeaponView>().TryUnlockBuyButton(Player);
-        //}
-    }
+    //    _weaponViews.Clear();
+    //}
 
-    private void OnCloseGame()
-    {
-        if (_weaponViews.Count > 0)
-        {
-            foreach (var view in _weaponViews)
-            {
-                view.BuyButtonClick -= OnBuyWeapon;
-                view.ChangeWeaponButtonClick -= OnChangeWeapon;
-            }
-        }
-    }
+    //private void TryBuyWeapon(Weapon weapon, WeaponView weaponView)
+    //{
+    //    if (weapon.Price <= _player.Wallet.Coins)
+    //    {
+    //        _player.PlayerStats.PlayerDamage.BuyWeapon(weapon);
+    //        //weapon.Buy();
+    //        weaponView.BuyButtonClick -= OnBuyWeapon;
+    //        UpdatePlayerStats();
+    //    }
+    //    else DialogPanel.Open();
+    //}
 }

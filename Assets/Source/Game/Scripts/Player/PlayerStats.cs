@@ -11,19 +11,14 @@ public class PlayerStats : MonoBehaviour
     private readonly Dictionary<int, int> _levels = new();
     private readonly int _maxExperience = 100;
 
-    [Header("[Player]")]
     [SerializeField] private Player _player;
-    [Header("[Player Armor]")]
     [SerializeField] private PlayerArmor _playerArmor;
-    [Header("[Player Ability]")]
     [SerializeField] private PlayerAbility _playerAbility;
-    [Header("[Player Damage]")]
     [SerializeField] private PlayerDamage _playerDamage;
-    [Header("[Player Health]")]
     [SerializeField] private PlayerHealth _playerHealth;
     [Header("[Speed]")]
     [SerializeField] private float _speed;
-    [Header("[MaxPlayerLevel]")]
+    [Header("[Max Player Level]")]
     [SerializeField] private int _maxPlayerLevel;
 
     private int _currentLevel = 1;
@@ -32,7 +27,7 @@ public class PlayerStats : MonoBehaviour
     private int _abilityPoints = 0;
 
     public float Speed => _speed;
-    public int Armor => _playerArmor.CurrentArmor.ItemArmor;
+    public int Armor => _playerArmor.CurrentArmor.ArmorValue;
     public int Daamge => _playerDamage.CurrentWeapon.Damage;
     public int Score => _score;
     public int Experience => _currentExperience;

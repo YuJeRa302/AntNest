@@ -6,6 +6,8 @@ public class Wallet : MonoBehaviour
 
     private int _currentCoins = 3000;
 
+    public int Coins => _currentCoins;
+
     public void Initialize(int value)
     {
         _currentCoins = (value == 0) ? _currentCoins : value;
@@ -19,10 +21,5 @@ public class Wallet : MonoBehaviour
     public void TakeCoins(int value)
     {
         _currentCoins += value;
-    }
-
-    public int GetCoins()
-    {
-        return _currentCoins;
     }
 }

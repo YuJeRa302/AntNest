@@ -4,27 +4,29 @@ using UnityEngine.UI;
 
 public class AbilityPanel : Shop
 {
+    [SerializeField] private Shop _shop;
     [SerializeField] private AbilityView _abilityView;
     [SerializeField] private GameObject _abilityContainer;
     [SerializeField] private Button _button;
 
     private List<Ability> _abilities;
-    private List<AbilityView> _abilityViews;
-    //private AbilityView[] _abilityViews;
+    private List<AbilityView> _abilityViews = new();
+    private Player _player;
+    private LevelObserver _levelObserver;
 
-    private void OnEnable()
+    private void Awake()
     {
-        _button.onClick.AddListener(OpenShopPanel);
-        LevelObserver.GameClosed += OnCloseGame;
+        //_shop.Initialized += OnShopInitialized;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        _button.onClick.RemoveListener(OpenShopPanel);
-        LevelObserver.GameClosed -= OnCloseGame;
+       // _button.onClick.RemoveListener(OpenShopTab);
+        //_shop.Initialized -= OnShopInitialized;
+        _levelObserver.GameClosed -= OnCloseGame;
     }
 
-    protected override void Initialized()
+    protected override void FillPanel()
     {
         if (_abilities != null)
         {
@@ -32,13 +34,22 @@ public class AbilityPanel : Shop
         }
         else
         {
-            _abilities = Player.PlayerStats.PlayerAbility.GetListAbility();
+            _abilities = _player.PlayerStats.PlayerAbility.GetListAbility();
 
             for (int i = 0; i < _abilities.Count; i++)
             {
                 AddAbility(_abilities[i]);
             }
         }
+    }
+
+    private void OnShopInitialized(Player player, LevelObserver levelObserver)
+    {
+        _player = player;
+        _levelObserver = levelObserver;
+        //_button.onClick.AddListener(OpenShopTab);
+        _levelObserver.GameClosed += OnCloseGame;
+        FillPanel();
     }
 
     private void AddAbility(Ability ability)
@@ -63,27 +74,27 @@ public class AbilityPanel : Shop
 
     private void TrySellAbility(Ability ability, AbilityView view)
     {
-        if (ability.Price <= Player.PlayerStats.PlayerAbility.Points)
+        if (ability.Price <= _player.PlayerStats.PlayerAbility.Points)
         {
-            Player.PlayerStats.PlayerAbility.BuyAbility(ability);
+            _player.PlayerStats.PlayerAbility.BuyAbility(ability);
             ability.Buy();
-            UpdatePlayerStats();
+            UpdatePlayerResource();
             view.SellButtonClick -= OnSellButton;
         }
-        else DialogPanel.Opened?.Invoke();
+        else DialogPanel.Open();
     }
 
     private void TryUpgradeAbility(Ability ability, AbilityView view)
     {
-        if (ability.UpgradePrice <= Player.PlayerStats.PlayerAbility.Points)
+        if (ability.UpgradePrice <= _player.PlayerStats.PlayerAbility.Points)
         {
-            Player.PlayerStats.PlayerAbility.UpgradeAbility(ability);
+            _player.PlayerStats.PlayerAbility.UpgradeAbility(ability);
             ability.Upgrade();
-            UpdatePlayerStats();
+            UpdatePlayerResource();
         }
-        else DialogPanel.Opened?.Invoke();
+        else DialogPanel.Open();
 
-        if (ability.MaxLevel == Player.PlayerStats.PlayerAbility.Ability[0].CurrentLevel) view.UpgradeButtonClick -= OnUpgradeButton;
+        if (ability.MaxLevel == _player.PlayerStats.PlayerAbility.Ability[0].CurrentLevel) view.UpgradeButtonClick -= OnUpgradeButton;
     }
 
     //private void GetAbilitiesView()

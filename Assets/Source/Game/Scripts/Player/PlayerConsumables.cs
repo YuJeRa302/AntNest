@@ -3,11 +3,8 @@ using UnityEngine;
 
 public class PlayerConsumables : MonoBehaviour
 {
-    [Header("[Transform]")]
     [SerializeField] private Transform _consumablesTransform;
-    [Header("[Consumables]")]
     [SerializeField] private List<Consumables> _consumables;
-    [Header("[Player]")]
     [SerializeField] private Player _player;
 
     private int _currentHealthPotion = 2;

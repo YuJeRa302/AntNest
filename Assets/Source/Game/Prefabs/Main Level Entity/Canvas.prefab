@@ -9357,16 +9357,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a5f573f7ce3ed49a9e69f75dfce91a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shopView: {fileID: 0}
-  _armorPanel: {fileID: 0}
-  _weaponPanel: {fileID: 0}
-  _consumablesPanel: {fileID: 0}
-  _abilityPanel: {fileID: 0}
   _dialogPanel: {fileID: 0}
-  _coins: {fileID: 0}
-  _points: {fileID: 0}
   _openPanel: {fileID: 0}
   _closePanel: {fileID: 0}
+  _shop: {fileID: 0}
   _armorView: {fileID: 742827401201670320, guid: 87713133a9a80c7459daa9a506a0158c, type: 3}
   _armorContainer: {fileID: 6579283653714403307}
   _button: {fileID: 6579283653283257970}
@@ -11627,7 +11621,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6579283654167028023}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShopPanel, Assembly-CSharp
         m_MethodName: OpenPanel
         m_Mode: 1
@@ -12084,8 +12078,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6579283652228941286}
-  - {fileID: 6579283653318859333}
   - {fileID: 9108711261488688229}
+  - {fileID: 6579283653318859333}
   m_Father: {fileID: 6579283654076459191}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12435,6 +12429,7 @@ MonoBehaviour:
   _enemiesName: {fileID: 3879189311732625776}
   _enemiesCount: {fileID: 1327574350625495740}
   _imageEnemy: {fileID: 6579283653554757790}
+  _canvasLoader: {fileID: 0}
 --- !u!1 &6579283653714403307
 GameObject:
   m_ObjectHideFlags: 0
@@ -13634,6 +13629,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6579283654000373087}
   - component: {fileID: 6579283654000373080}
+  - component: {fileID: 4859651466850449205}
   m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
@@ -13675,16 +13671,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa4e24194154ff84881d22b7a98ee8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shopView: {fileID: 0}
-  _armorPanel: {fileID: 0}
-  _weaponPanel: {fileID: 0}
-  _consumablesPanel: {fileID: 0}
-  _abilityPanel: {fileID: 0}
   _dialogPanel: {fileID: 0}
-  _coins: {fileID: 0}
-  _points: {fileID: 0}
   _openPanel: {fileID: 0}
   _closePanel: {fileID: 0}
+--- !u!114 &4859651466850449205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6579283654000373086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b3d3fef754966d41ae1abffa336f0ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shop: {fileID: 0}
+  _shopPanels: []
+  _coins: {fileID: 0}
+  _points: {fileID: 0}
 --- !u!1 &6579283654076459190
 GameObject:
   m_ObjectHideFlags: 0
@@ -14068,7 +14073,7 @@ GameObject:
   - component: {fileID: 6579283654167028020}
   - component: {fileID: 6579283654167028022}
   - component: {fileID: 6579283654167028021}
-  - component: {fileID: 6579283654167028023}
+  - component: {fileID: 5197092496396105273}
   m_Layer: 5
   m_Name: Weapon_Panel
   m_TagString: Untagged
@@ -14135,7 +14140,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6579283654167028023
+--- !u!114 &5197092496396105273
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14147,19 +14152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44de04d1f6b903945a42c189618be872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shopView: {fileID: 0}
-  _armorPanel: {fileID: 0}
-  _weaponPanel: {fileID: 0}
-  _consumablesPanel: {fileID: 0}
-  _abilityPanel: {fileID: 0}
-  _dialogPanel: {fileID: 0}
-  _coins: {fileID: 0}
-  _points: {fileID: 0}
-  _openPanel: {fileID: 0}
-  _closePanel: {fileID: 0}
-  _weaponView: {fileID: 6619038046925345111, guid: bcf736f896012b84fac174d401416fad, type: 3}
-  _weaponContainer: {fileID: 6579283653496742777}
-  _button: {fileID: 6579283653558988095}
+  _container: {fileID: 0}
+  _button: {fileID: 0}
+  _shop: {fileID: 0}
+  typeItem: 0
 --- !u!1 &6579283654206204475
 GameObject:
   m_ObjectHideFlags: 0
@@ -14326,16 +14322,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4236f2ed319a3fa43bbf06f803b027b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shopView: {fileID: 0}
-  _armorPanel: {fileID: 0}
-  _weaponPanel: {fileID: 0}
-  _consumablesPanel: {fileID: 0}
-  _abilityPanel: {fileID: 0}
   _dialogPanel: {fileID: 0}
-  _coins: {fileID: 0}
-  _points: {fileID: 0}
   _openPanel: {fileID: 0}
   _closePanel: {fileID: 0}
+  _shop: {fileID: 0}
   _consumablesView: {fileID: 5624434447462807636, guid: 203537eaaf95af145ad2382c003f174a, type: 3}
   _consumablesContainer: {fileID: 6579283653440795304}
   _button: {fileID: 6579283653264149510}
@@ -16127,16 +16117,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110d16274d38bce438ae23b4c6f3a4d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shopView: {fileID: 0}
-  _armorPanel: {fileID: 0}
-  _weaponPanel: {fileID: 0}
-  _consumablesPanel: {fileID: 0}
-  _abilityPanel: {fileID: 0}
   _dialogPanel: {fileID: 0}
-  _coins: {fileID: 0}
-  _points: {fileID: 0}
   _openPanel: {fileID: 0}
   _closePanel: {fileID: 0}
+  _shop: {fileID: 0}
   _abilityView: {fileID: 4453033447732439684, guid: fdf08dfbd405018448d0bb75ba9d3076, type: 3}
   _abilityContainer: {fileID: 1426738952945098823}
   _button: {fileID: 2941669130565871806}

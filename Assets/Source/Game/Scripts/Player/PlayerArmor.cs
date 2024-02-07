@@ -5,11 +5,8 @@ public class PlayerArmor : MonoBehaviour
 {
     private readonly int _minValue = 0;
 
-    [Header("[Transform]")]
     [SerializeField] private Transform _armorsTransform;
-    [Header("[Armor]")]
     [SerializeField] private List<Armor> _armor;
-    [Header("[Player]")]
     [SerializeField] private Player _player;
 
     private Armor _currentArmor;
@@ -25,16 +22,10 @@ public class PlayerArmor : MonoBehaviour
         _currentArmor = _armor[0];
     }
 
-    public void BuyArmor(Armor armor)
-    {
-        _player.Wallet.Buy(armor.Price);
-        _armor.Add(armor);
-    }
-
     public void ChangeCurrentArmor(Armor armor)
     {
-        _currentArmor.SetState(false);
-        armor.SetState(true);
+        _currentArmor.Item.SetState(false);
+        armor.Item.SetState(true);
         _currentArmor = armor;
         _player.PlayerView.UpdatePlayerStats();
     }
@@ -49,7 +40,7 @@ public class PlayerArmor : MonoBehaviour
         _player.PlayerStats.PlayerAbility.SetEffect(effect);
         _numberDamageBlocks = numberDamageBlocks;
         _abilityArmor = armor;
-        _currentArmor.Increase(_abilityArmor);
+        //_currentArmor.Increase(_abilityArmor);
         _player.PlayerView.UpdatePlayerStats();
     }
 
@@ -63,7 +54,7 @@ public class PlayerArmor : MonoBehaviour
 
     private void Decrease()
     {
-        _currentArmor.Decrease(_abilityArmor);
+        //_currentArmor.Decrease(_abilityArmor);
         _abilityArmor = _minValue;
         _player.PlayerStats.PlayerAbility.AbilityEffect.Stop();
         _player.PlayerView.UpdatePlayerStats();

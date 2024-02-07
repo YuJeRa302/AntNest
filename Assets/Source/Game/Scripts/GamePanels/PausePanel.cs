@@ -11,14 +11,15 @@ public class PausePanel : GamePanels
     [SerializeField] private Sprite _muteButton;
     [SerializeField] private Sprite _unmuteButton;
 
-    private void OnEnable()
+    private void Awake()
     {
+        gameObject.SetActive(false);
         _levelObserver.GamePaused += OpenPanel;
         _levelObserver.GameResumed += ClosePanel;
         _levelObserver.SoundMuted += SetButtonImage;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         _levelObserver.GamePaused -= OpenPanel;
         _levelObserver.GameResumed -= ClosePanel;

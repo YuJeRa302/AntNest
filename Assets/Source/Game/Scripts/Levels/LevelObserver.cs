@@ -37,13 +37,13 @@ public class LevelObserver : MonoBehaviour
     public int CountKillEnemy => _countKillEnemy;
     public EnemySpawner EnemySpawner => _enemySpawner;
 
-    public Action GamePaused;
-    public Action GameResumed;
-    public Action GameEnded;
-    public Action GameClosed;
-    public Action<bool> SoundMuted;
-    public Action<int> KillCountUpdated;
-    public Action<bool> LevelCompleted;
+    public event Action GamePaused;
+    public event Action GameResumed;
+    public event Action GameEnded;
+    public event Action GameClosed;
+    public event Action<bool> SoundMuted;
+    public event Action<int> KillCountUpdated;
+    public event Action<bool> LevelCompleted;
 
     private void OnEnable()
     {
@@ -74,6 +74,8 @@ public class LevelObserver : MonoBehaviour
         _loadConfig = loadConfig;
         _isPlayerAlive = true;
         _enemySpawner.Initialize(loadConfig);
+        _player.Wallet.Initialize(_loadConfig.PlayerCoins);
+        _player.PlayerStats.Initialize(_loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore);
         LoadPanels();
     }
 
@@ -89,10 +91,6 @@ public class LevelObserver : MonoBehaviour
     {
         foreach (var panel in _panels)
         {
-            panel.PanelOpened += OnOpenShopPanel;
-            panel.PanelOpened += OnOpenMenuPanel;
-            panel.PanelClosed += OnCloseShopPanel;
-            panel.PanelClosed += OnCloseMenuPanel;
             panel.OpenAd += OnOpenAd;
             panel.CloseAd += OnCloseAd;
         }
@@ -102,23 +100,9 @@ public class LevelObserver : MonoBehaviour
     {
         foreach (var panel in _panels)
         {
-            panel.PanelOpened -= OnOpenShopPanel;
-            panel.PanelOpened -= OnOpenMenuPanel;
-            panel.PanelClosed -= OnCloseShopPanel;
-            panel.PanelClosed -= OnCloseMenuPanel;
             panel.OpenAd -= OnOpenAd;
             panel.CloseAd -= OnCloseAd;
         }
-    }
-
-    private void OnOpenShopPanel()
-    {
-        Debug.Log("OnOpenShopPanel");
-    }
-
-    private void OnOpenMenuPanel()
-    {
-        Debug.Log("OnOpenMenuPanel");
     }
 
     private void OnOpenAd()
@@ -133,16 +117,6 @@ public class LevelObserver : MonoBehaviour
         SetTimeScale(_resumeTimeValue);
         AudioListener.pause = false;
         LoadLevel();
-    }
-
-    private void OnCloseShopPanel()
-    {
-
-    }
-
-    private void OnCloseMenuPanel()
-    {
-
     }
 
     private void OnEnemyDied(Enemy enemy)
@@ -200,7 +174,7 @@ public class LevelObserver : MonoBehaviour
     {
         var level = _loadConfig.Levels.IsComplete ? _player.PlayerStats.Level : 0;
         _saveProgress.Save(_loadConfig.Language,
-            _player.Wallet.GetCoins(),
+            _player.Wallet.Coins,
             level,
             _player.PlayerStats.Experience,
             _player.PlayerStats.Score,
@@ -232,7 +206,6 @@ public class LevelObserver : MonoBehaviour
 
         _load = asyncOperation;
         _load.allowSceneActivation = false;
-        //_levelParameters.CanvasLoader.gameObject.SetActive(true);
 
         while (_load.progress < 0.9f)
         {

@@ -1,99 +1,107 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class ArmorPanel : Shop
+public class ArmorPanel : ShopTab
 {
-    [SerializeField] private ArmorView _armorView;
-    [SerializeField] private GameObject _armorContainer;
-    [SerializeField] private Button _button;
+    //[SerializeField] private Shop _shop;
+    //[SerializeField] private ArmorView _armorView;
+    //[SerializeField] private GameObject _armorContainer;
+    //[SerializeField] private Button _button;
 
-    private List<Armor> _armors;
-    private List<ArmorView> _armorViews;
+    //private List<Armor> _armors;
+    //private List<ArmorView> _armorViews = new();
+    //private Player _player;
+    //private LevelObserver _levelObserver;
 
-    private void OnEnable()
-    {
-        _button.onClick.AddListener(OpenPanel);
-        LevelObserver.GameClosed += OnCloseGame;
-    }
+    //private void Awake()
+    //{
+    //    _shop.Initialized += OnShopInitialized;
+    //}
 
-    private void OnDisable()
-    {
-        _button.onClick.RemoveListener(OpenPanel);
-        LevelObserver.GameClosed -= OnCloseGame;
-    }
+    //private void OnDestroy()
+    //{
+    //    _button.onClick.RemoveListener(OpenShopPanel);
+    //    _shop.Initialized -= OnShopInitialized;
+    //    _levelObserver.GameClosed -= OnCloseGame;
+    //}
 
-    protected override void Initialized()
-    {
-        if (_armors == null)
-        {
-            _armors = Player.PlayerStats.PlayerArmor.GetListArmor();
-            AddEquipment(_armors);
-        }
+    //protected override void FillPanel()
+    //{
+    //    if (_armors != null)
+    //    {
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        _armors = _player.PlayerStats.PlayerArmor.GetListArmor();
+    //        AddEquipment(_armors);
+    //    }
 
-        TryUnlockBuyButton();
-    }
+    //    TryUnlockBuyButton();
+    //}
 
-    private void AddArmor(Armor armor)
-    {
-        var view = Instantiate(_armorView, _armorContainer.transform);
-        view.BuyButtonClick += OnBuyArmor;
-        view.ChangeArmorButtonClick += OnChangeArmor;
-        view.Render(armor);
-        _armorViews.Add(view);
-    }
+    //private void OnShopInitialized(Player player, LevelObserver levelObserver)
+    //{
+    //    _player = player;
+    //    _levelObserver = levelObserver;
+    //    _button.onClick.AddListener(OpenShopPanel);
+    //    _levelObserver.GameClosed += OnCloseGame;
+    //    FillPanel();
+    //}
 
-    private void OnBuyArmor(Armor armor, ArmorView view)
-    {
-        TryBuyArmor(armor, view);
-    }
+    //private void AddArmor(Armor armor)
+    //{
+    //    var view = Instantiate(_armorView, _armorContainer.transform);
+    //    view.BuyButtonClick += OnBuyArmor;
+    //    view.ChangeArmorButtonClick += OnChangeArmor;
+    //    view.Render(armor);
+    //    _armorViews.Add(view);
+    //}
 
-    private void OnChangeArmor(Armor armor)
-    {
-        Player.PlayerStats.PlayerArmor.ChangeCurrentArmor(armor);
-    }
+    //private void OnBuyArmor(Armor armor, ArmorView view)
+    //{
+    //    TryBuyArmor(armor, view);
+    //}
 
-    private void TryBuyArmor(Armor armor, ArmorView view)
-    {
-        if (armor.Price <= Player.Wallet.GetCoins())
-        {
-            Player.PlayerStats.PlayerArmor.BuyArmor(armor);
-            armor.Buy();
-            view.BuyButtonClick -= OnBuyArmor;
-            UpdatePlayerStats();
-        }
-        else DialogPanel.Opened?.Invoke();
-    }
+    //private void OnChangeArmor(Armor armor)
+    //{
+    //    _player.PlayerStats.PlayerArmor.ChangeCurrentArmor(armor);
+    //}
 
-    private void AddEquipment(List<Armor> armors)
-    {
-        for (int i = 1; i < armors.Count; i++)
-        {
-            AddArmor(armors[i]);
-        }
-    }
+    //private void TryBuyArmor(Armor armor, ArmorView view)
+    //{
+    //    if (armor.Price <= _player.Wallet.Coins)
+    //    {
+    //        _player.PlayerStats.PlayerArmor.BuyArmor(armor);
+    //        armor.Buy();
+    //        view.BuyButtonClick -= OnBuyArmor;
+    //        UpdatePlayerStats();
+    //    }
+    //    else DialogPanel.Open();
+    //}
 
-    private void TryUnlockBuyButton()
-    {
-        foreach (var view in _armorViews)
-        {
-            view.TryUnlockBuyButton(Player);
-        }
-        //for (int i = 0; i < _armorContainer.transform.childCount; i++)
-        //{
-        //    _armorContainer.transform.GetChild(i).GetComponent<ArmorView>().TryUnlockBuyButton(Player);
-        //}
-    }
+    //private void AddEquipment(List<Armor> armors)
+    //{
+    //    for (int i = 1; i < armors.Count; i++)
+    //    {
+    //        AddArmor(armors[i]);
+    //    }
+    //}
 
-    private void OnCloseGame()
-    {
-        if (_armorViews.Count > 0)
-        {
-            foreach (var view in _armorViews)
-            {
-                view.BuyButtonClick -= OnBuyArmor;
-                view.ChangeArmorButtonClick -= OnChangeArmor;
-            }
-        }
-    }
+    //private void TryUnlockBuyButton()
+    //{
+    //    foreach (var view in _armorViews)
+    //    {
+    //        view.TryUnlockBuyButton(_player);
+    //    }
+    //}
+
+    //private void OnCloseGame()
+    //{
+    //    if (_armorViews.Count > 0)
+    //    {
+    //        foreach (var view in _armorViews)
+    //        {
+    //            view.BuyButtonClick -= OnBuyArmor;
+    //            view.ChangeArmorButtonClick -= OnChangeArmor;
+    //        }
+    //    }
+    //}
 }

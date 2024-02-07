@@ -15,7 +15,7 @@ MonoBehaviour:
   _ambientVolume: 0.2721519
   _interfaceVolume: 0.2721519
   _playerCoins: 3000
-  _playerLevel: 3
+  _playerLevel: 2
   _playerExperience: 0
   _isFirstSession: 0
   _playerScore: 0

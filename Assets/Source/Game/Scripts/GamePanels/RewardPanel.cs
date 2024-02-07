@@ -28,15 +28,16 @@ public class RewardPanel : GamePanels
     [SerializeField] private Button _closePanel;
     [SerializeField] private Button _openAd;
 
-    private void OnEnable()
+    private void Awake()
     {
+        gameObject.SetActive(false);
         _levelObserver.GameEnded += OpenPanel;
         _levelObserver.LevelCompleted += GetReawrdValue;
         _closePanel.onClick.AddListener(ClosePanel);
         _openAd.onClick.AddListener(OpenRewardAd);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         _levelObserver.GameEnded -= OpenPanel;
         _levelObserver.LevelCompleted -= GetReawrdValue;

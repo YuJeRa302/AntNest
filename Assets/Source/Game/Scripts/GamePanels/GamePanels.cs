@@ -28,12 +28,4 @@ public abstract class GamePanels : MonoBehaviour
         gameObject.SetActive(false);
         PanelClosed?.Invoke();
     }
-
-    protected virtual void Subscribe() 
-    {
-
-    }
-
-    protected virtual void UpdateInfo() { }
-    protected virtual void Filling() { }
 }

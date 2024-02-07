@@ -1,44 +1,29 @@
-using System;
 using UnityEngine;
 
-public abstract class Armor : MonoBehaviour
+public class Armor : MonoBehaviour
 {
-    [Header("[Armor View]")]
-    [SerializeField] private Sprite _sprite;
-    [SerializeField] private int _price;
-    [SerializeField] private bool _isBayed;
-    [SerializeField] private int _armor;
-    [SerializeField] private int _armorLevel;
-    [Header("[Name]")]
-    [SerializeField] private string _name;
+    [SerializeField] private ArmorItem _armorItem;
 
-    public int ItemArmor => _armor;
-    public Sprite ItemIcon => _sprite;
-    public string Name => _name;
-    public int Price => _price;
-    public int ArmorLevel => _armorLevel;
-    public bool IsBayed => _isBayed;
+    public ArmorItem Item => _armorItem;
+    public int ArmorValue => _armorItem.ItemArmor;
+    public Sprite ItemIcon => _armorItem.ItemIcon;
+    public string Name => _armorItem.Name;
+    public int Price => _armorItem.Price;
+    public bool IsBayed => _armorItem.IsBayed;
+    public int Level => _armorItem.ArmorLevel;
 
-    public event Action<bool> OnChangeState;
-
-    public void Increase(int armor)
+    private void OnEnable()
     {
-        _armor += armor;
+        _armorItem.OnChangeState += SetState;
     }
 
-    public void Decrease(int armor)
+    private void OnDisable()
     {
-        _armor -= armor;
+        _armorItem.OnChangeState -= SetState;
     }
 
-    public void Buy()
-    {
-        _isBayed = true;
-    }
-
-    public void SetState(bool state)
+    private void SetState(bool state)
     {
         gameObject.SetActive(state);
-        OnChangeState?.Invoke(state);
     }
 }

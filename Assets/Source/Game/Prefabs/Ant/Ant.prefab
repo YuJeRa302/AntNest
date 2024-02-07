@@ -475,8 +475,8 @@ GameObject:
   - component: {fileID: 9096756433872126266}
   - component: {fileID: 3552352036623112986}
   - component: {fileID: 1632706678159749072}
-  - component: {fileID: 984166685897461252}
   - component: {fileID: 910157156060429933}
+  - component: {fileID: 6587045418068394551}
   m_Layer: 0
   m_Name: Iron(Epic)
   m_TagString: Untagged
@@ -554,24 +554,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &984166685897461252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 984166685897461253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eab030b39b3efe4da69cbc788bd23f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 1b7b6ca96c5c0d24cbca465070d9091e, type: 3}
-  _price: 1000
-  _isBayed: 0
-  _damage: 40
-  _weaponLevel: 3
-  _name: IronWeapon
 --- !u!222 &910157156060429933
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -580,6 +562,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 984166685897461253}
   m_CullTransparentMesh: 1
+--- !u!114 &6587045418068394551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 984166685897461253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65341298343fa9d498a5388ef0fc8662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponItem: {fileID: 0}
 --- !u!1 &1029906827538530171
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,8 +779,8 @@ GameObject:
   - component: {fileID: 2634577695745443967}
   - component: {fileID: 3109344884537627636}
   - component: {fileID: 919416000340551486}
-  - component: {fileID: 919416000340551485}
   - component: {fileID: 7960845047596034899}
+  - component: {fileID: 2833657019116907032}
   m_Layer: 0
   m_Name: WoodAxe
   m_TagString: Untagged
@@ -863,24 +858,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &919416000340551485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712097431941039851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eab030b39b3efe4da69cbc788bd23f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 75c569127cea7b24ebf347c8c59b60e5, type: 3}
-  _price: 100
-  _isBayed: 1
-  _damage: 15
-  _weaponLevel: 0
-  _name: 
 --- !u!222 &7960845047596034899
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -889,6 +866,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712097431941039851}
   m_CullTransparentMesh: 1
+--- !u!114 &2833657019116907032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712097431941039851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65341298343fa9d498a5388ef0fc8662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponItem: {fileID: 0}
 --- !u!1 &1721334001146875215
 GameObject:
   m_ObjectHideFlags: 0
@@ -2160,8 +2150,8 @@ GameObject:
   - component: {fileID: 2561274562026854640}
   - component: {fileID: 554673900521095237}
   - component: {fileID: 2330172661812786319}
-  - component: {fileID: 554673900521095236}
   - component: {fileID: 2601189120689677155}
+  - component: {fileID: 6323852214173739307}
   m_Layer: 0
   m_Name: Iron(Rare)
   m_TagString: Untagged
@@ -2239,24 +2229,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &554673900521095236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4275767351661745498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eab030b39b3efe4da69cbc788bd23f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 87dc7dfddf2eebd4a92eb392ea0dfc7a, type: 3}
-  _price: 150
-  _isBayed: 0
-  _damage: 25
-  _weaponLevel: 2
-  _name: BronzeWeapon
 --- !u!222 &2601189120689677155
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2265,6 +2237,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4275767351661745498}
   m_CullTransparentMesh: 1
+--- !u!114 &6323852214173739307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275767351661745498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65341298343fa9d498a5388ef0fc8662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponItem: {fileID: 0}
 --- !u!1 &4333730820300719212
 GameObject:
   m_ObjectHideFlags: 0
@@ -3786,7 +3771,7 @@ Transform:
   - {fileID: 1240909117737621990}
   - {fileID: 1043026799652730928}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7762064549988829407
 Animator:

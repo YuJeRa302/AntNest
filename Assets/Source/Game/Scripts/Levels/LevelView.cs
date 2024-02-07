@@ -12,15 +12,19 @@ public class LevelView : MonoBehaviour
     [SerializeField] private LeanLocalizedText _enemiesName;
     [SerializeField] private Text _enemiesCount;
     [SerializeField] private Image _imageEnemy;
+    [Header("[Canvas Loader]")]
+    [SerializeField] private CanvasLoader _canvasLoader;
 
     private void OnEnable()
     {
         _levelObserver.KillCountUpdated += UpdateEnemyKillCount;
+        _levelObserver.GameClosed += OnOpenCanvasLoader;
     }
 
     private void OnDisable()
     {
         _levelObserver.KillCountUpdated -= UpdateEnemyKillCount;
+        _levelObserver.GameClosed -= OnOpenCanvasLoader;
     }
 
     public void Initialize(string levelName, string enemiesName, Sprite levelSprite, Sprite enemiesSprite, int enemiesCount)
@@ -35,5 +39,10 @@ public class LevelView : MonoBehaviour
     private void UpdateEnemyKillCount(int value)
     {
         _enemiesCount.text = value.ToString();
+    }
+
+    private void OnOpenCanvasLoader()
+    {
+        _canvasLoader.gameObject.SetActive(true);
     }
 }

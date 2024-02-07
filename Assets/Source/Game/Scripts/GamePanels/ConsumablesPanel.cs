@@ -4,42 +4,54 @@ using UnityEngine.UI;
 
 public class ConsumablesPanel : Shop
 {
+    [SerializeField] private Shop _shop;
     [SerializeField] private ConsumablesView _consumablesView;
     [SerializeField] private GameObject _consumablesContainer;
     [SerializeField] private Button _button;
 
     private List<Consumables> _consumables;
-    private List<ConsumablesView> _consumablesViews;
+    private List<ConsumablesView> _consumablesViews = new();
+    private Player _player;
+    private LevelObserver _levelObserver;
 
-    private void OnEnable()
+    private void Awake()
     {
-        _button.onClick.AddListener(OpenShopPanel);
-        LevelObserver.GameClosed += OnCloseGame;
+        //_shop.Initialized += OnShopInitialized;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        _button.onClick.RemoveListener(OpenShopPanel);
-        LevelObserver.GameClosed -= OnCloseGame;
+        //_button.onClick.RemoveListener(OpenShopTab);
+        //_shop.Initialized -= OnShopInitialized;
+        _levelObserver.GameClosed -= OnCloseGame;
     }
 
-    protected override void Initialized()
+    protected override void FillPanel()
     {
         if (_consumables == null)
         {
-            _consumables = Player.PlayerConsumables.GetListConsumables();
+            _consumables = _player.PlayerConsumables.GetListConsumables();
             AddToList(_consumables);
         }
     }
 
+    private void OnShopInitialized(Player player, LevelObserver levelObserver)
+    {
+        _player = player;
+        _levelObserver = levelObserver;
+        //_button.onClick.AddListener(OpenShopTab);
+        _levelObserver.GameClosed += OnCloseGame;
+        FillPanel();
+    }
+
     private void TryBuyItem(Consumables consumables)
     {
-        if (consumables.Price <= Player.Wallet.GetCoins())
+        if (consumables.Price <= _player.Wallet.Coins)
         {
-            Player.PlayerConsumables.BuyConsumables(consumables.Price);
-            UpdatePlayerStats();
+            _player.PlayerConsumables.BuyConsumables(consumables.Price);
+            UpdatePlayerResource();
         }
-        else DialogPanel.Opened?.Invoke();
+        else DialogPanel.Open();
     }
 
     private void OnBuyConsumables(Consumables consumables)

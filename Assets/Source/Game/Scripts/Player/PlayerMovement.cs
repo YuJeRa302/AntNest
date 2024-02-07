@@ -7,15 +7,10 @@ public class PlayerMovement : MonoBehaviour
     private readonly float _minVectorValue = 0.0f;
     private readonly float _attackRate = 1.0f;
 
-    [Header("[Controller]")]
     [SerializeField] private CharacterController _characterController;
-    [Header("[Animator]")]
     [SerializeField] private Animator _animator;
-    [Header("[Joystick]")]
     [SerializeField] private Joystick _joystick;
-    [Header("[Player Camera]")]
     [SerializeField] private Camera _cameraPlayer;
-    [Header("[PlayerStats]")]
     [SerializeField] private Player _player;
     [Header("[AttackPoint]")]
     [SerializeField] private Transform _attackPoint;
