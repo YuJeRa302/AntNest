@@ -78,7 +78,7 @@ public class AbilityPanel : Shop
         {
             _player.PlayerStats.PlayerAbility.BuyAbility(ability);
             ability.Buy();
-            UpdatePlayerResource();
+            //UpdatePlayerResource();
             view.SellButtonClick -= OnSellButton;
         }
         else DialogPanel.OpenPanel();
@@ -90,7 +90,7 @@ public class AbilityPanel : Shop
         {
             _player.PlayerStats.PlayerAbility.UpgradeAbility(ability);
             ability.Upgrade();
-            UpdatePlayerResource();
+           // UpdatePlayerResource();
         }
         else DialogPanel.OpenPanel();
 

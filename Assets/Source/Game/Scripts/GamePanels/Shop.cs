@@ -110,7 +110,7 @@ public class Shop : GamePanels
         {
             Player.Wallet.Buy(itemView.Item.Price);
             itemView.Item.Buy();
-            UpdatePlayerResource();
+            GetPlayerResourceValue();
         }
         else DialogPanel.OpenPanel();
     }
