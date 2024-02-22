@@ -1,42 +1,35 @@
-using Lean.Localization;
-using System;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class ConsumablesView : MonoBehaviour
+public class ConsumablesView : ItemView
 {
-    [Header("[Weapon View]")]
-    [SerializeField] private Text _priceItem;
-    [SerializeField] private Image _iconItem;
-    [SerializeField] private Image _coinIcon;
-    [SerializeField] private Button _buyButton;
-    [Header("[Name]")]
-    [SerializeField] private LeanLocalizedText _name;
-
     private Consumables _consumables;
 
-    public event Action<Consumables> BuyButtonClick;
+    private void OnDestroy()
+    {
+        BuyButton.onClick.RemoveListener(OnButtonClick);
+    }
 
-    public void Render(Consumables consumables)
+    public override void Initialize<Item>(Item item, Player player)
+    {
+        _consumables = item as Consumables;
+        ShopItem = _consumables.Item;
+        AddListener();
+        Fill(_consumables);
+    }
+
+    private void Fill(Consumables consumables)
     {
         _consumables = consumables;
-        _name.TranslationName = _consumables.Name;
-        _priceItem.text = _consumables.Price.ToString();
-        _iconItem.sprite = _consumables.ItemIcon;
+        ItemName.TranslationName = _consumables.Name;
+        ItemPrice.text = _consumables.Price.ToString();
+        ItemIcon.sprite = _consumables.ItemIcon;
     }
 
-    public void OnButtonClick()
+    private void AddListener()
     {
-        BuyButtonClick?.Invoke(_consumables);
+        BuyButton.onClick.AddListener(OnButtonClick);
     }
 
-    private void OnEnable()
+    private void OnButtonClick()
     {
-        _buyButton.onClick.AddListener(OnButtonClick);
-    }
-
-    private void OnDisable()
-    {
-        _buyButton.onClick.RemoveListener(OnButtonClick);
+        BuyButtonClick?.Invoke(this);
     }
 }

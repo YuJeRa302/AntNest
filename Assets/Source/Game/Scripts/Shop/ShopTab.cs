@@ -7,28 +7,28 @@ public abstract class ShopTab : MonoBehaviour
     public TypeItem ItemType;
 
     [SerializeField] private Transform _container;
-    [SerializeField] private Button _button;
+    [SerializeField] private Button _openButton;
     [SerializeField] private Shop _shop;
     [SerializeField] private ItemView _itemView;
 
-    public event Action PanelOpened;
+    public event Action TabOpened;
 
     public Transform Container => _container;
     public ItemView ItemView => _itemView;
 
-    private void OnEnable()
+    protected void Awake()
     {
-        _button.onClick.AddListener(OpenPanel);
+        _openButton.onClick.AddListener(OpenTab);
     }
 
-    private void OnDisable()
+    protected void OnDestroy()
     {
-        _button.onClick.RemoveListener(OpenPanel);
+        _openButton.onClick.RemoveListener(OpenTab);
     }
 
-    private void OpenPanel()
+    protected virtual void OpenTab()
     {
+        TabOpened?.Invoke();
         gameObject.SetActive(true);
-        PanelOpened?.Invoke();
     }
 }

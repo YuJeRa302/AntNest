@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Create Weapon", order = 51)]

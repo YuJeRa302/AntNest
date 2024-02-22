@@ -13,11 +13,11 @@ public class Weapon : MonoBehaviour
     public bool IsBayed => _weaponItem.IsBayed;
     public int Level => _weaponItem.WeaponLevel;
 
-    public event Action<bool> OnChangeState;
+    public event Action<bool> ActiveStateChanged;
 
     public void SetState(bool state)
     {
-        OnChangeState?.Invoke(state);
         gameObject.SetActive(state);
+        ActiveStateChanged?.Invoke(state);
     }
 }

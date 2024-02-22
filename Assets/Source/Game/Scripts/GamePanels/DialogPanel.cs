@@ -8,15 +8,15 @@ public class DialogPanel : GamePanels
     private void Awake()
     {
         gameObject.SetActive(false);
-        _button.onClick.AddListener(ClosePanel);
+        _button.onClick.AddListener(Close);
     }
 
     private void OnDestroy()
     {
-        _button.onClick.RemoveListener(ClosePanel);
+        _button.onClick.RemoveListener(Close);
     }
 
-    public void Open()
+    public void OpenPanel()
     {
         gameObject.SetActive(true);
     }

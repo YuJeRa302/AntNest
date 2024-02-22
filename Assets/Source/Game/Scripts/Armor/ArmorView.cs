@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,14 +11,11 @@ public class ArmorView : ItemView
 
     private Armor _armor;
 
-   // public override event Action<ItemView> BuyButtonClick;
-    //public override event Action<ItemView> ChangeItemButtonClick;
-
     public Armor Armor => _armor;
 
     private void OnDestroy()
     {
-        _armor.Item.OnChangeState -= SetCurrent;
+        _armor.ActiveStateChanged -= SetCurrent;
         BuyButton.onClick.RemoveListener(OnButtonClick);
         BuyButton.onClick.RemoveListener(TryLockItem);
         _changeButton.onClick.RemoveListener(OnChangeCurrentArmor);
@@ -29,26 +25,26 @@ public class ArmorView : ItemView
     {
         _armor = item as Armor;
         ShopItem = _armor.Item;
-        Render(_armor);
         AddListener();
-        TryUnlockBuyButton(player);
+        Fill(_armor);
         TryLockItem();
+        TryUnlockBuyButton(player);
         TrySetCurrentArmor(_armor, player);
     }
 
-    private void Render(Armor armor)
+    private void Fill(Armor armor)
     {
         ItemName.TranslationName = armor.Name;
         ItemPrice.text = armor.Price.ToString();
         ItemIcon.sprite = armor.ItemIcon;
-        BuyButton.interactable = false;
         _armorItem.text = armor.ArmorValue.ToString();
         _levelItem.text = armor.Level.ToString();
+        BuyButton.interactable = false;
     }
 
     private void AddListener()
     {
-        _armor.Item.OnChangeState += SetCurrent;
+        _armor.ActiveStateChanged += SetCurrent;
         BuyButton.onClick.AddListener(OnButtonClick);
         BuyButton.onClick.AddListener(TryLockItem);
         _changeButton.onClick.AddListener(OnChangeCurrentArmor);
@@ -66,8 +62,7 @@ public class ArmorView : ItemView
 
     private void TrySetCurrentArmor(Armor armor, Player player)
     {
-        if (player.PlayerStats.PlayerDamage.CurrentWeapon == armor) ChangeItemButtonClick?.Invoke(this);
-        else return;
+        _isCurrentArmor.gameObject.SetActive(player.PlayerStats.PlayerArmor.CurrentArmor.Equals(armor));
     }
 
     private void TryUnlockBuyButton(Player player)
@@ -78,12 +73,12 @@ public class ArmorView : ItemView
 
     private void OnChangeCurrentArmor()
     {
-        ChangeItemButtonClick?.Invoke(this);
+        ChangeCurrentArmor?.Invoke(this);
     }
 
     private void OnButtonClick()
     {
-        //BuyButtonClick?.Invoke(this);
+        BuyButtonClick?.Invoke(this);
     }
 
     private void SetCurrent(bool state)

@@ -17,13 +17,13 @@ public abstract class GamePanels : MonoBehaviour
         LevelObserver = levelObserver;
     }
 
-    protected virtual void OpenPanel()
+    protected virtual void Open()
     {
         gameObject.SetActive(true);
         PanelOpened?.Invoke();
     }
 
-    protected virtual void ClosePanel()
+    protected virtual void Close()
     {
         gameObject.SetActive(false);
         PanelClosed?.Invoke();

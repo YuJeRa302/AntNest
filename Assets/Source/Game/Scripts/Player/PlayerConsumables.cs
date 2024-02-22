@@ -11,21 +11,25 @@ public class PlayerConsumables : MonoBehaviour
 
     public int CountHealthPotion => _currentHealthPotion;
 
-    public void BuyConsumables(int value)
+    private void OnDestroy()
     {
-        _player.Wallet.Buy(value);
-        TakePotion();
+        foreach (var consumable in _consumables)
+        {
+            consumable.Item.ItemBuyed -= TakePotion;
+        }
     }
 
-    public void GetPotion()
+    public int GetPotion()
     {
         _currentHealthPotion--;
         _player.PlayerView.ChangeCountPotion(_currentHealthPotion);
+        return _consumables[0].Item.Value;
     }
 
     public void Initialize()
     {
         AddItemToList();
+        AddListener();
         _player.PlayerView.ChangeCountPotion(_currentHealthPotion);
     }
 
@@ -45,6 +49,14 @@ public class PlayerConsumables : MonoBehaviour
         for (int i = 0; i < _consumablesTransform.childCount; i++)
         {
             _consumables.Add(_consumablesTransform.GetChild(i).GetComponent<Consumables>());
+        }
+    }
+
+    private void AddListener()
+    {
+        foreach (var consumable in _consumables)
+        {
+            consumable.Item.ItemBuyed += TakePotion;
         }
     }
 }

@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e4c190796aa74c47b38dddf1366f6a3, type: 3}
-  m_Name: LevelConfig
+  m_Script: {fileID: 11500000, guid: 072ad0cb8aa4d0249b8a56adeb8d15af, type: 3}
+  m_Name: HealthPotion
   m_EditorClassIdentifier: 
-  _ambientVolume: 0.2721519
-  _interfaceVolume: 0.2721519
-  _playerCoins: 0
-  _playerLevel: 2
-  _playerExperience: 0
-  _isFirstSession: 0
-  _playerScore: 0
+  _sprite: {fileID: 320134187, guid: 78cddcb7597c45f4fadca13f5d8b4606, type: 3}
+  _price: 50
+  _isBayed: 1
+  _name: HealthPotion
+  _value: 20

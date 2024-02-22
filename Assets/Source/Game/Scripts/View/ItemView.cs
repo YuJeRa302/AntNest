@@ -14,7 +14,8 @@ public abstract class ItemView : MonoBehaviour
     protected Item ShopItem;
 
     public Action<ItemView> BuyButtonClick;
-    public Action<ItemView> ChangeItemButtonClick;
+    public Action<ItemView> ChangeCurrentArmor;
+    public Action<ItemView> ChangeCurrentWeapon;
     public Action<ItemView> UpgradeButtonClick;
 
     public Item Item => ShopItem;

@@ -15,7 +15,7 @@ public class WeaponView : ItemView
 
     private void OnDestroy()
     {
-        _weapon.OnChangeState -= SetCurrent;
+        _weapon.ActiveStateChanged -= SetCurrent;
         BuyButton.onClick.RemoveListener(OnButtonClick);
         BuyButton.onClick.RemoveListener(TryLockItem);
         _changeButton.onClick.RemoveListener(OnChangeCurrentWeapon);
@@ -25,10 +25,10 @@ public class WeaponView : ItemView
     {
         _weapon = item as Weapon;
         ShopItem = _weapon.Item;
-        Fill(_weapon);
         AddListener();
-        TryUnlockBuyButton(player);
+        Fill(_weapon);
         TryLockItem();
+        TryUnlockBuyButton(player);
         TrySetCurrentWeapon(_weapon, player);
     }
 
@@ -37,14 +37,14 @@ public class WeaponView : ItemView
         ItemName.TranslationName = weapon.Name;
         ItemPrice.text = weapon.Price.ToString();
         ItemIcon.sprite = weapon.ItemIcon;
-        BuyButton.interactable = false;
         _itemDamage.text = weapon.Damage.ToString();
         _levelItem.text = weapon.Level.ToString();
+        BuyButton.interactable = false;
     }
 
     private void AddListener()
     {
-        _weapon.OnChangeState += SetCurrent;
+        _weapon.ActiveStateChanged += SetCurrent;
         BuyButton.onClick.AddListener(OnButtonClick);
         BuyButton.onClick.AddListener(TryLockItem);
         _changeButton.onClick.AddListener(OnChangeCurrentWeapon);
@@ -62,8 +62,7 @@ public class WeaponView : ItemView
 
     private void TrySetCurrentWeapon(Weapon weapon, Player player)
     {
-        if (player.PlayerStats.PlayerDamage.CurrentWeapon == weapon) ChangeItemButtonClick?.Invoke(this);
-        else return;
+        _isCurrentWeapon.gameObject.SetActive(player.PlayerStats.PlayerDamage.CurrentWeapon.Equals(weapon));
     }
 
     private void TryUnlockBuyButton(Player player)
@@ -74,7 +73,7 @@ public class WeaponView : ItemView
 
     private void OnChangeCurrentWeapon()
     {
-        ChangeItemButtonClick?.Invoke(this);
+        ChangeCurrentWeapon?.Invoke(this);
     }
 
     private void OnButtonClick()

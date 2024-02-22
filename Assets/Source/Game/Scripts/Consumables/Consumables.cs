@@ -1,14 +1,11 @@
 using UnityEngine;
 
-public abstract class Consumables : MonoBehaviour
+public class Consumables : MonoBehaviour
 {
-    [Header("[Consumables View]")]
-    [SerializeField] private Sprite _sprite;
-    [SerializeField] private int _price;
-    [Header("[Name]")]
-    [SerializeField] private string _name;
+    [SerializeField] private ConsumableItem _consumableItem;
 
-    public Sprite ItemIcon => _sprite;
-    public string Name => _name;
-    public int Price => _price;
+    public ConsumableItem Item => _consumableItem;
+    public Sprite ItemIcon => _consumableItem.ItemIcon;
+    public string Name => _consumableItem.Name;
+    public int Price => _consumableItem.Price;
 }

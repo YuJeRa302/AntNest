@@ -5,15 +5,17 @@ using UnityEngine.UI;
 
 public class Shop : GamePanels
 {
-    [SerializeField] private Button _openPanel;
-    [SerializeField] private Button _closePanel;
+    [SerializeField] private Button _openButton;
+    [SerializeField] private Button _closeButton;
     [SerializeField] private DialogPanel _dialogPanel;
     [SerializeField] private ShopTab[] _shopTabs;
 
     private List<ItemView> _itemViews = new();
     private List<Weapon> _weapons;
+    private List<Armor> _armors;
+    private List<Consumables> _consumables;
 
-    public event Action<int, int> PlayerResourceUpdated;
+    public event Action<int, int> PlayerResourceChanged;
 
     protected DialogPanel DialogPanel => _dialogPanel;
 
@@ -21,46 +23,59 @@ public class Shop : GamePanels
     {
         gameObject.SetActive(false);
         AddPanelsListener();
-        _openPanel.onClick.AddListener(OpenPanel);
-        _closePanel.onClick.AddListener(ClosePanel);
+        _openButton.onClick.AddListener(Open);
+        _closeButton.onClick.AddListener(Close);
     }
 
     private void OnDestroy()
     {
         RemovePanelsListener();
-        _openPanel.onClick.RemoveListener(OpenPanel);
-        _closePanel.onClick.RemoveListener(ClosePanel);
+        _openButton.onClick.RemoveListener(Open);
+        _closeButton.onClick.RemoveListener(Close);
     }
 
-    protected virtual void FillPanel() { }
-
-    protected override void OpenPanel()
+    protected override void Open()
     {
         gameObject.SetActive(true);
-        UpdatePlayerResource();
-        GetItemData();
-        CloseAllPanels();
+        GetPlayerResourceValue();
+        GetListItems();
+        CloseTabs();
     }
 
-    protected void UpdatePlayerResource()
+    protected void GetPlayerResourceValue()
     {
-        PlayerResourceUpdated?.Invoke(Player.Wallet.Coins, Player.PlayerStats.PlayerAbility.Points);
+        PlayerResourceChanged?.Invoke(Player.Wallet.Coins, Player.PlayerStats.PlayerAbility.Points);
     }
 
-    private void GetItemData()
+    protected override void Close()
+    {
+        gameObject.SetActive(false);
+        PanelClosed?.Invoke();
+        ClearItems();
+    }
+
+    private void GetListItems()
     {
         _weapons = Player.PlayerStats.PlayerDamage.GetListWeapon();
-        SearchItemContainer();
+        _armors = Player.PlayerStats.PlayerArmor.GetListArmor();
+        _consumables = Player.PlayerConsumables.GetListConsumables();
+        FillShopTabs();
     }
 
-    private void SearchItemContainer()
+    private void FillShopTabs()
     {
-        foreach (var panel in _shopTabs)
+        foreach (var tab in _shopTabs)
         {
-            switch (panel.ItemType)
+            switch (tab.ItemType)
             {
                 case TypeItem.Weapon:
-                    CreateListItem(_weapons, panel.ItemView, panel.Container);
+                    CreateListItem(_weapons, tab.ItemView, tab.Container);
+                    break;
+                case TypeItem.Armor:
+                    CreateListItem(_armors, tab.ItemView, tab.Container);
+                    break;
+                case TypeItem.Consumables:
+                    CreateListItem(_consumables, tab.ItemView, tab.Container);
                     break;
             }
         }
@@ -78,15 +93,15 @@ public class Shop : GamePanels
     {
         var view = Instantiate(itemView, container);
         view.Initialize(item, Player);
-        SetButtonListener(itemView);
+        AddButtonListener(view);
         _itemViews.Add(view);
     }
 
-    private void SetButtonListener(ItemView itemView)
+    private void AddButtonListener(ItemView itemView)
     {
         itemView.BuyButtonClick += OnBuyItem;
-        itemView.ChangeItemButtonClick += OnChangeWeapon;
-        itemView.ChangeItemButtonClick += OnChangeArmor;
+        if (itemView is WeaponView) itemView.ChangeCurrentWeapon += OnChangeWeapon;
+        if (itemView is ArmorView) itemView.ChangeCurrentArmor += OnChangeArmor;
     }
 
     private void OnBuyItem(ItemView itemView)
@@ -97,40 +112,55 @@ public class Shop : GamePanels
             itemView.Item.Buy();
             UpdatePlayerResource();
         }
-        else DialogPanel.Open();
+        else DialogPanel.OpenPanel();
     }
 
     private void OnChangeWeapon(ItemView itemView)
     {
-        Player.PlayerStats.PlayerDamage.ChangeCurrentWeapon((itemView as WeaponView).Weapon);
+        if (itemView is WeaponView) Player.PlayerStats.PlayerDamage.ChangeCurrentWeapon((itemView as WeaponView).Weapon);
+        else return;
     }
 
     private void OnChangeArmor(ItemView itemView)
     {
-        Player.PlayerStats.PlayerArmor.ChangeCurrentArmor((itemView as ArmorView).Armor);
+        if (itemView is ArmorView) Player.PlayerStats.PlayerArmor.ChangeCurrentArmor((itemView as ArmorView).Armor);
+        else return;
+    }
+
+    private void ClearItems()
+    {
+        foreach (var view in _itemViews)
+        {
+            view.BuyButtonClick -= OnBuyItem;
+            view.ChangeCurrentWeapon -= OnChangeWeapon;
+            view.ChangeCurrentArmor -= OnChangeArmor;
+            Destroy(view.gameObject);
+        }
+
+        _itemViews.Clear();
     }
 
     private void AddPanelsListener()
     {
-        foreach (var panel in _shopTabs)
+        foreach (var tab in _shopTabs)
         {
-            panel.PanelOpened += CloseAllPanels;
+            tab.TabOpened += CloseTabs;
         }
     }
 
     private void RemovePanelsListener()
     {
-        foreach (var panel in _shopTabs)
+        foreach (var tab in _shopTabs)
         {
-            panel.PanelOpened -= CloseAllPanels;
+            tab.TabOpened -= CloseTabs;
         }
     }
 
-    private void CloseAllPanels()
+    private void CloseTabs()
     {
-        foreach (var panel in _shopTabs)
+        foreach (var tab in _shopTabs)
         {
-            panel.gameObject.SetActive(false);
+            tab.gameObject.SetActive(false);
         }
     }
 }

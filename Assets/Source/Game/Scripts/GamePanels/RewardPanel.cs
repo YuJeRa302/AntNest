@@ -31,21 +31,21 @@ public class RewardPanel : GamePanels
     private void Awake()
     {
         gameObject.SetActive(false);
-        _levelObserver.GameEnded += OpenPanel;
+        _levelObserver.GameEnded += Open;
         _levelObserver.LevelCompleted += GetReawrdValue;
-        _closePanel.onClick.AddListener(ClosePanel);
+        _closePanel.onClick.AddListener(Close);
         _openAd.onClick.AddListener(OpenRewardAd);
     }
 
     private void OnDestroy()
     {
-        _levelObserver.GameEnded -= OpenPanel;
+        _levelObserver.GameEnded -= Open;
         _levelObserver.LevelCompleted -= GetReawrdValue;
-        _closePanel.onClick.RemoveListener(ClosePanel);
+        _closePanel.onClick.RemoveListener(Close);
         _openAd.onClick.RemoveListener(OpenRewardAd);
     }
 
-    protected override void ClosePanel()
+    protected override void Close()
     {
         gameObject.SetActive(false);
         InterstitialAd.Show(OnOpenAdCallback, OnCloseInterstitialAdCallback, OnErrorCallback);

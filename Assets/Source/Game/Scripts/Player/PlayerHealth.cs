@@ -60,7 +60,6 @@ public class PlayerHealth : MonoBehaviour
 
     private int Heal()
     {
-        _player.PlayerConsumables.GetPotion();
-        return _healing;
+        return _player.PlayerConsumables.GetPotion();
     }
 }

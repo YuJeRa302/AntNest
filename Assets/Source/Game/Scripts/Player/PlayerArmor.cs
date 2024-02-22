@@ -24,8 +24,8 @@ public class PlayerArmor : MonoBehaviour
 
     public void ChangeCurrentArmor(Armor armor)
     {
-        _currentArmor.Item.SetState(false);
-        armor.Item.SetState(true);
+        _currentArmor.SetState(false);
+        armor.SetState(true);
         _currentArmor = armor;
         _player.PlayerView.UpdatePlayerStats();
     }

@@ -14,15 +14,15 @@ public class PausePanel : GamePanels
     private void Awake()
     {
         gameObject.SetActive(false);
-        _levelObserver.GamePaused += OpenPanel;
-        _levelObserver.GameResumed += ClosePanel;
+        _levelObserver.GamePaused += Open;
+        _levelObserver.GameResumed += Close;
         _levelObserver.SoundMuted += SetButtonImage;
     }
 
     private void OnDestroy()
     {
-        _levelObserver.GamePaused -= OpenPanel;
-        _levelObserver.GameResumed -= ClosePanel;
+        _levelObserver.GamePaused -= Open;
+        _levelObserver.GameResumed -= Close;
         _levelObserver.SoundMuted -= SetButtonImage;
     }
 

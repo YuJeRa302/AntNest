@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Armor : MonoBehaviour
@@ -12,18 +13,11 @@ public class Armor : MonoBehaviour
     public bool IsBayed => _armorItem.IsBayed;
     public int Level => _armorItem.ArmorLevel;
 
-    private void OnEnable()
-    {
-        _armorItem.OnChangeState += SetState;
-    }
+    public event Action<bool> ActiveStateChanged;
 
-    private void OnDisable()
-    {
-        _armorItem.OnChangeState -= SetState;
-    }
-
-    private void SetState(bool state)
+    public void SetState(bool state)
     {
         gameObject.SetActive(state);
+        ActiveStateChanged?.Invoke(state);
     }
 }

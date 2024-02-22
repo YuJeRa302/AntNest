@@ -4,7 +4,7 @@ public class Wallet : MonoBehaviour
 {
     private readonly int _minCoins = 0;
 
-    private int _currentCoins = 3000;
+    private int _currentCoins = 1000;
 
     public int Coins => _currentCoins;
 

@@ -21,27 +21,27 @@ public class AbilityPanel : Shop
 
     private void OnDestroy()
     {
-       // _button.onClick.RemoveListener(OpenShopTab);
+        // _button.onClick.RemoveListener(OpenShopTab);
         //_shop.Initialized -= OnShopInitialized;
         _levelObserver.GameClosed -= OnCloseGame;
     }
 
-    protected override void FillPanel()
-    {
-        if (_abilities != null)
-        {
-            return;
-        }
-        else
-        {
-            _abilities = _player.PlayerStats.PlayerAbility.GetListAbility();
+    //protected override void FillPanel()
+    //{
+    //    if (_abilities != null)
+    //    {
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        _abilities = _player.PlayerStats.PlayerAbility.GetListAbility();
 
-            for (int i = 0; i < _abilities.Count; i++)
-            {
-                AddAbility(_abilities[i]);
-            }
-        }
-    }
+    //        for (int i = 0; i < _abilities.Count; i++)
+    //        {
+    //            AddAbility(_abilities[i]);
+    //        }
+    //    }
+    //}
 
     private void OnShopInitialized(Player player, LevelObserver levelObserver)
     {
@@ -49,7 +49,7 @@ public class AbilityPanel : Shop
         _levelObserver = levelObserver;
         //_button.onClick.AddListener(OpenShopTab);
         _levelObserver.GameClosed += OnCloseGame;
-        FillPanel();
+        //FillPanel();
     }
 
     private void AddAbility(Ability ability)
@@ -81,7 +81,7 @@ public class AbilityPanel : Shop
             UpdatePlayerResource();
             view.SellButtonClick -= OnSellButton;
         }
-        else DialogPanel.Open();
+        else DialogPanel.OpenPanel();
     }
 
     private void TryUpgradeAbility(Ability ability, AbilityView view)
@@ -92,7 +92,7 @@ public class AbilityPanel : Shop
             ability.Upgrade();
             UpdatePlayerResource();
         }
-        else DialogPanel.Open();
+        else DialogPanel.OpenPanel();
 
         if (ability.MaxLevel == _player.PlayerStats.PlayerAbility.Ability[0].CurrentLevel) view.UpgradeButtonClick -= OnUpgradeButton;
     }
