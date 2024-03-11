@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,11 +11,13 @@ public abstract class ShopTab : MonoBehaviour
     [SerializeField] private Button _openButton;
     [SerializeField] private Shop _shop;
     [SerializeField] private ItemView _itemView;
+    [SerializeField] private List<ItemData> _items;
 
     public event Action TabOpened;
 
     public Transform Container => _container;
     public ItemView ItemView => _itemView;
+    public List<ItemData> Items => _items;
 
     protected void Awake()
     {

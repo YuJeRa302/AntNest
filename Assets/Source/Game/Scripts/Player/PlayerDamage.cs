@@ -16,11 +16,11 @@ public class PlayerDamage : MonoBehaviour
     public Weapon CurrentWeapon => _currentWeapon;
     public int AbilityDamage => _abilityDamage;
 
-    public void Initialize()
-    {
-        AddItemToList();
-        _currentWeapon = _weapons[0];
-    }
+    //public void Initialize()
+    //{
+    //    AddItemToList();
+    //    _currentWeapon = _weapons[0];
+    //}
 
     public void ChangeCurrentWeapon(Weapon weapon)
     {
@@ -35,9 +35,9 @@ public class PlayerDamage : MonoBehaviour
         return _weapons;
     }
 
-    public void Increase(int damage, int hitCount, ParticleSystem effect)
+    public void Increase(int damage, int hitCount)
     {
-        _player.PlayerStats.PlayerAbility.SetEffect(effect);
+        //_player.PlayerStats.PlayerAbility.SetEffect(effect);
         _hitCount = hitCount;
         _abilityDamage = damage;
          //_currentWeapon.Increase(_abilityDamage);

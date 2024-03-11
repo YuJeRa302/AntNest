@@ -3,53 +3,44 @@ using UnityEngine;
 
 public class PlayerEquipment : MonoBehaviour
 {
-    [Header("[Transform]")]
+    [Header("[Container]")]
     [SerializeField] private Transform _weponsTransform;
     [SerializeField] private Transform _armorsTransform;
-    [Header("[Weapon]")]
+    [Header("[List Equipment]")]
     [SerializeField] private List<Equipment> _weapon;
-    [Header("[Armor]")]
     [SerializeField] private List<Equipment> _armor;
-    [Header("[Wallet]")]
-    [SerializeField] private Wallet _wallet;
-    [Header("[PlayerStats]")]
-    [SerializeField] private PlayerStats _playerStats;
-    //сделать отдельный скрипт под оружие отдельный под армор
+    [Header("[Player Entities]")]
+    [SerializeField] private Player _player;
+    [Header("[Equipment Data]")]
+    [SerializeField] private List<ItemData> _itemDatas;
+
     private Equipment _currentWeapon;
     private Equipment _currentArmor;
 
     public Equipment CurrentWeapon => _currentWeapon;
     public Equipment CurrentArmor => _currentArmor;
-    public int CountWeapon => _weapon.Count;
-    public int CountArmor => _armor.Count;
 
-    public void Initialized()
+    public void Initialize()
     {
-        AddItemToList(_weponsTransform, _armorsTransform, _weapon, _armor);
+        foreach (var item in _itemDatas)
+        {
+            AddEquipment((item as EquipmentItem).Template as Equipment);
+        }
 
+        _weapon[0].gameObject.SetActive(true);
         _currentWeapon = _weapon[0];
-        _currentArmor = _armor[0];
     }
 
-    public void BuyEquipment(Equipment equipment)
+    public void AddEquipment(Equipment equipment)
     {
-        _wallet.Buy(equipment.Price);
-
-        if (equipment is Axe1) _weapon.Add(equipment);
-        else _armor.Add(equipment);
+        if (equipment is Weapon) CreateEquipment(equipment, _weponsTransform, _weapon);
+        else CreateEquipment(equipment, _armorsTransform, _armor);
     }
+
     public void ChangeCurrentEquipment(Equipment equipment)
     {
-        if (equipment is Axe1) ChangeEquipment(equipment, ref _currentWeapon);
+        if (equipment is Weapon) ChangeEquipment(equipment, ref _currentWeapon);
         else ChangeEquipment(equipment, ref _currentArmor);
-    }
-
-    private void ChangeEquipment(Equipment newEquipment, ref Equipment currentequipment)
-    {
-        currentequipment.SetState(false);
-        newEquipment.SetState(true);
-        currentequipment = newEquipment;
-       // _playerStats.UpdatePlayerStats(currentequipment.Value, currentequipment.Value);
     }
 
     public List<Equipment> GetListWeapon()
@@ -62,37 +53,18 @@ public class PlayerEquipment : MonoBehaviour
         return _armor;
     }
 
-    public void IncreaseArmor(int armor)
+    private void ChangeEquipment(Equipment newEquipment, ref Equipment currentEquipment)
     {
-        _currentArmor.Increase(armor);
+        currentEquipment.SetState(false);
+        newEquipment.SetState(true);
+        currentEquipment = newEquipment;
+        _player.PlayerView.UpdatePlayerStats();
     }
 
-    public void DecreaseArmor(int armor)
+    private void CreateEquipment(Equipment equipment, Transform transform, List<Equipment> listEquipment)
     {
-        _currentArmor.Decrease(armor);
-    }
-
-    public void IncreaseDamage(int armor)
-    {
-        _currentWeapon.Increase(armor);
-    }
-
-    public void DecreaseDamage(int armor)
-    {
-        _currentWeapon.Decrease(armor);
-    }
-
-    private void AddItem(Transform container, List<Equipment> equipment)
-    {
-        for (int i = 0; i < container.childCount; i++)
-        {
-            equipment.Add(container.GetChild(i).GetComponent<Equipment>());
-        }
-    }
-
-    private void AddItemToList(Transform containerWeapon, Transform containerArmor, List<Equipment> weapon, List<Equipment> armor)
-    {
-        AddItem(containerWeapon, weapon);
-        AddItem(containerArmor, armor);
+        Equipment newEquipment = Instantiate(equipment, transform);
+        newEquipment.gameObject.SetActive(false);
+        listEquipment.Add(newEquipment);
     }
 }

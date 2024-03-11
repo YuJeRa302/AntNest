@@ -6,10 +6,7 @@ public class PlayerHealth : MonoBehaviour
     private readonly int _minHealth = 0;
     private readonly int _maxHealth = 100;
 
-    [Header("[Player]")]
     [SerializeField] private Player _player;
-    [Header("[Healing Potion Value]")]
-    [SerializeField] private int _healing = 20;
 
     private int _currentHealth = 0;
 
@@ -21,7 +18,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Initialize()
     {
-        _currentHealth = _maxHealth;
+        _currentHealth = 50;
     }
 
     public void TakeDamage(int damage)

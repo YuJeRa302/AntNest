@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
 
-[Serializable]
-public class AbilityLevel : MonoBehaviour
+[CreateAssetMenu(fileName = "New Ability Level Value", menuName = "Create Ability Level", order = 51)]
+public class AbilityLevel : ScriptableObject
 {
     public int Level;
     public int AbilityValue;

@@ -1,86 +1,105 @@
-using Lean.Localization;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipmentView : MonoBehaviour
+public class EquipmentView : ItemView
 {
-    [Header("[Equipment View]")]
-    [Header("[Text]")]
-    [SerializeField] private Text _priceItem;
-    [SerializeField] private Text _itemValue;
-    [SerializeField] private Text _itemLevel;
-    [Header("[Image]")]
-    [SerializeField] private Image _iconItem;
-    [SerializeField] private Image _coinIcon;
-    [SerializeField] private Image _isBayed;
-    [SerializeField] private Image _isCurrentEquipment;
-    [Header("[Button]")]
-    [SerializeField] private Button _buyButton;
     [SerializeField] private Button _changeButton;
-    [Header("[LeanLocalizedText]")]
-    [SerializeField] private LeanLocalizedText _name;
+    [SerializeField] private Image _isBayed;
+    [SerializeField] private Image _shopIcon;
+    [SerializeField] private Image _isCurrentWeapon;
+    [SerializeField] private Text _itemValue;
+    [SerializeField] private Text _levelItem;
 
-    private Equipment _equipment;
+    public event Action<ItemView> ChangeCurrentEquipment;
 
-    public event Action<Equipment, EquipmentView> BuyButtonClick;
-    public event Action<Equipment> ChangeEquipmentButtonClick;
-
-    public void Render(Equipment equipment)
+    private void OnDestroy()
     {
-        _equipment = equipment;
-        _name.TranslationName = equipment.Name;
-        _priceItem.text = equipment.Price.ToString();
-        _iconItem.sprite = equipment.ItemIcon;
-        _itemValue.text = equipment.Value.ToString();
-        _itemLevel.text = equipment.Level.ToString();
-        _buyButton.interactable = false;
+        (ItemObj as Equipment).ActiveStateChanged -= SetCurrent;
+        BuyButton.onClick.RemoveListener(OnButtonClick);
+        BuyButton.onClick.RemoveListener(TryLockItem);
+        _changeButton.onClick.RemoveListener(OnChangeCurrentEquipment);
     }
 
-    public void TryLockItem()
+    public override void Initialize(ItemData itemData, Player player)
     {
-        if (_equipment.IsBayed)
+        ItemObj = (itemData as EquipmentItem).Template;
+        ItemDataPrice = (itemData as EquipmentItem).Price;
+        GetPlayerEquipment(player);
+        AddListener();
+        Fill(itemData);
+        TryLockItem();
+        TryUnlockBuyButton(player, itemData);
+        TrySetCurrentEquipment(ItemObj as Equipment, player);
+    }
+
+    private void GetPlayerEquipment(Player player)
+    {
+        List<Equipment> equipmentList;
+
+        if ((ItemObj as Equipment) is Weapon) equipmentList = player.PlayerStats.PlayerEquipment.GetListWeapon();
+        else equipmentList = player.PlayerStats.PlayerEquipment.GetListArmor();
+
+        foreach (var equipment in equipmentList)
         {
-            _buyButton.gameObject.SetActive(false);
+            if (equipment.Value.Equals((ItemObj as Equipment).Value)) ItemObj = equipment;
+        }
+    }
+
+    private void Fill(ItemData itemData)
+    {
+        ItemName.TranslationName = (itemData as EquipmentItem).Name;
+        ItemPrice.text = (itemData as EquipmentItem).Price.ToString();
+        ItemIcon.sprite = (itemData as EquipmentItem).ItemIcon;
+        _itemValue.text = (itemData as EquipmentItem).Value.ToString();
+        _levelItem.text = (itemData as EquipmentItem).Level.ToString();
+        _shopIcon.sprite = (itemData as EquipmentItem).ShopIcon;
+        BuyButton.interactable = false;
+    }
+
+    private void AddListener()
+    {
+        (ItemObj as Equipment).ActiveStateChanged += SetCurrent;
+        BuyButton.onClick.AddListener(OnButtonClick);
+        BuyButton.onClick.AddListener(TryLockItem);
+        _changeButton.onClick.AddListener(OnChangeCurrentEquipment);
+    }
+
+    private void TryLockItem()
+    {
+        if ((ItemObj as Equipment).IsBayed)
+        {
+            BuyButton.gameObject.SetActive(false);
             _isBayed.gameObject.SetActive(true);
             _changeButton.gameObject.SetActive(true);
         }
     }
 
-    public void OnChangeCurrentEquipment()
+    private void TrySetCurrentEquipment(Equipment equipment, Player player)
     {
-        ChangeEquipmentButtonClick?.Invoke(_equipment);
+        if (equipment is Weapon) _isCurrentWeapon.gameObject.SetActive(player.PlayerStats.PlayerEquipment.CurrentWeapon.Equals(equipment));
+        else _isCurrentWeapon.gameObject.SetActive(player.PlayerStats.PlayerEquipment.CurrentArmor.Equals(equipment));
     }
 
-    public void OnButtonClick()
+    private void TryUnlockBuyButton(Player player, ItemData itemData)
     {
-        BuyButtonClick?.Invoke(_equipment, this);
+        if (player.PlayerStats.Level >= (itemData as EquipmentItem).Level) BuyButton.interactable = true;
+        else return;
     }
 
-    public void TryUnlockBuyButton(Player player)
+    private void OnChangeCurrentEquipment()
     {
-       // if (player.Level >= _equipment.Level) _buyButton.interactable = true;
-       // else return;
+        ChangeCurrentEquipment?.Invoke(this);
     }
 
-    private void OnEnable()
+    private void OnButtonClick()
     {
-        _equipment.OnChangeState += SetCurrent;
-        _buyButton.onClick.AddListener(OnButtonClick);
-        _buyButton.onClick.AddListener(TryLockItem);
-        _changeButton.onClick.AddListener(OnChangeCurrentEquipment);
-    }
-
-    private void OnDisable()
-    {
-        _equipment.OnChangeState -= SetCurrent;
-        _buyButton.onClick.RemoveListener(OnButtonClick);
-        _buyButton.onClick.RemoveListener(TryLockItem);
-        _changeButton.onClick.RemoveListener(OnChangeCurrentEquipment);
+        BuyButtonClick?.Invoke(this);
     }
 
     private void SetCurrent(bool state)
     {
-        _isCurrentEquipment.gameObject.SetActive(state);
+        _isCurrentWeapon.gameObject.SetActive(state);
     }
 }

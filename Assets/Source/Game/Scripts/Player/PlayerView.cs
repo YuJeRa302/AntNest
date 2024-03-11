@@ -72,8 +72,8 @@ public class PlayerView : MonoBehaviour
 
     public void UpdatePlayerStats()
     {
-        _playerArmor.text = _player.PlayerStats.Armor.ToString();
-        _playerDamage.text = _player.PlayerStats.Daamge.ToString();
+       // _playerArmor.text = _player.PlayerStats.PlayerEquipment.CurrentArmor.Value.ToString();
+        //_playerDamage.text = _player.PlayerStats.PlayerEquipment.CurrentWeapon.Value.ToString();
     }
 
     private void OnEnable()

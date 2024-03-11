@@ -18,22 +18,6 @@ public class PlayerAbility : MonoBehaviour
     public List<Ability> Ability => _abilities;
     public ParticleSystem AbilityEffect => _abilityEffect;
 
-    public void BuyAbility(Ability ability)
-    {
-        if (_points >= ability.Price)
-        {
-            _abilities.Add(ability);
-            GivePoints(ability.Price);
-        }
-        else return;
-    }
-
-    public void UpgradeAbility(Ability ability)
-    {
-        if (_points >= ability.UpgradePrice) GivePoints(ability.UpgradePrice);
-        else return;
-    }
-
     public List<Ability> GetListAbility()
     {
         return _abilities;
@@ -49,7 +33,7 @@ public class PlayerAbility : MonoBehaviour
         _abilityEffect = abilityEffect;
     }
 
-    private void GivePoints(int value)
+    public void GivePoints(int value)
     {
         _points = Mathf.Clamp(_points - value, _nullValue, _points);
     }

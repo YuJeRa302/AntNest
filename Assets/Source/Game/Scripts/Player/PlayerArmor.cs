@@ -35,9 +35,9 @@ public class PlayerArmor : MonoBehaviour
         return _armor;
     }
 
-    public void Increase(int armor, int numberDamageBlocks, ParticleSystem effect)
+    public void Increase(int armor, int numberDamageBlocks)
     {
-        _player.PlayerStats.PlayerAbility.SetEffect(effect);
+        //_player.PlayerStats.PlayerAbility.SetEffect(effect);
         _numberDamageBlocks = numberDamageBlocks;
         _abilityArmor = armor;
         //_currentArmor.Increase(_abilityArmor);

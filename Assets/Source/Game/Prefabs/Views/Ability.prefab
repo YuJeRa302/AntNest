@@ -435,7 +435,7 @@ RectTransform:
   - {fileID: 5898217559392611476}
   - {fileID: 8792601253225120356}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -454,18 +454,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e59448b41487e45846525efa12876f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _price: {fileID: 2290352925085571752}
+  ItemPrice: {fileID: 2290352925085571752}
+  ItemIcon: {fileID: 1005282116187056441}
+  BuyButton: {fileID: 2247351778437176451}
+  ItemName: {fileID: 3888447298487036316}
   _currentDelay: {fileID: 7796745105006108702}
   _currentAbilityValue: {fileID: 4115940378851368360}
-  _iconAbility: {fileID: 1005282116187056441}
-  _sellButton: {fileID: 2247351778437176451}
   _upgradeButton: {fileID: 2561636737161706020}
-  _abilityValueImage: {fileID: 2841571678121271224}
+  _shopImage: {fileID: 2841571678121271224}
   _nextLevelDelay: {fileID: 1415707373719817853}
   _nextLevelAbilityValue: {fileID: 4089182210181298136}
   _upgradeStats: {fileID: 7206956181757041415}
   _description: {fileID: 322279909801918807}
-  _name: {fileID: 3888447298487036316}
 --- !u!222 &196578088233146723
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1342,7 +1342,7 @@ GameObject:
   - component: {fileID: 2217611991733972284}
   - component: {fileID: 2841571678121271224}
   m_Layer: 5
-  m_Name: abilityValueImage
+  m_Name: shopImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

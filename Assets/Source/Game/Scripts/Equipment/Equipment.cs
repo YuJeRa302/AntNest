@@ -1,43 +1,22 @@
 using System;
 using UnityEngine;
 
-public abstract class Equipment : MonoBehaviour
+public abstract class Equipment : ItemObject
 {
-    [Header("[Equipment View]")]
-    [SerializeField] private Sprite _sprite;
-    [SerializeField] private int _price;
-    [SerializeField] private bool _isBayed;
     [SerializeField] private int _value;
-    [SerializeField] private int _level;
-    [SerializeField] private string _name;
+
+    public event Action<bool> ActiveStateChanged;
 
     public int Value => _value;
-    public Sprite ItemIcon => _sprite;
-    public string Name => _name;
-    public int Price => _price;
-    public int Level => _level;
-    public bool IsBayed => _isBayed;
 
-    public event Action<bool> OnChangeState;
-
-    public void Increase(int increaseValue)
+    public void LoadItemData(int value)
     {
-        _value += increaseValue;
-    }
-
-    public void Decrease(int decreaseValue)
-    {
-        _value -= decreaseValue;
-    }
-
-    public void Buy()
-    {
-        _isBayed = true;
+        _value = value;
     }
 
     public void SetState(bool state)
     {
         gameObject.SetActive(state);
-        OnChangeState?.Invoke(state);
+        ActiveStateChanged?.Invoke(state);
     }
 }

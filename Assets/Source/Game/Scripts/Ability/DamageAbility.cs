@@ -9,7 +9,7 @@ public class DamageAbility : Ability
     {
         if (IsUseAbility == false)
         {
-            Player.PlayerStats.PlayerDamage.Increase(CurrentAbilityValue, _hitCount, Effect);
+            Player.PlayerStats.PlayerDamage.Increase(CurrentAbilityValue, _hitCount);
             ApplyAbility(CurrentDelay);
         }
         else return;
