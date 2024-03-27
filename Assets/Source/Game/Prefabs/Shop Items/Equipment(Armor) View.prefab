@@ -683,16 +683,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2042311c52970b94a8b0fddc51751a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _priceItem: {fileID: 1635363682178343232}
-  _itemValue: {fileID: 2524563684199472844}
-  _itemLevel: {fileID: 3345728255143587084}
-  _iconItem: {fileID: 3371217382558966983}
-  _coinIcon: {fileID: 584647647126626489}
-  _isBayed: {fileID: 5861275595148244762}
-  _isCurrentEquipment: {fileID: 6332072686529715731}
-  _buyButton: {fileID: 2494440166810893653}
+  ItemPrice: {fileID: 0}
+  ItemIcon: {fileID: 0}
+  BuyButton: {fileID: 2494440166810893653}
+  ItemName: {fileID: 7312342018327300406}
   _changeButton: {fileID: 8508093552191021740}
-  _name: {fileID: 7312342018327300406}
+  _isBayed: {fileID: 5861275595148244762}
+  _shopIcon: {fileID: 0}
+  _isCurrentWeapon: {fileID: 0}
+  _itemValue: {fileID: 2524563684199472844}
+  _levelItem: {fileID: 3345728255143587084}
 --- !u!1 &2741299854389208583
 GameObject:
   m_ObjectHideFlags: 0

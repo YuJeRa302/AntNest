@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         foreach (Collider collider in coliderEnemy)
         {
             //if (collider.TryGetComponent<Enemy>(out Enemy enemy)) enemy.TakeDamage(_player.PlayerStats.PlayerDamage.CurrentWeapon.Damage);
-            if (collider.TryGetComponent<Enemy>(out Enemy enemy)) enemy.TakeDamage(_player.PlayerStats.PlayerEquipment.CurrentWeapon.Value);
+            // if (collider.TryGetComponent<Enemy>(out Enemy enemy)) enemy.TakeDamage((_player.PlayerStats.PlayerEquipment.CurrentWeapon.State.ItemData as EquipmentItemData).Value);
         }
     }
 

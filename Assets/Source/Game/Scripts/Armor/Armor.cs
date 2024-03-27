@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Armor : Equipment
+public class Armor : EquipmentItemGameObject
 {
     //[SerializeField] private ArmorItem _armorItem;
 

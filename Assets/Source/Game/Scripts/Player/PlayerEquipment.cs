@@ -1,70 +1,109 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerEquipment : MonoBehaviour
 {
-    [Header("[Container]")]
-    [SerializeField] private Transform _weponsTransform;
-    [SerializeField] private Transform _armorsTransform;
-    [Header("[List Equipment]")]
-    [SerializeField] private List<Equipment> _weapon;
-    [SerializeField] private List<Equipment> _armor;
-    [Header("[Player Entities]")]
+    private const string SaveKey = "PlayerEquipment";
+    
+    [Header("[Player Entity]")]
     [SerializeField] private Player _player;
-    [Header("[Equipment Data]")]
-    [SerializeField] private List<ItemData> _itemDatas;
+    [Header("[Containers]")]
+    [SerializeField] private Transform _weaponObjectContainer;
+    [SerializeField] private Transform _armorObjectContainer;
+    [Header("[Default Equipment Data]")] 
+    [SerializeField] private PlayerEquipmentState _defaultPlayerEquipmentState;
 
-    private Equipment _currentWeapon;
-    private Equipment _currentArmor;
+    private PlayerEquipmentState _playerEquipmentState;
+    private EquipmentItemGameObject _weaponObject;
+    private EquipmentItemGameObject _armorObject;
+    
+    public event Action EquipmentChanged;
+    
+    public PlayerEquipmentState PlayerEquipmentState => _playerEquipmentState;
+    public EquipmentItemState CurrentWeapon => _playerEquipmentState.EquippedWeapon;
+    public EquipmentItemState CurrentArmor => _playerEquipmentState.EquippedArmor;
 
-    public Equipment CurrentWeapon => _currentWeapon;
-    public Equipment CurrentArmor => _currentArmor;
+    public List<EquipmentItemState> ListWeapon => _playerEquipmentState.Items.Where(item => item.ItemData.ItemType == TypeItem.Weapon).ToList();
+
+    public List<EquipmentItemState> ListArmor => _playerEquipmentState.Items.Where(item => item.ItemData.ItemType == TypeItem.Armor).ToList();
+
+    private void Awake()
+    {
+        LoadPlayerEquipmentState();
+    }
 
     public void Initialize()
     {
-        foreach (var item in _itemDatas)
+        LoadPlayerEquipmentState();
+    }
+
+    public void BuyEquipmentItem(EquipmentItemState equipmentItemState)
+    {
+        equipmentItemState.IsBuyed = true;
+    }
+
+    public void EquipWeapon(EquipmentItemState equipmentItemState)
+    {
+        if (equipmentItemState == null) 
+            return;
+        
+        if (_weaponObject != null)
+            Destroy(_weaponObject.gameObject);
+        
+        if (CurrentWeapon != null)
+            CurrentWeapon.IsEquipped = false;
+        
+        equipmentItemState.IsEquipped = true;
+        _weaponObject = Instantiate(equipmentItemState.ItemData.ItemGameObject as EquipmentItemGameObject, _weaponObjectContainer);
+        _player.PlayerView.UpdatePlayerStats();
+        SavePlayerEquipmentState();
+    }
+
+    public void EquipArmor(EquipmentItemState equipmentItemState)
+    {
+        if (equipmentItemState == null) 
+            return;
+        
+        if (_armorObject != null)
+            Destroy(_armorObject.gameObject);
+        
+        if (CurrentArmor != null)
+            CurrentArmor.IsEquipped = false;
+        
+        equipmentItemState.IsEquipped = true;
+        _armorObject = Instantiate(equipmentItemState.ItemData.ItemGameObject as EquipmentItemGameObject, _armorObjectContainer);
+        _player.PlayerView.UpdatePlayerStats();
+        SavePlayerEquipmentState();
+    }
+
+    private void LoadPlayerEquipmentState()
+    {
+        if (PlayerPrefs.HasKey(SaveKey))
         {
-            AddEquipment((item as EquipmentItem).Template as Equipment);
+            _playerEquipmentState = JsonUtility.FromJson<PlayerEquipmentState>(PlayerPrefs.GetString(SaveKey));
+        }
+        else
+        {
+            _playerEquipmentState = _defaultPlayerEquipmentState;
+            PlayerPrefs.SetString(SaveKey, JsonUtility.ToJson(_playerEquipmentState));
         }
 
-        _weapon[0].gameObject.SetActive(true);
-        _currentWeapon = _weapon[0];
+        EquipWeapon(_playerEquipmentState.EquippedWeapon);
+        EquipArmor(_playerEquipmentState.EquippedArmor);
     }
 
-    public void AddEquipment(Equipment equipment)
+    private void SavePlayerEquipmentState()
     {
-        if (equipment is Weapon) CreateEquipment(equipment, _weponsTransform, _weapon);
-        else CreateEquipment(equipment, _armorsTransform, _armor);
+        PlayerPrefs.SetString(SaveKey, JsonUtility.ToJson(_playerEquipmentState));
     }
+}
 
-    public void ChangeCurrentEquipment(Equipment equipment)
-    {
-        if (equipment is Weapon) ChangeEquipment(equipment, ref _currentWeapon);
-        else ChangeEquipment(equipment, ref _currentArmor);
-    }
-
-    public List<Equipment> GetListWeapon()
-    {
-        return _weapon;
-    }
-
-    public List<Equipment> GetListArmor()
-    {
-        return _armor;
-    }
-
-    private void ChangeEquipment(Equipment newEquipment, ref Equipment currentEquipment)
-    {
-        currentEquipment.SetState(false);
-        newEquipment.SetState(true);
-        currentEquipment = newEquipment;
-        _player.PlayerView.UpdatePlayerStats();
-    }
-
-    private void CreateEquipment(Equipment equipment, Transform transform, List<Equipment> listEquipment)
-    {
-        Equipment newEquipment = Instantiate(equipment, transform);
-        newEquipment.gameObject.SetActive(false);
-        listEquipment.Add(newEquipment);
-    }
+[Serializable]
+public struct PlayerEquipmentState
+{
+    public List<EquipmentItemState> Items;
+    public EquipmentItemState EquippedWeapon => Items.FirstOrDefault(item => item.IsEquipped && item.ItemData.ItemType == TypeItem.Weapon);
+    public EquipmentItemState EquippedArmor => Items.FirstOrDefault(item => item.IsEquipped && item.ItemData.ItemType == TypeItem.Armor);
 }

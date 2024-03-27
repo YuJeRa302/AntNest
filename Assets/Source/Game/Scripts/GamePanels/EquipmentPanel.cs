@@ -1,18 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EquipmentPanel : Shop
 {
+    [FormerlySerializedAs("_weaponView")]
     [Header("[Views]")]
-    [SerializeField] private EquipmentView _weaponView;
-    [SerializeField] private EquipmentView _armorView;
+    [SerializeField] private EquipmentPanelItemView _weaponPanelItemView;
+    [SerializeField] private EquipmentPanelItemView _armorPanelItemView;
     [Header("[Containers]")]
     [SerializeField] private GameObject _weaponContainer;
     [SerializeField] private GameObject _armorContainer;
 
-    private List<Equipment> _weapons;
-    private List<Equipment> _armors;
-    //сделать отдельный скрипт под оружие отдельный под армор
+    private List<EquipmentItemGameObject> _weapons;
+    private List<EquipmentItemGameObject> _armors;
+    //СЃРґРµР»Р°С‚СЊ РѕС‚РґРµР»СЊРЅС‹Р№ СЃРєСЂРёРїС‚ РїРѕРґ РѕСЂСѓР¶РёРµ РѕС‚РґРµР»СЊРЅС‹Р№ РїРѕРґ Р°СЂРјРѕСЂ
 
     public void OpenEquipmentPanel(Panels panel)
     {
@@ -68,7 +70,7 @@ public class EquipmentPanel : Shop
     //    TryUnlockEquipment(_armorContainer);
     //}
 
-    private void AddEquipmentToList(List<Equipment> equipment, EquipmentView equipmentView, GameObject container)
+    private void AddEquipmentToList(List<EquipmentItemGameObject> equipment, EquipmentPanelItemView equipmentPanelItemView, GameObject container)
     {
         for (int i = 1; i < equipment.Count; i++)
         {

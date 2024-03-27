@@ -24,8 +24,8 @@ public class PlayerDamage : MonoBehaviour
 
     public void ChangeCurrentWeapon(Weapon weapon)
     {
-        _currentWeapon.SetState(false);
-        weapon.SetState(true);
+        _currentWeapon.SetActive(false);
+        weapon.SetActive(true);
         _currentWeapon = weapon;
         _player.PlayerView.UpdatePlayerStats();
     }

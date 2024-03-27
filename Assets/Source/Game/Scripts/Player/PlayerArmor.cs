@@ -19,13 +19,13 @@ public class PlayerArmor : MonoBehaviour
     public void Initialize()
     {
         AddItemToList();
-        _currentArmor = _armor[0];
+        //_currentArmor = _armor[0];
     }
 
     public void ChangeCurrentArmor(Armor armor)
     {
-        _currentArmor.SetState(false);
-        armor.SetState(true);
+        _currentArmor.SetActive(false);
+        armor.SetActive(true);
         _currentArmor = armor;
         _player.PlayerView.UpdatePlayerStats();
     }

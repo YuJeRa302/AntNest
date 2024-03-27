@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Ability : ItemObject
+public abstract class Ability : ItemGameObject
 {
     private readonly string _maxLevel = "MAX";
 
@@ -25,7 +25,7 @@ public abstract class Ability : ItemObject
     public int CurrentAbilityValue => _abilityItem.CurrentAbilityValue;
     public int CurrentLevel => _abilityItem.CurrentLevel;
     public int MaxLevel => _abilityItem.AbilityLevels.Count;
-    public bool IsBayed => _abilityItem.IsBayed;
+    public bool IsBayed => _abilityItem.IsBuyedByDefault;
     public string Description => _abilityItem.Description;
     public string Name => _abilityItem.Name;
     public float AnimationTime => _animationTime;

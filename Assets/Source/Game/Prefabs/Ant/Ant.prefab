@@ -3720,11 +3720,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b291cc20c7b7a964f9ceb3bda3c7bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weponsTransform: {fileID: 0}
-  _armorsTransform: {fileID: 0}
-  _weapon: []
-  _armor: []
-  _player: {fileID: 0}
+  _player: {fileID: 7762064549988829404}
+  _weaponObjectContainer: {fileID: 8562140622180195217}
+  _armorObjectContainer: {fileID: 7597173455443938265}
+  _state:
+    UnequipmentedItems: []
+    EquippedWeapon: {fileID: 0}
+    EquippedArmor: {fileID: 0}
 --- !u!1 &7958748987408296165
 GameObject:
   m_ObjectHideFlags: 0
