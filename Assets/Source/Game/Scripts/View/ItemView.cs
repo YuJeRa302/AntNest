@@ -11,13 +11,11 @@ public abstract class ItemView : MonoBehaviour
     [SerializeField] protected Button BuyButton;
     [SerializeField] protected LeanLocalizedText ItemName;
 
-    protected ItemObject ItemObj;
-    protected int ItemDataPrice;
+    private ItemState _itemState;
 
     public Action<ItemView> BuyButtonClick;
 
-    public ItemObject ItemObject => ItemObj;
-    public int Price => ItemDataPrice;
+    public ItemState ItemState => _itemState;
 
-    public virtual void Initialize(ItemData itemData, Player player) { }
+    public virtual void Initialize(ItemState itemState, Player player) { }
 }

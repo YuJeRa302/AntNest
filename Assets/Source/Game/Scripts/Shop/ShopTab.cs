@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,17 +6,14 @@ public abstract class ShopTab : MonoBehaviour
 {
     public TypeItem ItemType;
 
-    [SerializeField] private Transform _container;
+    [SerializeField] protected GameObject ItemContainer;
+
+    protected DialogPanel DialogPanel;
+
     [SerializeField] private Button _openButton;
     [SerializeField] private Shop _shop;
-    [SerializeField] private ItemView _itemView;
-    [SerializeField] private List<ItemData> _items;
 
     public event Action TabOpened;
-
-    public Transform Container => _container;
-    public ItemView ItemView => _itemView;
-    public List<ItemData> Items => _items;
 
     protected void Awake()
     {
@@ -29,9 +25,22 @@ public abstract class ShopTab : MonoBehaviour
         _openButton.onClick.RemoveListener(OpenTab);
     }
 
+    public void Initialize(DialogPanel dialogPanel)
+    {
+        DialogPanel = dialogPanel;
+    }
+
     protected virtual void OpenTab()
     {
         TabOpened?.Invoke();
         gameObject.SetActive(true);
+        FillTab();
+    }
+
+    protected virtual void FillTab() { }
+
+    protected virtual void UpdatePlayerResourceValue()
+    {
+        _shop.ChangePlayerResourceValue();
     }
 }

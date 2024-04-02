@@ -1,86 +1,61 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 public class WeaponPanel : ShopTab
 {
-    //[SerializeField] private Shop _shop;
-    //[SerializeField] private WeaponView _weaponView;
-    //[SerializeField] private GameObject _weaponContainer;
-    //[SerializeField] private Button _button;
+    //[Header("[Views]")]
+    //[SerializeField] private EquipmentPanelItemView _weaponPanelItemView;
 
-    //private Player _player;
+    //private List<EquipmentPanelItemView> _itemViews = new();
+    //private List<EquipmentItemState> _equipmentItemState;
 
-    //private void Awake()
+    //protected override void FillTab()
     //{
-    //    _shop.Initialized += OnShopInitialized;
-    //    _shop.PanelClosed += OnCloseShop;
+    //    //_equipmentItemState = Player.PlayerInventory.ListWeapon;
+
+    //    foreach (var item in _equipmentItemState)
+    //        AddItem(item, _weaponPanelItemView, ItemContainer);
     //}
 
-    //private void OnDestroy()
+    //private void AddItem(ItemState itemState, EquipmentPanelItemView itemView, GameObject container)
     //{
-    //    _button.onClick.RemoveListener(OpenShopPanel);
-    //    _shop.Initialized -= OnShopInitialized;
-    //    _shop.PanelClosed -= OnCloseShop;
+    //    var view = Instantiate(itemView, container.transform);
+    //   // view.Initialize(itemState, Player);
+    //    AddButtonListener(view);
+    //    _itemViews.Add(view);
     //}
 
-    //protected override void FillPanel()
+    //private void AddButtonListener(EquipmentPanelItemView itemView)
     //{
-    //    _weapons = _player.PlayerStats.PlayerDamage.GetListWeapon();
-    //    AddEquipment(_weapons);
+    //    itemView.BuyButtonClick += OnBuyItem;
+    //    itemView.ChangeCurrentEquipment += OnEquipItem;
     //}
 
-    //private void OnShopInitialized(Player player, LevelObserver levelObserver)
+    //private void OnBuyItem(EquipmentPanelItemView itemView)
     //{
-    //    _player = player;
-    //    _button.onClick.AddListener(OpenShopPanel);
-    //    FillPanel();
-    //}
-
-    //private void AddWeapon(Weapon weapon)
-    //{
-    //    var view = Instantiate(_weaponView, _weaponContainer.transform);
-    //    view.BuyButtonClick += OnBuyWeapon;
-    //    view.ChangeWeaponButtonClick += OnChangeWeapon;
-    //    view.Initialize(weapon, _player);
-    //    _weaponViews.Add(view);
-    //}
-
-    //private void AddEquipment(List<Weapon> weapons)
-    //{
-    //    for (int i = 0; i < weapons.Count; i++)
+    //    if (itemView.EquipmentItemState.ItemData.Price <= Player.Wallet.Coins)
     //    {
-    //        AddWeapon(weapons[i]);
+    //        Player.Wallet.Buy(itemView.EquipmentItemState.ItemData.Price);
+    //        Player.PlayerStats.PlayerEquipment.BuyEquipmentItem(itemView.EquipmentItemState);
+    //        UpdatePlayerResourceValue();
     //    }
+    //    else DialogPanel.OpenPanel();
     //}
 
-    //private void OnBuyWeapon(Weapon weapon, WeaponView weaponView)
+    //private void OnEquipItem(EquipmentPanelItemView itemView)
     //{
-    //    TryBuyWeapon(weapon, weaponView);
+    //    Player.PlayerStats.PlayerEquipment.EquipWeapon(itemView.EquipmentItemState);
     //}
 
-    //private void OnChangeWeapon(Weapon weapon)
+    //private void ClearItems()
     //{
-    //    _player.PlayerStats.PlayerDamage.ChangeCurrentWeapon(weapon);
-    //}
-
-    //private void OnCloseShop()
-    //{
-    //    foreach (var view in _weaponViews)
+    //    foreach (var view in _itemViews)
     //    {
-    //        view.BuyButtonClick -= OnBuyWeapon;
-    //        view.ChangeWeaponButtonClick -= OnChangeWeapon;
+    //        view.BuyButtonClick -= OnBuyItem;
+    //        view.ChangeCurrentEquipment -= OnEquipItem;
     //        Destroy(view.gameObject);
     //    }
 
-    //    _weaponViews.Clear();
-    //}
-
-    //private void TryBuyWeapon(Weapon weapon, WeaponView weaponView)
-    //{
-    //    if (weapon.Price <= _player.Wallet.Coins)
-    //    {
-    //        _player.PlayerStats.PlayerDamage.BuyWeapon(weapon);
-    //        //weapon.Buy();
-    //        weaponView.BuyButtonClick -= OnBuyWeapon;
-    //        UpdatePlayerStats();
-    //    }
-    //    else DialogPanel.Open();
+    //    _itemViews.Clear();
     //}
 }

@@ -1,86 +1,77 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class EquipmentPanel : Shop
+public class EquipmentPanel : ShopTab
 {
+    [FormerlySerializedAs("_weaponView")]
     [Header("[Views]")]
-    [SerializeField] private EquipmentView _weaponView;
-    [SerializeField] private EquipmentView _armorView;
+    [SerializeField] private EquipmentPanelItemView _weaponPanelItemView;
+    [SerializeField] private EquipmentPanelItemView _armorPanelItemView;
     [Header("[Containers]")]
     [SerializeField] private GameObject _weaponContainer;
     [SerializeField] private GameObject _armorContainer;
 
-    private List<Equipment> _weapons;
-    private List<Equipment> _armors;
-    //сделать отдельный скрипт под оружие отдельный под армор
+    private List<EquipmentItemGameObject> _weapons;
+    private List<EquipmentItemGameObject> _armors;
+    private List<EquipmentPanelItemView> _itemViews = new();
+    private List<EquipmentItemState> _equipmentItemState;
 
-    public void OpenEquipmentPanel(Panels panel)
+    protected override void FillTab()
     {
-        //CloseAllPanels();
-        gameObject.SetActive(true);
-        panel.gameObject.SetActive(true);
+        //_equipmentItemState = Player.PlayerInventory.ListWeapon;
+
+       // Debug.Log(Player);
+        //var equipmentsState = Player.PlayerInventory.GetPlayerEquipmentState().Items;
+
+        //foreach (var item in _equipmentItemState)
+        //{
+        //    if (item.ItemData.ItemType == TypeItem.Weapon) AddItem(item, _weaponPanelItemView, _weaponContainer);
+        //    else AddItem(item, _weaponPanelItemView, _armorContainer);
+        //}
     }
 
-    //public void AddEquipment(Equipment equipment, EquipmentView equipmentView, GameObject container)
-    //{
-    //    var view = Instantiate(equipmentView, container.transform);
-    //    view.BuyButtonClick += OnBuyEquipment;
-    //    view.ChangeEquipmentButtonClick += OnChangeEquipment;
-    //    view.Render(equipment);
-    //}
-
-    //public void OnBuyEquipment(Equipment equipment, EquipmentView equipmentView)
-    //{
-    //    TryBuyEquipment(equipment, equipmentView);
-    //}
-
-    //public void TryBuyEquipment(Equipment equipment, EquipmentView equipmentView)
-    //{
-    //    if (equipment.Price <= Player.Coins)
-    //    {
-    //        Player.PlayerEquipment.BuyEquipment(equipment);
-    //        equipment.Buy();
-    //        equipmentView.BuyButtonClick -= OnBuyEquipment;
-    //        UpdatePlayerStats();
-    //    }
-    //    else DialogPanel.ShowPanel();
-    //}
-
-    //public void OnChangeEquipment(Equipment equipment)
-    //{
-    //    Player.PlayerEquipment.ChangeCurrentEquipment(equipment);
-    //}
-
-    //protected override void Filling(Player player)
-    //{
-    //    Player = player;
-
-    //    if (_weapons == null)
-    //    {
-    //        _weapons = Player.PlayerEquipment.GetListWeapon();
-    //        _armors = Player.PlayerEquipment.GetListArmor();
-
-    //        AddEquipmentToList(_weapons, _weaponView, _weaponContainer);
-    //        AddEquipmentToList(_armors, _armorView, _armorContainer);
-    //    }
-
-    //    TryUnlockEquipment(_weaponContainer);
-    //    TryUnlockEquipment(_armorContainer);
-    //}
-
-    private void AddEquipmentToList(List<Equipment> equipment, EquipmentView equipmentView, GameObject container)
+    private void AddItem(ItemState itemState, EquipmentPanelItemView itemView, GameObject container)
     {
-        for (int i = 1; i < equipment.Count; i++)
-        {
-            //AddEquipment(equipment[i], equipmentView, container);
-        }
+        var view = Instantiate(itemView, container.transform);
+        //view.Initialize(itemState, Player);
+        AddButtonListener(view);
+        _itemViews.Add(view);
     }
 
-    private void TryUnlockEquipment(GameObject container)
+    private void AddButtonListener(EquipmentPanelItemView itemView)
     {
-        for (int i = 0; i < container.transform.childCount; i++)
+        //itemView.BuyButtonClick += OnBuyItem;
+        //itemView.ChangeCurrentEquipment += OnEquipItem;
+    }
+
+    //private void OnBuyItem(EquipmentPanelItemView itemView)
+    //{
+    //    if (itemView.ItemState.ItemData.Price <= Player.Wallet.Coins)
+    //    {
+    //        Player.Wallet.Buy(itemView.ItemState.ItemData.Price);
+    //        itemView.ItemGameObject.Buy()
+    //        GetPlayerResourceValue();
+    //    }
+    //    else DialogPanel.OpenPanel();
+    //}
+
+    //private void OnEquipItem(EquipmentPanelItemView itemView)
+    //{
+    //    if (itemView.ItemData.ItemType == ItemType.Armor)
+    //        Player.PlayerStats.PlayerEquipment.EquipArmor((itemView as EquipmentPanelItemView).ItemState);
+    //}
+
+    private void ClearItems()
+    {
+        foreach (var view in _itemViews)
         {
-           // container.transform.GetChild(i).GetComponent<EquipmentView>().TryUnlockBuyButton(Player);
+            //view.BuyButtonClick -= OnBuyItem;
+            //view.ChangeCurrentEquipment -= OnEquipItem;
+            Destroy(view.gameObject);
         }
+
+        _itemViews.Clear();
     }
 }

@@ -16,7 +16,6 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private PlayerAbility _playerAbility;
     [SerializeField] private PlayerDamage _playerDamage;
     [SerializeField] private PlayerHealth _playerHealth;
-    [SerializeField] private PlayerEquipment _playerEquipment;
     [Header("[Speed]")]
     [SerializeField] private float _speed;
     [Header("[Max Player Level]")]
@@ -28,12 +27,11 @@ public class PlayerStats : MonoBehaviour
     private int _abilityPoints = 0;
 
     public float Speed => _speed;
-    public int Armor => _playerEquipment.CurrentArmor.Value;
-    public int Damage => _playerEquipment.CurrentArmor.Value;
+    public int Armor => _player.PlayerArmorEquipment.CurrentArmor.ItemData.Value;
+    public int Damage => _player.PlayerWeaponEquipment.CurrentWeapon.ItemData.Value;
     public int Score => _score;
     public int Experience => _currentExperience;
     public int Level => _currentLevel;
-    public PlayerEquipment PlayerEquipment => _playerEquipment;
     public PlayerArmor PlayerArmor => _playerArmor;
     public PlayerDamage PlayerDamage => _playerDamage;
     public PlayerAbility PlayerAbility => _playerAbility;
@@ -109,7 +107,6 @@ public class PlayerStats : MonoBehaviour
     private void StatsInitialize()
     {
         _player.PlayerConsumables.Initialize();
-        PlayerEquipment.Initialize();
         //PlayerDamage.Initialize();
         PlayerArmor.Initialize();
         PlayerHealth.Initialize();

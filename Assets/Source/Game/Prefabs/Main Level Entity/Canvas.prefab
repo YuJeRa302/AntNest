@@ -8908,10 +8908,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemType: 0
-  _container: {fileID: 0}
+  ItemContainer: {fileID: 0}
   _openButton: {fileID: 0}
   _shop: {fileID: 0}
-  _itemView: {fileID: 0}
 --- !u!1 &6579283653007265616
 GameObject:
   m_ObjectHideFlags: 0
@@ -13621,7 +13620,7 @@ GameObject:
   - component: {fileID: 6579283654167028020}
   - component: {fileID: 6579283654167028022}
   - component: {fileID: 6579283654167028021}
-  - component: {fileID: 5197092496396105273}
+  - component: {fileID: 3051228677907219179}
   m_Layer: 5
   m_Name: Weapon_Panel
   m_TagString: Untagged
@@ -13688,7 +13687,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5197092496396105273
+--- !u!114 &3051228677907219179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13697,14 +13696,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6579283654167028027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44de04d1f6b903945a42c189618be872, type: 3}
+  m_Script: {fileID: 11500000, guid: 48ee5dcc3ae19214fb3957569d14d1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ItemType: 0
-  _container: {fileID: 0}
-  _openButton: {fileID: 0}
-  _shop: {fileID: 0}
-  _itemView: {fileID: 0}
+  ItemContainer: {fileID: 6579283653496742777}
+  _openButton: {fileID: 6579283653558988095}
+  _shop: {fileID: 6579283654000373080}
+  _player: {fileID: 0}
+  _itemView: {fileID: 1672117183771813317, guid: c53cbd5ea1c7d9644bd26df366e69352, type: 3}
+  _playerEquipment: {fileID: 0}
 --- !u!1 &6579283654206204475
 GameObject:
   m_ObjectHideFlags: 0
@@ -13872,10 +13873,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemType: 3
-  _container: {fileID: 0}
+  ItemContainer: {fileID: 0}
   _openButton: {fileID: 0}
   _shop: {fileID: 0}
-  _itemView: {fileID: 0}
 --- !u!1 &6579283654235964710
 GameObject:
   m_ObjectHideFlags: 0
@@ -15596,7 +15596,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemType: 0
-  _container: {fileID: 0}
+  ItemContainer: {fileID: 0}
   _openButton: {fileID: 0}
   _shop: {fileID: 0}
-  _itemView: {fileID: 0}

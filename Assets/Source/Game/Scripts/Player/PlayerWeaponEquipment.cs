@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerEquipment : MonoBehaviour
+public class PlayerWeaponEquipment : MonoBehaviour
 {
     private const string SaveKey = "PlayerEquipment";
 
@@ -17,11 +17,6 @@ public class PlayerEquipment : MonoBehaviour
     public EquipmentItemState CurrentWeapon => _playerEquipmentState.EquippedWeapon;
 
     private void Awake()
-    {
-        LoadPlayerEquipmentState();
-    }
-
-    public void Initialize()
     {
         LoadPlayerEquipmentState();
     }

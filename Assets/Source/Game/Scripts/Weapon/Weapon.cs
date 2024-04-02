@@ -1,1 +1,1 @@
-public class Weapon : Equipment { }
+public class Weapon : EquipmentItemGameObject { }

@@ -24,8 +24,8 @@ public class PlayerDamage : MonoBehaviour
 
     public void ChangeCurrentWeapon(Weapon weapon)
     {
-        _currentWeapon.SetState(false);
-        weapon.SetState(true);
+        _currentWeapon.SetActive(false);
+        weapon.SetActive(true);
         _currentWeapon = weapon;
         _player.PlayerView.UpdatePlayerStats();
     }
@@ -40,7 +40,7 @@ public class PlayerDamage : MonoBehaviour
         //_player.PlayerStats.PlayerAbility.SetEffect(effect);
         _hitCount = hitCount;
         _abilityDamage = damage;
-         //_currentWeapon.Increase(_abilityDamage);
+        //_currentWeapon.Increase(_abilityDamage);
         _player.PlayerView.UpdatePlayerStats();
     }
 
