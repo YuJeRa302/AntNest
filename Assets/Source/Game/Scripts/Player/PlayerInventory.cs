@@ -15,11 +15,29 @@ public class PlayerInventory : MonoBehaviour
 
     public List<EquipmentItemState> ListWeapon => _playerEquipmentState.Items.Where(item => item.ItemData.ItemType == TypeItem.Weapon).ToList();
     public List<EquipmentItemState> ListArmor => _playerEquipmentState.Items.Where(item => item.ItemData.ItemType == TypeItem.Armor).ToList();
+    public EquipmentItemState CurrentWeapon => _playerEquipmentState.EquippedWeapon;
+    public EquipmentItemState CurrentArmor => _playerEquipmentState.EquippedArmor;
 
     private void Awake()
     {
         AddDefaultEquipment(ListWeapon);
         AddDefaultEquipment(ListArmor);
+    }
+
+    public void EquipItem(EquipmentItemState equipmentItemState)
+    {
+        if (equipmentItemState.ItemData.ItemType == TypeItem.Weapon)
+        {
+            if (CurrentWeapon != null)
+                CurrentWeapon.IsEquipped = false;
+        }
+        else
+        {
+            if (CurrentArmor != null)
+                CurrentArmor.IsEquipped = false;
+        }
+
+        equipmentItemState.IsEquipped = true;
     }
 
     private void AddDefaultEquipment(List<EquipmentItemState> equipmentItemStates)

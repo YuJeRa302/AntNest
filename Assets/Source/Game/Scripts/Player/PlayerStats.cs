@@ -27,8 +27,8 @@ public class PlayerStats : MonoBehaviour
     private int _abilityPoints = 0;
 
     public float Speed => _speed;
-    public int Armor => _player.PlayerArmorEquipment.CurrentArmor.ItemData.Value;
-    public int Damage => _player.PlayerWeaponEquipment.CurrentWeapon.ItemData.Value;
+    public int Armor => _player.PlayerInventory.CurrentArmor.ItemData.Value;
+    public int Damage => _player.PlayerInventory.CurrentWeapon.ItemData.Value;
     public int Score => _score;
     public int Experience => _currentExperience;
     public int Level => _currentLevel;
