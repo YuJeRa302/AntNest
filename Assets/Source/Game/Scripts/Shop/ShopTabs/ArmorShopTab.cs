@@ -49,6 +49,8 @@ public class ArmorShopTab : ShopTab
         if (equipmentPanelItemView.EquipmentItemState.ItemData.Price <= _player.Wallet.Coins)
         {
             _playerEquipment.BuyArmorItem(equipmentPanelItemView.EquipmentItemState);
+            _player.Wallet.Buy(equipmentPanelItemView.EquipmentItemState.ItemData.Price);
+            UpdatePlayerResourceValue();
             Clear();
             Fill();
         }

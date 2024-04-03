@@ -14,6 +14,7 @@ public abstract class ShopTab : MonoBehaviour
     [SerializeField] private Shop _shop;
 
     public event Action TabOpened;
+    public event Action PlayerResourceUpdated;
 
     protected void Awake()
     {
@@ -41,6 +42,6 @@ public abstract class ShopTab : MonoBehaviour
 
     protected virtual void UpdatePlayerResourceValue()
     {
-        _shop.ChangePlayerResourceValue();
+        PlayerResourceUpdated.Invoke();
     }
 }

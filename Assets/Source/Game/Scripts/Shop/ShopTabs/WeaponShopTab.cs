@@ -49,6 +49,8 @@ public class WeaponShopTab : ShopTab
         if (equipmentPanelItemView.EquipmentItemState.ItemData.Price <= _player.Wallet.Coins)
         {
             _playerEquipment.BuyWeaponItem(equipmentPanelItemView.EquipmentItemState);
+            _player.Wallet.Buy(equipmentPanelItemView.EquipmentItemState.ItemData.Price);
+            UpdatePlayerResourceValue();
             Clear();
             Fill();
         }

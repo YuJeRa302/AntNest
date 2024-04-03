@@ -23,8 +23,6 @@ public class PlayerWeaponEquipment : MonoBehaviour
             Destroy(_weaponObject.gameObject);
 
         _player.PlayerInventory.EquipItem(equipmentItemState);
-
         _weaponObject = Instantiate(equipmentItemState.ItemData.ItemGameObject as EquipmentItemGameObject, _weaponObjectContainer);
-        _player.PlayerView.UpdatePlayerStats();
     }
 }

@@ -22,6 +22,7 @@ public class PlayerInventory : MonoBehaviour
     {
         AddDefaultEquipment(ListWeapon);
         AddDefaultEquipment(ListArmor);
+        _player.PlayerView.UpdatePlayerStats();
     }
 
     public void EquipItem(EquipmentItemState equipmentItemState)

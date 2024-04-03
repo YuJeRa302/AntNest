@@ -29,6 +29,16 @@ public class PlayerView : MonoBehaviour
         Take
     }
 
+    private void Awake()
+    {
+        
+    }
+
+    private void OnDestroy()
+    {
+        
+    }
+
     public void ChangeLevel(int value)
     {
         _level.text = value.ToString();
@@ -67,13 +77,12 @@ public class PlayerView : MonoBehaviour
         _sliderHP.value = _player.PlayerStats.PlayerHealth.MaxHealth;
         _sliderXP.maxValue = maxValueSlider;
         _sliderXP.value = experience;
-        UpdatePlayerStats();
     }
 
     public void UpdatePlayerStats()
     {
-       // _playerArmor.text = _player.PlayerStats.PlayerEquipment.CurrentArmor.Value.ToString();
-        //_playerDamage.text = _player.PlayerStats.PlayerEquipment.CurrentWeapon.Value.ToString();
+        _playerDamage.text = _player.PlayerInventory.CurrentWeapon.ItemData.Value.ToString();
+        _playerArmor.text = _player.PlayerInventory.CurrentArmor.ItemData.Value.ToString();
     }
 
     private void OnEnable()
