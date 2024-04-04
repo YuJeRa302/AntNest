@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,18 +17,4 @@ public class EquipmentItemData : ItemData
     public int Level => _level;
     public Sprite ShopIcon => _shopIcon;
     public ItemGameObject ItemGameObject => _itemGameObject;
-}
-
-[Serializable]
-public class ItemState
-{
-    public EquipmentItemData ItemData;
-}
-
-[Serializable]
-public class EquipmentItemState : ItemState
-{
-    public bool IsEquipped;
-    public bool IsBuyed;
-    public int Level;
 }
