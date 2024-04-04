@@ -9,6 +9,8 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] private PlayerStats _playerStats;
     [Header("[Ability]")]
     [SerializeField] private List<Ability> _abilities;
+    [Header("[Containers]")]
+    [SerializeField] private Transform _abilityObjectContainer;
 
     private int _points = 0;
     private ParticleSystem _abilityEffect;
