@@ -3408,6 +3408,8 @@ GameObject:
   - component: {fileID: 3744200491489372025}
   - component: {fileID: 3976628562072849500}
   - component: {fileID: 2686629597467653288}
+  - component: {fileID: 7751455257654607889}
+  - component: {fileID: 1026262736642019320}
   m_Layer: 0
   m_Name: Ant
   m_TagString: Untagged
@@ -3526,6 +3528,8 @@ MonoBehaviour:
   _playerSound: {fileID: 6626579373589028082}
   _playerView: {fileID: 0}
   _playerConsumables: {fileID: 3976628562072849500}
+  _playerInventory: {fileID: 0}
+  _playerEquipment: {fileID: 0}
 --- !u!114 &7762064549988829405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3543,7 +3547,6 @@ MonoBehaviour:
   _playerAbility: {fileID: 6198664025126081742}
   _playerDamage: {fileID: 7466515351911135777}
   _playerHealth: {fileID: 3744200491489372025}
-  _playerEquipment: {fileID: 0}
   _speed: 2
   _maxPlayerLevel: 5
 --- !u!65 &7762064549988829402
@@ -3633,6 +3636,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _abilityObjectContainer: {fileID: 0}
 --- !u!114 &6626579373589028082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3720,11 +3724,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b291cc20c7b7a964f9ceb3bda3c7bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weponsTransform: {fileID: 0}
-  _armorsTransform: {fileID: 0}
-  _weapon: []
-  _armor: []
   _player: {fileID: 0}
+  _equipmentObjectContainer: {fileID: 0}
+--- !u!114 &7751455257654607889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762064549988829376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b291cc20c7b7a964f9ceb3bda3c7bc71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+  _equipmentObjectContainer: {fileID: 0}
+--- !u!114 &1026262736642019320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7762064549988829376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c592dac82aa47c46904910181425e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+  _weaponPlayerEquipment: {fileID: 0}
+  _armorPlayerEquipment: {fileID: 0}
+  _defaultPlayerEquipmentState:
+    Items: []
 --- !u!1 &7958748987408296165
 GameObject:
   m_ObjectHideFlags: 0

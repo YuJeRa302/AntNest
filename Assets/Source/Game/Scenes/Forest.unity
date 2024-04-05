@@ -3895,28 +3895,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f5b9043b6bceb442bde81cbde50a28a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1628980519 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8807662954882811106, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
-  m_PrefabInstance: {fileID: 8562140623776764783}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f52dd4cef91a6b64f9d0ef4571afcb16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1628980520 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7636914307550885012, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
-  m_PrefabInstance: {fileID: 8562140623776764783}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 854d519e59615704385ffcdfd976ee84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1630766253
 GameObject:
   m_ObjectHideFlags: 0
@@ -4662,6 +4640,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2011594547 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7751455257654607889, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
+  m_PrefabInstance: {fileID: 8562140623776764783}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b291cc20c7b7a964f9ceb3bda3c7bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2014040493 stripped
@@ -6861,7 +6850,7 @@ PrefabInstance:
     - target: {fileID: 3051228677907219179, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: _playerEquipment
       value: 
-      objectReference: {fileID: 1628980519}
+      objectReference: {fileID: 1384660628}
     - target: {fileID: 3435305943927648620, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: _shop
       value: 
@@ -6933,7 +6922,7 @@ PrefabInstance:
     - target: {fileID: 3795503082630601195, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: _playerEquipment
       value: 
-      objectReference: {fileID: 1628980520}
+      objectReference: {fileID: 2011594547}
     - target: {fileID: 3829802941982243155, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
@@ -8623,11 +8612,11 @@ PrefabInstance:
     - target: {fileID: 1026262736642019320, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
       propertyPath: _armorPlayerEquipment
       value: 
-      objectReference: {fileID: 1628980520}
+      objectReference: {fileID: 2011594547}
     - target: {fileID: 1026262736642019320, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
       propertyPath: _weaponPlayerEquipment
       value: 
-      objectReference: {fileID: 1628980519}
+      objectReference: {fileID: 1384660628}
     - target: {fileID: 1026262736642019320, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
       propertyPath: _playerEquipmentState.Items.Array.size
       value: 6
@@ -8776,6 +8765,10 @@ PrefabInstance:
       propertyPath: _itemDatas.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: f5ca18b3b526cb246b1afb3106522ae2, type: 2}
+    - target: {fileID: 2686629597467653288, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
+      propertyPath: _equipmentObjectContainer
+      value: 
+      objectReference: {fileID: 8562140623776764789}
     - target: {fileID: 2686629597467653288, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
       propertyPath: _defaultPlayerEquipmentState.Items.Array.size
       value: 6
@@ -8944,6 +8937,14 @@ PrefabInstance:
       propertyPath: _armorObjectContainer
       value: 
       objectReference: {fileID: 8562140623776764788}
+    - target: {fileID: 7751455257654607889, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
+      propertyPath: _player
+      value: 
+      objectReference: {fileID: 2119701313760222131}
+    - target: {fileID: 7751455257654607889, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
+      propertyPath: _equipmentObjectContainer
+      value: 
+      objectReference: {fileID: 8562140623776764788}
     - target: {fileID: 7762064549988829376, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
       propertyPath: m_Name
       value: Ant
@@ -8971,11 +8972,11 @@ PrefabInstance:
     - target: {fileID: 7762064549988829404, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
       propertyPath: _playerArmorEquipment
       value: 
-      objectReference: {fileID: 1628980520}
+      objectReference: {fileID: 0}
     - target: {fileID: 7762064549988829404, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
       propertyPath: _playerWeaponEquipment
       value: 
-      objectReference: {fileID: 1628980519}
+      objectReference: {fileID: 0}
     - target: {fileID: 7762064549988829405, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
       propertyPath: _playerEquipment
       value: 

@@ -8,10 +8,12 @@ public class PlayerInventory : MonoBehaviour
     private const int DefaultItemLevel = 1;
 
     [SerializeField] private Player _player;
-    [SerializeField] private PlayerWeaponEquipment _weaponPlayerEquipment;
-    [SerializeField] private PlayerArmorEquipment _armorPlayerEquipment;
+    [SerializeField] private PlayerEquipment _weaponPlayerEquipment;
+    [SerializeField] private PlayerEquipment _armorPlayerEquipment;
     [Header("[Default Equipment Data]")]
-    [SerializeField] private PlayerEquipmentState _playerEquipmentState;
+    [SerializeField] private PlayerEquipmentState _defaultPlayerEquipmentState;
+
+    private PlayerEquipmentState _playerEquipmentState;
 
     public List<EquipmentItemState> ListWeapon => _playerEquipmentState.Items.Where(item => item.ItemData.ItemType == TypeItem.Weapon).ToList();
     public List<EquipmentItemState> ListArmor => _playerEquipmentState.Items.Where(item => item.ItemData.ItemType == TypeItem.Armor).ToList();
@@ -20,6 +22,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void Awake()
     {
+        _playerEquipmentState = _defaultPlayerEquipmentState;
         AddDefaultEquipment(ListWeapon);
         AddDefaultEquipment(ListArmor);
         _player.PlayerView.UpdatePlayerStats();
@@ -54,13 +57,13 @@ public class PlayerInventory : MonoBehaviour
     {
         if (equipmentItemState.ItemData.ItemType == TypeItem.Weapon)
         {
-            _weaponPlayerEquipment.BuyWeaponItem(equipmentItemState);
-            _weaponPlayerEquipment.EquipWeapon(equipmentItemState);
+            _weaponPlayerEquipment.BuyItem(equipmentItemState);
+            _weaponPlayerEquipment.EquipItem(equipmentItemState);
         }
         else
         {
-            _armorPlayerEquipment.BuyArmorItem(equipmentItemState);
-            _armorPlayerEquipment.EquipArmor(equipmentItemState);
+            _armorPlayerEquipment.BuyItem(equipmentItemState);
+            _armorPlayerEquipment.EquipItem(equipmentItemState);
         }
     }
 }

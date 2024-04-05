@@ -6,9 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerEffects))]
 [RequireComponent(typeof(PlayerSound))]
 [RequireComponent(typeof(PlayerConsumables))]
-[RequireComponent(typeof(PlayerArmorEquipment))]
-[RequireComponent(typeof(PlayerWeaponEquipment))]
 [RequireComponent(typeof(PlayerInventory))]
+[RequireComponent(typeof(PlayerEquipment))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private Wallet _wallet;
@@ -18,16 +17,14 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerSound _playerSound;
     [SerializeField] private PlayerView _playerView;
     [SerializeField] private PlayerConsumables _playerConsumables;
-    [SerializeField] private PlayerArmorEquipment _playerArmorEquipment;
-    [SerializeField] private PlayerWeaponEquipment _playerWeaponEquipment;
     [SerializeField] private PlayerInventory _playerInventory;
+    [SerializeField] private PlayerEquipment _playerEquipment;
 
     public PlayerStats PlayerStats => _playerStats;
     public PlayerSound PlayerSounds => _playerSound;
     public PlayerView PlayerView => _playerView;
     public PlayerConsumables PlayerConsumables => _playerConsumables;
     public Wallet Wallet => _wallet;
-    public PlayerArmorEquipment PlayerArmorEquipment => _playerArmorEquipment;
-    public PlayerWeaponEquipment PlayerWeaponEquipment => _playerWeaponEquipment;
     public PlayerInventory PlayerInventory => _playerInventory;
+    public PlayerEquipment PlayerEquipment => _playerEquipment;
 }

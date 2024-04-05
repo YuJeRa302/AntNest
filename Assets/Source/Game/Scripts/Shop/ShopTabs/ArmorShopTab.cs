@@ -5,7 +5,7 @@ public class ArmorShopTab : ShopTab
 {
     [SerializeField] private Player _player;
     [SerializeField] private EquipmentPanelItemView _itemView;
-    [SerializeField] private PlayerArmorEquipment _playerEquipment;
+    [SerializeField] private PlayerEquipment _playerEquipment;
 
     private List<EquipmentPanelItemView> _views = new();
 
@@ -48,7 +48,7 @@ public class ArmorShopTab : ShopTab
     {
         if (equipmentPanelItemView.EquipmentItemState.ItemData.Price <= _player.Wallet.Coins)
         {
-            _playerEquipment.BuyArmorItem(equipmentPanelItemView.EquipmentItemState);
+            _playerEquipment.BuyItem(equipmentPanelItemView.EquipmentItemState);
             _player.Wallet.Buy(equipmentPanelItemView.EquipmentItemState.ItemData.Price);
             UpdatePlayerResourceValue();
             Clear();
@@ -58,7 +58,7 @@ public class ArmorShopTab : ShopTab
 
     private void OnChangeArmor(EquipmentPanelItemView equipmentPanelItemView)
     {
-        _playerEquipment.EquipArmor(equipmentPanelItemView.EquipmentItemState);
+        _playerEquipment.EquipItem(equipmentPanelItemView.EquipmentItemState);
         Clear();
         Fill();
     }
