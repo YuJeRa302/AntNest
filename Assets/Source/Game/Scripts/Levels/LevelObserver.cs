@@ -74,8 +74,8 @@ public class LevelObserver : MonoBehaviour
         _loadConfig = loadConfig;
         _isPlayerAlive = true;
         _enemySpawner.Initialize(loadConfig);
-        _player.Wallet.Initialize(_loadConfig.PlayerCoins);
         _player.PlayerStats.Initialize(_loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore);
+        _player.Wallet.Initialize(_loadConfig.PlayerCoins);
         LoadPanels();
     }
 

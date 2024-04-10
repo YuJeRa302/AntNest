@@ -363,7 +363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -7, y: -41}
+  m_AnchoredPosition: {x: 0, y: -41}
   m_SizeDelta: {x: 350, y: 135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8181800697777873904
@@ -415,7 +415,7 @@ GameObject:
   - component: {fileID: 8181800697819822702}
   - component: {fileID: 8181800697819822691}
   - component: {fileID: 8181800697819822700}
-  - component: {fileID: 5624434447462807636}
+  - component: {fileID: 3418285166410358477}
   m_Layer: 5
   m_Name: Consumables View
   m_TagString: Untagged
@@ -484,7 +484,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5624434447462807636
+--- !u!114 &3418285166410358477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -493,13 +493,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8181800697819822703}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2dee2593c2c2c1468b0b672efb7ac66, type: 3}
+  m_Script: {fileID: 11500000, guid: ea439b4eedf322d499533d181de45e3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemPrice: {fileID: 7442133466990489360}
-  ItemIcon: {fileID: 9069519738984825592}
-  BuyButton: {fileID: 8181800698911103850}
-  ItemName: {fileID: 204827956696112427}
+  _itemPrice: {fileID: 7442133466990489360}
+  _itemIcon: {fileID: 9069519738984825592}
+  _buyButton: {fileID: 8181800698911103850}
+  _itemName: {fileID: 204827956696112427}
 --- !u!1 &8181800698673854605
 GameObject:
   m_ObjectHideFlags: 0

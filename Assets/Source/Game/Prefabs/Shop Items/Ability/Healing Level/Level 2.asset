@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839a0e9b833afd94c9cdc77ea141f6ab, type: 3}
   m_Name: Level 2
   m_EditorClassIdentifier: 
-  Level: 2
+  Level: 1
   AbilityValue: 25
   Delay: 30

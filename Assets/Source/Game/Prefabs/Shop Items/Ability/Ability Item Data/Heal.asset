@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f250da32cdd8db438c99950c83d4b27, type: 3}
+  m_Name: Heal
+  m_EditorClassIdentifier: 
+  _type: 2
+  _sprite: {fileID: 592255985, guid: 78cddcb7597c45f4fadca13f5d8b4606, type: 3}
+  _price: 1
+  _isBuyedByDefault: 0
+  _name: RegenAbilityName
+  _currentLevel: 0
+  _description: RegenAbilityDescription
+  _upgradePrice: 1
+  _abilityLevels:
+  - {fileID: 11400000, guid: 8a8f8eb16d08b4442aac9fff77673da4, type: 2}
+  - {fileID: 11400000, guid: 6eaa2f001a04d5d4a84271d12675bbe4, type: 2}
+  - {fileID: 11400000, guid: c5eac517d3e4fbb4db0213257c06c3bb, type: 2}
+  _shopSprite: {fileID: -1022390021, guid: 78cddcb7597c45f4fadca13f5d8b4606, type: 3}
+  _sound: {fileID: 8300000, guid: fb9e55fa47a894144a7c191aa26e1490, type: 3}
+  _itemGameObject: {fileID: 116816162159099250, guid: ebb394893a370964e89cdddb9a30561d, type: 3}
+  _particleSystem: {fileID: 19800000, guid: 38384b8f85c470a4cb4254f5647e1635, type: 3}

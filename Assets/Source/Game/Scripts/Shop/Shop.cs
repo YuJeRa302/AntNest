@@ -43,7 +43,7 @@ public class Shop : GamePanels
 
     private void ChangePlayerResourceValue()
     {
-        PlayerResourceChanged?.Invoke(Player.Wallet.Coins, Player.PlayerStats.PlayerAbility.Points);
+        PlayerResourceChanged?.Invoke(Player.Wallet.Coins, Player.Wallet.Points);
     }
 
     private void InitializeShopTabs()

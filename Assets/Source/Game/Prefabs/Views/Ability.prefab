@@ -139,8 +139,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4453033447732439684}
-          m_TargetAssemblyTypeName: AbilityView, Assembly-CSharp
+        - m_Target: {fileID: 5062409848469640482}
+          m_TargetAssemblyTypeName: AbilityPanelItemView, Assembly-CSharp
           m_MethodName: Hover
           m_Mode: 1
           m_Arguments:
@@ -155,8 +155,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4453033447732439684}
-          m_TargetAssemblyTypeName: AbilityView, Assembly-CSharp
+        - m_Target: {fileID: 5062409848469640482}
+          m_TargetAssemblyTypeName: AbilityPanelItemView, Assembly-CSharp
           m_MethodName: Exit
           m_Mode: 1
           m_Arguments:
@@ -405,8 +405,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2751610575598862828}
-  - component: {fileID: 4453033447732439684}
   - component: {fileID: 196578088233146723}
+  - component: {fileID: 5062409848469640482}
   - component: {fileID: 2731606952860042614}
   m_Layer: 5
   m_Name: Ability
@@ -442,30 +442,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 600, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4453033447732439684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2751610575598862829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5e59448b41487e45846525efa12876f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ItemPrice: {fileID: 2290352925085571752}
-  ItemIcon: {fileID: 1005282116187056441}
-  BuyButton: {fileID: 2247351778437176451}
-  ItemName: {fileID: 3888447298487036316}
-  _currentDelay: {fileID: 7796745105006108702}
-  _currentAbilityValue: {fileID: 4115940378851368360}
-  _upgradeButton: {fileID: 2561636737161706020}
-  _shopImage: {fileID: 2841571678121271224}
-  _nextLevelDelay: {fileID: 1415707373719817853}
-  _nextLevelAbilityValue: {fileID: 4089182210181298136}
-  _upgradeStats: {fileID: 7206956181757041415}
-  _description: {fileID: 322279909801918807}
 --- !u!222 &196578088233146723
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -474,6 +450,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2751610575598862829}
   m_CullTransparentMesh: 1
+--- !u!114 &5062409848469640482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2751610575598862829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3b5e2c213708d45863e548a853577f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemPrice: {fileID: 2290352925085571752}
+  _itemIcon: {fileID: 1005282116187056441}
+  _buyButton: {fileID: 2247351778437176451}
+  _itemName: {fileID: 3888447298487036316}
+  _currentDelay: {fileID: 7796745105006108702}
+  _currentAbilityValue: {fileID: 4115940378851368360}
+  _upgradeButton: {fileID: 2561636737161706020}
+  _shopImage: {fileID: 2841571678121271224}
+  _nextLevelDelay: {fileID: 1415707373719817853}
+  _nextLevelAbilityValue: {fileID: 4089182210181298136}
+  _upgradeStats: {fileID: 7206956181757041415}
+  _description: {fileID: 322279909801918807}
 --- !u!114 &2731606952860042614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 1845362396344971415}
   - component: {fileID: 1415707373719817853}
   m_Layer: 5
-  m_Name: upgradeCooldown
+  m_Name: nextLevelDelay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -673,7 +673,7 @@ GameObject:
   - component: {fileID: 7571045966675364983}
   - component: {fileID: 7796745105006108702}
   m_Layer: 5
-  m_Name: currentCooldown
+  m_Name: currentDelay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -924,7 +924,7 @@ GameObject:
   - component: {fileID: 5008579835369984415}
   - component: {fileID: 4115940378851368360}
   m_Layer: 5
-  m_Name: currentDuration
+  m_Name: currentAbilityValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1610,7 +1610,7 @@ GameObject:
   - component: {fileID: 5069667447071484232}
   - component: {fileID: 4089182210181298136}
   m_Layer: 5
-  m_Name: upgradeDuration
+  m_Name: nextLevelValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

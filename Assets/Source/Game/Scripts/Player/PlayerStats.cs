@@ -119,6 +119,6 @@ public class PlayerStats : MonoBehaviour
             ++_abilityPoints;
         }
 
-        PlayerAbility.SetPoints(_abilityPoints);
+        _player.Wallet.SetDefaultAbilityPoints(_abilityPoints);
     }
 }

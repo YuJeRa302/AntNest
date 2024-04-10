@@ -2,10 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Ability : ItemGameObject
+public class AbilityItemGameObject : ItemGameObject
 {
+    [SerializeField] private Button _useAbilityButton;
+
     protected Player Player;
-    protected bool IsUseAbility = false;
+    protected bool IsUseAbility = true;
     protected float CurrentDelay;
     protected int CurrentAbilityValue;
 
@@ -15,11 +17,24 @@ public abstract class Ability : ItemGameObject
     private ParticleSystem _particleSystem;
     private Coroutine _delay;
 
-    public void Initialize(Player player, AbilityState abilityState, Image reloadingImage)
+    private void Awake()
+    {
+        _useAbilityButton.onClick.AddListener(Use);
+    }
+
+    private void OnDestroy()
+    {
+        _useAbilityButton.onClick.RemoveListener(Use);
+        StopCoroutine(_delay);
+    }
+
+    public void Initialize(Player player, AbilityState abilityState, Image reloadingImage, ParticleSystem particleSystem)
     {
         Player = player;
+        CurrentDelay = abilityState.AbilityData.CurrentDelay;
+        CurrentAbilityValue = abilityState.AbilityData.CurrentAbilityValue;
         _abilityItemData = abilityState.AbilityData;
-        _particleSystem = abilityState.AbilityData.ParticleSystem;
+        _particleSystem = particleSystem;
         _reloadingImage = reloadingImage;
         _delay = StartCoroutine(Delay(_abilityItemData.CurrentDelay));
     }

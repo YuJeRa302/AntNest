@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
 
             if (currentDamage < _minHealth) currentDamage = _minHealth;
 
-            if (_player.PlayerStats.PlayerArmor.AbilityArmor > _player.PlayerStats.PlayerAbility.NullValue) _player.PlayerStats.PlayerArmor.UpdateArmor();
+           // if (_player.PlayerStats.PlayerArmor.AbilityArmor > _player.PlayerStats.PlayerAbility.NullValue) _player.PlayerStats.PlayerArmor.UpdateArmor();
 
             _currentHealth = Mathf.Clamp(_currentHealth - currentDamage, _minHealth, _maxHealth);
             ChangedHealth.Invoke(_currentHealth);

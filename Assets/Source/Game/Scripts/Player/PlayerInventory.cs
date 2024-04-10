@@ -12,17 +12,28 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private PlayerEquipment _armorPlayerEquipment;
     [Header("[Default Equipment Data]")]
     [SerializeField] private PlayerEquipmentState _defaultPlayerEquipmentState;
+    [Header("[Default Ability Data]")]
+    [SerializeField] private PlayerAbilityState _defaultAbilityState;
+    [Header("[Default Consumable Data]")]
+    [SerializeField] private PlayerConsumableState _defaultConsumableState;
+    [Header("[Default Count Health Potion]")]
+    [SerializeField] private int _defaultCountHealthPotion;
 
     private PlayerEquipmentState _playerEquipmentState;
+    private PlayerAbilityState _playerAbilityState;
+    private PlayerConsumableState _playerConsumableState;
 
     public List<EquipmentItemState> ListWeapon => _playerEquipmentState.Items.Where(item => item.ItemData.ItemType == TypeItem.Weapon).ToList();
     public List<EquipmentItemState> ListArmor => _playerEquipmentState.Items.Where(item => item.ItemData.ItemType == TypeItem.Armor).ToList();
+    public List<AbilityState> ListAbilities => _playerAbilityState.Items.ToList();
+    public List<ConsumableItemState> ListConsumables => _playerConsumableState.Items.ToList();
     public EquipmentItemState CurrentWeapon => _playerEquipmentState.EquippedWeapon;
     public EquipmentItemState CurrentArmor => _playerEquipmentState.EquippedArmor;
+    public int DefaultCountHealthPotion => _defaultCountHealthPotion;
 
     private void Awake()
     {
-        _playerEquipmentState = _defaultPlayerEquipmentState;
+        LoadDefaultState();
         AddDefaultEquipment(ListWeapon);
         AddDefaultEquipment(ListArmor);
         _player.PlayerView.UpdatePlayerStats();
@@ -42,6 +53,13 @@ public class PlayerInventory : MonoBehaviour
         }
 
         equipmentItemState.IsEquipped = true;
+    }
+
+    private void LoadDefaultState()
+    {
+        _playerEquipmentState = _defaultPlayerEquipmentState;
+        _playerAbilityState = _defaultAbilityState;
+        _playerConsumableState = _defaultConsumableState;
     }
 
     private void AddDefaultEquipment(List<EquipmentItemState> equipmentItemStates)
@@ -74,4 +92,16 @@ public struct PlayerEquipmentState
     public List<EquipmentItemState> Items;
     public EquipmentItemState EquippedWeapon => Items.FirstOrDefault(item => item.IsEquipped && item.ItemData.ItemType == TypeItem.Weapon);
     public EquipmentItemState EquippedArmor => Items.FirstOrDefault(item => item.IsEquipped && item.ItemData.ItemType == TypeItem.Armor);
+}
+
+[Serializable]
+public struct PlayerAbilityState
+{
+    public List<AbilityState> Items;
+}
+
+[Serializable]
+public struct PlayerConsumableState
+{
+    public List<ConsumableItemState> Items;
 }

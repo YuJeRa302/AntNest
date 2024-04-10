@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class EquipmentPanelItemView : MonoBehaviour
 {
-    [SerializeField] protected Text ItemPrice;
-    [SerializeField] protected Image ItemIcon;
-    [SerializeField] protected Button BuyButton;
-    [SerializeField] protected LeanLocalizedText ItemName;
+    [SerializeField] private Text _itemPrice;
+    [SerializeField] private Image _itemIcon;
+    [SerializeField] private Button _buyButton;
+    [SerializeField] private LeanLocalizedText _itemName;
     [SerializeField] private Button _changeButton;
     [SerializeField] private Image _isBayed;
     [SerializeField] private Image _shopIcon;
@@ -25,8 +25,8 @@ public class EquipmentPanelItemView : MonoBehaviour
 
     private void OnDestroy()
     {
-        BuyButton.onClick.RemoveListener(OnButtonClick);
-        BuyButton.onClick.RemoveListener(TryLockItem);
+        _buyButton.onClick.RemoveListener(OnButtonClick);
+        _buyButton.onClick.RemoveListener(TryLockItem);
         _changeButton.onClick.RemoveListener(OnChangeCurrentEquipment);
     }
 
@@ -43,19 +43,19 @@ public class EquipmentPanelItemView : MonoBehaviour
 
     private void Fill(EquipmentItemState equipmentItemState)
     {
-        ItemName.TranslationName = equipmentItemState.ItemData.Name;
-        ItemPrice.text = equipmentItemState.ItemData.Price.ToString();
-        ItemIcon.sprite = equipmentItemState.ItemData.ItemIcon;
+        _itemName.TranslationName = equipmentItemState.ItemData.Name;
+        _itemPrice.text = equipmentItemState.ItemData.Price.ToString();
+        _itemIcon.sprite = equipmentItemState.ItemData.ItemIcon;
         _itemValue.text = equipmentItemState.ItemData.Value.ToString();
         _levelItem.text = equipmentItemState.ItemData.Level.ToString();
         _shopIcon.sprite = equipmentItemState.ItemData.ShopIcon;
-        BuyButton.interactable = false;
+        _buyButton.interactable = false;
     }
 
     private void AddListener()
     {
-        BuyButton.onClick.AddListener(OnButtonClick);
-        BuyButton.onClick.AddListener(TryLockItem);
+        _buyButton.onClick.AddListener(OnButtonClick);
+        _buyButton.onClick.AddListener(TryLockItem);
         _changeButton.onClick.AddListener(OnChangeCurrentEquipment);
     }
 
@@ -64,7 +64,7 @@ public class EquipmentPanelItemView : MonoBehaviour
         if (_equipmentItemState.IsBuyed == false)
             return;
 
-        BuyButton.gameObject.SetActive(false);
+        _buyButton.gameObject.SetActive(false);
         _isBayed.gameObject.SetActive(true);
         _changeButton.gameObject.SetActive(true);
     }
@@ -77,7 +77,7 @@ public class EquipmentPanelItemView : MonoBehaviour
     private void TryUnlockBuyButton(Player player, EquipmentItemState equipmentItemState)
     {
         if (player.PlayerStats.Level >= equipmentItemState.ItemData.Level)
-            BuyButton.interactable = true;
+            _buyButton.interactable = true;
     }
 
     private void OnChangeCurrentEquipment()

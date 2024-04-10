@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DamageAbility : Ability
+public class DamageAbility : AbilityItemGameObject
 {
     [Header("[Hit Count]")]
     [SerializeField] private int _hitCount;

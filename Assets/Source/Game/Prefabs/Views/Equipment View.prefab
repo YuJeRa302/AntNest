@@ -683,10 +683,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2042311c52970b94a8b0fddc51751a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemPrice: {fileID: 1635363682178343232}
-  ItemIcon: {fileID: 3371217382558966983}
-  BuyButton: {fileID: 2494440166810893653}
-  ItemName: {fileID: 7312342018327300406}
+  _itemPrice: {fileID: 1635363682178343232}
+  _itemIcon: {fileID: 3371217382558966983}
+  _buyButton: {fileID: 2494440166810893653}
+  _itemName: {fileID: 7312342018327300406}
   _changeButton: {fileID: 8508093552191021740}
   _isBayed: {fileID: 5861275595148244762}
   _shopIcon: {fileID: 4290416859450902082}

@@ -1,42 +1,40 @@
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAbility : MonoBehaviour
 {
-    private readonly int _nullValue = 0;
-
-    [Header("[Player Stats]")]
-    [SerializeField] private PlayerStats _playerStats;
-    [Header("[Ability]")]
-    [SerializeField] private List<Ability> _abilities;
+    [SerializeField] private Player _player;
     [Header("[Containers]")]
     [SerializeField] private Transform _abilityObjectContainer;
+    [SerializeField] private Transform _playerEffectsContainer;
+    [SerializeField] private Transform _weaponEffectsContainer;
+    [Header("[AbilityReloadImage]")]
+    [SerializeField] private Image _reloadingImage;
 
-    private int _points = 0;
     private ParticleSystem _abilityEffect;
+    private AbilityItemGameObject _abilityItemGameObject;
 
-    public int NullValue => _nullValue;
-    public int Points => _points;
-    public List<Ability> Ability => _abilities;
     public ParticleSystem AbilityEffect => _abilityEffect;
+    public AbilityItemGameObject AbilityItemGameObject => _abilityItemGameObject;
 
-    public List<Ability> GetListAbility()
+    public void BuyAbility(AbilityState abilityState)
     {
-        return _abilities;
-    }
+        if (abilityState == null)
+            return;
 
-    public void SetPoints(int value)
-    {
-        _points = value;
-    }
+        abilityState.IsBuyed = true;
 
-    public void SetEffect(ParticleSystem abilityEffect)
-    {
-        _abilityEffect = abilityEffect;
-    }
+        if (_abilityItemGameObject != null)
+            Destroy(_abilityItemGameObject.gameObject);
 
-    public void GivePoints(int value)
-    {
-        _points = Mathf.Clamp(_points - value, _nullValue, _points);
+        if (_abilityEffect != null)
+            Destroy(_abilityEffect.gameObject);
+
+        if (abilityState.AbilityData.EffectType == TypeEffect.Weapon)
+            _abilityEffect = Instantiate(abilityState.AbilityData.ParticleSystem, _weaponEffectsContainer);
+        else _abilityEffect = Instantiate(abilityState.AbilityData.ParticleSystem, _playerEffectsContainer);
+
+        _abilityItemGameObject = Instantiate(abilityState.AbilityData.ItemGameObject, _abilityObjectContainer);
+        _abilityItemGameObject.Initialize(_player, abilityState, _reloadingImage, _abilityEffect);
     }
 }

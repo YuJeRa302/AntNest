@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 839a0e9b833afd94c9cdc77ea141f6ab, type: 3}
-  m_Name: Level 3
+  m_Name: Level 1
   m_EditorClassIdentifier: 
-  Level: 2
-  AbilityValue: 50
-  Delay: 35
+  Level: 0
+  AbilityValue: 15
+  Delay: 20

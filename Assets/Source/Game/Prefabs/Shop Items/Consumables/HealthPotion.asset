@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 072ad0cb8aa4d0249b8a56adeb8d15af, type: 3}
+  m_Script: {fileID: 11500000, guid: 54a7cb87c58f2af4a89f907df4ac62e5, type: 3}
   m_Name: HealthPotion
   m_EditorClassIdentifier: 
+  _type: 3
   _sprite: {fileID: 320134187, guid: 78cddcb7597c45f4fadca13f5d8b4606, type: 3}
   _price: 50
-  _isBayed: 1
+  _isBuyedByDefault: 0
   _name: HealthPotion
   _value: 20

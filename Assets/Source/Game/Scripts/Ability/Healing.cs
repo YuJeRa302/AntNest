@@ -1,4 +1,4 @@
-public class Healing : Ability
+public class Healing : AbilityItemGameObject
 {
     protected override void Use()
     {
