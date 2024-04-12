@@ -8529,7 +8529,7 @@ GameObject:
   - component: {fileID: 6579283652965192782}
   - component: {fileID: 6579283652965192776}
   - component: {fileID: 6579283652965192783}
-  - component: {fileID: 3795503082630601195}
+  - component: {fileID: 9197893760224240502}
   m_Layer: 5
   m_Name: Armor_Panel
   m_TagString: Untagged
@@ -8596,7 +8596,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3795503082630601195
+--- !u!114 &9197893760224240502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8605,15 +8605,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6579283652965192781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f67bf9028512b3c49821b2cfa2f2e55e, type: 3}
+  m_Script: {fileID: 11500000, guid: ca7482d293e82f14f8c3d71754ae63cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemType: 0
-  ItemContainer: {fileID: 0}
-  _openButton: {fileID: 0}
-  _shop: {fileID: 0}
+  ItemType: 1
+  ItemContainer: {fileID: 6579283653714403307}
+  _openButton: {fileID: 6579283653283257970}
+  _shop: {fileID: 6579283654000373080}
   _player: {fileID: 0}
-  _itemView: {fileID: 0}
+  _itemView: {fileID: 1672117183771813317, guid: c53cbd5ea1c7d9644bd26df366e69352, type: 3}
   _playerEquipment: {fileID: 0}
 --- !u!1 &6579283653007265616
 GameObject:
@@ -13324,7 +13324,7 @@ GameObject:
   - component: {fileID: 6579283654167028020}
   - component: {fileID: 6579283654167028022}
   - component: {fileID: 6579283654167028021}
-  - component: {fileID: 3051228677907219179}
+  - component: {fileID: 8265556996957319017}
   m_Layer: 5
   m_Name: Weapon_Panel
   m_TagString: Untagged
@@ -13391,7 +13391,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3051228677907219179
+--- !u!114 &8265556996957319017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13400,7 +13400,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6579283654167028027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48ee5dcc3ae19214fb3957569d14d1f1, type: 3}
+  m_Script: {fileID: 11500000, guid: ca7482d293e82f14f8c3d71754ae63cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ItemType: 0

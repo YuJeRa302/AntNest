@@ -35,10 +35,7 @@ public abstract class ShopTab : MonoBehaviour
     {
         TabOpened?.Invoke();
         gameObject.SetActive(true);
-        FillTab();
     }
-
-    protected virtual void FillTab() { }
 
     protected virtual void UpdatePlayerResourceValue()
     {
