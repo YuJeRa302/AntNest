@@ -1,44 +1,29 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MenuPanel : Panels
 {
-    [Header("[Level Buttons]")]
-    [SerializeField] private QuestPanel _questPanel;
-    [Header("[Menu]")]
-    [SerializeField] private Menu _menu;
-    [Header("[Sliders]")]
-    [SerializeField] private Slider _ambientSoundsSlider;
-    [SerializeField] private Slider _buttonFXSlider;
-    [Header("[Mute Button Image]")]
-    [SerializeField] private Image _imageButton;
-    [Header("[Sprite Mute Button]")]
-    [SerializeField] private Sprite _muteButton;
-    [SerializeField] private Sprite _unmuteButton;
+    [SerializeField] private SaveProgress _saveProgress;
+    [SerializeField] private LoadConfig _config;
+    [Header("[Menu Entities]")]
+    [SerializeField] private MenuSound _menuSound;
+    [SerializeField] private MenuView _menuView;
+    [SerializeField] private SettingsPanel _settingsPanel;
 
-    public Slider AmbientSoundsSlider => _ambientSoundsSlider;
-    public Slider ButtonFXSlider => _buttonFXSlider;
-    public Image MuteImageButton => _imageButton;
+    public MenuSound MenuSound => _menuSound;
+    public LoadConfig LoadConfig => _config;
 
     public void Initialize()
     {
-        _menu.Initialize();
         gameObject.SetActive(true);
+#if UNITY_WEBGL && !UNITY_EDITOR
+                GetLoad();
+#endif
     }
 
-    public void SetMuteButtonImage(bool state)
+    private void GetLoad()
     {
-        MuteImageButton.sprite = state == true ? _muteButton : _unmuteButton;
-    }
-
-    public void SetSliderValue(float ambientSoundsSlider, float buttonFXSlider)
-    {
-        _ambientSoundsSlider.value = ambientSoundsSlider;
-        _buttonFXSlider.value = buttonFXSlider;
-    }
-
-    protected override void UpdateInfo()
-    {
-        _questPanel.Initialize(_menu.LoadConfig);
+        _saveProgress.GetLoad(_config);
+        _settingsPanel.SettingsView.SetSliderValue(_config);
+        _menuSound.Initialize();
     }
 }

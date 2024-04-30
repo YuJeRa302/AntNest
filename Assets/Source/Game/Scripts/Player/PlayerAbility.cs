@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,5 +37,11 @@ public class PlayerAbility : MonoBehaviour
 
         _abilityItemGameObject = Instantiate(abilityState.AbilityData.ItemGameObject, _abilityObjectContainer);
         _abilityItemGameObject.Initialize(_player, abilityState, _reloadingImage, _abilityEffect);
+    }
+
+    public void UpgradeAbility(AbilityState abilityState) 
+    {
+        abilityState.CurrentLevel++;
+        BuyAbility(abilityState);
     }
 }

@@ -9,7 +9,9 @@ public class AbilityItemGameObject : ItemGameObject
     protected Player Player;
     protected bool IsUseAbility = true;
     protected float CurrentDelay;
+    protected float CurrentDuration;
     protected int CurrentAbilityValue;
+    protected TypeAbility TypeAbility;
 
     private float _animationTime;
     private Image _reloadingImage;
@@ -22,6 +24,11 @@ public class AbilityItemGameObject : ItemGameObject
         _useAbilityButton.onClick.AddListener(Use);
     }
 
+    private void OnEnable()
+    {
+        _delay = StartCoroutine(Delay(CurrentDelay));
+    }
+
     private void OnDestroy()
     {
         _useAbilityButton.onClick.RemoveListener(Use);
@@ -31,12 +38,13 @@ public class AbilityItemGameObject : ItemGameObject
     public void Initialize(Player player, AbilityState abilityState, Image reloadingImage, ParticleSystem particleSystem)
     {
         Player = player;
-        CurrentDelay = abilityState.AbilityData.CurrentDelay;
-        CurrentAbilityValue = abilityState.AbilityData.CurrentAbilityValue;
+        CurrentDelay = abilityState.AbilityData.AbilityLevels[abilityState.CurrentLevel].Delay;
+        CurrentAbilityValue = abilityState.AbilityData.AbilityLevels[abilityState.CurrentLevel].AbilityValue;
+        TypeAbility = abilityState.AbilityData.TypeAbility;
+        CurrentDuration = abilityState.AbilityData.AbilityDuration;
         _abilityItemData = abilityState.AbilityData;
         _particleSystem = particleSystem;
         _reloadingImage = reloadingImage;
-        _delay = StartCoroutine(Delay(_abilityItemData.CurrentDelay));
     }
 
     protected virtual void Use() { }

@@ -4,15 +4,15 @@ using System.Collections;
 
 public class Rewards : MonoBehaviour
 {
-    private readonly float _pauseValue = 0;
-    private readonly float _resumeValue = 1f;
-
     [Header("[Rewards Coin Multiplier]")]
     [SerializeField] private int _coinMultiplier = 2;
     [Header("[Level Parameters]")]
     [SerializeField] private LevelParameters _levelParameters;
     [Header("[Rewards Sound]")]
     [SerializeField] private RewardsSound _rewardsSound;
+
+    private readonly float _pauseValue = 0;
+    private readonly float _resumeValue = 1f;
 
     private Player _player;
     private bool _isCloseFullScreenAd;
@@ -60,8 +60,9 @@ public class Rewards : MonoBehaviour
 
     private IEnumerator WaitingAdClose()
     {
-        OpenFullScreenAd();
-
+#if UNITY_WEBGL && !UNITY_EDITOR
+                OpenFullScreenAd();
+#endif
         while (_isCloseFullScreenAd != true)
         {
             yield return null;

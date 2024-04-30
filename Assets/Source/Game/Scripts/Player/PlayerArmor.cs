@@ -27,7 +27,7 @@ public class PlayerArmor : MonoBehaviour
         _currentArmor.SetActive(false);
         armor.SetActive(true);
         _currentArmor = armor;
-        _player.PlayerView.UpdatePlayerStats();
+        ///_player.PlayerView.UpdatePlayerStats();
     }
 
     public List<Armor> GetListArmor()
@@ -41,7 +41,7 @@ public class PlayerArmor : MonoBehaviour
         _numberDamageBlocks = numberDamageBlocks;
         _abilityArmor = armor;
         //_currentArmor.Increase(_abilityArmor);
-        _player.PlayerView.UpdatePlayerStats();
+        //_player.PlayerView.UpdatePlayerStats();
     }
 
     public void UpdateArmor()
@@ -57,7 +57,7 @@ public class PlayerArmor : MonoBehaviour
         //_currentArmor.Decrease(_abilityArmor);
         _abilityArmor = _minValue;
         _player.PlayerStats.PlayerAbility.AbilityEffect.Stop();
-        _player.PlayerView.UpdatePlayerStats();
+        //_player.PlayerView.UpdatePlayerStats();
     }
 
     private void AddItemToList()

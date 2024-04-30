@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,16 +7,32 @@ public class EnemyAbility : MonoBehaviour
     [Header("[Stats]")]
     [SerializeField] private float _coolDown;
     [SerializeField] private int _damage;
-    [Header("[Enemy Effects]")]
-    [SerializeField] private ParticleSystem _ability;
     [Header("[Enemy]")]
     [SerializeField] private Enemy _enemy;
 
     private bool _isUseAbility = true;
 
+    public event Action AbilityUsing;
+
     private void Start()
     {
         StartCoroutine(AbilityCoolDown(_coolDown));
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        if (collision.gameObject.TryGetComponent(out Player player))
+        {
+            if (_isUseAbility == false)
+                CastAbility(player);
+        }
+        else return;
+    }
+
+    public void Initialize(EnemyData enemyData)
+    {
+        _coolDown = enemyData.AbilityCoolDown;
+        _damage = enemyData.AbilityDamage;
     }
 
     private IEnumerator AbilityCoolDown(float coolDown)
@@ -34,19 +51,10 @@ public class EnemyAbility : MonoBehaviour
 
     private void CastAbility(Player player)
     {
-        _ability.Play();
+        AbilityUsing.Invoke();
         player.PlayerStats.PlayerHealth.TakeDamage(_damage);
         UpdateValue(true, 1);
         _enemy.EnemyView.CoolDownImage.sprite = _enemy.EnemyView.CancelSprite;
-    }
-
-    private void OnTriggerStay(Collider collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Player player))
-        {
-            if (_isUseAbility == false) CastAbility(player);
-        }
-        else return;
     }
 
     private void UpdateValue(bool state, int delay)

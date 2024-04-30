@@ -2,28 +2,29 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Enemy : EnemyMovement
+[RequireComponent(typeof(EnemySound))]
+[RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(EnemyView))]
+[RequireComponent(typeof(EnemyAbility))]
+public class Enemy : MonoBehaviour
 {
+    [SerializeField] private NavMeshAgent _navMeshAgent;
+    [Header("[Enemy Entities]")]
+    [SerializeField] private EnemyView _enemyView;
+    [SerializeField] private EnemySound _enemySound;
+    [SerializeField] private EnemyMovement _enemyMovement;
+    [SerializeField] private EnemyAbility _enemyAbility;
+
     private readonly int _minHealth = 0;
     private readonly int _delayDestroy = 1;
 
-    [Header("[Enemy Stats]")]
-    [SerializeField] private int _id;
-    [SerializeField] private int _level;
-    [SerializeField] private int _damage;
-    [SerializeField] private int _health;
-    [SerializeField] private int _goldReward;
-    [SerializeField] private int _experienceReward;
-    [SerializeField] private int _score;
-    [SerializeField] private float _speed;
-    [Header("[Enemy Tag Name]")]
-    [SerializeField] private string _tagName;
-    [Header("[Enemy NavMeshAgent]")]
-    [SerializeField] private NavMeshAgent _navMeshAgent;
-    [Header("[Enemy View]")]
-    [SerializeField] private EnemyView _enemyView;
-    [Header("[Enemy Sound]")]
-    [SerializeField] private EnemySound _enemySound;
+    private int _level;
+    private int _damage;
+    private int _health;
+    private int _goldReward;
+    private int _experienceReward;
+    private int _score;
+    private string _tagName;
 
     public int Level => _level;
     public int Damage => _damage;
@@ -31,46 +32,54 @@ public abstract class Enemy : EnemyMovement
     public int GoldReward => _goldReward;
     public int ExperienceReward => _experienceReward;
     public int Score => _score;
-    public NavMeshAgent NavMeshAgent => _navMeshAgent;
-    public Sprite Sprite => _enemyView.Sprite;
-    public AudioClip HitPlayer => _enemySound.HitPlayer;
-    public AudioSource AudioSource => _enemySound.AudioSource;
     public string TagEnemy => _tagName;
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public EnemyView EnemyView => _enemyView;
-
+    public EnemyMovement EnemyMovement => _enemyMovement;
+    public EnemyAbility EnemyAbility => _enemyAbility;
+    public EnemySound EnemySound => _enemySound;
 
     public event Action<int> ChangedHealth;
-
     public event Action<Enemy> Dying;
+    public event Action HitTaking;
 
-
-    public void Die()
+    private void OnDestroy()
     {
-        Dying.Invoke(this);
-        SetDyingParameters();
-        Destroy(gameObject, _delayDestroy);
+        _enemyMovement.EnemyDying -= OnEnemyDying;
+    }
+
+    public void Initialize(EnemyData enemyData, float soundVolume, Player player)
+    {
+        Fill(enemyData);
+        _enemySound.Initialize(soundVolume, enemyData);
+        _enemyView.Initialize(enemyData);
+        _enemyAbility.Initialize(enemyData);
+        _enemyMovement.Initialize(player);
+        _enemyMovement.EnemyDying += OnEnemyDying;
     }
 
     public void TakeDamage(int damage)
     {
-        TakeHit();
         _health = Mathf.Clamp(_health - damage, _minHealth, _health);
-        ChangedHealth.Invoke(Health);
-        _enemyView.Hit.Play();
+        HitTaking.Invoke();
+        ChangedHealth.Invoke(_health);
     }
 
-    protected virtual void Start()
+    private void OnEnemyDying()
     {
-        Target = FindObjectOfType<Player>();
-        _enemyView.SetSliderValue(Health);
-        _enemySound.AudioSource.volume = FindObjectOfType<LevelParameters>().LoadConfig.AmbientVolume;
+        _enemySound.PlayDieSound();
+        Dying.Invoke(this);
+        Destroy(gameObject, _delayDestroy);
     }
 
-    private void SetDyingParameters()
+    private void Fill(EnemyData enemyData)
     {
-        IsDead = true;
-        _enemyView.DieEffect.Play();
-        _enemyView.Hit.gameObject.SetActive(false);
-        _enemySound.AudioSource.PlayOneShot(_enemySound.AudioClipDie);
+        _level = enemyData.Level;
+        _damage = enemyData.Damage;
+        _health = enemyData.Health;
+        _goldReward = enemyData.GoldReward;
+        _experienceReward = enemyData.ExperienceReward;
+        _score = enemyData.Score;
+        _tagName = enemyData.Name;
     }
 }

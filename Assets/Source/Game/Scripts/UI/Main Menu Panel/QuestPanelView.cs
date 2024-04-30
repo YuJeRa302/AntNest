@@ -12,8 +12,8 @@ public class QuestPanelView : MonoBehaviour
     [SerializeField] private LeanLocalizedText _description;
     [Header("[Wave]")]
     [SerializeField] private Text _waveCount;
-    [Header("[Endless Iamge]")]
-    [SerializeField] private Image _endlessimage;
+    [Header("[Endless Image]")]
+    [SerializeField] private Image _endlessImage;
 
     public void Initialize(int coins, int playerLevel)
     {
@@ -35,7 +35,7 @@ public class QuestPanelView : MonoBehaviour
 
     private void SetActiveState(bool imageState, bool textState)
     {
-        _endlessimage.gameObject.SetActive(imageState);
+        _endlessImage.gameObject.SetActive(imageState);
         _waveCount.gameObject.SetActive(textState);
     }
 }

@@ -20,8 +20,6 @@ public class LevelParameters : MonoBehaviour
     private LoadConfig _loadConfig;
     private Player _player;
     private Levels _levels;
-    private int _totalCountEnemy;
-    private int _currentWave = 0;
 
     public int IndexEndlessWave => 0;
     public Player Player => _player;

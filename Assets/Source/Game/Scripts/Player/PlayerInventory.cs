@@ -53,6 +53,7 @@ public class PlayerInventory : MonoBehaviour
         }
 
         equipmentItemState.IsEquipped = true;
+        _player.PlayerStats.ChangeEquipment();
     }
 
     private void LoadDefaultState()

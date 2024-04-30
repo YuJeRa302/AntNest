@@ -3,17 +3,17 @@ using UnityEngine.UI;
 
 public class DialogPanel : GamePanels
 {
-    [SerializeField] private Button _button;
+    [SerializeField] private Button _buttonClose;
 
     private void Awake()
     {
         gameObject.SetActive(false);
-        _button.onClick.AddListener(Close);
+        _buttonClose.onClick.AddListener(Close);
     }
 
     private void OnDestroy()
     {
-        _button.onClick.RemoveListener(Close);
+        _buttonClose.onClick.RemoveListener(Close);
     }
 
     public void OpenPanel()

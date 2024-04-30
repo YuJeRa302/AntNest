@@ -4,6 +4,7 @@ using Agava.YandexGames;
 public class SaveProgress : MonoBehaviour
 {
     private readonly string _key = "antHill";
+    private readonly int _nullLevel = 0;
 
     private SaveModel _data = null;
     private LoadConfig _loadConfig;
@@ -60,9 +61,11 @@ public class SaveProgress : MonoBehaviour
     {
         if (data != null)
         {
-            if (data.PlayerCompleteLevels != null) loadConfig.UpdateListPlayerLevels(data.PlayerCompleteLevels);
+            if (data.PlayerCompleteLevels != null)
+                loadConfig.UpdateListPlayerLevels(data.PlayerCompleteLevels);
 
-            SetConfigParameters(data.Language, data.PlayerCoins, data.PlayerLevel, data.PlayerExperience, data.PlayerScore, data.IsFirstSession, loadConfig);
+            var playerLevel = data.PlayerLevel == _nullLevel ? loadConfig.PlayerLevel : data.PlayerLevel;
+            SetConfigParameters(data.Language, data.PlayerCoins, playerLevel, data.PlayerExperience, data.PlayerScore, data.IsFirstSession, loadConfig);
         }
         else return;
     }

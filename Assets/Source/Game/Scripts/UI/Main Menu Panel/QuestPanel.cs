@@ -1,78 +1,111 @@
 using System.Collections.Generic;
+using IJunior.TypedScenes;
+using System.Collections;
 using UnityEngine;
+using System;
 
-public class QuestPanel : Panels
+public class QuestPanel : MenuTab
 {
-    private readonly int _indexShift = 1;
-
-    [Header("[Level Buttons]")]
     [SerializeField] private List<Buttons> _buttons;
+    [SerializeField] private QuestPanelView _questPanelView;
+    [SerializeField] private CanvasLoader _canvasLoader;
+    [Header("[View]")]
+    [SerializeField] private LoadConfig _loadConfig;
     [Header("[Containers]")]
     [SerializeField] private GameObject _buttonsContainer;
-    [Header("[QuestPanelView]")]
-    [SerializeField] private QuestPanelView _questPanelView;
-    [Header("[CanvasLoader]")]
-    [SerializeField] private CanvasLoader _canvasLoader;
+    [Header("[Default Level Data]")]
+    [SerializeField] private DefaultLevelState _defaultLevelState;
+    [Header("[View]")]
+    [SerializeField] private LevelDataView _levelDataView;
+
+    private AsyncOperation _load;
+    private List<LevelDataView> _levelDataViews = new();
+    private DefaultLevelState _levelState;
 
     public QuestPanelView QuestPanelView => _questPanelView;
 
-    public void Initialize(LoadConfig loadConfig)
+    protected override void OpenTab()
     {
-        _questPanelView.Initialize(loadConfig.PlayerCoins, loadConfig.PlayerLevel);
-        UpdateParameters(loadConfig, _buttons);
-        UnlockNewLevel(_buttons);
-        Load(_buttons);
+        base.OpenTab();
+        Initialize();
     }
 
-    private void UpdateParameters(LoadConfig loadConfig, List<Buttons> buttons)
+    protected override void CloseTab()
     {
-        for (int index = 0; index < buttons.Count; index++)
-        {
-            SetParameters(loadConfig, buttons[index]);
-
-            if (loadConfig.PlayerLevels != null)
-            {
-                if (loadConfig.PlayerLevels.TryGetValue(index, out bool value))
-                {
-                    buttons[index].ButtonsView.SetButtonState(value);
-                    buttons[index].Levels.SetComplete();
-                }
-            }
-        }
-
-        buttons[0].ButtonsView.SetButtonState(true);
-    }
-
-    private void UnlockNewLevel(List<Buttons> buttons)
-    {
-        for (int i = 0; i < buttons.Count - _indexShift; i++)
-        {
-            if (buttons[i].IsLevelComplete) buttons[i + _indexShift].ButtonsView.SetButtonState(true);
-        }
-    }
-
-    private void Load(List<Buttons> buttons)
-    {
+        base.CloseTab();
         Clear();
+    }
 
-        foreach (var button in buttons)
+    private void Initialize()
+    {
+        _levelState = _defaultLevelState;
+        _questPanelView.Initialize(_loadConfig.PlayerCoins, _loadConfig.PlayerLevel);
+        Fill();
+    }
+
+    private void Fill()
+    {
+        foreach (LevelDataState levelDataState in _levelState.LevelDataState)
         {
-            Instantiate(button, _buttonsContainer.transform);
+            LevelDataView view = Instantiate(_levelDataView, _buttonsContainer.transform);
+            _levelDataViews.Add(view);
+            view.Initialize(levelDataState, _loadConfig);
+            view.LevelModChanged += _questPanelView.SetTextValue;
+            view.HintsShowed += _questPanelView.SetTextValue;
+            view.LevelLoading += LoadScene;
         }
     }
 
     private void Clear()
     {
-        for (int i = 0; i < _buttonsContainer.transform.childCount; i++)
+        foreach (LevelDataView view in _levelDataViews)
         {
-            Destroy(_buttonsContainer.transform.GetChild(i).gameObject);
+            view.LevelModChanged -= _questPanelView.SetTextValue;
+            view.HintsShowed -= _questPanelView.SetTextValue;
+            view.LevelLoading -= LoadScene;
+            Destroy(view.gameObject);
+        }
+
+        _levelDataViews.Clear();
+    }
+
+    private void LoadScene(string sceneName, LoadConfig loadConfig)
+    {
+        switch (sceneName)
+        {
+            case Desert._sceneName:
+                StartCoroutine(LoadScreenLevel(Desert.LoadAsync(loadConfig)));
+                break;
+            case Forest._sceneName:
+                StartCoroutine(LoadScreenLevel(Forest.LoadAsync(loadConfig)));
+                break;
+            case Cave._sceneName:
+                StartCoroutine(LoadScreenLevel(Cave.LoadAsync(loadConfig)));
+                break;
         }
     }
 
-    private void SetParameters(LoadConfig loadConfig, Buttons buttons)
+    private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)
     {
-        buttons.GetParameters(loadConfig, _canvasLoader, this);
-        buttons.ButtonsView.SetButtonState(false);
-        buttons.ButtonsView.SetImage(buttons.IsLevelComplete);
+        if (_load != null)
+            yield break;
+
+        _load = asyncOperation;
+        _load.allowSceneActivation = false;
+        _canvasLoader.gameObject.SetActive(true);
+
+        while (_load.progress < 0.9f)
+        {
+            yield return null;
+        }
+
+        _load.allowSceneActivation = true;
+        _load = null;
     }
+}
+
+[Serializable]
+public struct DefaultLevelState
+{
+    public List<LevelDataState> LevelDataState;
 }

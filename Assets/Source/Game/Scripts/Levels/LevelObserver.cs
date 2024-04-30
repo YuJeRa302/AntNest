@@ -6,15 +6,13 @@ using UnityEngine.UI;
 
 public class LevelObserver : MonoBehaviour
 {
-    private readonly int _levelCompleteBonus = 150;
-    private readonly string _menuScene = "Menu";
-    private readonly float _resumeTimeValue = 1f;
-    private readonly float _pauseTimeValue = 0f;
-
     [Header("[Level Entities]")]
     [SerializeField] private EnemySpawner _enemySpawner;
+    [SerializeField] private LevelView _levelView;
+    [SerializeField] private RuneSpawn _runeSpawner;
     [SerializeField] private SaveProgress _saveProgress;
     [SerializeField] private Player _player;
+    [SerializeField] private PlayerInterfaceView _playerInterfaceView;
     [Header("[Panels]")]
     [SerializeField] private GamePanels[] _panels;
     [Header("[Buttons]")]
@@ -23,19 +21,25 @@ public class LevelObserver : MonoBehaviour
     [SerializeField] private Button _resumeGameButton;
     [SerializeField] private Button _closeGameButton;
 
-    private bool _isPlayerAlive = true;
+    private readonly int _levelCompleteBonus = 150;
+    private readonly string _menuScene = "Menu";
+    private readonly float _resumeTimeValue = 1f;
+    private readonly float _pauseTimeValue = 0f;
+
     private bool _isMuteSound = false;
+    private int _defaultCoins;
+    private int _defaultExp;
     private int _countKillEnemy = 0;
-    private int _countMoneyEarned;
-    private int _countExp;
+    private int _countMoneyEarned = 0;
+    private int _countExpEarned = 0;
     private AsyncOperation _load;
     private LoadConfig _loadConfig;
 
-    public bool IsPlayerAlive => _isPlayerAlive;
     public int CountMoneyEarned => _countMoneyEarned;
-    public int CountExp => _countExp;
+    public int CountExpEarned => _countExpEarned;
     public int CountKillEnemy => _countKillEnemy;
-    public EnemySpawner EnemySpawner => _enemySpawner;
+    public LevelView LevelView => _levelView;
+    public PlayerInterfaceView PlayerInterfaceView => _playerInterfaceView;
 
     public event Action GamePaused;
     public event Action GameResumed;
@@ -72,14 +76,16 @@ public class LevelObserver : MonoBehaviour
     public void Initialize(LoadConfig loadConfig)
     {
         _loadConfig = loadConfig;
-        _isPlayerAlive = true;
-        _enemySpawner.Initialize(loadConfig);
+        _defaultCoins = _loadConfig.PlayerCoins;
+        _defaultExp = _loadConfig.PlayerExperience;
+        _enemySpawner.Initialize(loadConfig, _player);
+        _runeSpawner.Initialize();
         _player.PlayerStats.Initialize(_loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore);
         _player.Wallet.Initialize(_loadConfig.PlayerCoins);
-        LoadPanels();
+        LoadGamePanels();
     }
 
-    private void LoadPanels()
+    private void LoadGamePanels()
     {
         foreach (var panel in _panels)
         {
@@ -87,10 +93,21 @@ public class LevelObserver : MonoBehaviour
         }
     }
 
+    private void CloseAllGamePanels()
+    {
+        foreach (var panel in _panels)
+        {
+            panel.gameObject.SetActive(false);
+        }
+    }
+
     private void AddPanelListener()
     {
         foreach (var panel in _panels)
         {
+            if (panel is RewardPanel)
+                (panel as RewardPanel).RewardPanelClosed += OnCloseRewardPanel;
+
             panel.OpenAd += OnOpenAd;
             panel.CloseAd += OnCloseAd;
         }
@@ -100,6 +117,9 @@ public class LevelObserver : MonoBehaviour
     {
         foreach (var panel in _panels)
         {
+            if (panel is RewardPanel)
+                (panel as RewardPanel).RewardPanelClosed -= OnCloseRewardPanel;
+
             panel.OpenAd -= OnOpenAd;
             panel.CloseAd -= OnCloseAd;
         }
@@ -121,27 +141,29 @@ public class LevelObserver : MonoBehaviour
 
     private void OnEnemyDied(Enemy enemy)
     {
-        UpdatePlayerStats(enemy);
+        _player.PlayerStats.EnemyDied(enemy);
         _countKillEnemy++;
         KillCountUpdated?.Invoke(_countKillEnemy);
     }
 
     private void OnPlayerDied()
     {
-        _isPlayerAlive = false;
         GiveWinEnemy();
     }
 
     private void GiveWinPlayer()
     {
+        CloseAllGamePanels();
         GameEnded?.Invoke();
-        _loadConfig.Levels.SetComplete();
-        _countMoneyEarned += _levelCompleteBonus;
+        _loadConfig.LevelDataState.IsComplete = true;
+        _countMoneyEarned = (_player.Wallet.Coins - _defaultCoins) + _levelCompleteBonus;
+        _countExpEarned = _player.PlayerStats.Experience - _defaultExp;
         LevelCompleted?.Invoke(true);
     }
 
     private void GiveWinEnemy()
     {
+        CloseAllGamePanels();
         GameEnded?.Invoke();
         LevelCompleted?.Invoke(false);
     }
@@ -170,17 +192,23 @@ public class LevelObserver : MonoBehaviour
         LoadLevel();
     }
 
-    public void UpdatePlayerData()
+    private void OnCloseRewardPanel()
     {
-        var level = _loadConfig.Levels.IsComplete ? _player.PlayerStats.Level : 0;
+        SavePlayerStats();
+        CloseGame();
+    }
+
+    private void SavePlayerStats()
+    {
+        var level = _loadConfig.LevelDataState.IsComplete ? _player.PlayerStats.Level : _loadConfig.PlayerLevel;
         _saveProgress.Save(_loadConfig.Language,
             _player.Wallet.Coins,
             level,
             _player.PlayerStats.Experience,
             _player.PlayerStats.Score,
            _loadConfig.IsFirstSession,
-            _loadConfig.Levels.LevelId,
-            _loadConfig.Levels.IsComplete);
+            _loadConfig.LevelDataState.LevelData.LevelId,
+            _loadConfig.LevelDataState.IsComplete);
     }
 
     private void SetTimeScale(float value)
@@ -191,13 +219,6 @@ public class LevelObserver : MonoBehaviour
     private void LoadLevel()
     {
         StartCoroutine(LoadScreenLevel(SceneManager.LoadSceneAsync(_menuScene)));
-    }
-
-    private void UpdatePlayerStats(Enemy enemy)
-    {
-        _countMoneyEarned += enemy.GoldReward;
-        _countExp += enemy.ExperienceReward;
-        _player.PlayerStats.OnEnemyDie(enemy);
     }
 
     private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)

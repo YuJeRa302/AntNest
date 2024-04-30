@@ -5,68 +5,90 @@ public class EnemyView : MonoBehaviour
 {
     [Header("[Sliders]")]
     [SerializeField] private Slider _sliderHP;
-    [Header("[Enemy]")]
+    [Header("[Enemy Stats]")]
     [SerializeField] private Enemy _enemy;
-    [Header("[Enemy Level]")]
     [SerializeField] private Text _level;
-    [Header("[Enemy HP]")]
     [SerializeField] private Text _health;
-    [Header("[Enemy Sprite]")]
-    [SerializeField] private Sprite _sprite;
-    [Header("[Enemy Icon]")]
-    [SerializeField] private Image _image;
+    [SerializeField] private Image _enemyIcon;
     [Header("[Enemy Effects]")]
     [SerializeField] private ParticleSystem _hit;
     [SerializeField] private ParticleSystem _dieEffect;
-    [Header("[CoolDown Image]")]
+    [SerializeField] private ParticleSystem _ability;
+    [Header("[Images]")]
     [SerializeField] private Image _coolDownImage;
-    [Header("[Cancel Image]")]
+    [SerializeField] private Image _abilityImage;
     [SerializeField] private Sprite _cancelSprite;
+    [Header("[View GameObject]")]
+    [SerializeField] private GameObject _enemyViewGameObject;
 
     private Camera _playerCamera;
 
-    public Sprite Sprite => _sprite;
-    public ParticleSystem Hit => _hit;
-    public ParticleSystem DieEffect => _dieEffect;
     public Image CoolDownImage => _coolDownImage;
     public Sprite CancelSprite => _cancelSprite;
 
-    public void SetSliderValue(int value)
+    private void OnDestroy()
+    {
+        _enemy.ChangedHealth -= OnChangeHealth;
+        _enemy.HitTaking -= OnHitTaking;
+        _enemy.EnemyMovement.EnemyDying -= OnEnemyDying;
+        _enemy.EnemyAbility.AbilityUsing -= OnUseAbility;
+    }
+
+    private void LateUpdate()
+    {
+        _enemyViewGameObject.transform.LookAt(_playerCamera.transform);
+    }
+
+    public void Initialize(EnemyData enemyData)
+    {
+        _playerCamera = FindObjectOfType<Camera>();
+        Fill(enemyData);
+        AddListener();
+    }
+
+    private void AddListener()
+    {
+        _enemy.ChangedHealth += OnChangeHealth;
+        _enemy.HitTaking += OnHitTaking;
+        _enemy.EnemyMovement.EnemyDying += OnEnemyDying;
+        _enemy.EnemyAbility.AbilityUsing += OnUseAbility;
+    }
+
+    private void Fill(EnemyData enemyData)
+    {
+        _level.text = _enemy.Level.ToString();
+        _health.text = _enemy.Health.ToString();
+        SetSliderValue(_enemy.Health);
+        _enemyIcon.sprite = enemyData.EnemyIcon;
+        _abilityImage.sprite = enemyData.AbilitySprite;
+        _cancelSprite = enemyData.CancelAbilitySprite;
+    }
+
+    private void SetSliderValue(int value)
     {
         _sliderHP.maxValue = value;
         _sliderHP.value = _sliderHP.maxValue;
     }
-    public void OnChangeHealth(int target)
+
+    private void OnChangeHealth(int target)
     {
         _sliderHP.value = target;
         _health.text = target.ToString();
     }
 
-    private void Initialized()
+    private void OnHitTaking()
     {
-        _playerCamera = FindObjectOfType<Camera>();
-        _level.text = _enemy.Level.ToString();
-        _health.text = _enemy.Health.ToString();
-        _image.sprite = _sprite;
+        _hit.Play();
     }
 
-    private void Start()
+    private void OnEnemyDying()
     {
-        Initialized();
+        _dieEffect.Play();
+        _hit.gameObject.SetActive(false);
     }
 
-    private void LateUpdate()
+    private void OnUseAbility()
     {
-        transform.LookAt(_playerCamera.transform);
-    }
-
-    private void OnEnable()
-    {
-        _enemy.ChangedHealth += OnChangeHealth;
-    }
-
-    private void OnDisable()
-    {
-        _enemy.ChangedHealth -= OnChangeHealth;
+        _ability.Play();
     }
 }

@@ -20,6 +20,7 @@ MonoBehaviour:
   _currentLevel: 0
   _description: RegenAbilityDescription
   _upgradePrice: 1
+  _abilityDuration: 0
   _abilityLevels:
   - {fileID: 11400000, guid: 8a8f8eb16d08b4442aac9fff77673da4, type: 2}
   - {fileID: 11400000, guid: 6eaa2f001a04d5d4a84271d12675bbe4, type: 2}
@@ -28,3 +29,5 @@ MonoBehaviour:
   _sound: {fileID: 8300000, guid: fb9e55fa47a894144a7c191aa26e1490, type: 3}
   _itemGameObject: {fileID: 116816162159099250, guid: ebb394893a370964e89cdddb9a30561d, type: 3}
   _particleSystem: {fileID: 19800000, guid: 38384b8f85c470a4cb4254f5647e1635, type: 3}
+  _typeEffect: 1
+  _typeAbility: 2

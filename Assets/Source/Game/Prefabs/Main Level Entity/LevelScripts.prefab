@@ -36,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1747327917629962778
 MonoBehaviour:
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelObserver: {fileID: 7297858956163358945}
-  _soundController: {fileID: 0}
+  _soundController: {fileID: 972409558029132792}
   _levelView: {fileID: 0}
 --- !u!114 &7297858956163358945
 MonoBehaviour:
@@ -78,10 +78,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7b0a879d82a154a98c9ae1a804b675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemySpawner: {fileID: 0}
-  _saveProgress: {fileID: 0}
+  _enemySpawner: {fileID: 7355126008103609782}
+  _levelView: {fileID: 0}
+  _runeSpawner: {fileID: 0}
+  _saveProgress: {fileID: 7194938797419932005}
   _player: {fileID: 0}
-  _panels: []
+  _playerInterfaceView: {fileID: 0}
+  _panels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   _soundButton: {fileID: 0}
   _pauseGameButton: {fileID: 0}
   _resumeGameButton: {fileID: 0}
@@ -124,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPoint: {fileID: 0}
   _delayEnemySpawn: 15
-  _levelObserver: {fileID: 0}
+  _levelObserver: {fileID: 7297858956163358945}
 --- !u!114 &972409558029132792
 MonoBehaviour:
   m_ObjectHideFlags: 0

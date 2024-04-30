@@ -19,14 +19,6 @@ public class ChangeLanguage : Panels
     [Header("[CurrentLanguageSprit]")]
     [SerializeField] private Sprite _sprite;
 
-    public void SelectLanguage(string value)
-    {
-        _leanLocalization.SetCurrentLanguage(value);
-        _loadConfig.SetCurrentLanguage(value);
-        _menuPanel.Initialize();
-        _loadConfig.SetSessionState(false);
-    }
-
     private void Awake()
     {
         YandexGamesSdk.CallbackLogging = true;
@@ -47,6 +39,14 @@ public class ChangeLanguage : Panels
         yield return null;
         OnInitialize();
 #endif
+    }
+
+    public void SelectLanguage(string value)
+    {
+        _leanLocalization.SetCurrentLanguage(value);
+        _loadConfig.SetCurrentLanguage(value);
+        _menuPanel.Initialize();
+        _loadConfig.SetSessionState(false);
     }
 
     private void OnInitialize()

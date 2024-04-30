@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeaderboardView : MonoBehaviour
+public class LeaderboardView : MenuTab
 {
     [Header("[Container]")]
-    [SerializeField] private Transform _container;
+    [SerializeField] private GameObject _leaderboardContainer;
     [Header("[ElementPrefab]")]
     [SerializeField] private LeaderboardElement _leaderboardElementPrefab;
     [Header("[Menu]")]
@@ -12,13 +12,24 @@ public class LeaderboardView : MonoBehaviour
 
     private List<LeaderboardElement> _leaderboardElements = new();
 
+    protected override void Awake()
+    {
+        gameObject.SetActive(false);
+        CloseButton.onClick.AddListener(CloseTab);
+    }
+
+    protected override void OnDestroy()
+    {
+        CloseButton.onClick.RemoveListener(CloseTab);
+    }
+
     public void FillingLeaderboard(List<LeaderboardPlayer> leaderboardPlayers)
     {
         ClearLeaderboard();
 
         foreach (LeaderboardPlayer player in leaderboardPlayers)
         {
-            LeaderboardElement leaderboardElementInstance = Instantiate(_leaderboardElementPrefab, _container);
+            LeaderboardElement leaderboardElementInstance = Instantiate(_leaderboardElementPrefab, _leaderboardContainer.transform);
             leaderboardElementInstance.Initialize(player.Name, player.Rank, player.Score);
 
             _leaderboardElements.Add(leaderboardElementInstance);
@@ -29,12 +40,6 @@ public class LeaderboardView : MonoBehaviour
     {
         _menuPanel.gameObject.SetActive(false);
         gameObject.SetActive(true);
-    }
-
-    public void Close()
-    {
-        gameObject.SetActive(false);
-        _menuPanel.gameObject.SetActive(true);
     }
 
     private void ClearLeaderboard()
@@ -50,9 +55,9 @@ public class LeaderboardView : MonoBehaviour
 
     private void ClearContainer()
     {
-        for (int i = 0; i < _container.transform.childCount; i++)
+        for (int i = 0; i < _leaderboardContainer.transform.childCount; i++)
         {
-            Destroy(_container.transform.GetChild(i).gameObject);
+            Destroy(_leaderboardContainer.transform.GetChild(i).gameObject);
         }
     }
 }

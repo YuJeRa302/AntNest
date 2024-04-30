@@ -12,16 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f250da32cdd8db438c99950c83d4b27, type: 3}
   m_Name: Armor
   m_EditorClassIdentifier: 
-  _type: 0
-  _sprite: {fileID: 0}
-  _price: 0
+  _type: 1
+  _sprite: {fileID: -1875506489, guid: 78cddcb7597c45f4fadca13f5d8b4606, type: 3}
+  _price: 1
   _isBuyedByDefault: 0
-  _name: 
+  _name: ArmorAbilityName
   _currentLevel: 0
-  _description: 
-  _upgradePrice: 0
-  _abilityLevels: []
-  _shopSprite: {fileID: 0}
-  _sound: {fileID: 0}
-  _itemGameObject: {fileID: 0}
-  _particleSystem: {fileID: 0}
+  _description: ArmorAbilityDescription
+  _upgradePrice: 1
+  _abilityDuration: 4
+  _abilityLevels:
+  - {fileID: 11400000, guid: 8d02c31be2ebe0a4c994eada217689f3, type: 2}
+  - {fileID: 11400000, guid: 1bc95fad0e4168748ab661936338fc02, type: 2}
+  - {fileID: 11400000, guid: db7fe0bd2aa0135428f4dcc82161c86a, type: 2}
+  _shopSprite: {fileID: -804689598, guid: 78cddcb7597c45f4fadca13f5d8b4606, type: 3}
+  _sound: {fileID: 8300000, guid: e88c6719ee125944c939db1d1217e7cb, type: 3}
+  _itemGameObject: {fileID: 3017487369258620538, guid: 8624a66cd62ba56499bf42bd5655ae15, type: 3}
+  _particleSystem: {fileID: 19800002, guid: 092fc91196646164590b1482bed459c0, type: 3}
+  _typeEffect: 1
+  _typeAbility: 0

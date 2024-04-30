@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Rune : MonoBehaviour
 {
-    [Header("[Containers]")]
     [SerializeField] private ParticleSystem[] Particles;
     [SerializeField] private Runes rune;
     [SerializeField] private AudioSource _audioSource;

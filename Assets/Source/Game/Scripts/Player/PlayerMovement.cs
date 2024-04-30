@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private readonly float _maxVectorValue = 1f;
-    private readonly float _minVectorValue = 0.0f;
-    private readonly float _attackRate = 1.0f;
-
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Animator _animator;
     [SerializeField] private Joystick _joystick;
@@ -18,6 +14,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _attackRange = 0.5f;
     [Header("[EnemyLayers]")]
     [SerializeField] private LayerMask _enemyLayers;
+
+    private readonly float _maxVectorValue = 1f;
+    private readonly float _minVectorValue = 0.0f;
+    private readonly float _attackRate = 1.0f;
 
     private Vector3 _moveVector;
     private float _speed;
@@ -33,10 +33,9 @@ public class PlayerMovement : MonoBehaviour
         Die
     }
 
-    public void Attack()
+    private void Start()
     {
-        if (_isAllowAttack == true) SetAttackParameters();
-        else return;
+        _speed = _player.PlayerStats.Speed;
     }
 
     private void Update()
@@ -44,15 +43,20 @@ public class PlayerMovement : MonoBehaviour
         Movement();
     }
 
-    private void Start()
-    {
-        _speed = _player.PlayerStats.Speed;
-    }
-
     private void OnDrawGizmosSelected()
     {
-        if (_attackPoint == null) return;
-        else Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
+        if (_attackPoint == null)
+            return;
+        else
+            Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
+    }
+
+    public void Attack()
+    {
+        if (_isAllowAttack == true)
+            SetAttackParameters();
+        else
+            return;
     }
 
     private void Step()
@@ -64,10 +68,10 @@ public class PlayerMovement : MonoBehaviour
     {
         _animator.SetTrigger(TransitionParametr.Attack.ToString());
         _player.PlayerSounds.AudioSourceAxe.PlayOneShot(_player.PlayerSounds.AxeSound);
-        yield return new WaitForSeconds(_attackRate);
-        FindAttackedEnemy();
 
-        if (_player.PlayerStats.PlayerDamage.AbilityDamage > 0) _player.PlayerStats.PlayerDamage.UpdateWeapon();
+        yield return new WaitForSeconds(_attackRate);
+
+        FindAttackedEnemy();
         _isAllowAttack = true;
     }
 
@@ -95,8 +99,8 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (Collider collider in coliderEnemy)
         {
-            //if (collider.TryGetComponent<Enemy>(out Enemy enemy)) enemy.TakeDamage(_player.PlayerStats.PlayerDamage.CurrentWeapon.Damage);
-            // if (collider.TryGetComponent<Enemy>(out Enemy enemy)) enemy.TakeDamage((_player.PlayerStats.PlayerEquipment.CurrentWeapon.State.ItemData as EquipmentItemData).Value);
+            if (collider.TryGetComponent<Enemy>(out Enemy enemy))
+                enemy.TakeDamage(_player.PlayerStats.Damage);
         }
     }
 
@@ -104,7 +108,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _isAllowAttack = false;
 
-        if (_makeDamage != null) StopCoroutine(_makeDamage);
+        if (_makeDamage != null)
+            StopCoroutine(_makeDamage);
 
         _makeDamage = AttackRate();
         StartCoroutine(_makeDamage);

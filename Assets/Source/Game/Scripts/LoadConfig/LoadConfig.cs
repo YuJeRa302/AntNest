@@ -15,21 +15,23 @@ public class LoadConfig : ScriptableObject
     [SerializeField] private bool _isFirstSession;
     [SerializeField] private int _playerScore;
 
-    private Levels _loadLevel;
     private string _language;
+    private Levels _loadLevel;
+    private LevelDataState _levelDataState;
     private Sprite _languageSprite;
     private Dictionary<int, bool> _playerLevels = new();
 
     public float AmbientVolume => _ambientVolume;
     public float InterfaceVolume => _interfaceVolume;
-    public Levels Levels => _loadLevel;
+    public bool IsFirstSession => _isFirstSession;
     public int PlayerCoins => _playerCoins;
     public int PlayerLevel => _playerLevel;
     public int PlayerScore => _playerScore;
     public int PlayerExperience => _playerExperience;
     public string Language => _language;
     public Dictionary<int, bool> PlayerLevels => _playerLevels;
-    public bool IsFirstSession => _isFirstSession;
+    public Levels Levels => _loadLevel;
+    public LevelDataState LevelDataState => _levelDataState;
 
     public void SetCurrentLanguageImage(Sprite sprite)
     {
@@ -45,6 +47,11 @@ public class LoadConfig : ScriptableObject
     {
         _ambientVolume = sliderAmbient.value;
         _interfaceVolume = sliderInterface.value;
+    }
+
+    public void LoadLevelData(LevelDataState levelDataState) 
+    {
+        _levelDataState = levelDataState;
     }
 
     public void SetLevelParameters(Levels loadLevel)

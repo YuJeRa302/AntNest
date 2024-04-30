@@ -1,20 +1,22 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    protected Player Target;
-    protected bool IsAttack = false;
-    protected bool IsDead = false;
-
-    private readonly float _delay = 1f;
-
     [Header("[Animator]")]
     [SerializeField] protected Animator Animator;
     [Header("[Enemy]")]
     [SerializeField] private Enemy _enemy;
 
+    private readonly float _delay = 1f;
+
     private IEnumerator _makeDamage;
+    private Player _target;
+    private bool _isAttack = false;
+    private bool _isDead = false;
+
+    public event Action EnemyDying;
 
     enum TransitionParametr
     {
@@ -24,67 +26,30 @@ public class EnemyMovement : MonoBehaviour
         Hit
     }
 
-    protected void TakeHit()
+    private void OnDestroy()
     {
-        Animator.SetTrigger(TransitionParametr.Hit.ToString());
-    }
-
-    protected void Move()
-    {
-        _enemy.NavMeshAgent.SetDestination(Target.transform.position);
-        Animator.Play(TransitionParametr.Run.ToString());
-    }
-
-    protected void SetStateDie()
-    {
-        if (_enemy.Health == 0)
-        {
-            Animator.Play(TransitionParametr.Die.ToString());
-
-            if (_makeDamage != null) StopCoroutine(_makeDamage);
-
-            _enemy.Die();
-        }
-    }
-
-    protected void OnAttack(Player player)
-    {
-        IsAttack = true;
-
-        if (_makeDamage != null) StopCoroutine(_makeDamage);
-
-        _makeDamage = AttackPlayer(player);
-        StartCoroutine(_makeDamage);
-    }
-
-    protected virtual IEnumerator AttackPlayer(Player player)
-    {
-        var waitForSeconds = new WaitForSeconds(_delay);
-
-        while (IsAttack == true)
-        {
-            player.PlayerStats.PlayerHealth.TakeDamage(_enemy.Damage);
-            yield return waitForSeconds;
-        }
+        _enemy.HitTaking -= TakeHit;
     }
 
     private void Update()
     {
-        if (IsDead != true)
+        if (_isDead != true)
         {
-            SetStateDie();
-            if (IsAttack != true) Move();
+            CheckEnemyHealth();
+
+            if (_isAttack != true)
+                Move();
         }
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (IsDead != true)
+        if (_isDead != true)
         {
             if (collision.TryGetComponent<Player>(out Player player))
             {
                 Animator.Play(TransitionParametr.Attack.ToString());
-                OnAttack(player);
+                Attack(player);
             }
         }
         else return;
@@ -94,14 +59,71 @@ public class EnemyMovement : MonoBehaviour
     {
         if (collision.TryGetComponent<Player>(out Player player))
         {
-            IsAttack = false;
+            _isAttack = false;
 
-            if (_makeDamage != null) StopCoroutine(_makeDamage);
+            if (_makeDamage != null)
+                StopCoroutine(_makeDamage);
         }
+    }
+
+    public void Initialize(Player player)
+    {
+        _target = player;
+        _enemy.HitTaking += TakeHit;
+    }
+
+    private void CheckEnemyHealth()
+    {
+        if (_enemy.Health == 0)
+            Die();
+        else return;
+    }
+
+    private void Attack(Player player)
+    {
+        _isAttack = true;
+
+        if (_makeDamage != null)
+            StopCoroutine(_makeDamage);
+
+        _makeDamage = AttackPlayer(player);
+        StartCoroutine(_makeDamage);
+    }
+
+    private IEnumerator AttackPlayer(Player player)
+    {
+        var waitForSeconds = new WaitForSeconds(_delay);
+
+        while (_isAttack == true)
+        {
+            player.PlayerStats.PlayerHealth.TakeDamage(_enemy.Damage);
+            yield return waitForSeconds;
+        }
+    }
+
+    private void Die()
+    {
+        if (_makeDamage != null)
+            StopCoroutine(_makeDamage);
+
+        _isDead = true;
+        Animator.Play(TransitionParametr.Die.ToString());
+        EnemyDying.Invoke();
+    }
+
+    private void Move()
+    {
+        _enemy.NavMeshAgent.SetDestination(_target.transform.position);
+        Animator.Play(TransitionParametr.Run.ToString());
+    }
+
+    private void TakeHit()
+    {
+        Animator.SetTrigger(TransitionParametr.Hit.ToString());
     }
 
     private void HitPlayer()
     {
-        _enemy.AudioSource.PlayOneShot(_enemy.HitPlayer);
+        _enemy.EnemySound.PlayHitSound();
     }
 }

@@ -27,7 +27,7 @@ public class PlayerDamage : MonoBehaviour
         _currentWeapon.SetActive(false);
         weapon.SetActive(true);
         _currentWeapon = weapon;
-        _player.PlayerView.UpdatePlayerStats();
+        //_player.PlayerView.UpdatePlayerStats();
     }
 
     public List<Weapon> GetListWeapon()
@@ -41,7 +41,7 @@ public class PlayerDamage : MonoBehaviour
         _hitCount = hitCount;
         _abilityDamage = damage;
         //_currentWeapon.Increase(_abilityDamage);
-        _player.PlayerView.UpdatePlayerStats();
+        //_player.PlayerView.UpdatePlayerStats();
     }
 
     public void UpdateWeapon()
@@ -57,7 +57,7 @@ public class PlayerDamage : MonoBehaviour
         // _currentWeapon.Decrease(_abilityDamage);
         _abilityDamage = _minValue;
         _player.PlayerStats.PlayerAbility.AbilityEffect.Stop();
-        _player.PlayerView.UpdatePlayerStats();
+        //_player.PlayerView.UpdatePlayerStats();
     }
 
     private void AddItemToList()

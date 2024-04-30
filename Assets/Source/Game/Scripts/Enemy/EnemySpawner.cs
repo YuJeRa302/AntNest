@@ -5,24 +5,25 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private readonly int _indexEndlessWave = 0;
-    private readonly int _defaultCountEnemy = 0;
     [Header("[SpawnParameters]")]
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private int _delayEnemySpawn = 15;
     [Header("[Level Entities]")]
     [SerializeField] private LevelObserver _levelObserver;
 
+    private readonly int _indexEndlessWave = 0;
+
+    private Player _player;
     private List<Enemy> _enemies = new();
+    private LevelDataState _levelDataState;
+    private int _countSpawnEnemy;
+    private float _soundVolumeEnemyValue;
     private int _totalCountEnemy;
     private int _currentWave = 0;
-    private int _currentCountEnemy = 0;
-    private Levels _levels;
     private IEnumerator _spawnEnemy;
     private IEnumerator _spawnWave;
 
     public Action<Enemy> EnemyDied;
-    public Action<int> WaveSpawning;
     public Action LastEnemyDied;
 
     private void OnEnable()
@@ -39,16 +40,21 @@ public class EnemySpawner : MonoBehaviour
         _levelObserver.GameEnded -= OnEndGame;
     }
 
-    public void Initialize(LoadConfig loadConfig)
+    public void Initialize(LoadConfig loadConfig, Player player)
     {
-        _levels = loadConfig.Levels;
+        _levelDataState = loadConfig.LevelDataState;
+        _player = player;
+        _soundVolumeEnemyValue = loadConfig.AmbientVolume;
+        _countSpawnEnemy = _levelDataState.LevelData.WaveData[_currentWave].CountEnemy;
+        _levelObserver.LevelView.ChangeWaveNumber(_currentWave);
         CalculateTotalNumberOfEnemies();
-        SpawnNextWave(_levelObserver.IsPlayerAlive);
+        Spawn(_levelDataState.LevelData.WaveData, _currentWave);
     }
 
     private void OnPauseGame()
     {
-        if (_spawnWave != null) StopCoroutine(_spawnWave);
+        if (_spawnWave != null)
+            StopCoroutine(_spawnWave);
 
         ChangeEnemiesState(false);
     }
@@ -56,7 +62,7 @@ public class EnemySpawner : MonoBehaviour
     private void OnResumeGame()
     {
         ChangeEnemiesState(true);
-        SpawnNextWave(_levelObserver.IsPlayerAlive);
+        StartCoroutine(_spawnWave);
     }
 
     private void OnEndGame()
@@ -66,88 +72,85 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnEnemyDie(Enemy enemy)
     {
-        _currentCountEnemy++;
         EnemyDied?.Invoke(enemy);
         enemy.Dying -= OnEnemyDie;
-        SpawnNextWave(_levelObserver.IsPlayerAlive);
+        CheckCountEnemy();
     }
 
-    private void SpawnNextWave(bool isPlayerAlive)
+    private void CheckCountEnemy()
     {
-        if (isPlayerAlive == true)
-        {
-            if (_levels.IsStandart == true) SetStandartSpawn(_currentCountEnemy);
-            else SetEndlessSpawn(_currentCountEnemy);
-        }
-        else return;
+        if (_totalCountEnemy == _levelObserver.CountKillEnemy)
+            LastEnemyDied?.Invoke();
     }
 
-    private void SetStandartSpawn(int currentCountEnemy)
-    {
-        if (_currentWave < _levels.Wave.Length - 1)
-        {
-            if (currentCountEnemy == _levels.Wave[_currentWave].CountEnemy)
-            {
-                SetWaveParameters(_levels.Wave, _currentWave);
-            }
-            else return;
-        }
-        else if (_totalCountEnemy == _levelObserver.CountKillEnemy) LastEnemyDied?.Invoke();
-    }
-
-    private void SetEndlessSpawn(int currentCountEnemy)
-    {
-        if (currentCountEnemy == _levels.Wave[_indexEndlessWave].CountEnemy)
-        {
-            SetWaveParameters(_levels.Wave, _indexEndlessWave);
-        }
-        else return;
-    }
-
-    private void SetWaveParameters(Wave[] waves, int index)
+    private void SpawnNextWave(List<WaveData> waveDatas)
     {
         _currentWave++;
-        WaveSpawning?.Invoke(_currentWave);
-        Spawn(waves, index);
-        _currentCountEnemy = _defaultCountEnemy;
+
+        if (_levelDataState.IsStandart == true)
+            SetStandartSpawn(waveDatas, _currentWave);
+        else
+            SetEndlessSpawn(waveDatas, _indexEndlessWave);
     }
 
-    private void Spawn(Wave[] wave, int index)
+    private void SetStandartSpawn(List<WaveData> waveDatas, int index)
     {
-        if (wave.Length > 0)
+        if (index < _levelDataState.LevelData.WaveData.Count)
         {
-            _spawnWave = SpawnWave(wave, index);
+            _countSpawnEnemy = waveDatas[index].CountEnemy;
+            Spawn(waveDatas, index);
+        }
+        else return;
+    }
+
+    private void SetEndlessSpawn(List<WaveData> waveDatas, int index)
+    {
+        Spawn(waveDatas, index);
+    }
+
+    private void Spawn(List<WaveData> waveDatas, int index)
+    {
+        if (waveDatas.Count > 0)
+        {
+            _spawnWave = SpawnWave(waveDatas, index);
             StartCoroutine(_spawnWave);
         }
         else return;
     }
 
-    private IEnumerator SpawnWave(Wave[] wave, int index)
+    private IEnumerator SpawnWave(List<WaveData> waveDatas, int index)
     {
-        yield return new WaitForSeconds(wave[index].DelaySpawn);
-        _spawnEnemy = SpawnEnemy(wave[index].EnemyPrefab, wave[index].CountEnemy);
+        _spawnEnemy = SpawnEnemy(waveDatas[index].EnemyData);
+        yield return new WaitForSeconds(waveDatas[index].DelaySpawn);
+
+        _levelObserver.LevelView.ChangeWaveNumber(_currentWave);
         StartCoroutine(_spawnEnemy);
 
-        if (_spawnWave != null) StopCoroutine(_spawnWave);
+        if (_spawnWave != null)
+            StopCoroutine(_spawnWave);
     }
 
-    private IEnumerator SpawnEnemy(Enemy enemy, int countEnemy)
+    private IEnumerator SpawnEnemy(EnemyData enemyData)
     {
         _enemies.Clear();
 
-        while (countEnemy > 0)
+        while (_countSpawnEnemy > 0)
         {
-            EnemyCreate(enemy);
-            countEnemy--;
+            EnemyCreate(enemyData);
+            _countSpawnEnemy--;
             yield return new WaitForSeconds(_delayEnemySpawn);
         }
 
-        if (_spawnEnemy != null) StopCoroutine(_spawnEnemy);
+        if (_spawnEnemy != null)
+            StopCoroutine(_spawnEnemy);
+
+        SpawnNextWave(_levelDataState.LevelData.WaveData); ;
     }
 
-    private void EnemyCreate(Enemy template)
+    private void EnemyCreate(EnemyData enemyData)
     {
-        Enemy enemy = Instantiate(template, new Vector3(_spawnPoint.localPosition.x, _spawnPoint.localPosition.y, _spawnPoint.localPosition.z), new Quaternion(0, 180, 0, 0));
+        Enemy enemy = Instantiate(enemyData.PrefabEnemy, new Vector3(_spawnPoint.localPosition.x, _spawnPoint.localPosition.y, _spawnPoint.localPosition.z), new Quaternion(0, 180, 0, 0));
+        enemy.Initialize(enemyData, _soundVolumeEnemyValue, _player);
         _enemies.Add(enemy);
         enemy.Dying += OnEnemyDie;
     }
@@ -158,7 +161,8 @@ public class EnemySpawner : MonoBehaviour
         {
             for (int i = 0; i < _enemies.Count; i++)
             {
-                _enemies[i].enabled = state;
+                if (_enemies[i] != null)
+                    _enemies[i].enabled = state;
             }
         }
         else return;
@@ -166,15 +170,16 @@ public class EnemySpawner : MonoBehaviour
 
     private void CalculateTotalNumberOfEnemies()
     {
-        for (int index = 0; index < _levels.Wave.Length; index++)
+        for (int index = 0; index < _levelDataState.LevelData.WaveData.Count; index++)
         {
-            _totalCountEnemy += _levels.Wave[index].CountEnemy;
+            _totalCountEnemy += _levelDataState.LevelData.WaveData[index].CountEnemy;
         }
     }
 
     private void DestroyEnemies()
     {
-        if (_spawnWave != null) StopCoroutine(_spawnWave);
+        if (_spawnWave != null)
+            StopCoroutine(_spawnWave);
 
         ClearListEnemies();
     }
@@ -185,10 +190,13 @@ public class EnemySpawner : MonoBehaviour
         {
             for (int i = 0; i < _enemies.Count; i++)
             {
-                Destroy(_enemies[i].gameObject);
+                if (_enemies[i].gameObject != null)
+                    Destroy(_enemies[i].gameObject);
+
                 _enemies[i].Dying -= OnEnemyDie;
             }
         }
-        else return;
+
+        _enemies.Clear();
     }
 }

@@ -101,9 +101,9 @@ public class AbilityPanelItemView : MonoBehaviour
 
     private void UpdateStats(AbilityState abilityState)
     {
-        abilityState.AbilityData.GetNextLevelAbilityValue(abilityState.AbilityData.CurrentLevel, out string delay, out string abilityvalue);
-        _currentDelay.text = abilityState.AbilityData.CurrentDelay.ToString();
-        _currentAbilityValue.text = abilityState.AbilityData.CurrentAbilityValue.ToString();
+        abilityState.AbilityData.GetNextLevelAbilityValue(abilityState.CurrentLevel, out string delay, out string abilityvalue);
+        _currentDelay.text = abilityState.AbilityData.AbilityLevels[abilityState.CurrentLevel].Delay.ToString();
+        _currentAbilityValue.text = abilityState.AbilityData.AbilityLevels[abilityState.CurrentLevel].AbilityValue.ToString();
         _nextLevelDelay.text = delay;
         _nextLevelAbilityValue.text = abilityvalue;
     }

@@ -20,6 +20,7 @@ MonoBehaviour:
   _currentLevel: 0
   _description: AttackAbilityDescription
   _upgradePrice: 1
+  _abilityDuration: 5
   _abilityLevels:
   - {fileID: 11400000, guid: 53e60453205ce7c40a816249cfec6c01, type: 2}
   - {fileID: 11400000, guid: 8d159a0bc290882468570723cc123e53, type: 2}
@@ -29,3 +30,4 @@ MonoBehaviour:
   _itemGameObject: {fileID: 6460560653073127413, guid: cb61322894b5ca04295cd7c887c18033, type: 3}
   _particleSystem: {fileID: 19800002, guid: 7287839e5686fda4980364f46913c400, type: 3}
   _typeEffect: 0
+  _typeAbility: 1

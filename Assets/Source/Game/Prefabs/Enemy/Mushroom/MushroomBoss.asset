@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebde2b9809e53244996845fe3d2a478a, type: 3}
+  m_Name: MushroomBoss
+  m_EditorClassIdentifier: 
+  _id: 2
+  _level: 2
+  _damage: 5
+  _health: 155
+  _goldReward: 150
+  _experienceReward: 100
+  _score: 100
+  _speed: 1
+  _name: FlyAgaric
+  _abilityCoolDown: 10
+  _abilityDamage: 15
+  _cancelAbilitySprite: {fileID: 21300000, guid: 2fa77160cc27ae141bb7899263c99c48, type: 3}
+  _abilitySprite: {fileID: 21300000, guid: 2cab99140cc613f47ab1da4913b8f140, type: 3}
+  _enemyIcon: {fileID: 21300000, guid: 64025f1f0b534c242911abd4a660fe83, type: 3}
+  _enemyHitParticleSystem: {fileID: 0}
+  _enemyDieParticleSystem: {fileID: 0}
+  _enemyAbilityParticleSystem: {fileID: 0}
+  _audioClipDie: {fileID: 8300000, guid: 14ce90e2a5361d548bdf6c2c126e0233, type: 3}
+  _hitPlayer: {fileID: 8300000, guid: 5dabf05f431bc294aafa824a4fdc4bfe, type: 3}
+  _prefabEnemy: {fileID: 8725826129267128959, guid: 7563ae0fc50bd974f8d6ecb50a744d2b, type: 3}

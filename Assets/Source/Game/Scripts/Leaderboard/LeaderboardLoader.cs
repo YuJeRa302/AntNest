@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Agava.YandexGames;
+using UnityEngine.UI;
 
 public class LeaderboardLoader : MonoBehaviour
 {
@@ -13,10 +14,25 @@ public class LeaderboardLoader : MonoBehaviour
     [SerializeField] private DialogPanel _dialogPanel;
     [Header("[Config]")]
     [SerializeField] private LoadConfig _config;
+    [Header("[Buttons]")]
+    [SerializeField] private Button _openButton;
+    [SerializeField] private Button _openAuthorize;
 
     private readonly List<LeaderboardPlayer> _leaderboardPlayers = new();
 
-    public void SetPlayer(int score)
+    private void Awake()
+    {
+        _openButton.onClick.AddListener(Open);
+        _openAuthorize.onClick.AddListener(Authorize);
+    }
+
+    private void OnDestroy()
+    {
+        _openButton.onClick.RemoveListener(Open);
+        _openAuthorize.onClick.RemoveListener(Authorize);
+    }
+
+    private void SetPlayer(int score)
     {
         if (PlayerAccount.IsAuthorized == false) return;
 
@@ -26,7 +42,7 @@ public class LeaderboardLoader : MonoBehaviour
         });
     }
 
-    public void Fill()
+    private void Fill()
     {
         _leaderboardPlayers.Clear();
 
@@ -49,16 +65,16 @@ public class LeaderboardLoader : MonoBehaviour
         });
     }
 
-    public void Open()
+    private void Open()
     {
         if (PlayerAccount.IsAuthorized == true) PlayerAccount.RequestPersonalProfileDataPermission();
 
-        if (PlayerAccount.IsAuthorized == false) return;
+        if (PlayerAccount.IsAuthorized == false) _dialogPanel.gameObject.SetActive(true);
 
         OnSuccessLoad();
     }
 
-    public void Authorize()
+    private void Authorize()
     {
         PlayerAccount.Authorize();
 

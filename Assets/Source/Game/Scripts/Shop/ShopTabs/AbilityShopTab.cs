@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class AbilityShopTab : ShopTab
 {
@@ -35,8 +36,8 @@ public class AbilityShopTab : ShopTab
     {
         foreach (AbilityPanelItemView itemView in _views)
         {
-            itemView.BuyButtonClick += OnBuyAbility;
-            itemView.UpgradeButtonClick += OnUpgradeAbility;
+            itemView.BuyButtonClick -= OnBuyAbility;
+            itemView.UpgradeButtonClick -= OnUpgradeAbility;
             Destroy(itemView.gameObject);
         }
 
@@ -49,6 +50,7 @@ public class AbilityShopTab : ShopTab
         {
             _player.Wallet.BuyAbility(itemView.AbilityState.AbilityData.UpgradePrice);
             _player.PlayerStats.PlayerAbility.BuyAbility(itemView.AbilityState);
+            UpdatePlayerResourceValue();
             Clear();
             Fill();
         }
@@ -57,11 +59,19 @@ public class AbilityShopTab : ShopTab
 
     private void OnUpgradeAbility(AbilityPanelItemView itemView)
     {
+        var lastIndex = itemView.AbilityState.AbilityData.AbilityLevels.LastOrDefault();
+
+        if (itemView.AbilityState.AbilityData.AbilityLevels.LastIndexOf(lastIndex) == itemView.AbilityState.CurrentLevel)
+        {
+            itemView.UpgradeButtonClick -= OnUpgradeAbility;
+            return;
+        }
+
         if (itemView.AbilityState.AbilityData.UpgradePrice <= _player.Wallet.Points)
         {
             _player.Wallet.BuyAbility(itemView.AbilityState.AbilityData.UpgradePrice);
-            itemView.AbilityState.AbilityData.IncreaseCurrentLevel();
-            _player.PlayerStats.PlayerAbility.BuyAbility(itemView.AbilityState);
+            _player.PlayerStats.PlayerAbility.UpgradeAbility(itemView.AbilityState);
+            UpdatePlayerResourceValue();
             Clear();
             Fill();
         }

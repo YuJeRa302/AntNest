@@ -11,6 +11,7 @@ public class AbilityItemData : ItemData
     [SerializeField] private int _currentLevel = 0;
     [SerializeField] private string _description;
     [SerializeField] private int _upgradePrice;
+    [SerializeField] private float _abilityDuration;
     [Header("[Level Ability]")]
     [SerializeField] private List<AbilityLevel> _abilityLevels = new();
     [SerializeField] private Sprite _shopSprite;
@@ -18,11 +19,15 @@ public class AbilityItemData : ItemData
     [SerializeField] private AbilityItemGameObject _itemGameObject;
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private TypeEffect _typeEffect;
+    [SerializeField] private TypeAbility _typeAbility;
 
+    public TypeAbility TypeAbility => _typeAbility;
     public TypeEffect EffectType => _typeEffect;
     public int UpgradePrice => _upgradePrice;
     public string Description => _description;
     public int CurrentLevel => _currentLevel;
+    public float AbilityDuration => _abilityDuration;
+    public List<AbilityLevel> AbilityLevels => _abilityLevels;
     public float CurrentDelay => _abilityLevels[_currentLevel].Delay;
     public int CurrentAbilityValue => _abilityLevels[_currentLevel].AbilityValue;
     public Sprite ShopSprite => _shopSprite;
@@ -34,7 +39,7 @@ public class AbilityItemData : ItemData
     {
         var nextAbilityLevel = ++currentLevel;
 
-        if (nextAbilityLevel <= _abilityLevels.Count)
+        if (nextAbilityLevel < _abilityLevels.Count)
         {
             delay = _abilityLevels[nextAbilityLevel].Delay.ToString();
             abilityValue = _abilityLevels[nextAbilityLevel].AbilityValue.ToString();
@@ -45,11 +50,6 @@ public class AbilityItemData : ItemData
             delay = _maxLevel;
             abilityValue = _maxLevel;
         }
-    }
-
-    public void IncreaseCurrentLevel()
-    {
-        _currentLevel++;
     }
 }
 
@@ -64,4 +64,5 @@ public class AbilityState : AbilityItemDataState
 {
     public bool IsBuyed;
     public bool IsLocked;
+    public int CurrentLevel;
 }

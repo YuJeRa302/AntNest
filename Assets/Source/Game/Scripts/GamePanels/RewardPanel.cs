@@ -28,6 +28,8 @@ public class RewardPanel : GamePanels
     [SerializeField] private Button _closePanel;
     [SerializeField] private Button _openAd;
 
+    public event Action RewardPanelClosed;
+
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -45,11 +47,21 @@ public class RewardPanel : GamePanels
         _openAd.onClick.RemoveListener(OpenRewardAd);
     }
 
+    protected override void Open()
+    {
+        base.Open();
+        _levelObserver.PlayerInterfaceView.gameObject.SetActive(false);
+    }
+
     protected override void Close()
     {
         gameObject.SetActive(false);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
         InterstitialAd.Show(OnOpenAdCallback, OnCloseInterstitialAdCallback, OnErrorCallback);
+#endif
         PanelClosed?.Invoke();
+        RewardPanelClosed.Invoke();
     }
 
     private void OpenRewardAd() => VideoAd.Show(OnOpenAdCallback, OnRewardCallback, OnCloseAdCallback);
@@ -80,9 +92,9 @@ public class RewardPanel : GamePanels
     {
         SetEndingImage(state);
         SetReawrdValue(_coinsRewardWithAds, _expRewardWithAds, _countKillEnemiesWithAds,
-            _levelObserver.CountMoneyEarned * _coinMultiplier, _levelObserver.CountExp, _levelObserver.CountKillEnemy);
+            _levelObserver.CountMoneyEarned * _coinMultiplier, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
         SetReawrdValue(_coinsRewardWithoutAds, _expRewardWithoutAds, _countKillEnemiesWithoutAds,
-            _levelObserver.CountMoneyEarned, _levelObserver.CountExp, _levelObserver.CountKillEnemy);
+            _levelObserver.CountMoneyEarned, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
     }
 
     private void SetEndingImage(bool state)

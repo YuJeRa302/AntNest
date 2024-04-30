@@ -9,7 +9,7 @@ public class MenuSound : MonoBehaviour
     public AudioSource AmbientSounds => _ambientSounds;
     public AudioSource ButtonFX => _buttonFX;
 
-    public void Initialized()
+    public void Initialize()
     {
         _ambientSounds.Play();
     }

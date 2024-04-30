@@ -31,15 +31,19 @@ public class PlayerView : MonoBehaviour
 
     private void Awake()
     {
-        
+        _player.PlayerStats.PlayerHealth.ChangedHealth += OnChangeHealth;
+        _player.PlayerStats.GoldValueChanged += OnChangeGold;
+        _player.PlayerStats.ExperienceValueChanged += OnChangeExperience;
     }
 
     private void OnDestroy()
     {
-        
+        _player.PlayerStats.PlayerHealth.ChangedHealth -= OnChangeHealth;
+        _player.PlayerStats.GoldValueChanged -= OnChangeGold;
+        _player.PlayerStats.ExperienceValueChanged -= OnChangeExperience;
     }
 
-    public void ChangeLevel(int value)
+    public void SetNewLevelValue(int value)
     {
         _level.text = value.ToString();
     }
@@ -49,23 +53,7 @@ public class PlayerView : MonoBehaviour
         _countHealthPotion.text = value.ToString();
     }
 
-    public void OnChangeHealth(int target)
-    {
-        _sliderHP.value = target;
-    }
-
-    public void OnChangeExperience(int target)
-    {
-        SetTextStats(_countExperienceUpdate, target.ToString(), _nameExperienceParametr, _experienceUpdateAnimator);
-        _sliderXP.value += target;
-    }
-
-    public void OnChangeGold(int target)
-    {
-        SetTextStats(_countGoldUpdate, target.ToString(), _nameGoldParametr, _goldUpdateAnimator);
-    }
-
-    public void SetNewValueSliderExperience(int value, int difference)
+    public void SetExperienceSliderValue(int value, int difference)
     {
         _sliderXP.maxValue = value;
         _sliderXP.value = difference;
@@ -81,18 +69,24 @@ public class PlayerView : MonoBehaviour
 
     public void UpdatePlayerStats()
     {
-        _playerDamage.text = _player.PlayerInventory.CurrentWeapon.ItemData.Value.ToString();
-        _playerArmor.text = _player.PlayerInventory.CurrentArmor.ItemData.Value.ToString();
+        _playerDamage.text = _player.PlayerStats.Damage.ToString();
+        _playerArmor.text = _player.PlayerStats.Armor.ToString();
     }
 
-    private void OnEnable()
+    private void OnChangeExperience(int target)
     {
-        _player.PlayerStats.PlayerHealth.ChangedHealth += OnChangeHealth;
+        SetTextStats(_countExperienceUpdate, target.ToString(), _nameExperienceParametr, _experienceUpdateAnimator);
+        _sliderXP.value += target;
     }
 
-    private void OnDisable()
+    private void OnChangeGold(int target)
     {
-        _player.PlayerStats.PlayerHealth.ChangedHealth -= OnChangeHealth;
+        SetTextStats(_countGoldUpdate, target.ToString(), _nameGoldParametr, _goldUpdateAnimator);
+    }
+
+    private void OnChangeHealth(int target)
+    {
+        _sliderHP.value = target;
     }
 
     private void SetTextStats(Text template, string text, string nameStats, Animator animator)
