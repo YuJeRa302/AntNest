@@ -8,6 +8,8 @@ public class LevelDataView : MonoBehaviour
     [Header("[Config]")]
     [SerializeField] private LoadConfig _loadConfig;
     [SerializeField] private LeanLocalizedText _nameLevel;
+    [SerializeField] private LeanLocalizedText _levelAvailable;
+    [SerializeField] private Text _levelAvailableText;
     [Header("[Buttons Animators]")]
     [SerializeField] private Animator[] _animators;
     [Header("[Image]")]
@@ -17,8 +19,11 @@ public class LevelDataView : MonoBehaviour
     [SerializeField] private Button _buttonAccept;
     [SerializeField] private Button _standartModeButton;
     [SerializeField] private Button _endlessModeButton;
+    [SerializeField] private GameObject _levelAvailableGameObject;
 
     private readonly int _zeroWave = 0;
+    private readonly int _levelIndexShift = 1;
+    private readonly int _firstLevelIndex = 1;
     private readonly Color _defaultColor = Color.blue;
     private readonly Color _acceptColor = Color.yellow;
 
@@ -65,7 +70,8 @@ public class LevelDataView : MonoBehaviour
         _levelDataState = levelDataState;
         _levelImage.sprite = levelDataState.LevelData.LevelIcon;
         _nameLevel.TranslationName = levelDataState.LevelData.NameScene;
-        _levelCompleteImage.sprite = levelDataState.IsComplete == true ? levelDataState.LevelData.AcceptSprite : levelDataState.LevelData.CancelSprite;
+        _levelAvailable.TranslationName = levelDataState.LevelData.LevelAvailable;
+        _levelAvailableText.text += " " + (levelDataState.LevelData.LevelId - _levelIndexShift).ToString();
         _standartLevelDescription = levelDataState.LevelData.StandartLevelDescription;
         _endlessLevelDescription = levelDataState.LevelData.EndlessLevelDescription;
         _hintsText = levelDataState.LevelData.HintsText;
@@ -73,27 +79,35 @@ public class LevelDataView : MonoBehaviour
 
     private void LoadCompletePlayerLevels(LevelDataState levelDataState)
     {
+        SetLevelState(false);
+
         if (_loadConfig.PlayerLevels.TryGetValue(levelDataState.LevelData.LevelId, out bool isLevelComplete))
         {
-            SetLevelState(isLevelComplete);
             levelDataState.IsComplete = isLevelComplete;
+            _levelCompleteImage.gameObject.SetActive(isLevelComplete);
+            SetLevelState(isLevelComplete);
         }
-        else return;
+
+        if (levelDataState.LevelData.LevelId == _firstLevelIndex)
+            SetLevelState(true);
     }
 
     private void CheckLevelState(LevelDataState levelDataState)
     {
-        if (levelDataState.LevelData.LevelId <= _loadConfig.PlayerLevel)
-            SetLevelState(true);
-        else
-            SetLevelState(false);
+        if (levelDataState.LevelData.LevelId == _firstLevelIndex)
+            return;
+
+        if (_loadConfig.PlayerLevels.TryGetValue(levelDataState.LevelData.LevelId - _levelIndexShift, out bool isLevelComplete))
+            SetLevelState(isLevelComplete);
+        else SetLevelState(false);
     }
 
     private void SetLevelState(bool isLevelComplete)
     {
-        _buttonAccept.interactable = isLevelComplete;
-        _standartModeButton.interactable = isLevelComplete;
-        _endlessModeButton.interactable = isLevelComplete;
+        _buttonAccept.gameObject.SetActive(isLevelComplete);
+        _standartModeButton.gameObject.SetActive(isLevelComplete);
+        _endlessModeButton.gameObject.SetActive(isLevelComplete);
+        _levelAvailableGameObject.SetActive(!isLevelComplete);
     }
 
     private void SetButtonsColor(Color colorStandartButton, Color colorEndlessButton)

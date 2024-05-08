@@ -11,12 +11,16 @@ public class EnemySpawner : MonoBehaviour
     [Header("[Level Entities]")]
     [SerializeField] private LevelObserver _levelObserver;
 
-    private readonly int _indexEndlessWave = 0;
+    private readonly int _indexDefaultWave = 0;
 
     private Player _player;
     private List<Enemy> _enemies = new();
     private LevelDataState _levelDataState;
     private int _countSpawnEnemy;
+    private int _countEnemyInLastWave = 0;
+    private int _indexExtraWave = 1;
+    private int _indexEndlessWave = 0;
+    private int[] _numberExtraWave;
     private float _soundVolumeEnemyValue;
     private int _totalCountEnemy;
     private int _currentWave = 0;
@@ -45,10 +49,13 @@ public class EnemySpawner : MonoBehaviour
         _levelDataState = loadConfig.LevelDataState;
         _player = player;
         _soundVolumeEnemyValue = loadConfig.AmbientVolume;
-        _countSpawnEnemy = _levelDataState.LevelData.WaveData[_currentWave].CountEnemy;
         _levelObserver.LevelView.ChangeWaveNumber(_currentWave);
         CalculateTotalNumberOfEnemies();
-        Spawn(_levelDataState.LevelData.WaveData, _currentWave);
+        _numberExtraWave = _levelDataState.LevelData.NumberExtraWave;
+        _countSpawnEnemy = _levelDataState.IsStandart == true ? _levelDataState.LevelData.WaveData[_currentWave].CountEnemy :
+            _levelDataState.LevelData.WaveEndlessDatas[_indexExtraWave].CountEnemy;
+        var levelData = _levelDataState.IsStandart == true ? _levelDataState.LevelData.WaveData : _levelDataState.LevelData.WaveEndlessDatas;
+        Spawn(levelData, _currentWave);
     }
 
     private void OnPauseGame()
@@ -74,7 +81,9 @@ public class EnemySpawner : MonoBehaviour
     {
         EnemyDied?.Invoke(enemy);
         enemy.Dying -= OnEnemyDie;
-        CheckCountEnemy();
+
+        if (_levelDataState.IsStandart == true)
+            CheckCountEnemy();
     }
 
     private void CheckCountEnemy()
@@ -105,7 +114,33 @@ public class EnemySpawner : MonoBehaviour
 
     private void SetEndlessSpawn(List<WaveData> waveDatas, int index)
     {
+        _countEnemyInLastWave++;
+        _countSpawnEnemy = _countEnemyInLastWave;
         Spawn(waveDatas, index);
+    }
+
+    private List<WaveData> GetWaveData()
+    {
+        if (_levelDataState.IsStandart == true)
+            return _levelDataState.LevelData.WaveData;
+
+        _levelObserver.LevelView.ShowExtraWaveIcon(false);
+        _indexEndlessWave = _indexDefaultWave;
+
+        foreach (int index in _numberExtraWave)
+        {
+            if (_currentWave == index)
+            {
+                _indexEndlessWave = _indexExtraWave;
+                _indexExtraWave++;
+                _levelObserver.LevelView.ShowExtraWaveIcon(true);
+            }
+        }
+
+        if (_indexEndlessWave > _levelDataState.LevelData.WaveEndlessDatas.Count)
+            _indexEndlessWave = _indexDefaultWave;
+
+        return _levelDataState.LevelData.WaveEndlessDatas;
     }
 
     private void Spawn(List<WaveData> waveDatas, int index)
@@ -132,6 +167,7 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemy(EnemyData enemyData)
     {
+        _countEnemyInLastWave = _countSpawnEnemy;
         _enemies.Clear();
 
         while (_countSpawnEnemy > 0)
@@ -144,7 +180,7 @@ public class EnemySpawner : MonoBehaviour
         if (_spawnEnemy != null)
             StopCoroutine(_spawnEnemy);
 
-        SpawnNextWave(_levelDataState.LevelData.WaveData); ;
+        SpawnNextWave(GetWaveData());
     }
 
     private void EnemyCreate(EnemyData enemyData)

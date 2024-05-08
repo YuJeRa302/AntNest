@@ -26,9 +26,9 @@ MonoBehaviour:
   _cancelAbilitySprite: {fileID: 21300000, guid: 2fa77160cc27ae141bb7899263c99c48, type: 3}
   _abilitySprite: {fileID: 21300000, guid: 9b65077a04e7bbd428ca63943973c024, type: 3}
   _enemyIcon: {fileID: 21300000, guid: 8c0a6ca65b968dc4fa3d794361dc6e0c, type: 3}
-  _enemyHitParticleSystem: {fileID: 0}
-  _enemyDieParticleSystem: {fileID: 0}
-  _enemyAbilityParticleSystem: {fileID: 0}
+  _enemyHitParticleSystem: {fileID: 8182780479800702960, guid: 0a45f5fa6434dba468f1b10d276f41fb, type: 3}
+  _enemyDieParticleSystem: {fileID: 19800004, guid: f4bf4c340b67ec24d8d6697d4dc544d1, type: 3}
+  _enemyAbilityParticleSystem: {fileID: 8274122675295800005, guid: a307ec900fc271946b78f07d5ff31aea, type: 3}
   _audioClipDie: {fileID: 8300000, guid: 14ce90e2a5361d548bdf6c2c126e0233, type: 3}
   _hitPlayer: {fileID: 8300000, guid: 5dabf05f431bc294aafa824a4fdc4bfe, type: 3}
   _prefabEnemy: {fileID: 799464357611153034, guid: 1b044153a07116e469a909591b6c415e, type: 3}

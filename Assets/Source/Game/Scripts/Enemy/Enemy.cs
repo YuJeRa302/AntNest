@@ -14,10 +14,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemySound _enemySound;
     [SerializeField] private EnemyMovement _enemyMovement;
     [SerializeField] private EnemyAbility _enemyAbility;
+    [SerializeField] private Transform _particleContainer;
 
     private readonly int _minHealth = 0;
     private readonly int _delayDestroy = 1;
 
+    private ParticleSystem _dieParticle;
+    private ParticleSystem _hitParticle;
+    private ParticleSystem _abilityParticle;
     private int _level;
     private int _damage;
     private int _health;
@@ -50,9 +54,10 @@ public class Enemy : MonoBehaviour
 
     public void Initialize(EnemyData enemyData, float soundVolume, Player player)
     {
+        CreateParticleSystem(_particleContainer, enemyData.EnemyDieParticleSystem, enemyData.EnemyHitParticleSystem, enemyData.EnemyAbilityParticleSystem);
         Fill(enemyData);
         _enemySound.Initialize(soundVolume, enemyData);
-        _enemyView.Initialize(enemyData);
+        _enemyView.Initialize(enemyData, _dieParticle, _hitParticle, _abilityParticle);
         _enemyAbility.Initialize(enemyData);
         _enemyMovement.Initialize(player);
         _enemyMovement.EnemyDying += OnEnemyDying;
@@ -70,6 +75,13 @@ public class Enemy : MonoBehaviour
         _enemySound.PlayDieSound();
         Dying.Invoke(this);
         Destroy(gameObject, _delayDestroy);
+    }
+
+    private void CreateParticleSystem(Transform container, ParticleSystem particleDie, ParticleSystem particleHit, ParticleSystem particleAbility)
+    {
+        _dieParticle = Instantiate(particleDie, container);
+        _hitParticle = Instantiate(particleHit, container);
+        _abilityParticle = Instantiate(particleAbility, container);
     }
 
     private void Fill(EnemyData enemyData)

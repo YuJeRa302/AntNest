@@ -45,19 +45,20 @@ public class ChangeLanguage : Panels
     {
         _leanLocalization.SetCurrentLanguage(value);
         _loadConfig.SetCurrentLanguage(value);
-        _menuPanel.Initialize();
+        //_menuPanel.Initialize();
         _loadConfig.SetSessionState(false);
     }
 
     private void OnInitialize()
     {
+       // YandexGamesSdk.Environment.i18n.lang; язык
 #if UNITY_WEBGL && !UNITY_EDITOR
                 YandexGamesSdk.GameReady();
 #endif
         if (_loadConfig.IsFirstSession == false)
         {
             gameObject.SetActive(_loadConfig.IsFirstSession);
-            _menuPanel.Initialize();
+            //_menuPanel.Initialize();
         }
         else _buttonsLang.SetActive(true);
     }

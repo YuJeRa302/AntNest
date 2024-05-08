@@ -11,7 +11,7 @@ public abstract class GamePanels : MonoBehaviour
     public Action OpenAd;
     public Action CloseAd;
 
-    public void Initialize(Player player, LevelObserver levelObserver)
+    public virtual void Initialize(Player player, LevelObserver levelObserver)
     {
         Player = player;
         LevelObserver = levelObserver;
@@ -20,12 +20,14 @@ public abstract class GamePanels : MonoBehaviour
     protected virtual void Open()
     {
         gameObject.SetActive(true);
+        LevelObserver.PlayerInterfaceView.gameObject.SetActive(false);
         PanelOpened?.Invoke();
     }
 
     protected virtual void Close()
     {
         gameObject.SetActive(false);
+        LevelObserver.PlayerInterfaceView.gameObject.SetActive(true);
         PanelClosed?.Invoke();
     }
 }

@@ -34,11 +34,12 @@ public class LeaderboardLoader : MonoBehaviour
 
     private void SetPlayer(int score)
     {
-        if (PlayerAccount.IsAuthorized == false) return;
+        if (PlayerAccount.IsAuthorized == false)
+            return;
 
         Leaderboard.GetPlayerEntry(LeaderboardName, _ =>
         {
-            Leaderboard.SetScore(LeaderboardName, score);
+            Leaderboard.SetScore(LeaderboardName, score, OnPlayerScoreSet);
         });
     }
 
@@ -46,7 +47,8 @@ public class LeaderboardLoader : MonoBehaviour
     {
         _leaderboardPlayers.Clear();
 
-        if (PlayerAccount.IsAuthorized == false) return;
+        if (PlayerAccount.IsAuthorized == false)
+            return;
 
         Leaderboard.GetEntries(LeaderboardName, result =>
         {
@@ -67,9 +69,10 @@ public class LeaderboardLoader : MonoBehaviour
 
     private void Open()
     {
-        if (PlayerAccount.IsAuthorized == true) PlayerAccount.RequestPersonalProfileDataPermission();
-
-        if (PlayerAccount.IsAuthorized == false) _dialogPanel.gameObject.SetActive(true);
+        if (PlayerAccount.IsAuthorized == true)
+            PlayerAccount.RequestPersonalProfileDataPermission();
+        else
+            _dialogPanel.gameObject.SetActive(true);
 
         OnSuccessLoad();
     }
@@ -78,17 +81,22 @@ public class LeaderboardLoader : MonoBehaviour
     {
         PlayerAccount.Authorize();
 
-        if (PlayerAccount.IsAuthorized == true) PlayerAccount.RequestPersonalProfileDataPermission();
-
-        if (PlayerAccount.IsAuthorized == false) return;
+        if (PlayerAccount.IsAuthorized == true)
+            PlayerAccount.RequestPersonalProfileDataPermission();
+        else
+            return;
 
         OnSuccessLoad();
+    }
+
+    private void OnPlayerScoreSet()
+    {
+        Fill();
+        _leaderboardView.Open();
     }
 
     private void OnSuccessLoad()
     {
         SetPlayer(_config.PlayerScore);
-        Fill();
-        _leaderboardView.Open();
     }
 }

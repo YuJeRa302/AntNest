@@ -6,17 +6,13 @@ using System;
 
 public class RewardPanel : GamePanels
 {
-    [SerializeField] private int _coinMultiplier = 2;
     [Header("[Level Entities]")]
     [SerializeField] private LevelObserver _levelObserver;
-    [Header("[Rewards With Ads]")]
+    [Header("[Rewards Text]")]
     [SerializeField] private Text _coinsRewardWithAds;
     [SerializeField] private Text _expRewardWithAds;
     [SerializeField] private Text _countKillEnemiesWithAds;
-    [Header("[Rewards Without Ads]")]
-    [SerializeField] private Text _coinsRewardWithoutAds;
-    [SerializeField] private Text _expRewardWithoutAds;
-    [SerializeField] private Text _countKillEnemiesWithoutAds;
+    [SerializeField] private Text _countCoinPerReward;
     [Header("[End Screen]")]
     [SerializeField] private Image _endImage;
     [SerializeField] private Sprite _winSprite;
@@ -25,32 +21,40 @@ public class RewardPanel : GamePanels
     [SerializeField] private string _winText;
     [SerializeField] private string _loseText;
     [Header("[Buttons]")]
-    [SerializeField] private Button _closePanel;
-    [SerializeField] private Button _openAd;
+    [SerializeField] private Button _closePanelButton;
+    [SerializeField] private Button _openAdButton;
+    [SerializeField] private Button _closeRewardScreenButton;
+    [Header("[RewardScreen]")]
+    [SerializeField] private GameObject _rewardScreen;
 
     public event Action RewardPanelClosed;
+    public event Action<bool> RewardPanelOpened;
+    public event Action RewardScreenOpened;
 
     private void Awake()
     {
-        gameObject.SetActive(false);
         _levelObserver.GameEnded += Open;
         _levelObserver.LevelCompleted += GetReawrdValue;
-        _closePanel.onClick.AddListener(Close);
-        _openAd.onClick.AddListener(OpenRewardAd);
+        _closePanelButton.onClick.AddListener(Close);
+        _openAdButton.onClick.AddListener(OpenRewardAd);
+        _closeRewardScreenButton.onClick.AddListener(CloseRewardScreen);
+        _rewardScreen.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
         _levelObserver.GameEnded -= Open;
         _levelObserver.LevelCompleted -= GetReawrdValue;
-        _closePanel.onClick.RemoveListener(Close);
-        _openAd.onClick.RemoveListener(OpenRewardAd);
+        _closePanelButton.onClick.RemoveListener(Close);
+        _openAdButton.onClick.RemoveListener(OpenRewardAd);
+        _closeRewardScreenButton.onClick.RemoveListener(CloseRewardScreen);
     }
 
     protected override void Open()
     {
-        base.Open();
-        _levelObserver.PlayerInterfaceView.gameObject.SetActive(false);
+        gameObject.SetActive(true);
+        LevelObserver.PlayerInterfaceView.gameObject.SetActive(false);
     }
 
     protected override void Close()
@@ -60,8 +64,25 @@ public class RewardPanel : GamePanels
 #if UNITY_WEBGL && !UNITY_EDITOR
         InterstitialAd.Show(OnOpenAdCallback, OnCloseInterstitialAdCallback, OnErrorCallback);
 #endif
-        PanelClosed?.Invoke();
+
         RewardPanelClosed.Invoke();
+    }
+
+    private void OpenRewardScreen()
+    {
+        RewardScreenOpened?.Invoke();
+        _rewardScreen.gameObject.SetActive(true);
+        _countCoinPerReward.text = "+ " + _levelObserver.CountMoneyEarned.ToString();
+        _openAdButton.gameObject.SetActive(false);
+        _closePanelButton.gameObject.SetActive(false);
+    }
+
+    private void CloseRewardScreen()
+    {
+        _closePanelButton.gameObject.SetActive(true);
+        _rewardScreen.gameObject.SetActive(false);
+        SetReawrdValue(_coinsRewardWithAds, _expRewardWithAds, _countKillEnemiesWithAds,
+            Player.Wallet.Coins, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
     }
 
     private void OpenRewardAd() => VideoAd.Show(OnOpenAdCallback, OnRewardCallback, OnCloseAdCallback);
@@ -86,15 +107,15 @@ public class RewardPanel : GamePanels
     private void OnRewardCallback()
     {
         Player.Wallet.TakeCoins(_levelObserver.CountMoneyEarned);
+        OpenRewardScreen();
     }
 
     private void GetReawrdValue(bool state)
     {
+        RewardPanelOpened?.Invoke(state);
         SetEndingImage(state);
         SetReawrdValue(_coinsRewardWithAds, _expRewardWithAds, _countKillEnemiesWithAds,
-            _levelObserver.CountMoneyEarned * _coinMultiplier, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
-        SetReawrdValue(_coinsRewardWithoutAds, _expRewardWithoutAds, _countKillEnemiesWithoutAds,
-            _levelObserver.CountMoneyEarned, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
+            Player.Wallet.Coins, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
     }
 
     private void SetEndingImage(bool state)
@@ -103,10 +124,10 @@ public class RewardPanel : GamePanels
         _endText.TranslationName = state == true ? _winText : _loseText;
     }
 
-    private void SetReawrdValue(Text coinsReward, Text expReward, Text countKillEnemies, int coinsRewardValue, int expRewardValue, int countKillEnemiesValue)
+    private void SetReawrdValue(Text coinsReward, Text expReward, Text countKillEnemies, int coins, int exp, int killCountEnemies)
     {
-        coinsReward.text = coinsRewardValue.ToString();
-        expReward.text = expRewardValue.ToString();
-        countKillEnemies.text = countKillEnemiesValue.ToString();
+        coinsReward.text = coins.ToString();
+        expReward.text = exp.ToString();
+        countKillEnemies.text = killCountEnemies.ToString();
     }
 }

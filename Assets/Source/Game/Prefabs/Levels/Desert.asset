@@ -21,5 +21,6 @@ MonoBehaviour:
   _acceptSprite: {fileID: -1935557950, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
   _cancelSprite: {fileID: -803613565, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
   _standartLevelDescription: StandartLevelDescription
+  _levelAvailable: LevelAvailable
   _endlessLevelDescription: EndlessLevelDescription
   _hintsText: HintsText

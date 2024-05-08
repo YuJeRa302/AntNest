@@ -9,6 +9,7 @@ public class EquipmentItemData : ItemData
     [SerializeField] private int _value;
     [SerializeField] private int _level;
     [SerializeField] private Sprite _shopIcon;
+    [SerializeField] private string _levelAvailableText;
     [FormerlySerializedAs("_itemObject")]
     [FormerlySerializedAs("_template")]
     [Header("[Template]")]
@@ -16,6 +17,7 @@ public class EquipmentItemData : ItemData
 
     public int Value => _value;
     public int Level => _level;
+    public string LevelAvailableText => _levelAvailableText;
     public Sprite ShopIcon => _shopIcon;
     public ItemGameObject ItemGameObject => _itemGameObject;
 }

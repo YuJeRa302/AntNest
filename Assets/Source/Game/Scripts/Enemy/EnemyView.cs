@@ -10,10 +10,6 @@ public class EnemyView : MonoBehaviour
     [SerializeField] private Text _level;
     [SerializeField] private Text _health;
     [SerializeField] private Image _enemyIcon;
-    [Header("[Enemy Effects]")]
-    [SerializeField] private ParticleSystem _hit;
-    [SerializeField] private ParticleSystem _dieEffect;
-    [SerializeField] private ParticleSystem _ability;
     [Header("[Images]")]
     [SerializeField] private Image _coolDownImage;
     [SerializeField] private Image _abilityImage;
@@ -21,6 +17,9 @@ public class EnemyView : MonoBehaviour
     [Header("[View GameObject]")]
     [SerializeField] private GameObject _enemyViewGameObject;
 
+    private ParticleSystem _hit;
+    private ParticleSystem _dieEffect;
+    private ParticleSystem _ability;
     private Camera _playerCamera;
 
     public Image CoolDownImage => _coolDownImage;
@@ -39,8 +38,11 @@ public class EnemyView : MonoBehaviour
         _enemyViewGameObject.transform.LookAt(_playerCamera.transform);
     }
 
-    public void Initialize(EnemyData enemyData)
+    public void Initialize(EnemyData enemyData, ParticleSystem particleDie, ParticleSystem particleHit, ParticleSystem particleAbility)
     {
+        _hit = particleHit;
+        _dieEffect = particleDie;
+        _ability = particleAbility;
         _playerCamera = FindObjectOfType<Camera>();
         Fill(enemyData);
         AddListener();

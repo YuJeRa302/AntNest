@@ -6,7 +6,6 @@ using System;
 
 public class QuestPanel : MenuTab
 {
-    [SerializeField] private List<Buttons> _buttons;
     [SerializeField] private QuestPanelView _questPanelView;
     [SerializeField] private CanvasLoader _canvasLoader;
     [Header("[View]")]

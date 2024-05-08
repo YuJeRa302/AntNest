@@ -28,6 +28,7 @@ public class Shop : GamePanels
 
     protected override void Open()
     {
+        base.Open();
         gameObject.SetActive(true);
         ChangePlayerResourceValue();
         InitializeShopTabs();
@@ -36,8 +37,8 @@ public class Shop : GamePanels
 
     protected override void Close()
     {
+        base.Close();
         gameObject.SetActive(false);
-        PanelClosed?.Invoke();
         Player.PlayerView.UpdatePlayerStats();
     }
 

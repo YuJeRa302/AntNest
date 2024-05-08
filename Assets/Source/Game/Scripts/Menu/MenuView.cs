@@ -15,7 +15,6 @@ public class MenuView : MonoBehaviour
 
     private void Awake()
     {
-        gameObject.SetActive(false);
         _soundButton.onClick.AddListener(SetSoundState);
     }
 

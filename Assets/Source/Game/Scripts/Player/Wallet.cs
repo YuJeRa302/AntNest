@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Wallet : MonoBehaviour
@@ -6,6 +7,8 @@ public class Wallet : MonoBehaviour
 
     private int _currentCoins = 0;
     private int _points = 0;
+
+    public event Action<int> CoinCountChanged;
 
     public int Coins => _currentCoins;
     public int Points => _points;
@@ -18,6 +21,7 @@ public class Wallet : MonoBehaviour
     public void BuyItem(int value)
     {
         _currentCoins = Mathf.Clamp(_currentCoins - value, _minValue, _currentCoins);
+        CoinCountChanged?.Invoke(_currentCoins);
     }
 
     public void BuyAbility(int value)
@@ -28,6 +32,7 @@ public class Wallet : MonoBehaviour
     public void TakeCoins(int value)
     {
         _currentCoins += value;
+        CoinCountChanged?.Invoke(_currentCoins);
     }
 
     public void SetDefaultAbilityPoints(int value)

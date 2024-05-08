@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using Lean.Localization;
 
 public class LevelObserver : MonoBehaviour
 {
@@ -13,13 +14,14 @@ public class LevelObserver : MonoBehaviour
     [SerializeField] private SaveProgress _saveProgress;
     [SerializeField] private Player _player;
     [SerializeField] private PlayerInterfaceView _playerInterfaceView;
+    [SerializeField] private SoundController _soundController;
     [Header("[Panels]")]
     [SerializeField] private GamePanels[] _panels;
     [Header("[Buttons]")]
     [SerializeField] private Button _soundButton;
-    [SerializeField] private Button _pauseGameButton;
-    [SerializeField] private Button _resumeGameButton;
     [SerializeField] private Button _closeGameButton;
+    [Header("[LeanLocalization]")]
+    [SerializeField] private LeanLocalization _leanLocalization;
 
     private readonly int _levelCompleteBonus = 150;
     private readonly string _menuScene = "Menu";
@@ -35,12 +37,6 @@ public class LevelObserver : MonoBehaviour
     private AsyncOperation _load;
     private LoadConfig _loadConfig;
 
-    public int CountMoneyEarned => _countMoneyEarned;
-    public int CountExpEarned => _countExpEarned;
-    public int CountKillEnemy => _countKillEnemy;
-    public LevelView LevelView => _levelView;
-    public PlayerInterfaceView PlayerInterfaceView => _playerInterfaceView;
-
     public event Action GamePaused;
     public event Action GameResumed;
     public event Action GameEnded;
@@ -49,6 +45,15 @@ public class LevelObserver : MonoBehaviour
     public event Action<int> KillCountUpdated;
     public event Action<bool> LevelCompleted;
 
+    public int CountMoneyEarned => _countMoneyEarned;
+    public int CountExpEarned => _countExpEarned;
+    public int CountKillEnemy => _countKillEnemy;
+    public LevelView LevelView => _levelView;
+    public PlayerInterfaceView PlayerInterfaceView => _playerInterfaceView;
+    public LoadConfig LoadConfig => _loadConfig;
+    public SoundController SoundController => _soundController;
+    public Player Player => _player;
+
     private void OnEnable()
     {
         AddPanelListener();
@@ -56,8 +61,6 @@ public class LevelObserver : MonoBehaviour
         _enemySpawner.LastEnemyDied += GiveWinPlayer;
         _player.PlayerStats.PlayerHealth.PlayerDie += OnPlayerDied;
         _soundButton.onClick.AddListener(MuteSound);
-        _pauseGameButton.onClick.AddListener(PauseGame);
-        _resumeGameButton.onClick.AddListener(ResumeGame);
         _closeGameButton.onClick.AddListener(CloseGame);
     }
 
@@ -68,8 +71,6 @@ public class LevelObserver : MonoBehaviour
         _enemySpawner.LastEnemyDied -= GiveWinPlayer;
         _player.PlayerStats.PlayerHealth.PlayerDie -= OnPlayerDied;
         _soundButton.onClick.RemoveListener(MuteSound);
-        _pauseGameButton.onClick.RemoveListener(PauseGame);
-        _resumeGameButton.onClick.RemoveListener(ResumeGame);
         _closeGameButton.onClick.RemoveListener(CloseGame);
     }
 
@@ -108,6 +109,11 @@ public class LevelObserver : MonoBehaviour
             if (panel is RewardPanel)
                 (panel as RewardPanel).RewardPanelClosed += OnCloseRewardPanel;
 
+            if (panel is PausePanel)
+                (panel as PausePanel).LanguageChanged += OnLanguageChanged;
+
+            panel.PanelOpened += PauseGame;
+            panel.PanelClosed += ResumeGame;
             panel.OpenAd += OnOpenAd;
             panel.CloseAd += OnCloseAd;
         }
@@ -120,9 +126,20 @@ public class LevelObserver : MonoBehaviour
             if (panel is RewardPanel)
                 (panel as RewardPanel).RewardPanelClosed -= OnCloseRewardPanel;
 
+            if (panel is PausePanel)
+                (panel as PausePanel).LanguageChanged -= OnLanguageChanged;
+
+            panel.PanelOpened -= PauseGame;
+            panel.PanelClosed -= ResumeGame;
             panel.OpenAd -= OnOpenAd;
             panel.CloseAd -= OnCloseAd;
         }
+    }
+
+    private void OnLanguageChanged(string value)
+    {
+        _leanLocalization.SetCurrentLanguage(value);
+        _loadConfig.SetCurrentLanguage(value);
     }
 
     private void OnOpenAd()
@@ -165,6 +182,8 @@ public class LevelObserver : MonoBehaviour
     {
         CloseAllGamePanels();
         GameEnded?.Invoke();
+        _countMoneyEarned = (_player.Wallet.Coins - _defaultCoins);
+        _countExpEarned = _player.PlayerStats.Experience - _defaultExp;
         LevelCompleted?.Invoke(false);
     }
 
