@@ -10,6 +10,7 @@ public class EquipmentPanelItemView : MonoBehaviour
     [SerializeField] private Button _buyButton;
     [SerializeField] private LeanLocalizedText _itemName;
     [SerializeField] private LeanLocalizedText _levelAvailableLeanLocalized;
+    [SerializeField] private LeanLocalToken _levelToken;
     [SerializeField] private Text _levelAvailableText;
     [SerializeField] private Button _changeButton;
     [SerializeField] private Image _isBayed;
@@ -47,8 +48,8 @@ public class EquipmentPanelItemView : MonoBehaviour
     private void Fill(EquipmentItemState equipmentItemState)
     {
         _itemName.TranslationName = equipmentItemState.ItemData.Name;
+        _levelToken.SetValue(equipmentItemState.ItemData.Level.ToString());
         _levelAvailableLeanLocalized.TranslationName = equipmentItemState.ItemData.LevelAvailableText;
-        _levelAvailableText.text += " " + equipmentItemState.ItemData.Level.ToString();
         _itemPrice.text = equipmentItemState.ItemData.Price.ToString();
         _itemIcon.sprite = equipmentItemState.ItemData.ItemIcon;
         _itemValue.text = equipmentItemState.ItemData.Value.ToString();

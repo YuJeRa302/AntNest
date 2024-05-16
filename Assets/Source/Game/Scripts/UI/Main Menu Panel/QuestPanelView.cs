@@ -14,7 +14,7 @@ public class QuestPanelView : MonoBehaviour
     [SerializeField] private Text _waveCount;
     [Header("[Endless Image]")]
     [SerializeField] private Image _endlessImage;
-
+    [SerializeField] private ScrollRect s;
     public void Initialize(int coins, int playerLevel)
     {
         _playerGold.text = coins.ToString();

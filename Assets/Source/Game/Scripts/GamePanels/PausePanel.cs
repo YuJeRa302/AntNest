@@ -92,16 +92,19 @@ public class PausePanel : GamePanels
     private void OnLanguageChanged(string value)
     {
         LanguageChanged.Invoke(value);
+        LevelObserver.LoadConfig.SetCurrentLanguage(value);
     }
 
     private void OnAmbientSoundVolumeChanged(float value)
     {
         AmbientSoundVolumeChanged.Invoke(value);
+        LevelObserver.LoadConfig.SetAmbientVolume(value);
     }
 
     private void OnButtonSoundVolumeChanged(float value)
     {
         ButtonSoundVolumeChanged.Invoke(value);
+        LevelObserver.LoadConfig.SetIterfaceVolume(value);
     }
 
     private void SetButtonImage(bool state)

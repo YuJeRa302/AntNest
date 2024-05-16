@@ -3,12 +3,12 @@ using IJunior.TypedScenes;
 using System.Collections;
 using UnityEngine;
 using System;
+using UnityEngine.UIElements;
 
 public class QuestPanel : MenuTab
 {
     [SerializeField] private QuestPanelView _questPanelView;
     [SerializeField] private CanvasLoader _canvasLoader;
-    [Header("[View]")]
     [SerializeField] private LoadConfig _loadConfig;
     [Header("[Containers]")]
     [SerializeField] private GameObject _buttonsContainer;
@@ -38,6 +38,7 @@ public class QuestPanel : MenuTab
     private void Initialize()
     {
         _levelState = _defaultLevelState;
+        _loadConfig.SetCountLevels(_levelState.LevelDataState.Count);
         _questPanelView.Initialize(_loadConfig.PlayerCoins, _loadConfig.PlayerLevel);
         Fill();
     }

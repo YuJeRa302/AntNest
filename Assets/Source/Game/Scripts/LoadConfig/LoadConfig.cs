@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "LevelConfig", menuName = "CreateLevelConfig")]
 public class LoadConfig : ScriptableObject
@@ -15,11 +13,10 @@ public class LoadConfig : ScriptableObject
     [SerializeField] private bool _isFirstSession;
     [SerializeField] private int _playerScore;
 
-    private string _language;
-    private Levels _loadLevel;
+    private string _language = null;
     private LevelDataState _levelDataState;
-    private Sprite _languageSprite;
-    private Dictionary<int, bool> _playerLevels = new();
+    private bool[] _levelsComplete;
+    private int _countLevels = 0;
 
     public float AmbientVolume => _ambientVolume;
     public float InterfaceVolume => _interfaceVolume;
@@ -28,14 +25,19 @@ public class LoadConfig : ScriptableObject
     public int PlayerLevel => _playerLevel;
     public int PlayerScore => _playerScore;
     public int PlayerExperience => _playerExperience;
+    public int CountLevels => _countLevels;
     public string Language => _language;
-    public Dictionary<int, bool> PlayerLevels => _playerLevels;
-    public Levels Levels => _loadLevel;
+    public bool[] LevelsComplete => _levelsComplete;
     public LevelDataState LevelDataState => _levelDataState;
 
-    public void SetCurrentLanguageImage(Sprite sprite)
+    public void SetCountLevels(int value)
     {
-        _languageSprite = sprite;
+        _countLevels = value;
+    }
+
+    public void SetSessionState(bool state)
+    {
+        _isFirstSession = state;
     }
 
     public void SetCurrentLanguage(string value)
@@ -43,20 +45,14 @@ public class LoadConfig : ScriptableObject
         _language = value;
     }
 
-    public void SetSoundParameters(Slider sliderAmbient, Slider sliderInterface)
+    public void SetAmbientVolume(float value)
     {
-        _ambientVolume = sliderAmbient.value;
-        _interfaceVolume = sliderInterface.value;
+        _ambientVolume = value;
     }
 
-    public void LoadLevelData(LevelDataState levelDataState) 
+    public void SetIterfaceVolume(float value)
     {
-        _levelDataState = levelDataState;
-    }
-
-    public void SetLevelParameters(Levels loadLevel)
-    {
-        _loadLevel = loadLevel;
+        _interfaceVolume = value;
     }
 
     public void SetPlayerParameters(int coins, int level, int experience, int score, bool isFirstSession)
@@ -68,13 +64,13 @@ public class LoadConfig : ScriptableObject
         _isFirstSession = isFirstSession;
     }
 
-    public void UpdateListPlayerLevels(Dictionary<int, bool> playerLevels)
+    public void UpdateListPlayerLevels(bool[] levelsComplete)
     {
-        _playerLevels = playerLevels;
+        _levelsComplete = levelsComplete;
     }
 
-    public void SetSessionState(bool state)
+    public void LoadLevelData(LevelDataState levelDataState)
     {
-        _isFirstSession = state;
+        _levelDataState = levelDataState;
     }
 }

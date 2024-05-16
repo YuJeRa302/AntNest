@@ -9,36 +9,30 @@ public class SaveProgress : MonoBehaviour
     private SaveModel _data = null;
     private LoadConfig _loadConfig;
 
-    public void Save(string language, int playerCoins, int playerLevel, int playerExperience, int score, bool isFirstSession, int levelId, bool levelState)
+    public void Save(int playerCoins, int playerLevel, int playerExperience, int score, LoadConfig loadConfig)
     {
-        if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+        if (PlayerAccount.IsAuthorized == true)
+            PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+
+        bool[] levelsComplete = new bool[loadConfig.CountLevels];
+
+        if (_data != null)
+            levelsComplete = _data.PlayerLevelComplete;
+
+        levelsComplete[loadConfig.LevelDataState.LevelData.LevelId] = loadConfig.LevelDataState.IsComplete;
 
         SaveModel newData = new()
         {
-            Language = language,
             PlayerCoins = playerCoins,
             PlayerLevel = playerLevel,
             PlayerExperience = playerExperience,
-            IsFirstSession = isFirstSession,
             PlayerScore = score,
-            PlayerCompleteLevels = new(),
+            Language = loadConfig.Language,
+            IsFirstSession = loadConfig.IsFirstSession,
+            AmbientVolume = loadConfig.AmbientVolume,
+            InterfaceVolume = loadConfig.InterfaceVolume,
+            PlayerLevelComplete = levelsComplete
         };
-
-        newData.PlayerCompleteLevels.Add(levelId, levelState);
-
-        if (_data != null)
-        {
-            var keys = _data.PlayerCompleteLevels.Keys;
-
-            foreach (int key in keys)
-            {
-                if (!newData.PlayerCompleteLevels.ContainsKey(key))
-                {
-                    _data.PlayerCompleteLevels.TryGetValue(key, out bool value);
-                    newData.PlayerCompleteLevels.Add(key, value);
-                }
-            }
-        }
 
         string json = JsonUtility.ToJson(newData);
 
@@ -47,27 +41,30 @@ public class SaveProgress : MonoBehaviour
             UnityEngine.PlayerPrefs.SetString(_key, json);
             UnityEngine.PlayerPrefs.Save();
         }
-        else PlayerAccount.SetCloudSaveData(json);
+        else
+            PlayerAccount.SetCloudSaveData(json);
     }
 
     public void GetLoad(LoadConfig loadConfig)
     {
         _loadConfig = loadConfig;
 
-        if (PlayerAccount.IsAuthorized == true) PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+        if (PlayerAccount.IsAuthorized == true)
+            PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
     }
 
     private void UpdateConfig(SaveModel data, LoadConfig loadConfig)
     {
         if (data != null)
         {
-            if (data.PlayerCompleteLevels != null)
-                loadConfig.UpdateListPlayerLevels(data.PlayerCompleteLevels);
+            if (data.PlayerLevelComplete != null)
+                loadConfig.UpdateListPlayerLevels(data.PlayerLevelComplete);
 
             var playerLevel = data.PlayerLevel == _nullLevel ? loadConfig.PlayerLevel : data.PlayerLevel;
             SetConfigParameters(data.Language, data.PlayerCoins, playerLevel, data.PlayerExperience, data.PlayerScore, data.IsFirstSession, loadConfig);
         }
-        else return;
+        else
+            return;
     }
 
     private void SetConfigParameters(string language, int playerCoins, int playerLevel, int playerExperience, int score, bool isFirstSession, LoadConfig loadConfig)
@@ -89,6 +86,7 @@ public class SaveProgress : MonoBehaviour
             string _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
             _data = JsonUtility.FromJson<SaveModel>(_hashKey);
         }
-        else return;
+        else
+            return;
     }
 }

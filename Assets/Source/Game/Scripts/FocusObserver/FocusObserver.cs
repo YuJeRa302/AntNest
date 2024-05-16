@@ -30,8 +30,10 @@ public class FocusObserver : MonoBehaviour
 
     private void ChangeFocus(bool state)
     {
-        if (state == true) ResumeGame();
-        else PauseGame();
+        if (state == true)
+            ResumeGame();
+        else
+            PauseGame();
     }
 
     private void PauseGame()

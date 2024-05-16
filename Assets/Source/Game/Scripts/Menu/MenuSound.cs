@@ -31,14 +31,9 @@ public class MenuSound : MonoBehaviour
 
     public void Initialize()
     {
+        SetValueVolume(_menuPanel.Config.AmbientVolume, _menuPanel.Config.InterfaceVolume);
         _ambientAudioSource.clip = _audioAmbient;
         _ambientAudioSource.Play();
-    }
-
-    public void SetValueVolume(float ambientSoundsValue, float buttonFXValue)
-    {
-        _ambientAudioSource.volume = ambientSoundsValue;
-        _interfaceAudioSource.volume = buttonFXValue;
     }
 
     public void SetStateMuteSound(bool state)
@@ -64,5 +59,11 @@ public class MenuSound : MonoBehaviour
     private void OnButtonVolumeChanged(float value)
     {
         _interfaceAudioSource.volume = value;
+    }
+
+    private void SetValueVolume(float ambientSoundsValue, float buttonFXValue)
+    {
+        _ambientAudioSource.volume = ambientSoundsValue;
+        _interfaceAudioSource.volume = buttonFXValue;
     }
 }

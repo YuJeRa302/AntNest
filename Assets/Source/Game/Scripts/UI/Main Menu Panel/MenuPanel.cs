@@ -5,6 +5,7 @@ using Agava.YandexGames;
 
 public class MenuPanel : Panels
 {
+    [SerializeField] private Canvas _canvasSceneLoader;
     [SerializeField] private SaveProgress _saveProgress;
     [SerializeField] private LoadConfig _config;
     [Header("[Menu Entities]")]
@@ -14,12 +15,17 @@ public class MenuPanel : Panels
     [Header("[LeanLocalization]")]
     [SerializeField] private LeanLocalization _leanLocalization;
 
+    private float _timeLoadScene = 2f;
+    private IEnumerator _sceneLoad;
+
     public MenuSound MenuSound => _menuSound;
     public SettingsPanel SettingsPanel => _settingsPanel;
+    public LoadConfig Config => _config;
 
     private void Awake()
     {
         YandexGamesSdk.CallbackLogging = true;
+        _sceneLoad = LoadScene();
         _settingsPanel.LanguageChanged += OnLanguageChanged;
     }
 
@@ -30,26 +36,37 @@ public class MenuPanel : Panels
 
     private IEnumerator Start()
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-        if (YandexGamesSdk.IsInitialized == true) 
+        if (YandexGamesSdk.IsInitialized)
         {
             yield return null;
-            OnInitialize();
+            LoadConfig();
         }
-        else yield return YandexGamesSdk.Initialize(OnInitialize);
-#endif
-#if UNITY_EDITOR
-        yield return null;
-        TestLoad();
-#endif
+        else
+            yield return YandexGamesSdk.Initialize(OnInitialize);
     }
 
     private void OnInitialize()
     {
+        _saveProgress.GetLoad(_config);
+        StartCoroutine(_sceneLoad);
+    }
+
+    private IEnumerator LoadScene()
+    {
+        yield return new WaitForSeconds(_timeLoadScene);
+
+        if (_config.IsFirstSession == true)
+        {
+            _config.SetSessionState(false);
+            _config.SetCurrentLanguage(YandexGamesSdk.Environment.i18n.lang);
+        }
+
+        OnLanguageChanged(_config.Language);
         gameObject.SetActive(true);
-#if UNITY_WEBGL && !UNITY_EDITOR
-                GetLoad();
-#endif
+        _settingsPanel.SetSliderValue(_config);
+        _menuSound.Initialize();
+        _canvasSceneLoader.gameObject.SetActive(false);
+        StopCoroutine(_sceneLoad);
     }
 
     private void OnLanguageChanged(string value)
@@ -58,23 +75,12 @@ public class MenuPanel : Panels
         _config.SetCurrentLanguage(value);
     }
 
-    private void TestLoad()
+    private void LoadConfig()
     {
+        _canvasSceneLoader.gameObject.SetActive(false);
+        OnLanguageChanged(_config.Language);
         gameObject.SetActive(true);
-        _config.SetCurrentLanguage("ru");
-        _leanLocalization.SetCurrentLanguage("ru");
         _settingsPanel.SetSliderValue(_config);
-        _menuSound.SetValueVolume(_config.AmbientVolume, _config.InterfaceVolume);
-        _menuSound.Initialize();
-    }
-
-    private void GetLoad()
-    {
-        _leanLocalization.SetCurrentLanguage(YandexGamesSdk.Environment.i18n.lang);
-        _config.SetCurrentLanguage(YandexGamesSdk.Environment.i18n.lang);
-        _saveProgress.GetLoad(_config);
-        _settingsPanel.SetSliderValue(_config);
-        _menuSound.SetValueVolume(_config.AmbientVolume, _config.InterfaceVolume);
         _menuSound.Initialize();
     }
 }

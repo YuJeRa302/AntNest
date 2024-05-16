@@ -46,12 +46,12 @@ public class Buttons : MonoBehaviour
 
     public void LoadLevel()
     {
-        if (_level.IsStandart != false || _level.IsEndless != false)
-        {
-            _loadConfig.SetLevelParameters(_level);
-            LoadScene(_level.NameScene, _loadConfig);
-        }
-        else OutputHints();
+        //if (_level.IsStandart != false || _level.IsEndless != false)
+        //{
+        //    _loadConfig.SetLevelParameters(_level);
+        //    LoadScene(_level.NameScene, _loadConfig);
+        //}
+        //else OutputHints();
     }
 
     public void SelectStandartLevel()

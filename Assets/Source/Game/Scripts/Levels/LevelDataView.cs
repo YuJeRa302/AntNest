@@ -9,6 +9,7 @@ public class LevelDataView : MonoBehaviour
     [SerializeField] private LoadConfig _loadConfig;
     [SerializeField] private LeanLocalizedText _nameLevel;
     [SerializeField] private LeanLocalizedText _levelAvailable;
+    [SerializeField] private LeanLocalToken _levelToken;
     [SerializeField] private Text _levelAvailableText;
     [Header("[Buttons Animators]")]
     [SerializeField] private Animator[] _animators;
@@ -23,7 +24,7 @@ public class LevelDataView : MonoBehaviour
 
     private readonly int _zeroWave = 0;
     private readonly int _levelIndexShift = 1;
-    private readonly int _firstLevelIndex = 1;
+    private readonly int _firstLevelIndex = 0;
     private readonly Color _defaultColor = Color.blue;
     private readonly Color _acceptColor = Color.yellow;
 
@@ -70,8 +71,8 @@ public class LevelDataView : MonoBehaviour
         _levelDataState = levelDataState;
         _levelImage.sprite = levelDataState.LevelData.LevelIcon;
         _nameLevel.TranslationName = levelDataState.LevelData.NameScene;
+        _levelToken.SetValue(levelDataState.LevelData.LevelId.ToString());
         _levelAvailable.TranslationName = levelDataState.LevelData.LevelAvailable;
-        _levelAvailableText.text += " " + (levelDataState.LevelData.LevelId - _levelIndexShift).ToString();
         _standartLevelDescription = levelDataState.LevelData.StandartLevelDescription;
         _endlessLevelDescription = levelDataState.LevelData.EndlessLevelDescription;
         _hintsText = levelDataState.LevelData.HintsText;
@@ -79,14 +80,10 @@ public class LevelDataView : MonoBehaviour
 
     private void LoadCompletePlayerLevels(LevelDataState levelDataState)
     {
-        SetLevelState(false);
-
-        if (_loadConfig.PlayerLevels.TryGetValue(levelDataState.LevelData.LevelId, out bool isLevelComplete))
-        {
-            levelDataState.IsComplete = isLevelComplete;
-            _levelCompleteImage.gameObject.SetActive(isLevelComplete);
-            SetLevelState(isLevelComplete);
-        }
+        bool levelState = _loadConfig.LevelsComplete.Length > _firstLevelIndex ? _loadConfig.LevelsComplete[levelDataState.LevelData.LevelId] : false;
+        levelDataState.IsComplete = levelState;
+        _levelCompleteImage.gameObject.SetActive(levelState);
+        SetLevelState(levelState);
 
         if (levelDataState.LevelData.LevelId == _firstLevelIndex)
             SetLevelState(true);
@@ -97,9 +94,8 @@ public class LevelDataView : MonoBehaviour
         if (levelDataState.LevelData.LevelId == _firstLevelIndex)
             return;
 
-        if (_loadConfig.PlayerLevels.TryGetValue(levelDataState.LevelData.LevelId - _levelIndexShift, out bool isLevelComplete))
-            SetLevelState(isLevelComplete);
-        else SetLevelState(false);
+        if (_loadConfig.LevelsComplete.Length > _firstLevelIndex)
+            SetLevelState(_loadConfig.LevelsComplete[levelDataState.LevelData.LevelId - _levelIndexShift]);
     }
 
     private void SetLevelState(bool isLevelComplete)
@@ -123,7 +119,8 @@ public class LevelDataView : MonoBehaviour
             _loadConfig.LoadLevelData(_levelDataState);
             LevelLoading.Invoke(_levelDataState.LevelData.NameScene, _loadConfig);
         }
-        else ShowHints();
+        else
+            ShowHints();
     }
 
     private void SelectStandartLevel()

@@ -12,15 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f691658132057d48957b25c5101331b, type: 3}
   m_Name: Desert
   m_EditorClassIdentifier: 
-  _levelId: 2
+  _levelId: 1
   _nameScene: Desert
   _isComplete: 0
+  _numberExtraWave: 
   _waveDatas:
   - {fileID: 11400000, guid: fce1dcb18b25c164abfc22f5447cdb2a, type: 2}
+  _waveEndlessDatas: []
   _levelIcon: {fileID: 21300000, guid: faf3ed7d7729c56428cebc28749eb0db, type: 3}
   _acceptSprite: {fileID: -1935557950, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
   _cancelSprite: {fileID: -803613565, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
+  _endlessSprite: {fileID: 0}
   _standartLevelDescription: StandartLevelDescription
   _levelAvailable: LevelAvailable
   _endlessLevelDescription: EndlessLevelDescription
   _hintsText: HintsText
+  _endlessText: 

@@ -74,16 +74,19 @@ public class SettingsPanel : MenuTab
     private void OnLanguageChanged(string value)
     {
         LanguageChanged.Invoke(value);
+        _menuPanel.Config.SetCurrentLanguage(value);
     }
 
     private void OnAmbientSoundVolumeChanged(float value)
     {
         AmbientSoundVolumeChanged.Invoke(value);
+        _menuPanel.Config.SetAmbientVolume(value);
     }
 
     private void OnButtonSoundVolumeChanged(float value)
     {
         ButtonSoundVolumeChanged.Invoke(value);
+        _menuPanel.Config.SetIterfaceVolume(value);
     }
 }
 

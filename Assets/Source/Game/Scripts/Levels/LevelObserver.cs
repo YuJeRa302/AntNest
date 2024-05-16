@@ -220,14 +220,7 @@ public class LevelObserver : MonoBehaviour
     private void SavePlayerStats()
     {
         var level = _loadConfig.LevelDataState.IsComplete ? _player.PlayerStats.Level : _loadConfig.PlayerLevel;
-        _saveProgress.Save(_loadConfig.Language,
-            _player.Wallet.Coins,
-            level,
-            _player.PlayerStats.Experience,
-            _player.PlayerStats.Score,
-           _loadConfig.IsFirstSession,
-            _loadConfig.LevelDataState.LevelData.LevelId,
-            _loadConfig.LevelDataState.IsComplete);
+        _saveProgress.Save(_player.Wallet.Coins, level, _player.PlayerStats.Experience, _player.PlayerStats.Score, _loadConfig);
     }
 
     private void SetTimeScale(float value)
@@ -242,7 +235,8 @@ public class LevelObserver : MonoBehaviour
 
     private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)
     {
-        if (_load != null) yield break;
+        if (_load != null)
+            yield break;
 
         _load = asyncOperation;
         _load.allowSceneActivation = false;
