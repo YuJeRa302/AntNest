@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5834612994848684018}
   - component: {fileID: 3791114138270754118}
   - component: {fileID: 3791114138269755270}
-  - component: {fileID: 3791114138271524199}
   - component: {fileID: 7384398037004268066}
   - component: {fileID: 7384238332117816441}
   - component: {fileID: 8199506202871884107}
+  - component: {fileID: 7834785824381755173}
   m_Layer: 0
   m_Name: Helmet Wood
   m_TagString: Untagged
@@ -92,23 +92,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3791114138271524199
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3791114138271693126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0adeffa9a9d89ac4e989bff8007a1dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _name: Wood
-  _sprite: {fileID: 0}
-  _price: 0
-  _isBayed: 1
-  _armor: 2
 --- !u!222 &7384398037004268066
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -165,3 +148,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   translationName: Helmet Wood
   FallbackText: "\u0414\u0435\u0440\u0435\u0432\u044F\u043D\u043D\u044B\u0439"
+--- !u!114 &7834785824381755173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3791114138271693126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f527e24182ca346428adc37a0c5fcabd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class ConsumablePanelItemView : MonoBehaviour
 {
     [SerializeField] private Text _itemPrice;
+    [SerializeField] private Text _itemValue;
     [SerializeField] private Image _itemIcon;
+    [SerializeField] private Image _shopIcon;
     [SerializeField] private Button _buyButton;
     [SerializeField] private LeanLocalizedText _itemName;
 
@@ -32,6 +34,8 @@ public class ConsumablePanelItemView : MonoBehaviour
     {
         _itemName.TranslationName = consumableItemState.ConsumableItemData.Name;
         _itemPrice.text = consumableItemState.ConsumableItemData.Price.ToString();
+        _itemValue.text = consumableItemState.ConsumableItemData.Value.ToString();
+        _shopIcon.sprite = consumableItemState.ConsumableItemData.SpriteShopItem;
         _itemIcon.sprite = consumableItemState.ConsumableItemData.ItemIcon;
     }
 

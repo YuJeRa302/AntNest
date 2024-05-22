@@ -129,9 +129,17 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6514879340281966331}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 3
   m_Center: {x: -0.0000004768372, y: 0, z: -0.00000017881396}
 --- !u!114 &6514879340284162085
@@ -146,15 +154,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98a63459df40b94ca64ec52ca1b1081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Particles:
+  _particles:
   - {fileID: 5229859917308554473}
   - {fileID: 2199889509909616641}
-  rune: 2
+  _typeRune: 2
   _audioSource: {fileID: 6514879340284162087}
   _audioClip: {fileID: 8300000, guid: 183e304c09c886349b8b640fe02d2933, type: 3}
+  _healing: 20
+  _coins: 50
 --- !u!95 &6514879340284162106
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -171,7 +181,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!82 &6514879340284162087
 AudioSource:
   m_ObjectHideFlags: 0
@@ -273,6 +284,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 6070216034635707026}
     m_Modifications:
     - target: {fileID: 2190944889750867841, guid: eb7aa9e963aed95499fce3331490b6b6, type: 3}
@@ -324,6 +336,9 @@ PrefabInstance:
       value: Star_B
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb7aa9e963aed95499fce3331490b6b6, type: 3}
 --- !u!198 &5229859917308554473 stripped
 ParticleSystem:
@@ -340,6 +355,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 6070216034635707026}
     m_Modifications:
     - target: {fileID: 5189876020481811049, guid: 1ab8c45923521a64697c6650b076593d, type: 3}
@@ -391,6 +407,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ab8c45923521a64697c6650b076593d, type: 3}
 --- !u!4 &2033042998692159531 stripped
 Transform:

@@ -27,34 +27,27 @@ public class PlayerHealth : MonoBehaviour
         {
             var currentDamage = damage - _player.PlayerStats.Armor;
 
-            if (currentDamage < _minHealth) currentDamage = _minHealth;
+            if (currentDamage < _minHealth)
+                currentDamage = _minHealth;
 
             _currentHealth = Mathf.Clamp(_currentHealth - currentDamage, _minHealth, _maxHealth);
             ChangedHealth.Invoke(_currentHealth);
         }
-        else PlayerDie.Invoke();
-    }
-
-    public void TakeHealPotion()
-    {
-        if (_player.PlayerConsumables.CountHealthPotion > 0 && _currentHealth != _maxHealth) ChangeHealth(Heal());
-        else return;
+        else
+            PlayerDie.Invoke();
     }
 
     public void TakeHealRune(int value)
     {
-        if (_currentHealth != _maxHealth) ChangeHealth(value);
-        else return;
+        if (_currentHealth != _maxHealth)
+            ChangeHealth(value);
+        else
+            return;
     }
 
     public void ChangeHealth(int value)
     {
         _currentHealth = Mathf.Clamp(_currentHealth + value, _minHealth, _maxHealth);
         ChangedHealth.Invoke(_currentHealth);
-    }
-
-    private int Heal()
-    {
-        return _player.PlayerConsumables.GetPotion();
     }
 }

@@ -16,8 +16,6 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private PlayerAbilityState _defaultAbilityState;
     [Header("[Default Consumable Data]")]
     [SerializeField] private PlayerConsumableState _defaultConsumableState;
-    [Header("[Default Count Health Potion]")]
-    [SerializeField] private int _defaultCountHealthPotion;
 
     private PlayerEquipmentState _playerEquipmentState;
     private PlayerAbilityState _playerAbilityState;
@@ -29,7 +27,6 @@ public class PlayerInventory : MonoBehaviour
     public List<ConsumableItemState> ListConsumables => _playerConsumableState.Items.ToList();
     public EquipmentItemState CurrentWeapon => _playerEquipmentState.EquippedWeapon;
     public EquipmentItemState CurrentArmor => _playerEquipmentState.EquippedArmor;
-    public int DefaultCountHealthPotion => _defaultCountHealthPotion;
 
     private void Awake()
     {
@@ -37,6 +34,7 @@ public class PlayerInventory : MonoBehaviour
         AddDefaultEquipment(ListWeapon);
         AddDefaultEquipment(ListArmor);
         _player.PlayerView.UpdatePlayerStats();
+        _player.PlayerConsumables.Initialize();
     }
 
     public void EquipItem(EquipmentItemState equipmentItemState)

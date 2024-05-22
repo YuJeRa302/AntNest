@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +8,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] private Transform _abilityObjectContainer;
     [SerializeField] private Transform _playerEffectsContainer;
     [SerializeField] private Transform _weaponEffectsContainer;
+    [SerializeField] private Image _defaultImage;
     [Header("[AbilityReloadImage]")]
     [SerializeField] private Image _reloadingImage;
 
@@ -25,6 +25,9 @@ public class PlayerAbility : MonoBehaviour
 
         abilityState.IsBuyed = true;
 
+        if (_defaultImage != null)
+            Destroy(_defaultImage);
+
         if (_abilityItemGameObject != null)
             Destroy(_abilityItemGameObject.gameObject);
 
@@ -39,7 +42,7 @@ public class PlayerAbility : MonoBehaviour
         _abilityItemGameObject.Initialize(_player, abilityState, _reloadingImage, _abilityEffect);
     }
 
-    public void UpgradeAbility(AbilityState abilityState) 
+    public void UpgradeAbility(AbilityState abilityState)
     {
         abilityState.CurrentLevel++;
         BuyAbility(abilityState);

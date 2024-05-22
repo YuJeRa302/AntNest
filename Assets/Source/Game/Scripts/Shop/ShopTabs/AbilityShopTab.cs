@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class AbilityShopTab : ShopTab
 {
     [SerializeField] private Player _player;
     [SerializeField] private AbilityPanelItemView _itemView;
+    [SerializeField] private ScrollRect _scroll;
+    [SerializeField] private DotView _dotView;
 
     private List<AbilityPanelItemView> _views = new();
 
@@ -18,6 +21,12 @@ public class AbilityShopTab : ShopTab
     {
         base.OnDestroy();
         Clear();
+    }
+
+    protected override void OpenTab()
+    {
+        base.OpenTab();
+        _dotView.SetScrollRect(_scroll);
     }
 
     private void Fill()

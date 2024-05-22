@@ -855,9 +855,6 @@ MonoBehaviour:
   _level: {fileID: 3406436801154485210}
   _health: {fileID: 1726675067138532677}
   _enemyIcon: {fileID: 9153341692117087907}
-  _hit: {fileID: 0}
-  _dieEffect: {fileID: 0}
-  _ability: {fileID: 0}
   _coolDownImage: {fileID: 8155144495672048487}
   _abilityImage: {fileID: 3582231017923333632}
   _cancelSprite: {fileID: 0}

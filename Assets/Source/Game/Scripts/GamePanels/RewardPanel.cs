@@ -60,11 +60,7 @@ public class RewardPanel : GamePanels
     protected override void Close()
     {
         gameObject.SetActive(false);
-
-#if UNITY_WEBGL && !UNITY_EDITOR
         InterstitialAd.Show(OnOpenAdCallback, OnCloseInterstitialAdCallback, OnErrorCallback);
-#endif
-
         RewardPanelClosed.Invoke();
     }
 

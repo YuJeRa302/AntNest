@@ -129,9 +129,17 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2468235926395312670}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 3
   m_Center: {x: 0.001488209, y: -0.002572679, z: -0.046597406}
 --- !u!114 &2468235926394209795
@@ -146,12 +154,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98a63459df40b94ca64ec52ca1b1081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Particles:
+  _particles:
   - {fileID: 6869804914348509603}
   - {fileID: 5106302879643992359}
-  rune: 1
+  _typeRune: 1
   _audioSource: {fileID: 2468235926394209820}
   _audioClip: {fileID: 8300000, guid: 183e304c09c886349b8b640fe02d2933, type: 3}
+  _healing: 20
+  _coins: 50
 --- !u!82 &2468235926394209820
 AudioSource:
   m_ObjectHideFlags: 0
@@ -250,7 +260,7 @@ AudioSource:
     m_RotationOrder: 4
 --- !u!95 &2468235926394209821
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -267,12 +277,14 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &701369163452773157
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 701369163714288659}
     m_Modifications:
     - target: {fileID: 6071581220147937608, guid: d5d3adf7c87389744ab8d93e512dbd57, type: 3}
@@ -324,6 +336,9 @@ PrefabInstance:
       value: Heart
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5d3adf7c87389744ab8d93e512dbd57, type: 3}
 --- !u!4 &6771537500421370477 stripped
 Transform:
@@ -340,6 +355,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 701369163714288659}
     m_Modifications:
     - target: {fileID: 5609036113937821180, guid: 31579df3d524e304ab70f552c5a01cc6, type: 3}
@@ -391,6 +407,9 @@ PrefabInstance:
       value: LightHeart
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31579df3d524e304ab70f552c5a01cc6, type: 3}
 --- !u!4 &4930473099467904043 stripped
 Transform:

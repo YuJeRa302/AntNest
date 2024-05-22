@@ -20,4 +20,9 @@ public class DialogPanel : GamePanels
     {
         gameObject.SetActive(true);
     }
+
+    protected override void Close()
+    {
+        gameObject.SetActive(false);
+    }
 }

@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 1267463871104465886}
   - component: {fileID: 841033134666935218}
   - component: {fileID: 841033134666935219}
-  - component: {fileID: 841033134666935212}
   - component: {fileID: 8617276568622434165}
-  - component: {fileID: 6351886595380196742}
   - component: {fileID: 2469349011974762506}
   - component: {fileID: 2258591951590928344}
+  - component: {fileID: -1347880655892123638}
   m_Layer: 0
   m_Name: Helmet Bronze
   m_TagString: Untagged
@@ -93,24 +92,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &841033134666935212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841033134666935214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0adeffa9a9d89ac4e989bff8007a1dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprite: {fileID: 0}
-  _price: 150
-  _isBayed: 0
-  _armor: 8
-  _armorLevel: 0
-  _name: Bronze
 --- !u!222 &8617276568622434165
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -119,24 +100,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 841033134666935214}
   m_CullTransparentMesh: 1
---- !u!114 &6351886595380196742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841033134666935214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37fcfaccf998dff4481d9444311787af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 20e6201487c96e24f9406d57bc78305a, type: 3}
-  _price: 150
-  _isBayed: 0
-  _value: 8
-  _level: 2
-  _name: BronzeHelmet
 --- !u!114 &2469349011974762506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,3 +148,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   translationName: Helmet Bronze
   FallbackText: 
+--- !u!114 &-1347880655892123638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841033134666935214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f527e24182ca346428adc37a0c5fcabd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

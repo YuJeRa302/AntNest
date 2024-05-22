@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     [Header("[Enemy]")]
     [SerializeField] private Enemy _enemy;
 
-    private readonly float _delay = 1f;
+    private readonly float _delay = 0.75f;
 
     private IEnumerator _makeDamage;
     private Player _target;
@@ -52,12 +52,13 @@ public class EnemyMovement : MonoBehaviour
                 Attack(player);
             }
         }
-        else return;
+        else
+            return;
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.TryGetComponent<Player>(out Player player))
+        if (collision.TryGetComponent(out Player player))
         {
             _isAttack = false;
 
@@ -76,7 +77,8 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_enemy.Health == 0)
             Die();
-        else return;
+        else
+            return;
     }
 
     private void Attack(Player player)
@@ -96,8 +98,8 @@ public class EnemyMovement : MonoBehaviour
 
         while (_isAttack == true)
         {
-            player.PlayerStats.PlayerHealth.TakeDamage(_enemy.Damage);
             yield return waitForSeconds;
+            player.PlayerStats.PlayerHealth.TakeDamage(_enemy.Damage);
         }
     }
 

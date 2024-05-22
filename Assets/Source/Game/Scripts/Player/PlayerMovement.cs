@@ -24,15 +24,6 @@ public class PlayerMovement : MonoBehaviour
     private bool _isAllowAttack = true;
     private IEnumerator _makeDamage;
 
-    enum TransitionParametr
-    {
-        Horizontal,
-        Vertical,
-        Speed,
-        Attack,
-        Die
-    }
-
     private void Start()
     {
         _speed = _player.PlayerStats.Speed;
@@ -66,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator AttackRate()
     {
-        _animator.SetTrigger(TransitionParametr.Attack.ToString());
+        _animator.SetTrigger(TransitionParameter.Attack.ToString());
         _player.PlayerSounds.AudioSourceAxe.PlayOneShot(_player.PlayerSounds.AxeSound);
 
         yield return new WaitForSeconds(_attackRate);
@@ -80,9 +71,9 @@ public class PlayerMovement : MonoBehaviour
         _moveVector = Vector3.zero;
         _moveVector.x = _joystick.GetHorizontalValue() * _speed;
         _moveVector.z = _joystick.GetVerticalValue() * _speed;
-        _animator.SetFloat(TransitionParametr.Horizontal.ToString(), _moveVector.x);
-        _animator.SetFloat(TransitionParametr.Vertical.ToString(), _moveVector.z);
-        _animator.SetFloat(TransitionParametr.Speed.ToString(), _moveVector.sqrMagnitude);
+        _animator.SetFloat(TransitionParameter.Horizontal.ToString(), _moveVector.x);
+        _animator.SetFloat(TransitionParameter.Vertical.ToString(), _moveVector.z);
+        _animator.SetFloat(TransitionParameter.Speed.ToString(), _moveVector.sqrMagnitude);
 
         if (Vector3.Angle(Vector3.forward, _moveVector) > _maxVectorValue || Vector3.Angle(Vector3.forward, _moveVector) == _minVectorValue)
         {
@@ -99,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (Collider collider in coliderEnemy)
         {
-            if (collider.TryGetComponent<Enemy>(out Enemy enemy))
+            if (collider.TryGetComponent(out Enemy enemy))
                 enemy.TakeDamage(_player.PlayerStats.Damage);
         }
     }

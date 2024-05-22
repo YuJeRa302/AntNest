@@ -1977,6 +1977,37 @@ Transform:
   m_Father: {fileID: 9033125874921812216}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!1 &4570025590999670594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 444779128612215797}
+  m_Layer: 0
+  m_Name: Throw Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &444779128612215797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4570025590999670594}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.4, z: 0.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6986125607562957434}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4692762056985356795
 GameObject:
   m_ObjectHideFlags: 0
@@ -3375,6 +3406,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4869634631570888367}
+  - {fileID: 444779128612215797}
   - {fileID: 1605020593773440621}
   - {fileID: 2333098000205656146}
   - {fileID: 5347646114922487085}
@@ -3382,7 +3414,7 @@ Transform:
   - {fileID: 7026735058215002245}
   - {fileID: 1240909117737621990}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7762064549988829407
 Animator:
@@ -3449,7 +3481,7 @@ MonoBehaviour:
   _cameraPlayer: {fileID: 0}
   _player: {fileID: 7762064549988829404}
   _attackPoint: {fileID: 8562140623353840338}
-  _attackRange: 0.45
+  _attackRange: 0.7
   _enemyLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -3562,6 +3594,7 @@ MonoBehaviour:
   _abilityObjectContainer: {fileID: 0}
   _playerEffectsContainer: {fileID: 2333098000205656146}
   _weaponEffectsContainer: {fileID: 3598705623499679027}
+  _defaultImage: {fileID: 0}
   _reloadingImage: {fileID: 0}
 --- !u!114 &6626579373589028082
 MonoBehaviour:
@@ -3606,8 +3639,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e193dbe2b1f68448ed9cd8db907aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _consumableItem: {fileID: 11400000, guid: dad32b7d2e24240458e06f8d9ce3f0f4, type: 2}
+  _grenadeButton: {fileID: 0}
+  _potionButton: {fileID: 0}
+  _mineButtonGameObject: {fileID: 0}
   _player: {fileID: 7762064549988829404}
+  _throwPoint: {fileID: 444779128612215797}
 --- !u!114 &2686629597467653288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3694,7 +3730,8 @@ MonoBehaviour:
   _defaultConsumableState:
     Items:
     - ConsumableItemData: {fileID: 11400000, guid: e42f9db5e69d13e408ed83fba293b785, type: 2}
-  _defaultCountHealthPotion: 2
+    - ConsumableItemData: {fileID: 11400000, guid: 0b9638ad8e8b90e4eadcdc8b35e487cf, type: 2}
+    - ConsumableItemData: {fileID: 11400000, guid: ce31b89dac5fdb9478d9fd9dd0fbdf0b, type: 2}
 --- !u!1 &7958748987408296165
 GameObject:
   m_ObjectHideFlags: 0

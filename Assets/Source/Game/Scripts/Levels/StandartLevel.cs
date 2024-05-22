@@ -1,1 +1,0 @@
-public class StandartLevel : Levels { }

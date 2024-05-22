@@ -46,11 +46,12 @@ public class ConsumableShopTab : ShopTab
         if (consumablePanelItemView.ConsumableItemState.ConsumableItemData.Price <= _player.Wallet.Coins)
         {
             _player.Wallet.BuyItem(consumablePanelItemView.ConsumableItemState.ConsumableItemData.Price);
-            _player.PlayerConsumables.BuyItem();
+            _player.PlayerConsumables.BuyItem(consumablePanelItemView.ConsumableItemState);
             UpdatePlayerResourceValue();
             Clear();
             Fill();
         }
-        else DialogPanel.OpenPanel();
+        else
+            DialogPanel.OpenPanel();
     }
 }

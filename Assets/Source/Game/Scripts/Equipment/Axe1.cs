@@ -1,1 +1,0 @@
-public class Axe1 : EquipmentItemGameObject { }

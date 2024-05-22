@@ -44,7 +44,7 @@ public class PlayerStats : MonoBehaviour
 
     public void Initialize(int level, int experience, int score)
     {
-        StatsInitialize();
+        PlayerHealth.Initialize();
         GenerateLevelPlayer(_maxPlayerLevel);
         SetPlayerStats(level, experience, score);
     }
@@ -144,12 +144,6 @@ public class PlayerStats : MonoBehaviour
             }
         }
         else return;
-    }
-
-    private void StatsInitialize()
-    {
-        _player.PlayerConsumables.Initialize();
-        PlayerHealth.Initialize();
     }
 
     private void GetNewPointAblility(int level)

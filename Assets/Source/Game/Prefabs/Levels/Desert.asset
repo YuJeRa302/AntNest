@@ -15,10 +15,14 @@ MonoBehaviour:
   _levelId: 1
   _nameScene: Desert
   _isComplete: 0
-  _numberExtraWave: 
+  _numberExtraWave: 010000000400000007000000
   _waveDatas:
   - {fileID: 11400000, guid: fce1dcb18b25c164abfc22f5447cdb2a, type: 2}
-  _waveEndlessDatas: []
+  _waveEndlessDatas:
+  - {fileID: 11400000, guid: fce1dcb18b25c164abfc22f5447cdb2a, type: 2}
+  - {fileID: 11400000, guid: 9e6cb28a88b0f9b4a83f3e4340485fa6, type: 2}
+  - {fileID: 11400000, guid: cf2e6d704c131c3429c6faab84e07e9d, type: 2}
+  - {fileID: 11400000, guid: 153d90650eac9354e8fb4c3429b1eb9c, type: 2}
   _levelIcon: {fileID: 21300000, guid: faf3ed7d7729c56428cebc28749eb0db, type: 3}
   _acceptSprite: {fileID: -1935557950, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
   _cancelSprite: {fileID: -803613565, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
@@ -27,4 +31,4 @@ MonoBehaviour:
   _levelAvailable: LevelAvailable
   _endlessLevelDescription: EndlessLevelDescription
   _hintsText: HintsText
-  _endlessText: 
+  _endlessText: Infinity

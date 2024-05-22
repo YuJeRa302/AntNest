@@ -3,9 +3,6 @@ using UnityEngine.UI;
 
 public class PlayerView : MonoBehaviour
 {
-    private readonly string _nameExperienceParametr = "XP";
-    private readonly string _nameGoldParametr = "G";
-
     [Header("[Sliders]")]
     [SerializeField] private Slider _sliderHP;
     [SerializeField] private Slider _sliderXP;
@@ -14,7 +11,6 @@ public class PlayerView : MonoBehaviour
     [Header("[Level]")]
     [SerializeField] private Text _level;
     [Header("[Text]")]
-    [SerializeField] private Text _countHealthPotion;
     [SerializeField] private Text _countExperienceUpdate;
     [SerializeField] private Text _countGoldUpdate;
     [Header("[Animator]")]
@@ -23,6 +19,9 @@ public class PlayerView : MonoBehaviour
     [Header("[Player Stats UI]")]
     [SerializeField] private Text _playerDamage;
     [SerializeField] private Text _playerArmor;
+
+    private readonly string _nameExperienceParametr = "XP";
+    private readonly string _nameGoldParametr = "G";
 
     enum TransitionParametr
     {
@@ -46,11 +45,6 @@ public class PlayerView : MonoBehaviour
     public void SetNewLevelValue(int value)
     {
         _level.text = value.ToString();
-    }
-
-    public void ChangeCountPotion(int value)
-    {
-        _countHealthPotion.text = value.ToString();
     }
 
     public void SetExperienceSliderValue(int value, int difference)
