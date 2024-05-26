@@ -6063,6 +6063,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6579283652389760226}
     - target: {fileID: 7297858956163358945, guid: af04da77dd8bba64bb1181a68d8578bc, type: 3}
+      propertyPath: _canvasLoader
+      value: 
+      objectReference: {fileID: 311662589}
+    - target: {fileID: 7297858956163358945, guid: af04da77dd8bba64bb1181a68d8578bc, type: 3}
       propertyPath: _closeGameButton
       value: 
       objectReference: {fileID: 6579283652389760223}

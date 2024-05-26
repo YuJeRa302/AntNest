@@ -28,15 +28,14 @@ public class Enemy : MonoBehaviour
     private int _goldReward;
     private int _experienceReward;
     private int _score;
-    private string _tagName;
 
     public int Level => _level;
     public int Damage => _damage;
     public int Health => _health;
+    public int MinHealth => _minHealth;
     public int GoldReward => _goldReward;
     public int ExperienceReward => _experienceReward;
     public int Score => _score;
-    public string TagEnemy => _tagName;
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public EnemyView EnemyView => _enemyView;
     public EnemyMovement EnemyMovement => _enemyMovement;
@@ -50,6 +49,7 @@ public class Enemy : MonoBehaviour
     private void OnDestroy()
     {
         _enemyMovement.EnemyDying -= OnEnemyDying;
+        _enemyMovement.AttackingEnemyRemoved -= OnAttackingEnemyRemoved;
     }
 
     public void Initialize(EnemyData enemyData, float soundVolume, Player player)
@@ -61,6 +61,7 @@ public class Enemy : MonoBehaviour
         _enemyAbility.Initialize(enemyData);
         _enemyMovement.Initialize(player);
         _enemyMovement.EnemyDying += OnEnemyDying;
+        _enemyMovement.AttackingEnemyRemoved += OnAttackingEnemyRemoved;
     }
 
     public void TakeDamage(int damage)
@@ -68,6 +69,11 @@ public class Enemy : MonoBehaviour
         _health = Mathf.Clamp(_health - damage, _minHealth, _health);
         HitTaking.Invoke();
         ChangedHealth.Invoke(_health);
+    }
+
+    private void OnAttackingEnemyRemoved()
+    {
+        Destroy(gameObject);
     }
 
     private void OnEnemyDying()
@@ -92,6 +98,5 @@ public class Enemy : MonoBehaviour
         _goldReward = enemyData.GoldReward;
         _experienceReward = enemyData.ExperienceReward;
         _score = enemyData.Score;
-        _tagName = enemyData.Name;
     }
 }

@@ -12,7 +12,7 @@ public class GrenadeButtonGameObject : ConsumableButtonGameObject
             ItemGameObject = Instantiate(ConsumableItemData.ItemGameObject, new Vector3(PlacementPoint.position.x,
                 PlacementPoint.position.y, PlacementPoint.position.z), Quaternion.identity);
             (ItemGameObject as GrenadeGameObject).Initialize(ConsumableItemData);
-            (ItemGameObject as GrenadeGameObject).Rigidbody.AddForce(transform.forward * (ItemGameObject as GrenadeGameObject).ThrowForce,
+            (ItemGameObject as GrenadeGameObject).Rigidbody.AddForce(PlacementPoint.forward * (ItemGameObject as GrenadeGameObject).ThrowForce,
                 ForceMode.VelocityChange);
             ApplyConsumable(ButtonDelay);
         }

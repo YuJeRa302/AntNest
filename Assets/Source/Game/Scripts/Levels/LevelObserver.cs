@@ -15,6 +15,7 @@ public class LevelObserver : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private PlayerInterfaceView _playerInterfaceView;
     [SerializeField] private SoundController _soundController;
+    [SerializeField] private CanvasLoader _canvasLoader;
     [Header("[Panels]")]
     [SerializeField] private GamePanels[] _panels;
     [Header("[Buttons]")]
@@ -27,15 +28,22 @@ public class LevelObserver : MonoBehaviour
     private readonly string _menuScene = "Menu";
     private readonly float _resumeTimeValue = 1f;
     private readonly float _pauseTimeValue = 0f;
+    private readonly int _minExpCount = 0;
+    private readonly float _maxLoadProgressValue = 0.9f;
 
     private bool _isMuteSound = false;
     private int _defaultCoins;
     private int _defaultExp;
+    private int _defaultLevel;
     private int _countKillEnemy = 0;
     private int _countMoneyEarned = 0;
     private int _countExpEarned = 0;
     private AsyncOperation _load;
     private LoadConfig _loadConfig;
+    private int _playerCoins;
+    private int _playerExpirience;
+    private int _playerLevel;
+    private int _playerScore;
 
     public event Action GamePaused;
     public event Action GameResumed;
@@ -45,6 +53,7 @@ public class LevelObserver : MonoBehaviour
     public event Action<int> KillCountUpdated;
     public event Action<bool> LevelCompleted;
 
+    public int PlayerCoins => _playerCoins;
     public int CountMoneyEarned => _countMoneyEarned;
     public int CountExpEarned => _countExpEarned;
     public int CountKillEnemy => _countKillEnemy;
@@ -84,6 +93,12 @@ public class LevelObserver : MonoBehaviour
         _player.PlayerStats.Initialize(_loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore);
         _player.Wallet.Initialize(_loadConfig.PlayerCoins);
         LoadGamePanels();
+    }
+
+    public void TakeReward(int value)
+    {
+        _playerCoins += value;
+        _countMoneyEarned += value;
     }
 
     private void LoadGamePanels()
@@ -163,40 +178,58 @@ public class LevelObserver : MonoBehaviour
         KillCountUpdated?.Invoke(_countKillEnemy);
     }
 
-    private void OnPlayerDied()
+    private void OnPlayerDied(int playerCoins, int playerLevel, int playerExpirience, int playerScore)
     {
+        _playerCoins = playerCoins;
+        _playerExpirience = playerExpirience;
+        _playerLevel = playerLevel;
+        _playerScore = playerScore;
+        SetTimeScale(_pauseTimeValue);
         GiveWinEnemy();
     }
 
     private void GiveWinPlayer()
     {
         CloseAllGamePanels();
-        GameEnded?.Invoke();
         _loadConfig.LevelDataState.IsComplete = true;
-        _countMoneyEarned = (_player.Wallet.Coins - _defaultCoins) + _levelCompleteBonus;
-        _countExpEarned = _player.PlayerStats.Experience - _defaultExp;
+        _countMoneyEarned = (_playerCoins - _defaultCoins) + _levelCompleteBonus;
+        CalculateExpEarned();
         LevelCompleted?.Invoke(true);
+        GameEnded?.Invoke();
     }
 
     private void GiveWinEnemy()
     {
         CloseAllGamePanels();
-        GameEnded?.Invoke();
-        _countMoneyEarned = (_player.Wallet.Coins - _defaultCoins);
-        _countExpEarned = _player.PlayerStats.Experience - _defaultExp;
+        _countMoneyEarned = (_playerCoins - _defaultCoins);
+        CalculateExpEarned();
         LevelCompleted?.Invoke(false);
+        GameEnded?.Invoke();
+    }
+
+    private void CalculateExpEarned()
+    {
+        int expEarned = 0;
+
+        if (_defaultLevel < _playerLevel)
+            expEarned = _playerExpirience;
+
+        if (_defaultLevel == _playerLevel)
+            expEarned = _playerExpirience >= _defaultExp ? _playerExpirience - _defaultExp : _minExpCount;
+
+        _countExpEarned = expEarned;
     }
 
     private void PauseGame()
     {
-        GamePaused?.Invoke();
         SetTimeScale(_pauseTimeValue);
+        GamePaused?.Invoke();
     }
 
     private void ResumeGame()
     {
-        GameResumed?.Invoke();
         SetTimeScale(_resumeTimeValue);
+        GameResumed?.Invoke();
     }
 
     private void MuteSound()
@@ -219,8 +252,8 @@ public class LevelObserver : MonoBehaviour
 
     private void SavePlayerStats()
     {
-        var level = _loadConfig.LevelDataState.IsComplete ? _player.PlayerStats.Level : _loadConfig.PlayerLevel;
-        _saveProgress.Save(_player.Wallet.Coins, level, _player.PlayerStats.Experience, _player.PlayerStats.Score, _loadConfig);
+        var level = _loadConfig.LevelDataState.IsComplete ? _playerLevel : _loadConfig.PlayerLevel;
+        _saveProgress.Save(_playerCoins, level, _playerExpirience, _playerScore, _loadConfig);
     }
 
     private void SetTimeScale(float value)
@@ -240,8 +273,9 @@ public class LevelObserver : MonoBehaviour
 
         _load = asyncOperation;
         _load.allowSceneActivation = false;
+        _canvasLoader.gameObject.SetActive(true);
 
-        while (_load.progress < 0.9f)
+        while (_load.progress < _maxLoadProgressValue)
         {
             yield return null;
         }

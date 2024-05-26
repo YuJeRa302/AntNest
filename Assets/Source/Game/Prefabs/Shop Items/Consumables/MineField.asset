@@ -24,4 +24,4 @@ MonoBehaviour:
   _typeConsumable: 1
   _itemGameObject: {fileID: 4419056850842519369, guid: caf90b2f71c8a5040b3770e8da50cddd, type: 3}
   _effect: {fileID: 198194127032045410, guid: 592a91fc63b271d40bd3dc4f9d0b1fb1, type: 3}
-  _useConsumable: {fileID: 8300000, guid: 5e47a812132bb534397ac48e64d3f376, type: 3}
+  _useConsumable: {fileID: 8300000, guid: 8c1baa0f15f5f9a49acfc604a74670c8, type: 3}

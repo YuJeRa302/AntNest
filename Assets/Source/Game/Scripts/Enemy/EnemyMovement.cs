@@ -17,14 +17,7 @@ public class EnemyMovement : MonoBehaviour
     private bool _isDead = false;
 
     public event Action EnemyDying;
-
-    enum TransitionParametr
-    {
-        Die,
-        Run,
-        Attack,
-        Hit
-    }
+    public event Action AttackingEnemyRemoved;
 
     private void OnDestroy()
     {
@@ -36,6 +29,7 @@ public class EnemyMovement : MonoBehaviour
         if (_isDead != true)
         {
             CheckEnemyHealth();
+            CheckEnemyTarget();
 
             if (_isAttack != true)
                 Move();
@@ -46,14 +40,22 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_isDead != true)
         {
-            if (collision.TryGetComponent<Player>(out Player player))
+            if (collision.TryGetComponent(out Player player))
             {
-                Animator.Play(TransitionParametr.Attack.ToString());
+                Animator.Play(EnemyTransitionParameter.Attack.ToString());
                 Attack(player);
             }
         }
         else
             return;
+    }
+
+    private void CheckEnemyTarget()
+    {
+        if (_target != null)
+            return;
+        else
+            AttackingEnemyRemoved?.Invoke();
     }
 
     private void OnTriggerExit(Collider collision)
@@ -75,7 +77,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void CheckEnemyHealth()
     {
-        if (_enemy.Health == 0)
+        if (_enemy.Health == _enemy.MinHealth)
             Die();
         else
             return;
@@ -94,11 +96,9 @@ public class EnemyMovement : MonoBehaviour
 
     private IEnumerator AttackPlayer(Player player)
     {
-        var waitForSeconds = new WaitForSeconds(_delay);
-
         while (_isAttack == true)
         {
-            yield return waitForSeconds;
+            yield return new WaitForSeconds(_delay);
             player.PlayerStats.PlayerHealth.TakeDamage(_enemy.Damage);
         }
     }
@@ -109,19 +109,19 @@ public class EnemyMovement : MonoBehaviour
             StopCoroutine(_makeDamage);
 
         _isDead = true;
-        Animator.Play(TransitionParametr.Die.ToString());
+        Animator.Play(EnemyTransitionParameter.Die.ToString());
         EnemyDying.Invoke();
     }
 
     private void Move()
     {
         _enemy.NavMeshAgent.SetDestination(_target.transform.position);
-        Animator.Play(TransitionParametr.Run.ToString());
+        Animator.Play(EnemyTransitionParameter.Run.ToString());
     }
 
     private void TakeHit()
     {
-        Animator.SetTrigger(TransitionParametr.Hit.ToString());
+        Animator.SetTrigger(EnemyTransitionParameter.Hit.ToString());
     }
 
     private void HitPlayer()

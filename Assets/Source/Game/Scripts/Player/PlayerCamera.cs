@@ -14,6 +14,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position = _playerTransform.position + _deltaPosition;
+        if (_playerTransform != null)
+            transform.position = _playerTransform.position + _deltaPosition;
     }
 }

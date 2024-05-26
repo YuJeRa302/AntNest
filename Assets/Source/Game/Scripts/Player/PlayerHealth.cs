@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     private int _currentHealth = 0;
 
     public event Action<int> ChangedHealth;
-    public event Action PlayerDie;
+    public event Action<int, int, int, int> PlayerDie;
 
     public int MaxHealth => _maxHealth;
     public int CurrentHealth => _currentHealth;
@@ -34,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
             ChangedHealth.Invoke(_currentHealth);
         }
         else
-            PlayerDie.Invoke();
+            SetPlayerDie();
     }
 
     public void TakeHealRune(int value)
@@ -49,5 +49,11 @@ public class PlayerHealth : MonoBehaviour
     {
         _currentHealth = Mathf.Clamp(_currentHealth + value, _minHealth, _maxHealth);
         ChangedHealth.Invoke(_currentHealth);
+    }
+
+    private void SetPlayerDie()
+    {
+        Destroy(gameObject);
+        PlayerDie?.Invoke(_player.Wallet.Coins, _player.PlayerStats.Level, _player.PlayerStats.Experience, _player.PlayerStats.Score);
     }
 }

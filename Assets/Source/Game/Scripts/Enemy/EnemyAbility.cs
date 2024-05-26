@@ -10,6 +10,9 @@ public class EnemyAbility : MonoBehaviour
     [Header("[Enemy]")]
     [SerializeField] private Enemy _enemy;
 
+    private readonly int _minValue = 0;
+    private readonly int _maxValue = 1;
+
     private bool _isUseAbility = true;
 
     public event Action AbilityUsing;
@@ -26,7 +29,8 @@ public class EnemyAbility : MonoBehaviour
             if (_isUseAbility == false)
                 CastAbility(player);
         }
-        else return;
+        else 
+            return;
     }
 
     public void Initialize(EnemyData enemyData)
@@ -39,21 +43,21 @@ public class EnemyAbility : MonoBehaviour
     {
         float animationTime = coolDown;
 
-        while (animationTime > 0)
+        while (animationTime > _minValue)
         {
             animationTime -= Time.deltaTime;
             _enemy.EnemyView.CoolDownImage.fillAmount = animationTime / coolDown;
             yield return null;
         }
 
-        UpdateValue(false, 0);
+        UpdateValue(false, _minValue);
     }
 
     private void CastAbility(Player player)
     {
         AbilityUsing.Invoke();
         player.PlayerStats.PlayerHealth.TakeDamage(_damage);
-        UpdateValue(true, 1);
+        UpdateValue(true, _maxValue);
         _enemy.EnemyView.CoolDownImage.sprite = _enemy.EnemyView.CancelSprite;
     }
 

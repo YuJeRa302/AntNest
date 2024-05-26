@@ -61,7 +61,6 @@ public class RewardPanel : GamePanels
     {
         gameObject.SetActive(false);
         InterstitialAd.Show(OnOpenAdCallback, OnCloseInterstitialAdCallback, OnErrorCallback);
-        RewardPanelClosed.Invoke();
     }
 
     private void OpenRewardScreen()
@@ -78,7 +77,7 @@ public class RewardPanel : GamePanels
         _closePanelButton.gameObject.SetActive(true);
         _rewardScreen.gameObject.SetActive(false);
         SetReawrdValue(_coinsRewardWithAds, _expRewardWithAds, _countKillEnemiesWithAds,
-            Player.Wallet.Coins, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
+            _levelObserver.CountMoneyEarned, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
     }
 
     private void OpenRewardAd() => VideoAd.Show(OnOpenAdCallback, OnRewardCallback, OnCloseAdCallback);
@@ -93,16 +92,17 @@ public class RewardPanel : GamePanels
     private void OnCloseInterstitialAdCallback(bool state)
     {
         CloseAd?.Invoke();
+        RewardPanelClosed?.Invoke();
     }
 
     private void OnErrorCallback(string state)
     {
-        CloseAd?.Invoke();
+        RewardPanelClosed?.Invoke();
     }
 
     private void OnRewardCallback()
     {
-        Player.Wallet.TakeCoins(_levelObserver.CountMoneyEarned);
+        _levelObserver.TakeReward(_levelObserver.CountMoneyEarned);
         OpenRewardScreen();
     }
 
@@ -111,7 +111,7 @@ public class RewardPanel : GamePanels
         RewardPanelOpened?.Invoke(state);
         SetEndingImage(state);
         SetReawrdValue(_coinsRewardWithAds, _expRewardWithAds, _countKillEnemiesWithAds,
-            Player.Wallet.Coins, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
+            _levelObserver.CountMoneyEarned, _levelObserver.CountExpEarned, _levelObserver.CountKillEnemy);
     }
 
     private void SetEndingImage(bool state)

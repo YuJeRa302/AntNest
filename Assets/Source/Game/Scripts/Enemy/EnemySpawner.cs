@@ -12,6 +12,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private LevelObserver _levelObserver;
 
     private readonly int _indexDefaultWave = 0;
+    private readonly int _minValue = 0;
 
     private Player _player;
     private List<Enemy> _enemies = new();
@@ -109,7 +110,8 @@ public class EnemySpawner : MonoBehaviour
             _countSpawnEnemy = waveDatas[index].CountEnemy;
             Spawn(waveDatas, index);
         }
-        else return;
+        else
+            return;
     }
 
     private void SetEndlessSpawn(List<WaveData> waveDatas, int index)
@@ -145,12 +147,13 @@ public class EnemySpawner : MonoBehaviour
 
     private void Spawn(List<WaveData> waveDatas, int index)
     {
-        if (waveDatas.Count > 0)
+        if (waveDatas.Count > _minValue)
         {
             _spawnWave = SpawnWave(waveDatas, index);
             StartCoroutine(_spawnWave);
         }
-        else return;
+        else
+            return;
     }
 
     private IEnumerator SpawnWave(List<WaveData> waveDatas, int index)
@@ -170,7 +173,7 @@ public class EnemySpawner : MonoBehaviour
         _countEnemyInLastWave = _countSpawnEnemy;
         _enemies.Clear();
 
-        while (_countSpawnEnemy > 0)
+        while (_countSpawnEnemy > _minValue)
         {
             EnemyCreate(enemyData);
             _countSpawnEnemy--;
@@ -193,7 +196,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void ChangeEnemiesState(bool state)
     {
-        if (_enemies.Count > 0)
+        if (_enemies.Count > _minValue)
         {
             for (int i = 0; i < _enemies.Count; i++)
             {
@@ -201,7 +204,8 @@ public class EnemySpawner : MonoBehaviour
                     _enemies[i].enabled = state;
             }
         }
-        else return;
+        else
+            return;
     }
 
     private void CalculateTotalNumberOfEnemies()
@@ -214,6 +218,9 @@ public class EnemySpawner : MonoBehaviour
 
     private void DestroyEnemies()
     {
+        if (_spawnEnemy != null)
+            StopCoroutine(_spawnEnemy);
+
         if (_spawnWave != null)
             StopCoroutine(_spawnWave);
 
@@ -222,14 +229,15 @@ public class EnemySpawner : MonoBehaviour
 
     private void ClearListEnemies()
     {
-        if (_enemies.Count > 0)
+        if (_enemies.Count > _minValue)
         {
             for (int i = 0; i < _enemies.Count; i++)
             {
                 if (_enemies[i].gameObject != null)
+                {
+                    _enemies[i].Dying -= OnEnemyDie;
                     Destroy(_enemies[i].gameObject);
-
-                _enemies[i].Dying -= OnEnemyDie;
+                }
             }
         }
 
