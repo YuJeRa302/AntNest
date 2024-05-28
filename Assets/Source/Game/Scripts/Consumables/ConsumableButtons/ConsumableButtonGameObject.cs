@@ -13,7 +13,6 @@ public abstract class ConsumableButtonGameObject : MonoBehaviour
 
     protected Player Player;
     protected bool IsUseConsumable = true;
-    protected float ButtonDelay;
     protected int Value;
     protected TypeConsumable TypeConsumable;
     protected ConsumableItemData ConsumableItemData;
@@ -21,7 +20,8 @@ public abstract class ConsumableButtonGameObject : MonoBehaviour
     protected ItemGameObject ItemGameObject;
     protected Transform PlacementPoint;
 
-    private float _animationTime;
+    private float _defaultDelayConsumable;
+    private float _currentDelayConsumable;
     private Coroutine _delay;
 
     [Obsolete]
@@ -32,7 +32,7 @@ public abstract class ConsumableButtonGameObject : MonoBehaviour
 
     private void OnEnable()
     {
-        _delay = StartCoroutine(Delay(ButtonDelay));
+        _delay = StartCoroutine(Delay());
         UpdateCountConsumable();
     }
 
@@ -49,7 +49,7 @@ public abstract class ConsumableButtonGameObject : MonoBehaviour
     public void Initialize(ConsumableItemState consumableItemState, Transform placementPoint, Player player)
     {
         Player = player;
-        ButtonDelay = consumableItemState.ConsumableItemData.DelayButton;
+        _defaultDelayConsumable = consumableItemState.ConsumableItemData.DelayButton;
         TypeConsumable = consumableItemState.ConsumableItemData.TypeConsumable;
         ConsumableItemData = consumableItemState.ConsumableItemData;
         ItemGameObject = consumableItemState.ConsumableItemData.ItemGameObject;
@@ -62,34 +62,34 @@ public abstract class ConsumableButtonGameObject : MonoBehaviour
     [Obsolete]
     protected virtual void Use() { }
 
-    protected void ApplyConsumable(float delay)
+    protected void ApplyConsumable()
     {
+        CountConsumableItem--;
+        _currentDelayConsumable = _defaultDelayConsumable;
         UpdateCountConsumable();
-        UpdateButton(true, delay);
-        ResumeCooldown(delay);
+        UpdateButton(true, _currentDelayConsumable);
+        ResumeCooldown();
     }
 
-    private void ResumeCooldown(float delay)
+    private void ResumeCooldown()
     {
         if (gameObject.activeSelf == true)
         {
             if (_delay != null)
                 StopCoroutine(_delay);
 
-            _delay = StartCoroutine(Delay(delay));
+            _delay = StartCoroutine(Delay());
         }
         else
             return;
     }
 
-    private IEnumerator Delay(float delay)
+    private IEnumerator Delay()
     {
-        _animationTime = delay;
-
-        while (_animationTime > MinValue)
+        while (_currentDelayConsumable > MinValue)
         {
-            _animationTime -= Time.deltaTime;
-            _reloadingImage.fillAmount = _animationTime / delay;
+            _currentDelayConsumable -= Time.deltaTime;
+            _reloadingImage.fillAmount = _currentDelayConsumable / _defaultDelayConsumable;
             yield return null;
         }
 

@@ -10,7 +10,7 @@ public class ArmorAbility : AbilityItemGameObject
         if (IsUseAbility == false)
         {
             Player.PlayerStats.UseAbility(TypeAbility, CurrentDuration, CurrentAbilityValue);
-            ApplyAbility(CurrentDelay);
+            ApplyAbility();
         }
         else return;
     }

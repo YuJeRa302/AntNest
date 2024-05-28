@@ -1,60 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &402227133
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 402227134}
-  - component: {fileID: 402227135}
-  m_Layer: 0
-  m_Name: Increase Reward
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &402227134
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 402227133}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4084762235943934251}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &402227135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 402227133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: 0
-  entries:
-  - Language: ru
-    Text: 
-    Object: {fileID: 0}
-  - Language: tr
-    Text: 
-    Object: {fileID: 0}
-  - Language: en
-    Text: Increase Reward
-    Object: {fileID: 0}
 --- !u!1 &6717321060470258
 GameObject:
   m_ObjectHideFlags: 0
@@ -2522,7 +2467,6 @@ Transform:
   - {fileID: 6573319604284592785}
   - {fileID: 9094176015183721769}
   - {fileID: 8180247728773058632}
-  - {fileID: 402227134}
   - {fileID: 3288134704697992202}
   - {fileID: 9094860271102212653}
   - {fileID: 7540477187799054463}
@@ -2534,6 +2478,7 @@ Transform:
   - {fileID: 80982403882145674}
   - {fileID: 2660138533484116664}
   - {fileID: 1828180456210143365}
+  - {fileID: 5553335700559254594}
   m_Father: {fileID: 6579283653709203231}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2844,6 +2789,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!1 &2201972504744710491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5553335700559254594}
+  - component: {fileID: 6251974000105237191}
+  m_Layer: 0
+  m_Name: Language
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5553335700559254594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201972504744710491}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4084762235943934251}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6251974000105237191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201972504744710491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb15fa0e7301ff849bf4d6dcede7c12b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: 0
+  entries:
+  - Language: ru
+    Text: "\u042F\u0437\u044B\u043A"
+    Object: {fileID: 0}
+  - Language: tr
+    Text: Dil
+    Object: {fileID: 0}
+  - Language: en
+    Text: Language
+    Object: {fileID: 0}
 --- !u!1 &2380777370579822345
 GameObject:
   m_ObjectHideFlags: 0
@@ -13004,9 +13004,6 @@ MonoBehaviour:
   _sliderXP: {fileID: 6579283653246020321}
   _player: {fileID: 0}
   _level: {fileID: 6744163576343894506}
-  _countHealthPotion: {fileID: 7106311072530162106}
-  _countMineField: {fileID: 5053791763602705901}
-  _countGrenade: {fileID: 5485170536428435691}
   _countExperienceUpdate: {fileID: 1561703541150832142}
   _countGoldUpdate: {fileID: 1701629874898287943}
   _experienceUpdateAnimator: {fileID: 6579283653761542054}

@@ -41,10 +41,7 @@ public class EnemyMovement : MonoBehaviour
         if (_isDead != true)
         {
             if (collision.TryGetComponent(out Player player))
-            {
-                Animator.Play(EnemyTransitionParameter.Attack.ToString());
                 Attack(player);
-            }
         }
         else
             return;
@@ -98,8 +95,9 @@ public class EnemyMovement : MonoBehaviour
     {
         while (_isAttack == true)
         {
-            yield return new WaitForSeconds(_delay);
+            Animator.Play(EnemyTransitionParameter.Attack.ToString());
             player.PlayerStats.PlayerHealth.TakeDamage(_enemy.Damage);
+            yield return new WaitForSeconds(_delay);
         }
     }
 

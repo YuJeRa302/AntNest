@@ -59,7 +59,6 @@ public class RewardPanel : GamePanels
 
     protected override void Close()
     {
-        gameObject.SetActive(false);
         InterstitialAd.Show(OnOpenAdCallback, OnCloseInterstitialAdCallback, OnErrorCallback);
     }
 

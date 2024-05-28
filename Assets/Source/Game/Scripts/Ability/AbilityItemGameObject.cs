@@ -6,14 +6,16 @@ public class AbilityItemGameObject : ItemGameObject
 {
     [SerializeField] private Button _useAbilityButton;
 
+    private readonly int _minValue = 0;
+
     protected Player Player;
     protected bool IsUseAbility = true;
-    protected float CurrentDelay;
     protected float CurrentDuration;
     protected int CurrentAbilityValue;
     protected TypeAbility TypeAbility;
 
-    private float _animationTime;
+    private float _defaultDelay;
+    private float _currentDelay;
     private Image _reloadingImage;
     private AbilityItemData _abilityItemData;
     private ParticleSystem _particleSystem;
@@ -26,7 +28,7 @@ public class AbilityItemGameObject : ItemGameObject
 
     private void OnEnable()
     {
-        _delay = StartCoroutine(Delay(CurrentDelay));
+        _delay = StartCoroutine(Delay());
     }
 
     private void OnDestroy()
@@ -38,7 +40,7 @@ public class AbilityItemGameObject : ItemGameObject
     public void Initialize(Player player, AbilityState abilityState, Image reloadingImage, ParticleSystem particleSystem)
     {
         Player = player;
-        CurrentDelay = abilityState.AbilityData.AbilityLevels[abilityState.CurrentLevel].Delay;
+        _defaultDelay = abilityState.AbilityData.AbilityLevels[abilityState.CurrentLevel].Delay;
         CurrentAbilityValue = abilityState.AbilityData.AbilityLevels[abilityState.CurrentLevel].AbilityValue;
         TypeAbility = abilityState.AbilityData.TypeAbility;
         CurrentDuration = abilityState.AbilityData.AbilityDuration;
@@ -49,37 +51,37 @@ public class AbilityItemGameObject : ItemGameObject
 
     protected virtual void Use() { }
 
-    protected void ApplyAbility(float delay)
+    protected void ApplyAbility()
     {
+        _currentDelay = _defaultDelay;
         _particleSystem.Play();
         Player.PlayerSounds.AudioPlayerAbility.PlayOneShot(_abilityItemData.Sound);
-        UpdateAbility(true, delay);
-        ResumeCooldown(delay);
+        UpdateAbility(true, _currentDelay);
+        ResumeCooldown();
     }
 
-    private void ResumeCooldown(float delay)
+    private void ResumeCooldown()
     {
         if (gameObject.activeSelf == true)
         {
-            if (_delay != null) StopCoroutine(_delay);
+            if (_delay != null)
+                StopCoroutine(_delay);
 
-            _delay = StartCoroutine(Delay(delay));
+            _delay = StartCoroutine(Delay());
         }
         else return;
     }
 
-    private IEnumerator Delay(float delay)
+    private IEnumerator Delay()
     {
-        _animationTime = delay;
-
-        while (_animationTime > 0)
+        while (_currentDelay > _minValue)
         {
-            _animationTime -= Time.deltaTime;
-            _reloadingImage.fillAmount = _animationTime / delay;
+            _currentDelay -= Time.deltaTime;
+            _reloadingImage.fillAmount = _currentDelay / _defaultDelay;
             yield return null;
         }
 
-        UpdateAbility(false, 0);
+        UpdateAbility(false, _minValue);
     }
 
     private void UpdateAbility(bool state, float delay)

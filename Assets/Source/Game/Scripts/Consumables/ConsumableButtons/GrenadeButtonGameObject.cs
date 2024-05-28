@@ -8,13 +8,12 @@ public class GrenadeButtonGameObject : ConsumableButtonGameObject
     {
         if (CountConsumableItem > MinValue && IsUseConsumable == false)
         {
-            CountConsumableItem--;
             ItemGameObject = Instantiate(ConsumableItemData.ItemGameObject, new Vector3(PlacementPoint.position.x,
                 PlacementPoint.position.y, PlacementPoint.position.z), Quaternion.identity);
             (ItemGameObject as GrenadeGameObject).Initialize(ConsumableItemData);
             (ItemGameObject as GrenadeGameObject).Rigidbody.AddForce(PlacementPoint.forward * (ItemGameObject as GrenadeGameObject).ThrowForce,
                 ForceMode.VelocityChange);
-            ApplyConsumable(ButtonDelay);
+            ApplyConsumable();
         }
         else
             return;

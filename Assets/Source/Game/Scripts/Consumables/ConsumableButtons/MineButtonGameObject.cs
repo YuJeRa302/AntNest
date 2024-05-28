@@ -8,11 +8,10 @@ public class MineButtonGameObject : ConsumableButtonGameObject
     {
         if (CountConsumableItem > MinValue && IsUseConsumable == false)
         {
-            CountConsumableItem--;
             ItemGameObject = Instantiate(ConsumableItemData.ItemGameObject, new Vector3(PlacementPoint.transform.localPosition.x,
                 MinValue, PlacementPoint.transform.localPosition.z), Quaternion.identity);
             (ItemGameObject as FieldMineGameObject).Initialize(ConsumableItemData);
-            ApplyConsumable(ButtonDelay);
+            ApplyConsumable();
         }
         else
             return;

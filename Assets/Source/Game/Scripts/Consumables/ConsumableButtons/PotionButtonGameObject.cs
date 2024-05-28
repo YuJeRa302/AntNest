@@ -9,9 +9,8 @@ public class PotionButtonGameObject : ConsumableButtonGameObject
             Player.PlayerStats.PlayerHealth.CurrentHealth != Player.PlayerStats.PlayerHealth.MaxHealth
             && IsUseConsumable == false)
         {
-            CountConsumableItem--;
             Player.PlayerStats.PlayerHealth.ChangeHealth(ConsumableItemData.Value);
-            ApplyConsumable(ButtonDelay);
+            ApplyConsumable();
         }
         else
             return;

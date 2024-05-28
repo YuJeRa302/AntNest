@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class SettingsPanel : MenuTab
 {
-    [SerializeField] private MenuPanel _menuPanel;
     [Header("[LanguageButton Entities]")]
     [SerializeField] private DefaultLanguageButtonState _defaultLanguageButtonState;
     [SerializeField] private LanguageButtonView _languageButtonView;
@@ -38,10 +37,10 @@ public class SettingsPanel : MenuTab
         Clear();
     }
 
-    public void SetSliderValue(LoadConfig loadConfig)
+    protected override void OpenTab()
     {
-        _ambientSoundsSlider.value = loadConfig.AmbientVolume;
-        _buttonFXSlider.value = loadConfig.InterfaceVolume;
+        base.OpenTab();
+        SetSliderValue(MenuPanel.Config);
     }
 
     private void Fill()
@@ -50,8 +49,8 @@ public class SettingsPanel : MenuTab
         {
             LanguageButtonView view = Instantiate(_languageButtonView, _buttonsContainer.transform);
             _languageButtonViews.Add(view);
-            view.Initialize(languageButtonState, _menuPanel.MenuSound.InterfaceAudioSource,
-                _menuPanel.MenuSound.AudioButtonClick, _menuPanel.MenuSound.AudioButtonHover);
+            view.Initialize(languageButtonState, MenuPanel.MenuSound.InterfaceAudioSource,
+                MenuPanel.MenuSound.AudioButtonClick, MenuPanel.MenuSound.AudioButtonHover);
             view.LanguageSelected += OnLanguageChanged;
         }
     }
@@ -67,22 +66,28 @@ public class SettingsPanel : MenuTab
         _languageButtonViews.Clear();
     }
 
+    private void SetSliderValue(LoadConfig loadConfig)
+    {
+        _ambientSoundsSlider.value = loadConfig.AmbientVolume;
+        _buttonFXSlider.value = loadConfig.InterfaceVolume;
+    }
+
     private void OnLanguageChanged(string value)
     {
         LanguageChanged.Invoke(value);
-        _menuPanel.Config.SetCurrentLanguage(value);
+        MenuPanel.Config.SetCurrentLanguage(value);
     }
 
     private void OnAmbientSoundVolumeChanged(float value)
     {
         AmbientSoundVolumeChanged.Invoke(value);
-        _menuPanel.Config.SetAmbientVolume(value);
+        MenuPanel.Config.SetAmbientVolume(value);
     }
 
     private void OnButtonSoundVolumeChanged(float value)
     {
         ButtonSoundVolumeChanged.Invoke(value);
-        _menuPanel.Config.SetIterfaceVolume(value);
+        MenuPanel.Config.SetIterfaceVolume(value);
     }
 }
 
