@@ -1,10 +1,12 @@
 using UnityEngine;
 using Agava.YandexGames;
+using System.Collections;
 
 public class SaveProgress : MonoBehaviour
 {
     private readonly string _key = "antHill";
     private readonly int _nullLevel = 0;
+    private bool _isGetLoadRespoundRecive;
 
     private SaveModel _data = null;
     private LoadConfig _loadConfig;
@@ -45,12 +47,15 @@ public class SaveProgress : MonoBehaviour
             PlayerAccount.SetCloudSaveData(json);
     }
 
-    public void GetLoad(LoadConfig loadConfig)
+    public IEnumerator GetLoad(LoadConfig loadConfig)
     {
         _loadConfig = loadConfig;
+        _isGetLoadRespoundRecive = false;
 
         if (PlayerAccount.IsAuthorized == true)
             PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+
+        yield return new WaitUntil(() => _isGetLoadRespoundRecive);
     }
 
     private void UpdateConfig(SaveModel data, LoadConfig loadConfig)
@@ -77,10 +82,13 @@ public class SaveProgress : MonoBehaviour
     {
         _data = JsonUtility.FromJson<SaveModel>(json);
         UpdateConfig(_data, _loadConfig);
+        _isGetLoadRespoundRecive = true;
     }
 
     private void OnErrorLoad(string message)
     {
+        _isGetLoadRespoundRecive = true;
+
         if (UnityEngine.PlayerPrefs.HasKey(_key))
         {
             string _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
