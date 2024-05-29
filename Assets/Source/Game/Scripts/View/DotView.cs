@@ -3,6 +3,12 @@ using UnityEngine.UI;
 
 public class DotView : MonoBehaviour
 {
+    private const float _minValueVector2 = 0f;
+    private const float _minMiddleAverageValue = 0.25f;
+    private const float _middleMaxAverageValue = 0.75f;
+    private const float _defaultHorizontalValue = 0f;
+    private const float _defaultVerticalValue = 1f;
+
     [Header("[Dots Image]")]
     [SerializeField] private Image _firstDot;
     [SerializeField] private Image _middleDot;
@@ -10,11 +16,6 @@ public class DotView : MonoBehaviour
 
     private readonly Color _defaultColor = Color.white;
     private readonly Color _selectedColor = Color.green;
-    private readonly float _minValueVector2 = 0f;
-    private readonly float _minMiddleAverageValue = 0.25f;
-    private readonly float _middleMaxAverageValue = 0.75f;
-    private readonly float _defaultHorizontalValue = 0f;
-    private readonly float _defaultVerticalValue = 1f;
 
     private ScrollRect _scroll;
 
@@ -61,7 +62,9 @@ public class DotView : MonoBehaviour
 
     private void ChangeHorizontalVectorValue(Vector2 vector2)
     {
-        if (vector2.normalized.x >= _minValueVector2 && vector2.x < _minMiddleAverageValue)
+        Debug.Log(vector2.normalized.x);
+
+        if (vector2.normalized.x <= _minValueVector2 && vector2.x < _minMiddleAverageValue)
             _firstDot.color = _selectedColor;
         else if (vector2.x >= _minMiddleAverageValue && vector2.x < _middleMaxAverageValue)
             _middleDot.color = _selectedColor;

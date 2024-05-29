@@ -4,6 +4,13 @@ using Agava.YandexGames;
 
 public class MenuPanel : MonoBehaviour
 {
+    private const string EnglishCode = "English";
+    private const string RussianCode = "Russian";
+    private const string TurkishCode = "Turkish";
+    private const string English = "en";
+    private const string Russian = "ru";
+    private const string Turkish = "tr";
+
     [SerializeField] private SaveProgress _saveProgress;
     [SerializeField] private LoadConfig _config;
     [Header("[Menu Entities]")]
@@ -34,13 +41,29 @@ public class MenuPanel : MonoBehaviour
         _saveProgress.GetLoad(_config);
         _menuSound.Initialize();
 
-        if (_config.IsFirstSession == true)
-        {
-            _config.SetSessionState(false);
-            _leanLocalization.SetCurrentLanguage(YandexGamesSdk.Environment.i18n.lang);
-        }
-        else
+        if (_config.Language != null)
             _leanLocalization.SetCurrentLanguage(_config.Language);
+        else
+            SetLanguage();
+
+    }
+
+    private void SetLanguage()
+    {
+        string languageCode = YandexGamesSdk.Environment.i18n.lang;
+
+        switch (languageCode)
+        {
+            case English:
+                _leanLocalization.SetCurrentLanguage(EnglishCode);
+                break;
+            case Russian:
+                _leanLocalization.SetCurrentLanguage(RussianCode);
+                break;
+            case Turkish:
+                _leanLocalization.SetCurrentLanguage(TurkishCode);
+                break;
+        }
     }
 
     private void OnLanguageChanged(string value)
