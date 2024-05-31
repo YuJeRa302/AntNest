@@ -18,6 +18,8 @@ public class LevelObserver : MonoBehaviour
     [SerializeField] private CanvasLoader _canvasLoader;
     [Header("[Panels]")]
     [SerializeField] private GamePanels[] _panels;
+    [Header("[Joystick]")]
+    [SerializeField] private Joystick _joystick;
     [Header("[Buttons]")]
     [SerializeField] private Button _soundButton;
     [SerializeField] private Button _closeGameButton;
@@ -28,13 +30,9 @@ public class LevelObserver : MonoBehaviour
     private readonly string _menuScene = "Menu";
     private readonly float _resumeTimeValue = 1f;
     private readonly float _pauseTimeValue = 0f;
-    private readonly int _minExpCount = 0;
     private readonly float _maxLoadProgressValue = 0.9f;
 
     private bool _isMuteSound = false;
-    private int _defaultCoins;
-    private int _defaultExp;
-    private int _defaultLevel;
     private int _countKillEnemy = 0;
     private int _countMoneyEarned = 0;
     private int _countExpEarned = 0;
@@ -53,7 +51,6 @@ public class LevelObserver : MonoBehaviour
     public event Action<int> KillCountUpdated;
     public event Action<bool> LevelCompleted;
 
-    public int PlayerCoins => _playerCoins;
     public int CountMoneyEarned => _countMoneyEarned;
     public int CountExpEarned => _countExpEarned;
     public int CountKillEnemy => _countKillEnemy;
@@ -69,6 +66,7 @@ public class LevelObserver : MonoBehaviour
         _enemySpawner.EnemyDied += OnEnemyDied;
         _enemySpawner.LastEnemyDied += GiveWinPlayer;
         _player.PlayerStats.PlayerHealth.PlayerDie += OnPlayerDied;
+        _player.Wallet.GoldenRuneTaked += OnGoldenRuneTaked;
         _soundButton.onClick.AddListener(MuteSound);
         _closeGameButton.onClick.AddListener(CloseGame);
     }
@@ -79,6 +77,7 @@ public class LevelObserver : MonoBehaviour
         _enemySpawner.EnemyDied -= OnEnemyDied;
         _enemySpawner.LastEnemyDied -= GiveWinPlayer;
         _player.PlayerStats.PlayerHealth.PlayerDie -= OnPlayerDied;
+        _player.Wallet.GoldenRuneTaked -= OnGoldenRuneTaked;
         _soundButton.onClick.RemoveListener(MuteSound);
         _closeGameButton.onClick.RemoveListener(CloseGame);
     }
@@ -86,8 +85,10 @@ public class LevelObserver : MonoBehaviour
     public void Initialize(LoadConfig loadConfig)
     {
         _loadConfig = loadConfig;
-        _defaultCoins = _loadConfig.PlayerCoins;
-        _defaultExp = _loadConfig.PlayerExperience;
+
+        if (_loadConfig.TypeDevice == TypeDevice.Desktop)
+            _joystick.gameObject.SetActive(false);
+
         _enemySpawner.Initialize(loadConfig, _player);
         _runeSpawner.Initialize();
         _player.PlayerStats.Initialize(_loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore);
@@ -95,26 +96,16 @@ public class LevelObserver : MonoBehaviour
         LoadGamePanels();
     }
 
-    public void TakeReward(int value)
-    {
-        _playerCoins += value;
-        _countMoneyEarned += value;
-    }
-
     private void LoadGamePanels()
     {
         foreach (var panel in _panels)
-        {
             panel.Initialize(_player, this);
-        }
     }
 
     private void CloseAllGamePanels()
     {
         foreach (var panel in _panels)
-        {
             panel.gameObject.SetActive(false);
-        }
     }
 
     private void AddPanelListener()
@@ -122,7 +113,10 @@ public class LevelObserver : MonoBehaviour
         foreach (var panel in _panels)
         {
             if (panel is RewardPanel)
+            {
                 (panel as RewardPanel).RewardPanelClosed += OnCloseRewardPanel;
+                (panel as RewardPanel).RewardScreenOpened += OnRewardTaked;
+            }
 
             if (panel is PausePanel)
                 (panel as PausePanel).LanguageChanged += OnLanguageChanged;
@@ -139,7 +133,10 @@ public class LevelObserver : MonoBehaviour
         foreach (var panel in _panels)
         {
             if (panel is RewardPanel)
+            {
                 (panel as RewardPanel).RewardPanelClosed -= OnCloseRewardPanel;
+                (panel as RewardPanel).RewardScreenOpened -= OnRewardTaked;
+            }
 
             if (panel is PausePanel)
                 (panel as PausePanel).LanguageChanged -= OnLanguageChanged;
@@ -155,6 +152,17 @@ public class LevelObserver : MonoBehaviour
     {
         _leanLocalization.SetCurrentLanguage(value);
         _loadConfig.SetCurrentLanguage(value);
+    }
+
+    private void OnGoldenRuneTaked(int value)
+    {
+        _countMoneyEarned += value;
+    }
+
+    private void OnRewardTaked(int value)
+    {
+        _playerCoins += value;
+        _countMoneyEarned += value;
     }
 
     private void OnOpenAd()
@@ -173,8 +181,10 @@ public class LevelObserver : MonoBehaviour
 
     private void OnEnemyDied(Enemy enemy)
     {
-        _player.PlayerStats.EnemyDied(enemy);
+        _countMoneyEarned += enemy.GoldReward;
+        _countExpEarned += enemy.ExperienceReward;
         _countKillEnemy++;
+        _player.PlayerStats.EnemyDied(enemy);
         KillCountUpdated?.Invoke(_countKillEnemy);
     }
 
@@ -190,10 +200,11 @@ public class LevelObserver : MonoBehaviour
 
     private void GiveWinPlayer()
     {
+        GetPlayerResources();
         CloseAllGamePanels();
+        _countMoneyEarned += _levelCompleteBonus;
+        _playerCoins += _levelCompleteBonus;
         _loadConfig.LevelDataState.IsComplete = true;
-        _countMoneyEarned = (_playerCoins - _defaultCoins) + _levelCompleteBonus;
-        CalculateExpEarned();
         LevelCompleted?.Invoke(true);
         GameEnded?.Invoke();
     }
@@ -201,23 +212,16 @@ public class LevelObserver : MonoBehaviour
     private void GiveWinEnemy()
     {
         CloseAllGamePanels();
-        _countMoneyEarned = (_playerCoins - _defaultCoins);
-        CalculateExpEarned();
         LevelCompleted?.Invoke(false);
         GameEnded?.Invoke();
     }
 
-    private void CalculateExpEarned()
+    private void GetPlayerResources()
     {
-        int expEarned = 0;
-
-        if (_defaultLevel < _playerLevel)
-            expEarned = _playerExpirience;
-
-        if (_defaultLevel == _playerLevel)
-            expEarned = _playerExpirience >= _defaultExp ? _playerExpirience - _defaultExp : _minExpCount;
-
-        _countExpEarned = expEarned;
+        _playerCoins = _player.Wallet.Coins;
+        _playerExpirience = _player.PlayerStats.Experience;
+        _playerLevel = _player.PlayerStats.Level;
+        _playerScore = _player.PlayerStats.Score;
     }
 
     private void PauseGame()

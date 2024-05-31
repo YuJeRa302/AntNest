@@ -18,6 +18,7 @@ MonoBehaviour:
   _numberExtraWave: 010000000400000007000000
   _waveDatas:
   - {fileID: 11400000, guid: 7482b991cf4b94d48b212a0b98f8430a, type: 2}
+  - {fileID: 11400000, guid: 7482b991cf4b94d48b212a0b98f8430a, type: 2}
   - {fileID: 11400000, guid: 37f3140fab9d819409495fb6a618885f, type: 2}
   _waveEndlessDatas:
   - {fileID: 11400000, guid: 7482b991cf4b94d48b212a0b98f8430a, type: 2}
@@ -27,7 +28,7 @@ MonoBehaviour:
   _levelIcon: {fileID: 21300000, guid: 941268feb4bae2a49a52f38f2d855d05, type: 3}
   _acceptSprite: {fileID: -1935557950, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
   _cancelSprite: {fileID: -803613565, guid: 3922af05642d3e9438672f598edcc51a, type: 3}
-  _endlessSprite: {fileID: 0}
+  _endlessSprite: {fileID: 21300000, guid: e152f34019e22b542baa928d6ab4b593, type: 3}
   _standartLevelDescription: StandartLevelDescription
   _levelAvailable: LevelAvailable
   _endlessLevelDescription: EndlessLevelDescription

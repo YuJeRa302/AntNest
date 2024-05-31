@@ -10,17 +10,17 @@ public class LoadConfig : ScriptableObject
     [SerializeField] private int _playerCoins;
     [SerializeField] private int _playerLevel;
     [SerializeField] private int _playerExperience;
-    [SerializeField] private bool _isFirstSession;
     [SerializeField] private int _playerScore;
 
     private string _language = null;
     private LevelDataState _levelDataState;
     private bool[] _levelsComplete;
     private int _countLevels = 0;
+    private TypeDevice _typeDevice;
 
+    public TypeDevice TypeDevice => _typeDevice;
     public float AmbientVolume => _ambientVolume;
     public float InterfaceVolume => _interfaceVolume;
-    public bool IsFirstSession => _isFirstSession;
     public int PlayerCoins => _playerCoins;
     public int PlayerLevel => _playerLevel;
     public int PlayerScore => _playerScore;
@@ -30,14 +30,14 @@ public class LoadConfig : ScriptableObject
     public bool[] LevelsComplete => _levelsComplete;
     public LevelDataState LevelDataState => _levelDataState;
 
+    public void SetCurrentDevice(TypeDevice typeDevice)
+    {
+        _typeDevice = typeDevice;
+    }
+
     public void SetCountLevels(int value)
     {
         _countLevels = value;
-    }
-
-    public void SetSessionState(bool state)
-    {
-        _isFirstSession = state;
     }
 
     public void SetCurrentLanguage(string value)
@@ -55,13 +55,12 @@ public class LoadConfig : ScriptableObject
         _interfaceVolume = value;
     }
 
-    public void SetPlayerParameters(int coins, int level, int experience, int score, bool isFirstSession)
+    public void SetPlayerParameters(int coins, int level, int experience, int score)
     {
         _playerLevel = level;
         _playerExperience = experience;
         _playerCoins = coins;
         _playerScore = score;
-        _isFirstSession = isFirstSession;
     }
 
     public void UpdateListPlayerLevels(bool[] levelsComplete)

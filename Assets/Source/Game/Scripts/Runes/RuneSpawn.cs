@@ -26,9 +26,7 @@ public class RuneSpawn : MonoBehaviour
     private void Spawn()
     {
         foreach (Transform positinon in _position)
-        {
             CreateRunes(positinon, rnd.Next(_listRunes.Length));
-        }
     }
 
     private void CreateRunes(Transform runePosition, int value)

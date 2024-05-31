@@ -2,6 +2,7 @@ using Lean.Localization;
 using UnityEngine;
 using Agava.YandexGames;
 using System.Collections;
+using Agava.WebUtility;
 
 public class MenuPanel : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class MenuPanel : MonoBehaviour
 
     private void Awake()
     {
-        LoadScene();
+        StartCoroutine(LoadScene());
         _settingsPanel.LanguageChanged += OnLanguageChanged;
     }
 
@@ -41,6 +42,11 @@ public class MenuPanel : MonoBehaviour
         YandexGamesSdk.GameReady();
         yield return _saveProgress.GetLoad(_config);
         _menuSound.Initialize();
+
+        if (Device.IsMobile)
+            _config.SetCurrentDevice(TypeDevice.Mobile);
+        else
+            _config.SetCurrentDevice(TypeDevice.Desktop);
 
         if (_config.Language != null)
             _leanLocalization.SetCurrentLanguage(_config.Language);

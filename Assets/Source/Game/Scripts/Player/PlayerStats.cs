@@ -55,7 +55,7 @@ public class PlayerStats : MonoBehaviour
         _player.Wallet.TakeCoins(enemy.GoldReward);
         GoldValueChanged.Invoke(enemy.GoldReward);
         ExperienceValueChanged.Invoke(enemy.ExperienceReward);
-        UpdatePlayerScore(enemy.Score);
+        _score += enemy.Score;
         SetNewPlayerLevel(_currentLevel);
     }
 
@@ -110,12 +110,8 @@ public class PlayerStats : MonoBehaviour
                 _player.PlayerView.SetExperienceSliderValue(currentValue, _currentExperience);
             }
         }
-        else return;
-    }
-
-    private void UpdatePlayerScore(int score)
-    {
-        _score += score;
+        else
+            return;
     }
 
     private void SetPlayerLevel(int currentLevel, int generateExperienceValue, int currentExperience)
@@ -143,7 +139,8 @@ public class PlayerStats : MonoBehaviour
                 _levels.Add(i, _maxExperience + _maxExperience * i);
             }
         }
-        else return;
+        else
+            return;
     }
 
     private void GetNewPointAblility(int level)

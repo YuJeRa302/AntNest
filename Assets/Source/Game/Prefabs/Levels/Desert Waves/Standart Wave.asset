@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c5b788fbc1ca0041a20c0ec4a8c0374, type: 3}
   m_Name: Standart Wave
   m_EditorClassIdentifier: 
-  _countEnemy: 1
+  _countEnemy: 2
   _delaySpawn: 10
   _enemyData: {fileID: 11400000, guid: be36730cbce4dae43adb4b007081d3bd, type: 2}

@@ -6,20 +6,17 @@ public class SaveProgress : MonoBehaviour
 {
     private readonly string _key = "antHill";
     private readonly int _nullLevel = 0;
-    private bool _isGetLoadRespoundRecive;
 
+    private bool _isGetLoadRespondRecive;
     private SaveModel _data = null;
     private LoadConfig _loadConfig;
 
     public void Save(int playerCoins, int playerLevel, int playerExperience, int score, LoadConfig loadConfig)
     {
-        if (PlayerAccount.IsAuthorized == true)
-            PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
-
         bool[] levelsComplete = new bool[loadConfig.CountLevels];
 
-        if (_data != null)
-            levelsComplete = _data.PlayerLevelComplete;
+        if (loadConfig.LevelsComplete != null)
+            levelsComplete = loadConfig.LevelsComplete;
 
         levelsComplete[loadConfig.LevelDataState.LevelData.LevelId] = loadConfig.LevelDataState.IsComplete;
 
@@ -30,7 +27,6 @@ public class SaveProgress : MonoBehaviour
             PlayerExperience = playerExperience,
             PlayerScore = score,
             Language = loadConfig.Language,
-            IsFirstSession = loadConfig.IsFirstSession,
             AmbientVolume = loadConfig.AmbientVolume,
             InterfaceVolume = loadConfig.InterfaceVolume,
             PlayerLevelComplete = levelsComplete
@@ -50,12 +46,12 @@ public class SaveProgress : MonoBehaviour
     public IEnumerator GetLoad(LoadConfig loadConfig)
     {
         _loadConfig = loadConfig;
-        _isGetLoadRespoundRecive = false;
+        _isGetLoadRespondRecive = false;
 
         if (PlayerAccount.IsAuthorized == true)
             PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
 
-        yield return new WaitUntil(() => _isGetLoadRespoundRecive);
+        yield return new WaitUntil(() => _isGetLoadRespondRecive);
     }
 
     private void UpdateConfig(SaveModel data, LoadConfig loadConfig)
@@ -66,35 +62,33 @@ public class SaveProgress : MonoBehaviour
                 loadConfig.UpdateListPlayerLevels(data.PlayerLevelComplete);
 
             var playerLevel = data.PlayerLevel == _nullLevel ? loadConfig.PlayerLevel : data.PlayerLevel;
-            SetConfigParameters(data.Language, data.PlayerCoins, playerLevel, data.PlayerExperience, data.PlayerScore, data.IsFirstSession, loadConfig);
+            SetConfigParameters(data.Language, data.PlayerCoins, playerLevel, data.PlayerExperience, data.PlayerScore, loadConfig);
         }
         else
             return;
     }
 
-    private void SetConfigParameters(string language, int playerCoins, int playerLevel, int playerExperience, int score, bool isFirstSession, LoadConfig loadConfig)
+    private void SetConfigParameters(string language, int playerCoins, int playerLevel, int playerExperience, int score, LoadConfig loadConfig)
     {
         loadConfig.SetCurrentLanguage(language);
-        loadConfig.SetPlayerParameters(playerCoins, playerLevel, playerExperience, score, isFirstSession);
+        loadConfig.SetPlayerParameters(playerCoins, playerLevel, playerExperience, score);
     }
 
     private void OnSuccessLoad(string json)
     {
         _data = JsonUtility.FromJson<SaveModel>(json);
         UpdateConfig(_data, _loadConfig);
-        _isGetLoadRespoundRecive = true;
+        _isGetLoadRespondRecive = true;
     }
 
     private void OnErrorLoad(string message)
     {
-        _isGetLoadRespoundRecive = true;
-
         if (UnityEngine.PlayerPrefs.HasKey(_key))
         {
             string _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
             _data = JsonUtility.FromJson<SaveModel>(_hashKey);
         }
-        else
-            return;
+
+        _isGetLoadRespondRecive = true;
     }
 }

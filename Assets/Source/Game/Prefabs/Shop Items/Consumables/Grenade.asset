@@ -17,9 +17,9 @@ MonoBehaviour:
   _price: 150
   _isBuyedByDefault: 0
   _name: Grenade
-  _count: 10
+  _count: 1
   _value: 40
-  _delayButton: 20
+  _delayButton: 45
   _spriteShopItem: {fileID: 21300000, guid: 7f72c9a05fa68d64480ba1543e96dae6, type: 3}
   _typeConsumable: 2
   _itemGameObject: {fileID: 6706167319048376282, guid: 011504a7c55c25d41817db180ecb7b67, type: 3}

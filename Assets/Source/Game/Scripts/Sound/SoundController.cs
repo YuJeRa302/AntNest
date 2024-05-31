@@ -83,7 +83,7 @@ public class SoundController : MonoBehaviour
         _rewardAudioSource.PlayOneShot(audioClip);
     }
 
-    private void OnRewardScreenOpen()
+    private void OnRewardScreenOpen(int value)
     {
         _ambientAudioSource.mute = true;
         _rewardAudioSource.PlayOneShot(_rewardAudio);

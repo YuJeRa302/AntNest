@@ -19,7 +19,7 @@ MonoBehaviour:
   _name: HealthPotion
   _count: 2
   _value: 20
-  _delayButton: 10
+  _delayButton: 15
   _spriteShopItem: {fileID: 21300000, guid: df9d8f9157579df4c89510bb99aae780, type: 3}
   _typeConsumable: 0
   _itemGameObject: {fileID: 0}

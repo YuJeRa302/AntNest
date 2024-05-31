@@ -29,7 +29,7 @@ public class RewardPanel : GamePanels
 
     public event Action RewardPanelClosed;
     public event Action<bool> RewardPanelOpened;
-    public event Action RewardScreenOpened;
+    public event Action<int> RewardScreenOpened;
 
     private void Awake()
     {
@@ -64,7 +64,7 @@ public class RewardPanel : GamePanels
 
     private void OpenRewardScreen()
     {
-        RewardScreenOpened?.Invoke();
+        RewardScreenOpened?.Invoke(_levelObserver.CountMoneyEarned);
         _rewardScreen.gameObject.SetActive(true);
         _countCoinPerReward.text = "+ " + _levelObserver.CountMoneyEarned.ToString();
         _openAdButton.gameObject.SetActive(false);
@@ -101,7 +101,6 @@ public class RewardPanel : GamePanels
 
     private void OnRewardCallback()
     {
-        _levelObserver.TakeReward(_levelObserver.CountMoneyEarned);
         OpenRewardScreen();
     }
 

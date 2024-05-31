@@ -28,9 +28,7 @@ public class Rune : MonoBehaviour
         _audioSource.PlayOneShot(_audioClip);
 
         foreach (var particle in _particles)
-        {
             particle.Play();
-        }
 
         switch (typeRune)
         {
@@ -38,7 +36,7 @@ public class Rune : MonoBehaviour
                 player.PlayerStats.PlayerHealth.TakeHealRune(_healing);
                 break;
             case TypeRune.Gold:
-                player.Wallet.TakeCoins(_coins);
+                player.Wallet.TakeGoldenRune(_coins);
                 break;
         }
     }

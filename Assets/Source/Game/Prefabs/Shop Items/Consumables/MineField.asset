@@ -17,9 +17,9 @@ MonoBehaviour:
   _price: 100
   _isBuyedByDefault: 0
   _name: Mine
-  _count: 10
+  _count: 1
   _value: 30
-  _delayButton: 15
+  _delayButton: 35
   _spriteShopItem: {fileID: 21300000, guid: 7f72c9a05fa68d64480ba1543e96dae6, type: 3}
   _typeConsumable: 1
   _itemGameObject: {fileID: 4419056850842519369, guid: caf90b2f71c8a5040b3770e8da50cddd, type: 3}
