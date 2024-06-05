@@ -8,7 +8,6 @@ public class AbilityShopTab : ShopTab
     [SerializeField] private Player _player;
     [SerializeField] private AbilityPanelItemView _itemView;
     [SerializeField] private ScrollRect _scroll;
-    [SerializeField] private DotView _dotView;
 
     private List<AbilityPanelItemView> _views = new();
 
@@ -26,7 +25,6 @@ public class AbilityShopTab : ShopTab
     protected override void OpenTab()
     {
         base.OpenTab();
-        _dotView.SetScrollRect(_scroll);
     }
 
     private void Fill()
@@ -53,6 +51,20 @@ public class AbilityShopTab : ShopTab
         _views.Clear();
     }
 
+    private void ClearUnnecessaryAbility()
+    {
+        foreach (AbilityPanelItemView itemView in _views)
+        {
+            if (itemView.AbilityState.IsBuyed == false)
+            {
+                itemView.BuyButtonClick -= OnBuyAbility;
+                itemView.UpgradeButtonClick -= OnUpgradeAbility;
+                Destroy(itemView.gameObject);
+                _player.PlayerInventory.RemoveUnnecessaryAbility(itemView.AbilityState);
+            }
+        }
+    }
+
     private void OnBuyAbility(AbilityPanelItemView itemView)
     {
         if (itemView.AbilityState.AbilityData.Price <= _player.Wallet.Points)
@@ -60,6 +72,7 @@ public class AbilityShopTab : ShopTab
             _player.Wallet.BuyAbility(itemView.AbilityState.AbilityData.UpgradePrice);
             _player.PlayerStats.PlayerAbility.BuyAbility(itemView.AbilityState);
             UpdatePlayerResourceValue();
+            ClearUnnecessaryAbility();
             Clear();
             Fill();
         }

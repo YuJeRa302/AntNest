@@ -62,7 +62,7 @@ public class DotView : MonoBehaviour
 
     private void ChangeHorizontalVectorValue(Vector2 vector2)
     {
-        if (vector2.normalized.x <= _minValueVector2 && vector2.x < _minMiddleAverageValue)
+        if (vector2.normalized.x >= _minValueVector2 && vector2.x < _minMiddleAverageValue)
             _firstDot.color = _selectedColor;
         else if (vector2.x >= _minMiddleAverageValue && vector2.x < _middleMaxAverageValue)
             _middleDot.color = _selectedColor;

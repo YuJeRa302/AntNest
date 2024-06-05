@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Lean.Localization;
 
 public abstract class ShopTab : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public abstract class ShopTab : MonoBehaviour
 
     [SerializeField] private Button _openButton;
     [SerializeField] private Shop _shop;
+    [SerializeField] private LeanLocalizedText _leanText;
+    [SerializeField] private string _translationText;
 
     public event Action TabOpened;
     public event Action PlayerResourceUpdated;
@@ -33,6 +36,7 @@ public abstract class ShopTab : MonoBehaviour
 
     protected virtual void OpenTab()
     {
+        _leanText.TranslationName = _translationText;
         TabOpened?.Invoke();
         gameObject.SetActive(true);
     }

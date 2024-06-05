@@ -9,6 +9,8 @@ public class Rune : MonoBehaviour
     [SerializeField] private int _healing = 20;
     [SerializeField] private int _coins = 50;
 
+    private float _destroyDelay = 0.38f;
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.TryGetComponent(out Player player))
@@ -16,7 +18,7 @@ public class Rune : MonoBehaviour
             if (player.PlayerStats.PlayerHealth.CurrentHealth < player.PlayerStats.PlayerHealth.MaxHealth || _typeRune != TypeRune.Healing)
             {
                 TakeRune(_typeRune, player);
-                Destroy(gameObject, 0.38f);
+                Destroy(gameObject, _destroyDelay);
             }
             else
                 return;

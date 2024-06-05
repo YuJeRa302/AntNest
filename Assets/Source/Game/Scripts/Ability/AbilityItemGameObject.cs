@@ -34,7 +34,9 @@ public class AbilityItemGameObject : ItemGameObject
     private void OnDestroy()
     {
         _useAbilityButton.onClick.RemoveListener(Use);
-        StopCoroutine(_delay);
+
+        if (_delay != null)
+            StopCoroutine(_delay);
     }
 
     public void Initialize(Player player, AbilityState abilityState, Image reloadingImage, ParticleSystem particleSystem)

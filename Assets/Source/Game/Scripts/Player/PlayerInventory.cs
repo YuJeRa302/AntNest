@@ -54,6 +54,11 @@ public class PlayerInventory : MonoBehaviour
         _player.PlayerStats.ChangeEquipment();
     }
 
+    public void RemoveUnnecessaryAbility(AbilityState abilityState)
+    {
+        _playerAbilityState.Items.Remove(abilityState);
+    }
+
     private void LoadDefaultState()
     {
         _playerEquipmentState = _defaultPlayerEquipmentState;

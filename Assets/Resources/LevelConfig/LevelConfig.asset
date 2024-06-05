@@ -17,5 +17,4 @@ MonoBehaviour:
   _playerCoins: 100
   _playerLevel: 1
   _playerExperience: 0
-  _isFirstSession: 0
   _playerScore: 0
