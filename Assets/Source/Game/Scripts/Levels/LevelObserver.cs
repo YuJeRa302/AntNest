@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using Lean.Localization;
+using Source.Game.Scripts;
 
 public class LevelObserver : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class LevelObserver : MonoBehaviour
     [SerializeField] private Button _closeGameButton;
     [Header("[LeanLocalization]")]
     [SerializeField] private LeanLocalization _leanLocalization;
+    [Space(50)]
+    [SerializeField] private PauseHandler _pauseHandler;
 
     private readonly int _levelCompleteBonus = 150;
     private readonly string _menuScene = "Menu";
@@ -167,15 +170,13 @@ public class LevelObserver : MonoBehaviour
 
     private void OnOpenAd()
     {
-        SetTimeScale(_pauseTimeValue);
-        AudioListener.pause = true;
+        _pauseHandler.PauseGame();
     }
 
     private void OnCloseAd()
     {
         GameClosed?.Invoke();
-        SetTimeScale(_resumeTimeValue);
-        AudioListener.pause = false;
+        _pauseHandler.ResumeGame();
         LoadLevel();
     }
 
@@ -194,7 +195,7 @@ public class LevelObserver : MonoBehaviour
         _playerExpirience = playerExpirience;
         _playerLevel = playerLevel;
         _playerScore = playerScore;
-        SetTimeScale(_pauseTimeValue);
+        Time.timeScale = _pauseTimeValue;
         GiveWinEnemy();
     }
 
@@ -226,13 +227,13 @@ public class LevelObserver : MonoBehaviour
 
     private void PauseGame()
     {
-        SetTimeScale(_pauseTimeValue);
+        _pauseHandler.PauseGame();
         GamePaused?.Invoke();
     }
 
     private void ResumeGame()
     {
-        SetTimeScale(_resumeTimeValue);
+        _pauseHandler.ResumeGame();
         GameResumed?.Invoke();
     }
 
@@ -258,11 +259,6 @@ public class LevelObserver : MonoBehaviour
     {
         var level = _loadConfig.LevelDataState.IsComplete ? _playerLevel : _loadConfig.PlayerLevel;
         _saveProgress.Save(_playerCoins, level, _playerExpirience, _playerScore, _loadConfig);
-    }
-
-    private void SetTimeScale(float value)
-    {
-        Time.timeScale = value;
     }
 
     private void LoadLevel()

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 360250615523316195}
   - component: {fileID: 7355126008103609782}
   - component: {fileID: 972409558029132792}
+  - component: {fileID: 841066573705675791}
   m_Layer: 0
   m_Name: LevelScripts
   m_TagString: Untagged
@@ -85,13 +86,16 @@ MonoBehaviour:
   _player: {fileID: 0}
   _playerInterfaceView: {fileID: 0}
   _soundController: {fileID: 972409558029132792}
+  _canvasLoader: {fileID: 0}
   _panels:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _joystick: {fileID: 0}
   _soundButton: {fileID: 0}
   _closeGameButton: {fileID: 0}
   _leanLocalization: {fileID: 0}
+  _pauseHandler: {fileID: 841066573705675791}
 --- !u!114 &7194938797419932005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab26010e17f86dc4e9655908aa344293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pauseHandler: {fileID: 0}
 --- !u!114 &7355126008103609782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,3 +160,15 @@ MonoBehaviour:
   _rewardAudio: {fileID: 8300000, guid: c7e1f447c573ce349bd77f03be9717ef, type: 3}
   _winAudio: {fileID: 8300000, guid: a45114329ea718945b70c60591a18fb1, type: 3}
   _loseAudio: {fileID: 8300000, guid: c590f093ddf2c3742b3a200d759d4743, type: 3}
+--- !u!114 &841066573705675791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747327917629962774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7370d962fada4b3d87075d7e328fcf8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

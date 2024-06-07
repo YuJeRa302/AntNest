@@ -1,10 +1,16 @@
 using UnityEngine;
 using Agava.WebUtility;
+using Source.Game.Scripts;
 
+[RequireComponent(typeof(PauseHandler))]
 public class FocusObserver : MonoBehaviour
 {
-    private readonly float _pauseValue = 0;
-    private readonly float _resumeValue = 1f;
+    [SerializeField] private PauseHandler _pauseHandler;
+
+    private void Awake()
+    {
+        _pauseHandler = GetComponent<PauseHandler>();
+    }
 
     private void OnEnable()
     {
@@ -30,23 +36,23 @@ public class FocusObserver : MonoBehaviour
 
     private void ChangeFocus(bool state)
     {
-        if (state == true)
-            ResumeGame();
-        else
-            PauseGame();
+        if (state) 
+            _pauseHandler.ResumeGame();
+        else 
+            _pauseHandler.PauseGame();
     }
 
-    private void PauseGame()
+    [ContextMenu("Loose Focus")]
+    public void LooseFocus()
     {
-        AudioListener.pause = true;
-        AudioListener.volume = _pauseValue;
-        Time.timeScale = _pauseValue;
+        OnInBackgroundChangeApp(false);
+        OnInBackgroundChangeWeb(true);
     }
 
-    private void ResumeGame()
+    [ContextMenu("Get Focus")]
+    public void GetFocus()
     {
-        AudioListener.pause = false;
-        AudioListener.volume = _resumeValue;
-        Time.timeScale = _resumeValue;
+        OnInBackgroundChangeApp(true);
+        OnInBackgroundChangeWeb(false);
     }
 }
