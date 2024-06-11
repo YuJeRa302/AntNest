@@ -1,7 +1,6 @@
 [System.Serializable]
 public class SaveModel
 {
-    public bool IsFirstSession = true;
     public string Language;
     public float AmbientVolume;
     public float InterfaceVolume;

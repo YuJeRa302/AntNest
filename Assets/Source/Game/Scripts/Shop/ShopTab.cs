@@ -22,6 +22,7 @@ public abstract class ShopTab : MonoBehaviour
     protected void Awake()
     {
         _openButton.onClick.AddListener(OpenTab);
+        _leanText.FallbackText = string.Empty;
     }
 
     protected void OnDestroy()

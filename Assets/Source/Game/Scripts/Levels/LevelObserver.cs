@@ -31,7 +31,6 @@ public class LevelObserver : MonoBehaviour
 
     private readonly int _levelCompleteBonus = 150;
     private readonly string _menuScene = "Menu";
-    private readonly float _resumeTimeValue = 1f;
     private readonly float _pauseTimeValue = 0f;
     private readonly float _maxLoadProgressValue = 0.9f;
 
@@ -71,7 +70,7 @@ public class LevelObserver : MonoBehaviour
         _player.PlayerStats.PlayerHealth.PlayerDie += OnPlayerDied;
         _player.Wallet.GoldenRuneTaked += OnGoldenRuneTaked;
         _soundButton.onClick.AddListener(MuteSound);
-        _closeGameButton.onClick.AddListener(CloseGame);
+        _closeGameButton.onClick.AddListener(ExitGame);
     }
 
     private void OnDisable()
@@ -82,7 +81,7 @@ public class LevelObserver : MonoBehaviour
         _player.PlayerStats.PlayerHealth.PlayerDie -= OnPlayerDied;
         _player.Wallet.GoldenRuneTaked -= OnGoldenRuneTaked;
         _soundButton.onClick.RemoveListener(MuteSound);
-        _closeGameButton.onClick.RemoveListener(CloseGame);
+        _closeGameButton.onClick.RemoveListener(ExitGame);
     }
 
     public void Initialize(LoadConfig loadConfig)
@@ -176,7 +175,6 @@ public class LevelObserver : MonoBehaviour
     private void OnCloseAd()
     {
         GameClosed?.Invoke();
-        _pauseHandler.ResumeGame();
         LoadLevel();
     }
 
@@ -243,22 +241,24 @@ public class LevelObserver : MonoBehaviour
         SoundMuted?.Invoke(_isMuteSound);
     }
 
-    private void CloseGame()
+    private void ExitGame()
     {
+        StartCoroutine(CloseGame());
+    }
+
+    private IEnumerator CloseGame()
+    {
+        yield return _saveProgress.SaveApplicationParameters(_loadConfig);
         GameClosed?.Invoke();
         LoadLevel();
     }
 
     private void OnCloseRewardPanel()
     {
-        SavePlayerStats();
-        CloseGame();
-    }
-
-    private void SavePlayerStats()
-    {
         var level = _loadConfig.LevelDataState.IsComplete ? _playerLevel : _loadConfig.PlayerLevel;
         _saveProgress.Save(_playerCoins, level, _playerExpirience, _playerScore, _loadConfig);
+        GameClosed?.Invoke();
+        LoadLevel();
     }
 
     private void LoadLevel()
@@ -271,9 +271,9 @@ public class LevelObserver : MonoBehaviour
         if (_load != null)
             yield break;
 
+        _canvasLoader.gameObject.SetActive(true);
         _load = asyncOperation;
         _load.allowSceneActivation = false;
-        _canvasLoader.gameObject.SetActive(true);
 
         while (_load.progress < _maxLoadProgressValue)
         {
@@ -281,6 +281,7 @@ public class LevelObserver : MonoBehaviour
         }
 
         _load.allowSceneActivation = true;
+        _pauseHandler.ResumeGame();
         _load = null;
     }
 }

@@ -43,6 +43,42 @@ public class SaveProgress : MonoBehaviour
             PlayerAccount.SetCloudSaveData(json);
     }
 
+    public IEnumerator SaveApplicationParameters(LoadConfig loadConfig)
+    {
+        _loadConfig = loadConfig;
+
+        float ambientVolume = loadConfig.AmbientVolume;
+        float interfaceVolume = loadConfig.InterfaceVolume;
+        string language = loadConfig.Language;
+
+        if (PlayerAccount.IsAuthorized == true)
+            PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+
+        yield return new WaitUntil(() => _isGetLoadRespondRecive);
+
+        SaveModel newData = new()
+        {
+            PlayerCoins = _loadConfig.PlayerCoins,
+            PlayerLevel = _loadConfig.PlayerLevel,
+            PlayerExperience = _loadConfig.PlayerExperience,
+            PlayerScore = _loadConfig.PlayerScore,
+            Language = language,
+            AmbientVolume = ambientVolume,
+            InterfaceVolume = interfaceVolume,
+            PlayerLevelComplete = _loadConfig.LevelsComplete
+        };
+
+        string json = JsonUtility.ToJson(newData);
+
+        if (PlayerAccount.IsAuthorized == false)
+        {
+            UnityEngine.PlayerPrefs.SetString(_key, json);
+            UnityEngine.PlayerPrefs.Save();
+        }
+        else
+            PlayerAccount.SetCloudSaveData(json);
+    }
+
     public IEnumerator GetLoad(LoadConfig loadConfig)
     {
         _loadConfig = loadConfig;

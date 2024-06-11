@@ -25,9 +25,11 @@ public class MenuPanel : MonoBehaviour
     public MenuSound MenuSound => _menuSound;
     public SettingsPanel SettingsPanel => _settingsPanel;
     public LoadConfig Config => _config;
+    public SaveProgress SaveProgress => _saveProgress;
 
     private void Awake()
     {
+        YandexGamesSdk.GameReady();
         StartCoroutine(LoadScene());
         _settingsPanel.LanguageChanged += OnLanguageChanged;
     }
@@ -39,7 +41,6 @@ public class MenuPanel : MonoBehaviour
 
     private IEnumerator LoadScene()
     {
-        YandexGamesSdk.GameReady();
         yield return _saveProgress.GetLoad(_config);
         _menuSound.Initialize();
 

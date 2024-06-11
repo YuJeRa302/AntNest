@@ -86,6 +86,7 @@ public class SoundController : MonoBehaviour
     private void OnRewardScreenOpen(int value)
     {
         _ambientAudioSource.mute = true;
+        AudioListener.pause = false;
         _rewardAudioSource.PlayOneShot(_rewardAudio);
     }
 }

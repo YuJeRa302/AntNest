@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsPanel : MenuTab
 {
+    [SerializeField] private CanvasLoader _canvasLoader;
     [Header("[LanguageButton Entities]")]
     [SerializeField] private DefaultLanguageButtonState _defaultLanguageButtonState;
     [SerializeField] private LanguageButtonView _languageButtonView;
@@ -12,6 +14,7 @@ public class SettingsPanel : MenuTab
     [Header("[Sliders]")]
     [SerializeField] private Slider _ambientSoundsSlider;
     [SerializeField] private Slider _buttonFXSlider;
+    [SerializeField] private Button _saveButton;
 
     private List<LanguageButtonView> _languageButtonViews = new();
     private DefaultLanguageButtonState _languageButtonState;
@@ -26,6 +29,7 @@ public class SettingsPanel : MenuTab
         _languageButtonState = _defaultLanguageButtonState;
         _ambientSoundsSlider.onValueChanged.AddListener(OnAmbientSoundVolumeChanged);
         _buttonFXSlider.onValueChanged.AddListener(OnButtonSoundVolumeChanged);
+        _saveButton.onClick.AddListener(Save);
         Fill();
     }
 
@@ -34,6 +38,7 @@ public class SettingsPanel : MenuTab
         base.OnDestroy();
         _ambientSoundsSlider.onValueChanged.RemoveListener(OnAmbientSoundVolumeChanged);
         _buttonFXSlider.onValueChanged.RemoveListener(OnButtonSoundVolumeChanged);
+        _saveButton.onClick.RemoveListener(Save);
         Clear();
     }
 
@@ -53,6 +58,19 @@ public class SettingsPanel : MenuTab
                 MenuPanel.MenuSound.AudioButtonClick, MenuPanel.MenuSound.AudioButtonHover);
             view.LanguageSelected += OnLanguageChanged;
         }
+    }
+
+    private void Save()
+    {
+        StartCoroutine(SaveApplicationParameters());
+    }
+
+    private IEnumerator SaveApplicationParameters()
+    {
+        _canvasLoader.gameObject.SetActive(true);
+        yield return MenuPanel.SaveProgress.SaveApplicationParameters(MenuPanel.Config);
+        _canvasLoader.gameObject.SetActive(false);
+        SetSliderValue(MenuPanel.Config);
     }
 
     private void Clear()
