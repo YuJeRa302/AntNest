@@ -29,9 +29,14 @@ public class MenuPanel : MonoBehaviour
 
     private void Awake()
     {
-        YandexGamesSdk.GameReady();
+#if UNITY_EDITOR
         StartCoroutine(LoadScene());
         _settingsPanel.LanguageChanged += OnLanguageChanged;
+#else
+        StartCoroutine(LoadScene());
+        _settingsPanel.LanguageChanged += OnLanguageChanged;
+        YandexGamesSdk.GameReady();
+#endif
     }
 
     private void OnDestroy()
@@ -44,15 +49,19 @@ public class MenuPanel : MonoBehaviour
         yield return _saveProgress.GetLoad(_config);
         _menuSound.Initialize();
 
-        if (Device.IsMobile)
-            _config.SetCurrentDevice(TypeDevice.Mobile);
-        else
-            _config.SetCurrentDevice(TypeDevice.Desktop);
-
+#if UNITY_EDITOR
+        _leanLocalization.SetCurrentLanguage(Russian);
+#else
         if (_config.Language != null)
             _leanLocalization.SetCurrentLanguage(_config.Language);
         else
             SetLanguage();
+
+        if (Device.IsMobile)
+            _config.SetCurrentDevice(TypeDevice.Mobile);
+        else
+            _config.SetCurrentDevice(TypeDevice.Desktop);
+#endif
     }
 
     private void SetLanguage()

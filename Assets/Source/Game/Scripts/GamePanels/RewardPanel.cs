@@ -59,7 +59,13 @@ public class RewardPanel : GamePanels
 
     protected override void Close()
     {
+#if UNITY_EDITOR
+        Debug.Log("InterstitialAd.Show");
+        CloseAd?.Invoke();
+        RewardPanelClosed?.Invoke();
+#else
         InterstitialAd.Show(OnOpenAdCallback, OnCloseInterstitialAdCallback, OnErrorCallback);
+#endif
     }
 
     private void OpenRewardScreen()

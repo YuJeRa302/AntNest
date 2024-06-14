@@ -32,7 +32,15 @@ public class SaveProgress : MonoBehaviour
             PlayerLevelComplete = levelsComplete
         };
 
+#if UNITY_EDITOR
+        loadConfig.UpdateListPlayerLevels(levelsComplete);
+        loadConfig.SetAmbientVolume(loadConfig.AmbientVolume);
+        loadConfig.SetIterfaceVolume(loadConfig.InterfaceVolume);
+        SetConfigParameters(loadConfig.Language, playerCoins, playerLevel, playerExperience, score, loadConfig);
+#else
         string json = JsonUtility.ToJson(newData);
+
+        Debug.Log("Save progress" + json);
 
         if (PlayerAccount.IsAuthorized == false)
         {
@@ -41,18 +49,24 @@ public class SaveProgress : MonoBehaviour
         }
         else
             PlayerAccount.SetCloudSaveData(json);
+#endif
+
     }
 
     public IEnumerator SaveApplicationParameters(LoadConfig loadConfig)
     {
         _loadConfig = loadConfig;
-
         float ambientVolume = loadConfig.AmbientVolume;
         float interfaceVolume = loadConfig.InterfaceVolume;
         string language = loadConfig.Language;
 
+#if UNITY_EDITOR
+        _isGetLoadRespondRecive = true;
+
+#else
         if (PlayerAccount.IsAuthorized == true)
             PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+#endif
 
         yield return new WaitUntil(() => _isGetLoadRespondRecive);
 
@@ -68,6 +82,12 @@ public class SaveProgress : MonoBehaviour
             PlayerLevelComplete = _loadConfig.LevelsComplete
         };
 
+#if UNITY_EDITOR
+        loadConfig.UpdateListPlayerLevels(_loadConfig.LevelsComplete);
+        loadConfig.SetAmbientVolume(ambientVolume);
+        loadConfig.SetIterfaceVolume(interfaceVolume);
+        SetConfigParameters(language, _loadConfig.PlayerCoins, _loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore, loadConfig);
+#else
         string json = JsonUtility.ToJson(newData);
 
         if (PlayerAccount.IsAuthorized == false)
@@ -77,6 +97,7 @@ public class SaveProgress : MonoBehaviour
         }
         else
             PlayerAccount.SetCloudSaveData(json);
+#endif
     }
 
     public IEnumerator GetLoad(LoadConfig loadConfig)
@@ -84,9 +105,12 @@ public class SaveProgress : MonoBehaviour
         _loadConfig = loadConfig;
         _isGetLoadRespondRecive = false;
 
+#if UNITY_EDITOR
+        _isGetLoadRespondRecive = true;
+#else
         if (PlayerAccount.IsAuthorized == true)
             PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
-
+#endif
         yield return new WaitUntil(() => _isGetLoadRespondRecive);
     }
 
