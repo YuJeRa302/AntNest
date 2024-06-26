@@ -39,6 +39,12 @@ public class AbilityItemGameObject : ItemGameObject
             StopCoroutine(_delay);
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Q))
+            Use();
+    }
+
     public void Initialize(Player player, AbilityState abilityState, Image reloadingImage, ParticleSystem particleSystem)
     {
         Player = player;

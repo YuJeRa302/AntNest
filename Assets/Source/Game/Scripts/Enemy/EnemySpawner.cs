@@ -233,10 +233,13 @@ public class EnemySpawner : MonoBehaviour
         {
             for (int i = 0; i < _enemies.Count; i++)
             {
-                if (_enemies[i].gameObject != null)
+                if (_enemies[i] != null)
                 {
-                    _enemies[i].Dying -= OnEnemyDie;
-                    Destroy(_enemies[i].gameObject);
+                    if (_enemies[i].gameObject != null)
+                    {
+                        _enemies[i].Dying -= OnEnemyDie;
+                        Destroy(_enemies[i].gameObject);
+                    }
                 }
             }
         }

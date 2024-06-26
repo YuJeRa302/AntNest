@@ -31,3 +31,31 @@ Mine,"Bana ait"
 Grenade,"El bombası"
 AttentionObjects,"Dikkat! Seviye tamamlandıktan sonra tüm öğeler ve yetenekler kaybolur"
 AttentionAbility,"Dikkat! Yeteneklerden birini seçin"
+Greetings,"Merhaba!,
+arayüzü tanıyalım"
+LevelStats,"Bu pencere seviyenin ve düşmanların adlarını gösterir"
+Begin,"Başlamak"
+End,"Tamamlamak"
+WavePanel,"Üst panel dalga numarasını ve öldürme sayısını gösterir"
+ShopButton,"Geçerli altın miktarının belirtildiği alışveriş düğmesi"
+PauseButton,"Duraklat düğmesi, duraklatırken dili ve sesi değiştirebilirsiniz"
+PlayerStats,"Karakterin mevcut zırhı ve hasarı"
+ShopPanel,"Mağaza
+Burada karakteriniz için ekipman, sarf malzemeleri ve beceriler satın alırsınız"
+TopElements,"Mağazanın üst kısmında karakterin altınları ve beceri puanları bulunur"
+WeaponButton,"Silah
+Bir silah satın aldıktan sonra onu donatmanız gerekir
+Karakter seviyeniz arttıkça yeni silahların kilidi açılacaktır"
+ArmorButton,"Zırh
+Zırh satın aldıktan sonra onu donatmanız gerekir
+Karakter seviyeniz arttıkça yeni zırhın kilidi açılacaktır"
+ConsumablesButton,"Sarf malzemeleri
+İstenilen miktarda satın alınabilir"
+AbilityButton,"Yetenekler
+Karakter beceri puanları kullanılarak satın alındı ​​ve yükseltildi
+Her seviye 1 beceri puanı verir"
+BottomElements,"Alt panel oynatıcı için önemli bilgiler içerir"
+SensorButton,"Oyun düğmelerine dokunun"
+EndDescription,"Tebrikler
+Eğitimi tamamladınız
+İyi oyunlar!"

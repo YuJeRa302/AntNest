@@ -25,3 +25,4 @@ MonoBehaviour:
   _itemGameObject: {fileID: 0}
   _effect: {fileID: 0}
   _useConsumable: {fileID: 0}
+  _keyCode: 101

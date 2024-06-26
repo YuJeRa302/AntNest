@@ -6,9 +6,6 @@ using Agava.WebUtility;
 
 public class MenuPanel : MonoBehaviour
 {
-    private const string EnglishCode = "English";
-    private const string RussianCode = "Russian";
-    private const string TurkishCode = "Turkish";
     private const string English = "en";
     private const string Russian = "ru";
     private const string Turkish = "tr";
@@ -22,6 +19,9 @@ public class MenuPanel : MonoBehaviour
     [Header("[LeanLocalization]")]
     [SerializeField] private LeanLocalization _leanLocalization;
 
+    private readonly int _nullStringLength = 0;
+
+    public MenuView MenuView => _menuView;
     public MenuSound MenuSound => _menuSound;
     public SettingsPanel SettingsPanel => _settingsPanel;
     public LoadConfig Config => _config;
@@ -29,13 +29,13 @@ public class MenuPanel : MonoBehaviour
 
     private void Awake()
     {
+        _config.SetPauseGameState(false);
+
 #if UNITY_EDITOR
-        StartCoroutine(LoadScene());
         _settingsPanel.LanguageChanged += OnLanguageChanged;
 #else
-        StartCoroutine(LoadScene());
-        _settingsPanel.LanguageChanged += OnLanguageChanged;
         YandexGamesSdk.GameReady();
+        _settingsPanel.LanguageChanged += OnLanguageChanged;
 #endif
     }
 
@@ -44,18 +44,20 @@ public class MenuPanel : MonoBehaviour
         _settingsPanel.LanguageChanged -= OnLanguageChanged;
     }
 
-    private IEnumerator LoadScene()
+    private IEnumerator Start()
     {
         yield return _saveProgress.GetLoad(_config);
+        _menuView.Initialize();
         _menuSound.Initialize();
 
 #if UNITY_EDITOR
         _leanLocalization.SetCurrentLanguage(Russian);
+        _config.SetCurrentDevice(TypeDevice.Desktop);
 #else
-        if (_config.Language != null)
-            _leanLocalization.SetCurrentLanguage(_config.Language);
-        else
+        if (_config.Language.Length == _nullStringLength)
             SetLanguage();
+        else
+            _leanLocalization.SetCurrentLanguage(_config.Language);
 
         if (Device.IsMobile)
             _config.SetCurrentDevice(TypeDevice.Mobile);
@@ -71,13 +73,13 @@ public class MenuPanel : MonoBehaviour
         switch (languageCode)
         {
             case English:
-                _leanLocalization.SetCurrentLanguage(EnglishCode);
+                _leanLocalization.SetCurrentLanguage(English);
                 break;
             case Russian:
-                _leanLocalization.SetCurrentLanguage(RussianCode);
+                _leanLocalization.SetCurrentLanguage(Russian);
                 break;
             case Turkish:
-                _leanLocalization.SetCurrentLanguage(TurkishCode);
+                _leanLocalization.SetCurrentLanguage(Turkish);
                 break;
         }
     }

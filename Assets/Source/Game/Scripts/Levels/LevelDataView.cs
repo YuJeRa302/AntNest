@@ -16,6 +16,7 @@ public class LevelDataView : MonoBehaviour
     [Header("[Image]")]
     [SerializeField] private Image _levelImage;
     [SerializeField] private Image _levelCompleteImage;
+    [SerializeField] private Image _hardDifficultImage;
     [Header("[Buttons]")]
     [SerializeField] private Button _buttonAccept;
     [SerializeField] private Button _standartModeButton;
@@ -67,6 +68,9 @@ public class LevelDataView : MonoBehaviour
 
     private void Fill(LevelDataState levelDataState, LoadConfig config)
     {
+        if (levelDataState.LevelData.HardDifficult == true)
+            _hardDifficultImage.gameObject.SetActive(true);
+
         _loadConfig = config;
         _levelDataState = levelDataState;
         _levelImage.sprite = levelDataState.LevelData.LevelIcon;

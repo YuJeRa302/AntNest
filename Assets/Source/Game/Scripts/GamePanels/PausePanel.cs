@@ -46,6 +46,7 @@ public class PausePanel : GamePanels
         base.Initialize(player, levelObserver);
         _ambientSoundsSlider.value = LevelObserver.LoadConfig.AmbientVolume;
         _buttonFX.value = LevelObserver.LoadConfig.InterfaceVolume;
+        _imageButton.sprite = levelObserver.LoadConfig.IsSoundOn == true ? _unmuteButton : _muteButton;
     }
 
     private void AddListener()
@@ -109,6 +110,6 @@ public class PausePanel : GamePanels
 
     private void SetButtonImage(bool state)
     {
-        _imageButton.sprite = state == true ? _muteButton : _unmuteButton;
+        _imageButton.sprite = state == true ? _unmuteButton : _muteButton;
     }
 }

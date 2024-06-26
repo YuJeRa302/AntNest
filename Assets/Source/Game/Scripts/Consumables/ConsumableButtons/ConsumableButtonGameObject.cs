@@ -20,6 +20,7 @@ public abstract class ConsumableButtonGameObject : MonoBehaviour
     protected ItemGameObject ItemGameObject;
     protected Transform PlacementPoint;
 
+    private KeyCode _keyCode;
     private float _defaultDelayConsumable;
     private float _currentDelayConsumable;
     private Coroutine _delay;
@@ -46,9 +47,17 @@ public abstract class ConsumableButtonGameObject : MonoBehaviour
             StopCoroutine(_delay);
     }
 
+    [Obsolete]
+    private void Update()
+    {
+        if (Input.GetKey(_keyCode))
+            Use();
+    }
+
     public void Initialize(ConsumableItemState consumableItemState, Transform placementPoint, Player player)
     {
         Player = player;
+        _keyCode = consumableItemState.ConsumableItemData.KeyCode;
         _defaultDelayConsumable = consumableItemState.ConsumableItemData.DelayButton;
         TypeConsumable = consumableItemState.ConsumableItemData.TypeConsumable;
         ConsumableItemData = consumableItemState.ConsumableItemData;

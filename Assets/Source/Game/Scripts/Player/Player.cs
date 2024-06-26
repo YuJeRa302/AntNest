@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerConsumables _playerConsumables;
     [SerializeField] private PlayerInventory _playerInventory;
     [SerializeField] private PlayerEquipment _playerEquipment;
+    [SerializeField] private PlayerInput _playerInput;
 
     public PlayerStats PlayerStats => _playerStats;
     public PlayerSound PlayerSounds => _playerSound;
@@ -24,4 +25,5 @@ public class Player : MonoBehaviour
     public PlayerConsumables PlayerConsumables => _playerConsumables;
     public Wallet Wallet => _wallet;
     public PlayerInventory PlayerInventory => _playerInventory;
+    public PlayerInput PlayerInput => _playerInput;
 }

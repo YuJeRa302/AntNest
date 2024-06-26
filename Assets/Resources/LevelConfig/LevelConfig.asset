@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: LevelConfig
   m_EditorClassIdentifier: 
   _ambientVolume: 0.5447188
-  _interfaceVolume: 0.5447188
+  _interfaceVolume: 0.15600406
+  _isSoundOn: 1
+  _isFirstSession: 1
   _playerCoins: 100
   _playerLevel: 1
   _playerExperience: 0

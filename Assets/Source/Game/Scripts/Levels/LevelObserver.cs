@@ -31,8 +31,8 @@ public class LevelObserver : MonoBehaviour
 
     private readonly int _levelCompleteBonus = 150;
     private readonly string _menuScene = "Menu";
-    private readonly float _pauseTimeValue = 0f;
     private readonly float _maxLoadProgressValue = 0.9f;
+    private readonly float _pauseValue = 0;
 
     private bool _isMuteSound = false;
     private int _countKillEnemy = 0;
@@ -89,8 +89,11 @@ public class LevelObserver : MonoBehaviour
         _loadConfig = loadConfig;
 
         if (_loadConfig.TypeDevice == TypeDevice.Desktop)
-            _joystick.gameObject.SetActive(false);
+            _playerInterfaceView.SetDesktopInterface();
+        else
+            _playerInterfaceView.SetMobileInterface();
 
+        _loadConfig.SetPauseGameState(false);
         _enemySpawner.Initialize(loadConfig, _player);
         _runeSpawner.Initialize();
         _player.PlayerStats.Initialize(_loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore);
@@ -169,7 +172,7 @@ public class LevelObserver : MonoBehaviour
 
     private void OnOpenAd()
     {
-        _pauseHandler.PauseGame();
+        SoundMuted?.Invoke(false);
     }
 
     private void OnCloseAd()
@@ -193,12 +196,12 @@ public class LevelObserver : MonoBehaviour
         _playerExpirience = playerExpirience;
         _playerLevel = playerLevel;
         _playerScore = playerScore;
-        Time.timeScale = _pauseTimeValue;
         GiveWinEnemy();
     }
 
     private void GiveWinPlayer()
     {
+        Time.timeScale = _pauseValue;
         GetPlayerResources();
         CloseAllGamePanels();
         _countMoneyEarned += _levelCompleteBonus;
@@ -210,6 +213,7 @@ public class LevelObserver : MonoBehaviour
 
     private void GiveWinEnemy()
     {
+        Time.timeScale = _pauseValue;
         CloseAllGamePanels();
         LevelCompleted?.Invoke(false);
         GameEnded?.Invoke();
@@ -225,20 +229,23 @@ public class LevelObserver : MonoBehaviour
 
     private void PauseGame()
     {
+        _loadConfig.SetPauseGameState(true);
         _pauseHandler.PauseGame();
         GamePaused?.Invoke();
     }
 
     private void ResumeGame()
     {
+        _loadConfig.SetPauseGameState(false);
         _pauseHandler.ResumeGame();
         GameResumed?.Invoke();
     }
 
     private void MuteSound()
     {
-        _isMuteSound = _isMuteSound != true;
+        _isMuteSound = _loadConfig.IsSoundOn != true;
         SoundMuted?.Invoke(_isMuteSound);
+        _loadConfig.SetSoundState(_isMuteSound);
     }
 
     private void ExitGame()

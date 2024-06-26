@@ -11,6 +11,7 @@ public class LevelData : ScriptableObject
     [Header("[Level Stats]")]
     [SerializeField] private string _nameScene;
     [SerializeField] private bool _isComplete;
+    [SerializeField] private bool _hardDifficult;
     [SerializeField] private int[] _numberExtraWave;
     [Header("[Wave Data]")]
     [SerializeField] private List<WaveData> _waveDatas;
@@ -27,6 +28,7 @@ public class LevelData : ScriptableObject
     [SerializeField] private string _hintsText;
     [SerializeField] private string _endlessText;
 
+    public bool HardDifficult => _hardDifficult;
     public string NameScene => _nameScene;
     public string EndlessText => _endlessText;
     public string NameEnemy => _waveDatas.FirstOrDefault().EnemyData.Name;

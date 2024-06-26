@@ -9,6 +9,8 @@ public class DotView : MonoBehaviour
     private const float _defaultHorizontalValue = 0f;
     private const float _defaultVerticalValue = 1f;
 
+    [Header("[Slider]")]
+    [SerializeField] private Slider _slider;
     [Header("[Dots Image]")]
     [SerializeField] private Image _firstDot;
     [SerializeField] private Image _middleDot;
@@ -21,6 +23,8 @@ public class DotView : MonoBehaviour
 
     private void OnDestroy()
     {
+        _slider.onValueChanged.RemoveListener(OnChangeSliderValue);
+
         if (_scroll != null)
             _scroll.onValueChanged.RemoveListener(OnChangeVectorValue);
     }
@@ -29,6 +33,7 @@ public class DotView : MonoBehaviour
     {
         _scroll = scrollRect;
         _scroll.onValueChanged.AddListener(OnChangeVectorValue);
+        _slider.onValueChanged.AddListener(OnChangeSliderValue);
         LoadDefauitParameters();
     }
 
@@ -36,6 +41,12 @@ public class DotView : MonoBehaviour
     {
         _scroll.horizontalNormalizedPosition = _defaultHorizontalValue;
         _scroll.verticalNormalizedPosition = _defaultVerticalValue;
+
+        if (_scroll.horizontal)
+            _slider.value = _scroll.horizontalNormalizedPosition;
+        else
+            _slider.value = _scroll.verticalNormalizedPosition;
+
         SetDotsDefaultColor();
         _firstDot.color = _selectedColor;
     }
@@ -50,8 +61,18 @@ public class DotView : MonoBehaviour
             ChangeVerticalVectorValue(vector2);
     }
 
+    private void OnChangeSliderValue(float value)
+    {
+        if (_scroll.horizontal)
+            _scroll.horizontalNormalizedPosition = value;
+        else
+            _scroll.verticalNormalizedPosition = value;
+    }
+
     private void ChangeVerticalVectorValue(Vector2 vector2)
     {
+        _slider.value = vector2.y;
+
         if (vector2.normalized.y >= _minValueVector2 && vector2.y < _minMiddleAverageValue)
             _lastDot.color = _selectedColor;
         else if (vector2.y >= _minMiddleAverageValue && vector2.y < _middleMaxAverageValue)
@@ -62,6 +83,8 @@ public class DotView : MonoBehaviour
 
     private void ChangeHorizontalVectorValue(Vector2 vector2)
     {
+        _slider.value = vector2.x;
+
         if (vector2.normalized.x >= _minValueVector2 && vector2.x < _minMiddleAverageValue)
             _firstDot.color = _selectedColor;
         else if (vector2.x >= _minMiddleAverageValue && vector2.x < _middleMaxAverageValue)

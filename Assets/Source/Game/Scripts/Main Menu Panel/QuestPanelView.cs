@@ -9,6 +9,8 @@ public class QuestPanelView : MonoBehaviour
     [SerializeField] private Text _playerLevel;
     [SerializeField] private LeanLocalizedText _description;
     [SerializeField] private Text _waveCount;
+    [Header("[Dialog Panel]")]
+    [SerializeField] private GameObject _dialogPanel;
     [Header("[Endless Image]")]
     [SerializeField] private Image _endlessImage;
     [Header("[ScrollRect]")]
@@ -33,6 +35,18 @@ public class QuestPanelView : MonoBehaviour
             _waveCount.text = waveCount.ToString();
         }
         else SetActiveState(true, false);
+    }
+
+    public void OpenDialogPanel()
+    {
+        _dialogPanel.SetActive(true);
+        _scroll.gameObject.SetActive(false);
+    }
+
+    public void CloseDialogPanel()
+    {
+        _dialogPanel.SetActive(false);
+        _scroll.gameObject.SetActive(true);
     }
 
     private void SetActiveState(bool imageState, bool textState)

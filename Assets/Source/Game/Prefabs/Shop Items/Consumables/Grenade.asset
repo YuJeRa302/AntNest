@@ -25,3 +25,4 @@ MonoBehaviour:
   _itemGameObject: {fileID: 6706167319048376282, guid: 011504a7c55c25d41817db180ecb7b67, type: 3}
   _effect: {fileID: 198194127032045410, guid: 592a91fc63b271d40bd3dc4f9d0b1fb1, type: 3}
   _useConsumable: {fileID: 8300000, guid: 8c1baa0f15f5f9a49acfc604a74670c8, type: 3}
+  _keyCode: 114

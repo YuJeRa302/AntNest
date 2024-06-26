@@ -12,7 +12,7 @@ public class PlayerCamera : MonoBehaviour
         _deltaPosition = transform.position - _playerTransform.position;
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         if (_playerTransform != null)
             transform.position = _playerTransform.position + _deltaPosition;

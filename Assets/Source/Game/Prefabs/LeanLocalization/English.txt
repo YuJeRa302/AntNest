@@ -31,3 +31,31 @@ Mine,"Mine"
 Grenade,"Grenade"
 AttentionObjects,"Attention! All items and abilities disappear after completing the level"
 AttentionAbility,"Attention! Choose one of the abilities"
+Greetings,"Hello, 
+let's get acquainted with the interface!"
+LevelStats,"This window shows the names of the level and enemies"
+Begin,"Start"
+End,"End"
+WavePanel,"The top panel shows the wave number and the number of kills"
+ShopButton,"Shop button with the current amount of gold indicated"
+PauseButton,"Pause button, while pausing you can change the language and sound"
+PlayerStats,"Character's current armor and damage"
+ShopPanel,"Shop
+Here you purchase equipment, consumables and skills for your character"
+TopElements,"At the top of the store are the character's gold and skill points"
+WeaponButton,"Weapon
+After purchasing a weapon, you need to equip it
+New weapons will be unlocked as your character level increases"
+ArmorButton,"Armor
+After purchasing armor you need to equip it
+New armor will be unlocked as your character level increases"
+ConsumablesButton,"Consumables
+Can be purchased in any quantity"
+AbilityButton,"Skills
+Purchased and upgraded using character skill points
+Each level gives 1 skill point"
+BottomElements,"The bottom panel contains important information for the player"
+SensorButton,"Touch gaming buttons"
+EndDescription,"Congratulations
+You have completed training
+Have a good game!"

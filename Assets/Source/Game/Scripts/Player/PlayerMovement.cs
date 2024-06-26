@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,21 +7,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Joystick _joystick;
     [SerializeField] private Camera _cameraPlayer;
     [SerializeField] private Player _player;
-    [Header("[AttackPoint]")]
-    [SerializeField] private Transform _attackPoint;
-    [Header("[AttackRange]")]
-    [SerializeField] private float _attackRange = 0.5f;
-    [Header("[EnemyLayers]")]
-    [SerializeField] private LayerMask _enemyLayers;
 
     private readonly float _maxVectorValue = 1f;
     private readonly float _minVectorValue = 0.0f;
-    private readonly float _attackRate = 1.0f;
 
     private Vector3 _moveVector;
     private float _speed;
-    private bool _isAllowAttack = true;
-    private IEnumerator _makeDamage;
 
     private void Start()
     {
@@ -34,36 +24,9 @@ public class PlayerMovement : MonoBehaviour
         Movement();
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        if (_attackPoint == null)
-            return;
-        else
-            Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
-    }
-
-    public void Attack()
-    {
-        if (_isAllowAttack == true)
-            SetAttackParameters();
-        else
-            return;
-    }
-
     private void Step()
     {
         _player.PlayerSounds.AudioSourceStep.PlayOneShot(_player.PlayerSounds.FootStep);
-    }
-
-    private IEnumerator AttackRate()
-    {
-        _animator.SetTrigger(TransitionParameter.Attack.ToString());
-        _player.PlayerSounds.AudioSourceAxe.PlayOneShot(_player.PlayerSounds.AxeSound);
-
-        yield return new WaitForSeconds(_attackRate);
-
-        FindAttackedEnemy();
-        _isAllowAttack = true;
     }
 
     private void Movement()
@@ -81,28 +44,6 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(direct);
         }
 
-        _characterController.Move(_moveVector * Time.deltaTime);
-    }
-
-    private void FindAttackedEnemy()
-    {
-        Collider[] coliderEnemy = Physics.OverlapSphere(_attackPoint.position, _attackRange, _enemyLayers);
-
-        foreach (Collider collider in coliderEnemy)
-        {
-            if (collider.TryGetComponent(out Enemy enemy))
-                enemy.TakeDamage(_player.PlayerStats.Damage);
-        }
-    }
-
-    private void SetAttackParameters()
-    {
-        _isAllowAttack = false;
-
-        if (_makeDamage != null)
-            StopCoroutine(_makeDamage);
-
-        _makeDamage = AttackRate();
-        StartCoroutine(_makeDamage);
+        _characterController.Move(_moveVector.normalized * _speed * Time.deltaTime);
     }
 }

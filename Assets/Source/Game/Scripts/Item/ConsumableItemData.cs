@@ -14,7 +14,9 @@ public class ConsumableItemData : ItemData
     [SerializeField] private ItemGameObject _itemGameObject;
     [SerializeField] private ParticleSystem _effect;
     [SerializeField] private AudioClip _useConsumable;
+    [SerializeField] private KeyCode _keyCode;
 
+    public KeyCode KeyCode => _keyCode;
     public int Count => _count;
     public int Value => _value;
     public float DelayButton => _delayButton;

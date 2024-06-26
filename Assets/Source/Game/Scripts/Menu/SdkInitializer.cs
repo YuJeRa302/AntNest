@@ -9,12 +9,20 @@ public class SdkInitializer : MonoBehaviour
 
     private void Awake()
     {
+#if UNITY_EDITOR
+        OnInitialize();
+#else
         YandexGamesSdk.CallbackLogging = true;
+#endif
     }
 
     private IEnumerator Start()
     {
+#if UNITY_EDITOR
+        yield return null;
+#else
         yield return YandexGamesSdk.Initialize(OnInitialize);
+#endif
     }
 
     private void OnInitialize()

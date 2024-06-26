@@ -3,6 +3,8 @@ using IJunior.TypedScenes;
 using System.Collections;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class QuestPanel : MenuTab
 {
@@ -15,12 +17,30 @@ public class QuestPanel : MenuTab
     [SerializeField] private DefaultLevelState _defaultLevelState;
     [Header("[View]")]
     [SerializeField] private LevelDataView _levelDataView;
+    [Header("[Dialog Panel Buttons]")]
+    [SerializeField] private Button _openGuidButton;
+    [SerializeField] private Button _closeDialogPanelButton;
+
+    private readonly string _guidScene = "Guid";
 
     private AsyncOperation _load;
     private List<LevelDataView> _levelDataViews = new();
     private DefaultLevelState _levelState;
 
-    public QuestPanelView QuestPanelView => _questPanelView;
+    protected override void Awake()
+    {
+        base.Awake();
+        _openGuidButton.onClick.AddListener(LoadGuidLevel);
+        _closeDialogPanelButton.onClick.AddListener(CloseDialogPanel);
+        _questPanelView.CloseDialogPanel();
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        _openGuidButton.onClick.RemoveListener(LoadGuidLevel);
+        _closeDialogPanelButton.onClick.RemoveListener(CloseDialogPanel);
+    }
 
     protected override void OpenTab()
     {
@@ -36,6 +56,9 @@ public class QuestPanel : MenuTab
 
     private void Initialize()
     {
+        if (_loadConfig.IsFirstSession == true)
+            _questPanelView.OpenDialogPanel();
+
         _levelState = _defaultLevelState;
         _loadConfig.SetCountLevels(_levelState.LevelDataState.Count);
         _questPanelView.Initialize(_loadConfig.PlayerCoins, _loadConfig.PlayerLevel);
@@ -100,6 +123,17 @@ public class QuestPanel : MenuTab
 
         _load.allowSceneActivation = true;
         _load = null;
+    }
+
+    private void CloseDialogPanel()
+    {
+        _questPanelView.CloseDialogPanel();
+        _loadConfig.SetSessionState(false);
+    }
+
+    private void LoadGuidLevel()
+    {
+        StartCoroutine(LoadScreenLevel(SceneManager.LoadSceneAsync(_guidScene)));
     }
 }
 

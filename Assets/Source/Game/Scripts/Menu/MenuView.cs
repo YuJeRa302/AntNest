@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,8 @@ public class MenuView : MonoBehaviour
     [SerializeField] private Sprite _muteButtonSprite;
     [SerializeField] private Sprite _unmuteButtonSprite;
 
+    public event Action<bool> SoundStateChanged;
+
     private void Awake()
     {
         _soundButton.onClick.AddListener(SetSoundState);
@@ -23,10 +26,15 @@ public class MenuView : MonoBehaviour
         _soundButton.onClick.RemoveListener(SetSoundState);
     }
 
+    public void Initialize()
+    {
+        _imageButton.sprite = _menuPanel.Config.IsSoundOn == true ? _unmuteButtonSprite : _muteButtonSprite;
+    }
+
     private void SetSoundState()
     {
-        var state = _menuPanel.MenuSound.AmbientSounds.mute != true;
-        _imageButton.sprite = state == true ? _muteButtonSprite : _unmuteButtonSprite;
-        _menuPanel.MenuSound.SetStateMuteSound(state);
+        bool state = _menuPanel.Config.IsSoundOn != true;
+        _imageButton.sprite = state == true ? _unmuteButtonSprite : _muteButtonSprite;
+        SoundStateChanged?.Invoke(state);
     }
 }

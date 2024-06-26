@@ -6,18 +6,24 @@ public class LoadConfig : ScriptableObject
     [Header("[Sound]")]
     [SerializeField] private float _ambientVolume;
     [SerializeField] private float _interfaceVolume;
+    [SerializeField] private bool _isSoundOn;
     [Header("[Player Stats]")]
+    [SerializeField] private bool _isFirstSession;
     [SerializeField] private int _playerCoins;
     [SerializeField] private int _playerLevel;
     [SerializeField] private int _playerExperience;
     [SerializeField] private int _playerScore;
 
-    private string _language = null;
+    private string _language = string.Empty;
     private LevelDataState _levelDataState;
     private bool[] _levelsComplete;
+    private bool _isGamePause;
     private int _countLevels = 0;
     private TypeDevice _typeDevice;
 
+    public bool IsGamePause => _isGamePause;
+    public bool IsFirstSession => _isFirstSession;
+    public bool IsSoundOn => _isSoundOn;
     public TypeDevice TypeDevice => _typeDevice;
     public float AmbientVolume => _ambientVolume;
     public float InterfaceVolume => _interfaceVolume;
@@ -29,6 +35,21 @@ public class LoadConfig : ScriptableObject
     public string Language => _language;
     public bool[] LevelsComplete => _levelsComplete;
     public LevelDataState LevelDataState => _levelDataState;
+
+    public void SetPauseGameState(bool value)
+    {
+        _isGamePause = value;
+    }
+
+    public void SetSoundState(bool value)
+    {
+        _isSoundOn = value;
+    }
+
+    public void SetSessionState(bool value)
+    {
+        _isFirstSession = value;
+    }
 
     public void SetCurrentDevice(TypeDevice typeDevice)
     {

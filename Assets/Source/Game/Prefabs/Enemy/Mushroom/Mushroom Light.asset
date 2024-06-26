@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebde2b9809e53244996845fe3d2a478a, type: 3}
+  m_Name: Mushroom Light
+  m_EditorClassIdentifier: 
+  _id: 1
+  _level: 1
+  _damage: 4
+  _health: 75
+  _goldReward: 10
+  _experienceReward: 5
+  _score: 10
+  _speed: 1
+  _name: FlyAgaric
+  _abilityCoolDown: 10
+  _abilityDamage: 10
+  _cancelAbilitySprite: {fileID: 21300000, guid: 2fa77160cc27ae141bb7899263c99c48, type: 3}
+  _abilitySprite: {fileID: 21300000, guid: 2cab99140cc613f47ab1da4913b8f140, type: 3}
+  _enemyIcon: {fileID: 21300000, guid: 64025f1f0b534c242911abd4a660fe83, type: 3}
+  _enemyHitParticleSystem: {fileID: 1488932359917748843, guid: 3477257fefce314489d4e9330050369a, type: 3}
+  _enemyDieParticleSystem: {fileID: 19800004, guid: f4bf4c340b67ec24d8d6697d4dc544d1, type: 3}
+  _enemyAbilityParticleSystem: {fileID: 5965922570172535946, guid: 46751a4fc3a9b0e4d89bf47c9d7a6694, type: 3}
+  _audioClipDie: {fileID: 8300000, guid: 14ce90e2a5361d548bdf6c2c126e0233, type: 3}
+  _hitPlayer: {fileID: 8300000, guid: 5dabf05f431bc294aafa824a4fdc4bfe, type: 3}
+  _prefabEnemy: {fileID: 3676382707236482304, guid: 0e4dcfdc005aa7e41b7c598b4a93bc64, type: 3}

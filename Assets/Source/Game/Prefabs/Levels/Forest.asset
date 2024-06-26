@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f691658132057d48957b25c5101331b, type: 3}
   m_Name: Forest
   m_EditorClassIdentifier: 
-  _levelId: 0
+  _levelId: 3
   _nameScene: Forest
   _isComplete: 0
+  _hardDifficult: 1
   _numberExtraWave: 010000000400000007000000
   _waveDatas:
   - {fileID: 11400000, guid: d6a2b28927d9b014cba1d7157cd008b2, type: 2}

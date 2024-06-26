@@ -29,18 +29,19 @@ public class SaveProgress : MonoBehaviour
             Language = loadConfig.Language,
             AmbientVolume = loadConfig.AmbientVolume,
             InterfaceVolume = loadConfig.InterfaceVolume,
-            PlayerLevelComplete = levelsComplete
+            PlayerLevelComplete = levelsComplete,
+            IsFirstSession = loadConfig.IsFirstSession,
+            IsSoundOn = loadConfig.IsSoundOn
         };
 
 #if UNITY_EDITOR
         loadConfig.UpdateListPlayerLevels(levelsComplete);
         loadConfig.SetAmbientVolume(loadConfig.AmbientVolume);
         loadConfig.SetIterfaceVolume(loadConfig.InterfaceVolume);
-        SetConfigParameters(loadConfig.Language, playerCoins, playerLevel, playerExperience, score, loadConfig);
+        SetConfigParameters(loadConfig.Language, playerCoins, playerLevel, playerExperience, score,
+            _loadConfig.IsFirstSession, _loadConfig.IsSoundOn, loadConfig);
 #else
         string json = JsonUtility.ToJson(newData);
-
-        Debug.Log("Save progress" + json);
 
         if (PlayerAccount.IsAuthorized == false)
         {
@@ -50,7 +51,6 @@ public class SaveProgress : MonoBehaviour
         else
             PlayerAccount.SetCloudSaveData(json);
 #endif
-
     }
 
     public IEnumerator SaveApplicationParameters(LoadConfig loadConfig)
@@ -62,10 +62,11 @@ public class SaveProgress : MonoBehaviour
 
 #if UNITY_EDITOR
         _isGetLoadRespondRecive = true;
-
 #else
         if (PlayerAccount.IsAuthorized == true)
             PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+        else
+            LoadPlayerPrefs();
 #endif
 
         yield return new WaitUntil(() => _isGetLoadRespondRecive);
@@ -79,14 +80,17 @@ public class SaveProgress : MonoBehaviour
             Language = language,
             AmbientVolume = ambientVolume,
             InterfaceVolume = interfaceVolume,
-            PlayerLevelComplete = _loadConfig.LevelsComplete
+            PlayerLevelComplete = _loadConfig.LevelsComplete,
+            IsFirstSession = loadConfig.IsFirstSession,
+            IsSoundOn = loadConfig.IsSoundOn
         };
 
 #if UNITY_EDITOR
         loadConfig.UpdateListPlayerLevels(_loadConfig.LevelsComplete);
         loadConfig.SetAmbientVolume(ambientVolume);
         loadConfig.SetIterfaceVolume(interfaceVolume);
-        SetConfigParameters(language, _loadConfig.PlayerCoins, _loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore, loadConfig);
+        SetConfigParameters(language, _loadConfig.PlayerCoins, _loadConfig.PlayerLevel, _loadConfig.PlayerExperience,
+            _loadConfig.PlayerScore, _loadConfig.IsFirstSession, _loadConfig.IsSoundOn, loadConfig);
 #else
         string json = JsonUtility.ToJson(newData);
 
@@ -110,6 +114,8 @@ public class SaveProgress : MonoBehaviour
 #else
         if (PlayerAccount.IsAuthorized == true)
             PlayerAccount.GetCloudSaveData(OnSuccessLoad, OnErrorLoad);
+        else
+            LoadPlayerPrefs();
 #endif
         yield return new WaitUntil(() => _isGetLoadRespondRecive);
     }
@@ -122,16 +128,30 @@ public class SaveProgress : MonoBehaviour
                 loadConfig.UpdateListPlayerLevels(data.PlayerLevelComplete);
 
             var playerLevel = data.PlayerLevel == _nullLevel ? loadConfig.PlayerLevel : data.PlayerLevel;
-            SetConfigParameters(data.Language, data.PlayerCoins, playerLevel, data.PlayerExperience, data.PlayerScore, loadConfig);
+            SetConfigParameters(data.Language, data.PlayerCoins, playerLevel, data.PlayerExperience, data.PlayerScore, data.IsFirstSession, data.IsSoundOn, loadConfig);
         }
         else
             return;
     }
 
-    private void SetConfigParameters(string language, int playerCoins, int playerLevel, int playerExperience, int score, LoadConfig loadConfig)
+    private void SetConfigParameters(string language, int playerCoins, int playerLevel, int playerExperience, int score, bool isFirstSession, bool isSoundOn, LoadConfig loadConfig)
     {
+        loadConfig.SetSoundState(isSoundOn);
+        loadConfig.SetSessionState(isFirstSession);
         loadConfig.SetCurrentLanguage(language);
         loadConfig.SetPlayerParameters(playerCoins, playerLevel, playerExperience, score);
+    }
+
+    private void LoadPlayerPrefs()
+    {
+        if (UnityEngine.PlayerPrefs.HasKey(_key))
+        {
+            string _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
+            _data = JsonUtility.FromJson<SaveModel>(_hashKey);
+            UpdateConfig(_data, _loadConfig);
+        }
+
+        _isGetLoadRespondRecive = true;
     }
 
     private void OnSuccessLoad(string json)
@@ -147,6 +167,7 @@ public class SaveProgress : MonoBehaviour
         {
             string _hashKey = UnityEngine.PlayerPrefs.GetString(_key);
             _data = JsonUtility.FromJson<SaveModel>(_hashKey);
+            UpdateConfig(_data, _loadConfig);
         }
 
         _isGetLoadRespondRecive = true;

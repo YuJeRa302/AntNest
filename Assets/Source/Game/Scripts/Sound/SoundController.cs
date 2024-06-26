@@ -20,6 +20,9 @@ public class SoundController : MonoBehaviour
     [SerializeField] private AudioClip _winAudio;
     [SerializeField] private AudioClip _loseAudio;
 
+    private readonly float _pauseValue = 0;
+    private readonly float _resumeValue = 1f;
+
     public AudioSource InterfaceAudioSource => _interfaceAudioSource;
     public AudioClip AudioButtonHover => _audioButtonHover;
     public AudioClip AudioButtonClick => _audioButtonClick;
@@ -48,6 +51,7 @@ public class SoundController : MonoBehaviour
         _interfaceAudioSource.volume = loadConfig.InterfaceVolume;
         _ambientAudioSource.clip = _audioAmbient;
         _ambientAudioSource.Play();
+        SetAudioListenerValue(loadConfig.IsSoundOn);
     }
 
     public void HoverSound()
@@ -62,8 +66,7 @@ public class SoundController : MonoBehaviour
 
     private void OnMuted(bool state)
     {
-        _ambientAudioSource.mute = state;
-        _interfaceAudioSource.mute = state;
+        SetAudioListenerValue(state);
     }
 
     private void OnAmbientVolumeChanged(float value)
@@ -85,8 +88,12 @@ public class SoundController : MonoBehaviour
 
     private void OnRewardScreenOpen(int value)
     {
-        _ambientAudioSource.mute = true;
-        AudioListener.pause = false;
         _rewardAudioSource.PlayOneShot(_rewardAudio);
+    }
+
+    private void SetAudioListenerValue(bool state)
+    {
+        AudioListener.pause = !state;
+        AudioListener.volume = !state == true ? _pauseValue : _resumeValue;
     }
 }

@@ -37,6 +37,12 @@ public class GuidPanel : MenuTab
         _enemyButton.onClick.RemoveListener(ShowEnemyGuide);
     }
 
+    protected override void OpenTab()
+    {
+        base.OpenTab();
+        ShowPlayerGuide();
+    }
+
     private void ShowPlayerGuide()
     {
         HideAllGuide();
