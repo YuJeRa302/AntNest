@@ -14,6 +14,16 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _moveVector;
     private float _speed;
 
+    private void Awake()
+    {
+        _player.PlayerStats.PlayerHealth.ChangedHealth += Hit;
+    }
+
+    private void OnDestroy()
+    {
+        _player.PlayerStats.PlayerHealth.ChangedHealth -= Hit;
+    }
+
     private void Start()
     {
         _speed = _player.PlayerStats.Speed;
@@ -27,6 +37,11 @@ public class PlayerMovement : MonoBehaviour
     private void Step()
     {
         _player.PlayerSounds.AudioSourceStep.PlayOneShot(_player.PlayerSounds.FootStep);
+    }
+
+    private void Hit(int hit)
+    {
+        _animator.SetTrigger(TransitionParameter.Hit.ToString());
     }
 
     private void Movement()

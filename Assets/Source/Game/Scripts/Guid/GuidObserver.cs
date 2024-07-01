@@ -64,16 +64,16 @@ public class GuidObserver : MonoBehaviour
         if (_guidIndex < _guidView.DescriptionLength - 1)
             _guidIndex++;
         else
-            EndGuid();
+            StartCoroutine(EndGuid());
 
         GuidUpdated?.Invoke(_guidIndex);
     }
 
-    private void EndGuid()
+    private IEnumerator EndGuid()
     {
         _loadConfig.SetSessionState(false);
-        _saveProgress.SaveApplicationParameters(_loadConfig);
-        LoadLevel();
+        yield return _saveProgress.SaveApplicationParameters(_loadConfig);
+        StartCoroutine(LoadScreenLevel(SceneManager.LoadSceneAsync(_menuScene)));
     }
 
     private void OpenSettings()
@@ -84,11 +84,6 @@ public class GuidObserver : MonoBehaviour
     private void CloseSettings()
     {
         SettingsClosed?.Invoke();
-    }
-
-    private void LoadLevel()
-    {
-        StartCoroutine(LoadScreenLevel(SceneManager.LoadSceneAsync(_menuScene)));
     }
 
     private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)

@@ -4,5 +4,6 @@ public enum TransitionParameter
     Vertical,
     Speed,
     Attack,
+    Hit,
     Die
 }

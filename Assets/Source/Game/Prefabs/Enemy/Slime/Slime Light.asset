@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _id: 5
   _level: 5
-  _damage: 20
+  _damage: 5
   _health: 175
   _goldReward: 50
   _experienceReward: 25

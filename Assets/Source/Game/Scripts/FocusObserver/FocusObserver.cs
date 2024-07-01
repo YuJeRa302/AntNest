@@ -9,7 +9,8 @@ public class FocusObserver : MonoBehaviour
 
     private void Awake()
     {
-        _pauseHandler = GetComponent<PauseHandler>();
+        if (Application.isFocused == false)
+            ChangeFocus(Application.isFocused);
     }
 
     private void OnEnable()
@@ -36,9 +37,9 @@ public class FocusObserver : MonoBehaviour
 
     private void ChangeFocus(bool state)
     {
-        if (state) 
+        if (state)
             _pauseHandler.ResumeGame();
-        else 
+        else
             _pauseHandler.PauseGame();
     }
 

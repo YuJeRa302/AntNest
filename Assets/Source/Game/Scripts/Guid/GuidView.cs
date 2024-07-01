@@ -6,6 +6,8 @@ public class GuidView : MonoBehaviour
 {
     [Header("[Level Entities]")]
     [SerializeField] private GuidObserver _guidObserver;
+    [Header("[LeanLocalized Tokens]")]
+    [SerializeField] private string[] _title;
     [Header("[Guid Description Text]")]
     [SerializeField] private string[] _description;
     [Header("[Guid GameObjects]")]
@@ -18,6 +20,7 @@ public class GuidView : MonoBehaviour
     [SerializeField] private Sprite _unmuteButtonSprite;
     [SerializeField] private Image _soundButtonImage;
     [Header("[Guid Panel]")]
+    [SerializeField] private LeanLocalizedText _titleText;
     [SerializeField] private LeanLocalizedText _guidText;
     [SerializeField] private Image _imageGuidButton;
     [SerializeField] private LeanLocalizedText _textGuidButton;
@@ -71,6 +74,7 @@ public class GuidView : MonoBehaviour
 
     private void SetNextGuid(int index)
     {
+        _titleText.TranslationName = _title[index];
         _guidText.TranslationName = _description[index];
         _descriptionGameObjects[index].SetActive(true);
     }

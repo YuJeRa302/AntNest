@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class EnemyView : MonoBehaviour
 {
+    [Header("[Canvas]")]
+    [SerializeField] private Canvas _enemyCanvas;
     [Header("[Sliders]")]
     [SerializeField] private Slider _sliderHP;
     [Header("[Enemy Stats]")]
@@ -20,7 +22,7 @@ public class EnemyView : MonoBehaviour
     private ParticleSystem _hit;
     private ParticleSystem _dieEffect;
     private ParticleSystem _ability;
-    private Camera _playerCamera;
+    private PlayerCamera _playerUICamera;
 
     public Image CoolDownImage => _coolDownImage;
     public Sprite CancelSprite => _cancelSprite;
@@ -35,15 +37,15 @@ public class EnemyView : MonoBehaviour
 
     private void LateUpdate()
     {
-        _enemyViewGameObject.transform.LookAt(_playerCamera.transform);
+        _enemyViewGameObject.transform.LookAt(_playerUICamera.transform);
     }
 
-    public void Initialize(EnemyData enemyData, ParticleSystem particleDie, ParticleSystem particleHit, ParticleSystem particleAbility)
+    public void Initialize(EnemyData enemyData, ParticleSystem particleDie, ParticleSystem particleHit, ParticleSystem particleAbility, PlayerCamera playerCamera)
     {
         _hit = particleHit;
         _dieEffect = particleDie;
         _ability = particleAbility;
-        _playerCamera = FindObjectOfType<Camera>();
+        _playerUICamera = playerCamera;
         Fill(enemyData);
         AddListener();
     }

@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GuidPanel : MenuTab
 {
@@ -19,11 +21,18 @@ public class GuidPanel : MenuTab
     [SerializeField] private MenuPanel _menuPanel;
     [Header("[DotView]")]
     [SerializeField] private DotView _dotView;
+    [SerializeField] private Button _openGuidButton;
+    [SerializeField] private CanvasLoader _canvasLoader;
+
+    private readonly string _guidScene = "Guid";
+
+    private AsyncOperation _load;
 
     private new void Awake()
     {
         base.Awake();
         _dotView.SetScrollRect(_scrollPlayerInfo);
+        _openGuidButton.onClick.AddListener(LoadGuidLevel);
         _playerButton.onClick.AddListener(ShowPlayerGuide);
         _shopButton.onClick.AddListener(ShowShopGuide);
         _enemyButton.onClick.AddListener(ShowEnemyGuide);
@@ -32,6 +41,7 @@ public class GuidPanel : MenuTab
     private new void OnDestroy()
     {
         base.OnDestroy();
+        _openGuidButton.onClick.RemoveListener(LoadGuidLevel);
         _playerButton.onClick.RemoveListener(ShowPlayerGuide);
         _shopButton.onClick.RemoveListener(ShowShopGuide);
         _enemyButton.onClick.RemoveListener(ShowEnemyGuide);
@@ -69,5 +79,29 @@ public class GuidPanel : MenuTab
         _playerInfo.SetActive(false);
         _shopItem.SetActive(false);
         _enemy.SetActive(false);
+    }
+
+
+    private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)
+    {
+        if (_load != null)
+            yield break;
+
+        _load = asyncOperation;
+        _load.allowSceneActivation = false;
+        _canvasLoader.gameObject.SetActive(true);
+
+        while (_load.progress < 0.9f)
+        {
+            yield return null;
+        }
+
+        _load.allowSceneActivation = true;
+        _load = null;
+    }
+
+    private void LoadGuidLevel()
+    {
+        StartCoroutine(LoadScreenLevel(SceneManager.LoadSceneAsync(_guidScene)));
     }
 }

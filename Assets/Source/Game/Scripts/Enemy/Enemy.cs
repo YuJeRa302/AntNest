@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
         CreateParticleSystem(_particleContainer, enemyData.EnemyDieParticleSystem, enemyData.EnemyHitParticleSystem, enemyData.EnemyAbilityParticleSystem);
         Fill(enemyData);
         _enemySound.Initialize(soundVolume, enemyData);
-        _enemyView.Initialize(enemyData, _dieParticle, _hitParticle, _abilityParticle);
+        _enemyView.Initialize(enemyData, _dieParticle, _hitParticle, _abilityParticle, player.PlayerUICamera);
         _enemyAbility.Initialize(enemyData);
         _enemyMovement.Initialize(player);
         _enemyMovement.EnemyDying += OnEnemyDying;

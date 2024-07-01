@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2728653094288616652}
   - component: {fileID: 919110988655436191}
   - component: {fileID: 5080163968804121510}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: EnemyIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4192556207287244305}
   - component: {fileID: 1472025067641318046}
   - component: {fileID: 3802504431370910389}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 2981088096845943951}
   - component: {fileID: 8579066840176024177}
   - component: {fileID: 547401580343160582}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: abilityImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 9010064992348015491}
   - component: {fileID: 3853411199397356275}
   - component: {fileID: 9026293684067467376}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +317,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 355646660849529722}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 5861979201724493136}
   - component: {fileID: 5391629701466547814}
   - component: {fileID: 2514151210621356181}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 2376385676451289668}
   - component: {fileID: 3393509429112864178}
   - component: {fileID: 6073680743821101571}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1147,6 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c98bd8638dff443b410678dfbd5b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyCanvas: {fileID: 0}
   _sliderHP: {fileID: 2783100618406102385}
   _enemy: {fileID: 799464357611153034}
   _level: {fileID: 6073680743821101571}
@@ -1450,7 +1451,7 @@ GameObject:
   - component: {fileID: 1541444334634145872}
   - component: {fileID: 1811237349391029484}
   - component: {fileID: 7635782510609891402}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: currentHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1531,7 +1532,7 @@ GameObject:
   - component: {fileID: 8640212501405418354}
   - component: {fileID: 3094581742728078405}
   - component: {fileID: 5292515773322207745}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: EnemyView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1635,7 +1636,7 @@ GameObject:
   - component: {fileID: 5835981073972317723}
   - component: {fileID: 9099598106781529186}
   - component: {fileID: 993247088519010882}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1710,7 +1711,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1484967228711021466}
   - component: {fileID: 2783100618406102385}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -30,6 +30,7 @@ public class QuestPanel : MenuTab
     protected override void Awake()
     {
         base.Awake();
+
         _openGuidButton.onClick.AddListener(LoadGuidLevel);
         _closeDialogPanelButton.onClick.AddListener(CloseDialogPanel);
         _questPanelView.CloseDialogPanel();

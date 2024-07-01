@@ -5,7 +5,7 @@ public class Wallet : MonoBehaviour
 {
     private readonly int _minValue = 0;
 
-    private int _currentCoins = 0;
+    private int _currentCoins = 10000;
     private int _points = 0;
 
     public event Action<int> CoinCountChanged;

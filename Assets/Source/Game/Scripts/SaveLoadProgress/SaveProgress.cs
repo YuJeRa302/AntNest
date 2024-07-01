@@ -16,7 +16,12 @@ public class SaveProgress : MonoBehaviour
         bool[] levelsComplete = new bool[loadConfig.CountLevels];
 
         if (loadConfig.LevelsComplete != null)
-            levelsComplete = loadConfig.LevelsComplete;
+        {
+            for (int index = 0; index < loadConfig.LevelsComplete.Length; index++)
+            {
+                levelsComplete[index] = loadConfig.LevelsComplete[index];
+            }
+        }
 
         levelsComplete[loadConfig.LevelDataState.LevelData.LevelId] = loadConfig.LevelDataState.IsComplete;
 
@@ -59,6 +64,7 @@ public class SaveProgress : MonoBehaviour
         float ambientVolume = loadConfig.AmbientVolume;
         float interfaceVolume = loadConfig.InterfaceVolume;
         string language = loadConfig.Language;
+        bool isFirstSession = loadConfig.IsFirstSession;
 
 #if UNITY_EDITOR
         _isGetLoadRespondRecive = true;
@@ -81,7 +87,7 @@ public class SaveProgress : MonoBehaviour
             AmbientVolume = ambientVolume,
             InterfaceVolume = interfaceVolume,
             PlayerLevelComplete = _loadConfig.LevelsComplete,
-            IsFirstSession = loadConfig.IsFirstSession,
+            IsFirstSession = isFirstSession,
             IsSoundOn = loadConfig.IsSoundOn
         };
 
