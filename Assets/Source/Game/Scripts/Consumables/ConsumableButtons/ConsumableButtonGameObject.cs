@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public abstract class ConsumableButtonGameObject : MonoBehaviour
 {
+    protected readonly int MinValue = 0;
+
     [SerializeField] private Button _useConsumableButton;
     [SerializeField] private Text _countConsumableItem;
     [SerializeField] private Image _reloadingImage;
-
-    protected readonly int MinValue = 0;
 
     protected Player Player;
     protected bool IsUseConsumable = true;

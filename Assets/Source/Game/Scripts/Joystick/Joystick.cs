@@ -4,16 +4,16 @@ using UnityEngine.UI;
 
 public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
-    [Header("[JoystickBackgorund;]")]
-    [SerializeField] private Image _joystickBackgorund;
-    [Header("[Joystick]")]
-    [SerializeField] private Image _joystick;
-
     private readonly string _axisHorizontal = "Horizontal";
     private readonly string _axisVertical = "Vertical";
     private readonly int _nullValue = 0;
     private readonly int _multiplier = 2;
     private readonly float _defaultValueMagnitude = 1.0f;
+
+    [Header("[JoystickBackgorund;]")]
+    [SerializeField] private Image _joystickBackgorund;
+    [Header("[Joystick]")]
+    [SerializeField] private Image _joystick;
 
     private Vector2 _inputVector;
 

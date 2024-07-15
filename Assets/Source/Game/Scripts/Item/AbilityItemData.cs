@@ -25,7 +25,6 @@ public class AbilityItemData : ItemData
     public TypeEffect EffectType => _typeEffect;
     public int UpgradePrice => _upgradePrice;
     public string Description => _description;
-    public int CurrentLevel => _currentLevel;
     public float AbilityDuration => _abilityDuration;
     public List<AbilityLevel> AbilityLevels => _abilityLevels;
     public float CurrentDelay => _abilityLevels[_currentLevel].Delay;

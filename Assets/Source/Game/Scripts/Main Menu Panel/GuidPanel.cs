@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GuidPanel : MenuTab
 {
+    private readonly string _guidScene = "Guid";
+
     [Header("[PlayerInfo]")]
     [SerializeField] private GameObject _playerInfo;
     [SerializeField] private Button _playerButton;
@@ -23,8 +25,6 @@ public class GuidPanel : MenuTab
     [SerializeField] private DotView _dotView;
     [SerializeField] private Button _openGuidButton;
     [SerializeField] private CanvasLoader _canvasLoader;
-
-    private readonly string _guidScene = "Guid";
 
     private AsyncOperation _load;
 
@@ -80,7 +80,6 @@ public class GuidPanel : MenuTab
         _shopItem.SetActive(false);
         _enemy.SetActive(false);
     }
-
 
     private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)
     {

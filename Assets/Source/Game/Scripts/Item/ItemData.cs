@@ -12,6 +12,5 @@ public abstract class ItemData : ScriptableObject
     public Sprite ItemIcon => _sprite;
     public string Name => _name;
     public int Price => _price;
-    public bool IsBuyedByDefault => _isBuyedByDefault;
     public TypeItem ItemType => _type;
 }

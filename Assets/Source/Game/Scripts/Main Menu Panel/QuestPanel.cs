@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class QuestPanel : MenuTab
 {
+    private readonly string _guidScene = "Guid";
+
     [SerializeField] private QuestPanelView _questPanelView;
     [SerializeField] private CanvasLoader _canvasLoader;
     [SerializeField] private LoadConfig _loadConfig;
@@ -21,8 +23,6 @@ public class QuestPanel : MenuTab
     [SerializeField] private Button _openGuidButton;
     [SerializeField] private Button _closeDialogPanelButton;
 
-    private readonly string _guidScene = "Guid";
-
     private AsyncOperation _load;
     private List<LevelDataView> _levelDataViews = new();
     private DefaultLevelState _levelState;
@@ -30,7 +30,6 @@ public class QuestPanel : MenuTab
     protected override void Awake()
     {
         base.Awake();
-
         _openGuidButton.onClick.AddListener(LoadGuidLevel);
         _closeDialogPanelButton.onClick.AddListener(CloseDialogPanel);
         _questPanelView.CloseDialogPanel();

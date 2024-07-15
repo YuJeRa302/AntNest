@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private Player _player;
-
     private readonly int _minHealth = 0;
     private readonly int _maxHealth = 100;
+
+    [SerializeField] private Player _player;
 
     private int _currentHealth = 0;
 
     public event Action<int> ChangedHealth;
-    public event Action<int, int, int, int> PlayerDie;
+    public event Action<int, int, int, int> PlayerDied;
 
     public int MaxHealth => _maxHealth;
     public int CurrentHealth => _currentHealth;
@@ -54,6 +54,6 @@ public class PlayerHealth : MonoBehaviour
     private void SetPlayerDie()
     {
         Destroy(gameObject);
-        PlayerDie?.Invoke(_player.Wallet.Coins, _player.PlayerStats.Level, _player.PlayerStats.Experience, _player.PlayerStats.Score);
+        PlayerDied?.Invoke(_player.Wallet.Coins, _player.PlayerStats.Level, _player.PlayerStats.Experience, _player.PlayerStats.Score);
     }
 }

@@ -10612,6 +10612,10 @@ PrefabInstance:
       propertyPath: _spawnPoint
       value: 
       objectReference: {fileID: 1949878670}
+    - target: {fileID: 7355126008103609782, guid: af04da77dd8bba64bb1181a68d8578bc, type: 3}
+      propertyPath: _delayEnemySpawn
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33291,6 +33295,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3166172648668389124, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c23fd8b725be7694391067f7d80191ec, type: 3}
     - target: {fileID: 3490204998078047007, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: _player
       value: 
@@ -33518,6 +33526,18 @@ PrefabInstance:
     - target: {fileID: 6245746106966954493, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366643253811720847, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 86.931
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366643253811720847, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 76.404
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366643253811720847, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -64
       objectReference: {fileID: 0}
     - target: {fileID: 6579283652159284521, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -33923,6 +33943,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 418559945}
+    - target: {fileID: 7332424691368142327, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
+      propertyPath: FallbackText
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7495565787763557655, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

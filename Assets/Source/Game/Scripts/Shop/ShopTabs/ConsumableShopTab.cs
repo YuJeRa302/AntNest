@@ -26,7 +26,7 @@ public class ConsumableShopTab : ShopTab
             ConsumablePanelItemView view = Instantiate(_itemView, ItemContainer.transform);
             _views.Add(view);
             view.Initialize(consumableItemState);
-            view.BuyButtonClick += OnBuyConsumable;
+            view.BuyButtonClicked += OnBuyConsumable;
         }
     }
 
@@ -34,7 +34,7 @@ public class ConsumableShopTab : ShopTab
     {
         foreach (ConsumablePanelItemView itemView in _views)
         {
-            itemView.BuyButtonClick -= OnBuyConsumable;
+            itemView.BuyButtonClicked -= OnBuyConsumable;
             Destroy(itemView.gameObject);
         }
 

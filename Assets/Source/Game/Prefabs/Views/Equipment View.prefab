@@ -691,7 +691,9 @@ MonoBehaviour:
   _levelAvailableLeanLocalized: {fileID: 1367083882405416309}
   _levelToken: {fileID: 4160056291469061235}
   _levelAvailableText: {fileID: 542183274901953644}
-  _changeButton: {fileID: 8508093552191021740}
+  _changeButtons:
+  - {fileID: 8508093552191021740}
+  - {fileID: 7921937578191818091}
   _isBayed: {fileID: 5861275595148244762}
   _shopIcon: {fileID: 4290416859450902082}
   _isCurrentWeapon: {fileID: 6332072686529715731}
@@ -1614,8 +1616,9 @@ GameObject:
   - component: {fileID: 680199850576641396}
   - component: {fileID: 4583999464646882157}
   - component: {fileID: 5861275595148244762}
+  - component: {fileID: 7921937578191818091}
   m_Layer: 5
-  m_Name: IsBuyImageBg
+  m_Name: changerWeaponButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1680,3 +1683,47 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7921937578191818091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9018736898057767557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 5861275595148244762}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []

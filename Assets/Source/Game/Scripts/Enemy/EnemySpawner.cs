@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [Header("[SpawnParameters]")]
-    [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private int _delayEnemySpawn = 15;
-    [Header("[Level Entities]")]
-    [SerializeField] private LevelObserver _levelObserver;
-
     private readonly int _indexDefaultWave = 0;
     private readonly int _minValue = 0;
+
+    [Header("[SpawnParameters]")]
+    [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private int _delayEnemySpawn = 8;
+    [Header("[Level Entities]")]
+    [SerializeField] private LevelObserver _levelObserver;
 
     private Player _player;
     private List<Enemy> _enemies = new();

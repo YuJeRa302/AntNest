@@ -4,7 +4,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(71);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(70);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(69);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(68);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(67);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(66);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(65);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(64);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(63);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(62)\"}"
+                "value": "{\"m_Value\":\"D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(77);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(75);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(74);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(73);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(72);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(71);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(70);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(69);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(68);D:/Project(Unity)/GitHub/TestProject/ProjectNewVersion Debug(67)\"}"
             },
             {
                 "type": "System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",

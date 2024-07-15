@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 public class GuidView : MonoBehaviour
 {
+    private readonly string _beginTextButton = "Begin";
+    private readonly string _endTextButton = "End";
+    private readonly string _endDescription = "EndDescription";
+
     [Header("[Level Entities]")]
     [SerializeField] private GuidObserver _guidObserver;
     [Header("[LeanLocalized Tokens]")]
@@ -24,10 +28,6 @@ public class GuidView : MonoBehaviour
     [SerializeField] private LeanLocalizedText _guidText;
     [SerializeField] private Image _imageGuidButton;
     [SerializeField] private LeanLocalizedText _textGuidButton;
-
-    private readonly string _beginTextButton = "Begin";
-    private readonly string _endTextButton = "End";
-    private readonly string _endDescription = "EndDescription";
 
     public int DescriptionLength => _description.Length;
 

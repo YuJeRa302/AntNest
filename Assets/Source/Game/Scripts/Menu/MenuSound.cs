@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class MenuSound : MonoBehaviour
 {
+    private readonly float _pauseValue = 0;
+    private readonly float _resumeValue = 1f;
+
     [SerializeField] private MenuPanel _menuPanel;
     [Header("[AudioSource]")]
     [SerializeField] private AudioSource _ambientAudioSource;
@@ -11,9 +14,6 @@ public class MenuSound : MonoBehaviour
     [SerializeField] private AudioClip _audioButtonClick;
     [Header("[Ambient Audio Clips]")]
     [SerializeField] private AudioClip _audioAmbient;
-
-    private readonly float _pauseValue = 0;
-    private readonly float _resumeValue = 1f;
 
     public AudioSource InterfaceAudioSource => _interfaceAudioSource;
     public AudioClip AudioButtonHover => _audioButtonHover;

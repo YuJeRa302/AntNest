@@ -10,6 +10,8 @@ public class MenuPanel : MonoBehaviour
     private const string Russian = "ru";
     private const string Turkish = "tr";
 
+    private readonly int _nullStringLength = 0;
+
     [SerializeField] private SaveProgress _saveProgress;
     [SerializeField] private LoadConfig _config;
     [Header("[Menu Entities]")]
@@ -18,8 +20,6 @@ public class MenuPanel : MonoBehaviour
     [SerializeField] private SettingsPanel _settingsPanel;
     [Header("[LeanLocalization]")]
     [SerializeField] private LeanLocalization _leanLocalization;
-
-    private readonly int _nullStringLength = 0;
 
     public MenuView MenuView => _menuView;
     public MenuSound MenuSound => _menuSound;

@@ -6060,6 +6060,10 @@ PrefabInstance:
       propertyPath: _spawnPoint
       value: 
       objectReference: {fileID: 3122366672769510048}
+    - target: {fileID: 7355126008103609782, guid: af04da77dd8bba64bb1181a68d8578bc, type: 3}
+      propertyPath: _delayEnemySpawn
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7495,6 +7499,10 @@ PrefabInstance:
       propertyPath: _eventSystem
       value: 
       objectReference: {fileID: 377926211}
+    - target: {fileID: 4143283319701920303, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
+      propertyPath: _levelObserver
+      value: 
+      objectReference: {fileID: 1747327918111257332}
     - target: {fileID: 4143283319701920303, guid: ea46a7474d90c024aac0ef71cfba17c7, type: 3}
       propertyPath: _graphicRaycaster
       value: 

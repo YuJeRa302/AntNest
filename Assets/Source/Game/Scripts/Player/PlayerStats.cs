@@ -8,6 +8,10 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    private readonly Dictionary<int, int> _levels = new();
+    private readonly int _maxExperience = 100;
+    private readonly int _minValue = 0;
+
     [SerializeField] private Player _player;
     [SerializeField] private PlayerAbility _playerAbility;
     [SerializeField] private PlayerHealth _playerHealth;
@@ -15,10 +19,6 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private float _speed;
     [Header("[Max Player Level]")]
     [SerializeField] private int _maxPlayerLevel;
-
-    private readonly Dictionary<int, int> _levels = new();
-    private readonly int _maxExperience = 100;
-    private readonly int _minValue = 0;
 
     private int _currentLevel = 1;
     private int _currentExperience = 0;

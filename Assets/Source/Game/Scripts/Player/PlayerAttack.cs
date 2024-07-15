@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour
 {
+    private readonly float _attackRate = 1.267f;
+
     [SerializeField] private Animator _animator;
     [SerializeField] private Player _player;
     [SerializeField] private Button _attakButton;
@@ -13,8 +15,6 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float _attackRange = 0.5f;
     [Header("[EnemyLayers]")]
     [SerializeField] private LayerMask _enemyLayers;
-
-    private readonly float _attackRate = 1.267f;
 
     private bool _isAllowAttack = true;
     private IEnumerator _makeDamage;

@@ -2044,7 +2044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuPanel: {fileID: 593471591}
-  CloseButton: {fileID: 1478890429}
+  _closeButton: {fileID: 1478890429}
   _openButton: {fileID: 2059107484}
   _playerInfo: {fileID: 2126268396}
   _playerButton: {fileID: 1864393201}
@@ -3740,7 +3740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuPanel: {fileID: 593471591}
-  CloseButton: {fileID: 1341098516}
+  _closeButton: {fileID: 1341098516}
   _openButton: {fileID: 1195713958}
   _canvasLoader: {fileID: 8413798}
   _defaultLanguageButtonState:
@@ -6185,7 +6185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuPanel: {fileID: 593471591}
-  CloseButton: {fileID: 523889249}
+  _closeButton: {fileID: 523889249}
   _openButton: {fileID: 1052027918}
   _questPanelView: {fileID: 565113793}
   _canvasLoader: {fileID: 279233018}
@@ -18925,7 +18925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuPanel: {fileID: 593471591}
-  CloseButton: {fileID: 1191387195}
+  _closeButton: {fileID: 1191387195}
   _openButton: {fileID: 1126878975}
   _leaderboardContainer: {fileID: 5706976662462028763}
   _leaderboardElementPrefab: {fileID: 1816256222391700241, guid: 04b1484ed7860e545ab33d9b92abcd82, type: 3}

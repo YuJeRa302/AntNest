@@ -4,6 +4,9 @@ using Lean.Localization;
 
 public class LevelView : MonoBehaviour
 {
+    private readonly int _defaultEnemiesCount = 0;
+    private readonly string _waveLeanLocalizedName = "Wave";
+
     [Header("[Level Entities]")]
     [SerializeField] private LevelObserver _levelObserver;
     [Header("[UI Entities]")]
@@ -19,9 +22,6 @@ public class LevelView : MonoBehaviour
     [SerializeField] private Text _waveNumber;
     [SerializeField] private LeanLocalizedText _waveName;
     [SerializeField] private Image _extraWaveIcon;
-
-    private readonly int _defaultEnemiesCount = 0;
-    private readonly string _waveLeanLocalizedName = "Wave";
 
     private void Awake()
     {

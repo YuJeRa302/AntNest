@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class AbilityItemGameObject : ItemGameObject
 {
-    [SerializeField] private Button _useAbilityButton;
-
     private readonly int _minValue = 0;
+
+    [SerializeField] private Button _useAbilityButton;
 
     protected Player Player;
     protected bool IsUseAbility = true;

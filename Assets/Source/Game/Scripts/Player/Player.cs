@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerEquipment _playerEquipment;
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private PlayerCamera _playerUICamera;
+
     public PlayerStats PlayerStats => _playerStats;
     public PlayerSound PlayerSounds => _playerSound;
     public PlayerView PlayerView => _playerView;

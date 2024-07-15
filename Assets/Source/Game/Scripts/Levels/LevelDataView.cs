@@ -5,6 +5,12 @@ using System;
 
 public class LevelDataView : MonoBehaviour
 {
+    private readonly int _zeroWave = 0;
+    private readonly int _levelIndexShift = 1;
+    private readonly int _firstLevelIndex = 0;
+    private readonly Color _defaultColor = Color.blue;
+    private readonly Color _acceptColor = Color.yellow;
+
     [Header("[Config]")]
     [SerializeField] private LoadConfig _loadConfig;
     [SerializeField] private LeanLocalizedText _nameLevel;
@@ -22,12 +28,6 @@ public class LevelDataView : MonoBehaviour
     [SerializeField] private Button _standartModeButton;
     [SerializeField] private Button _endlessModeButton;
     [SerializeField] private GameObject _levelAvailableGameObject;
-
-    private readonly int _zeroWave = 0;
-    private readonly int _levelIndexShift = 1;
-    private readonly int _firstLevelIndex = 0;
-    private readonly Color _defaultColor = Color.blue;
-    private readonly Color _acceptColor = Color.yellow;
 
     private LevelDataState _levelDataState;
     private string _standartLevelDescription;

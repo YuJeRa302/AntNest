@@ -12,7 +12,7 @@ public class EquipmentPanelItemView : MonoBehaviour
     [SerializeField] private LeanLocalizedText _levelAvailableLeanLocalized;
     [SerializeField] private LeanLocalToken _levelToken;
     [SerializeField] private Text _levelAvailableText;
-    [SerializeField] private Button _changeButton;
+    [SerializeField] private Button[] _changeButtons;
     [SerializeField] private Image _isBayed;
     [SerializeField] private Image _shopIcon;
     [SerializeField] private Image _isCurrentWeapon;
@@ -22,8 +22,8 @@ public class EquipmentPanelItemView : MonoBehaviour
 
     private EquipmentItemState _equipmentItemState;
 
-    public event Action<EquipmentPanelItemView> BuyButtonClick;
-    public event Action<EquipmentPanelItemView> ChangeCurrentEquipment;
+    public event Action<EquipmentPanelItemView> BuyButtonClicked;
+    public event Action<EquipmentPanelItemView> CurrentEquipmentChanged;
 
     public EquipmentItemState EquipmentItemState => _equipmentItemState;
 
@@ -31,7 +31,9 @@ public class EquipmentPanelItemView : MonoBehaviour
     {
         _buyButton.onClick.RemoveListener(OnButtonClick);
         _buyButton.onClick.RemoveListener(TryLockItem);
-        _changeButton.onClick.RemoveListener(OnChangeCurrentEquipment);
+
+        foreach (var button in _changeButtons)
+            button.onClick.RemoveListener(OnChangeCurrentEquipment);
     }
 
     public void Initialize(EquipmentItemState itemState, Player player)
@@ -63,7 +65,9 @@ public class EquipmentPanelItemView : MonoBehaviour
     {
         _buyButton.onClick.AddListener(OnButtonClick);
         _buyButton.onClick.AddListener(TryLockItem);
-        _changeButton.onClick.AddListener(OnChangeCurrentEquipment);
+
+        foreach (var button in _changeButtons)
+            button.onClick.AddListener(OnChangeCurrentEquipment);
     }
 
     private void TryLockItem()
@@ -73,7 +77,9 @@ public class EquipmentPanelItemView : MonoBehaviour
 
         _buyButton.gameObject.SetActive(false);
         _isBayed.gameObject.SetActive(true);
-        _changeButton.gameObject.SetActive(true);
+
+        foreach (var button in _changeButtons)
+            button.gameObject.SetActive(true);
     }
 
     private void TrySetCurrentEquipment(EquipmentItemState equipmentItemState)
@@ -91,12 +97,12 @@ public class EquipmentPanelItemView : MonoBehaviour
 
     private void OnChangeCurrentEquipment()
     {
-        ChangeCurrentEquipment?.Invoke(this);
+        CurrentEquipmentChanged?.Invoke(this);
     }
 
     private void OnButtonClick()
     {
-        BuyButtonClick?.Invoke(this);
+        BuyButtonClicked?.Invoke(this);
     }
 
     private void CheckEquipState()

@@ -34,8 +34,8 @@ public class AbilityShopTab : ShopTab
             AbilityPanelItemView view = Instantiate(_itemView, ItemContainer.transform);
             _views.Add(view);
             view.Initialize(abilityState, _player);
-            view.BuyButtonClick += OnBuyAbility;
-            view.UpgradeButtonClick += OnUpgradeAbility;
+            view.BuyButtonClicked += OnBuyAbility;
+            view.UpgradeButtonClicked += OnUpgradeAbility;
         }
     }
 
@@ -43,8 +43,8 @@ public class AbilityShopTab : ShopTab
     {
         foreach (AbilityPanelItemView itemView in _views)
         {
-            itemView.BuyButtonClick -= OnBuyAbility;
-            itemView.UpgradeButtonClick -= OnUpgradeAbility;
+            itemView.BuyButtonClicked -= OnBuyAbility;
+            itemView.UpgradeButtonClicked -= OnUpgradeAbility;
             Destroy(itemView.gameObject);
         }
 
@@ -57,8 +57,8 @@ public class AbilityShopTab : ShopTab
         {
             if (itemView.AbilityState.IsBuyed == false)
             {
-                itemView.BuyButtonClick -= OnBuyAbility;
-                itemView.UpgradeButtonClick -= OnUpgradeAbility;
+                itemView.BuyButtonClicked -= OnBuyAbility;
+                itemView.UpgradeButtonClicked -= OnUpgradeAbility;
                 Destroy(itemView.gameObject);
                 _player.PlayerInventory.RemoveUnnecessaryAbility(itemView.AbilityState);
             }
@@ -85,7 +85,7 @@ public class AbilityShopTab : ShopTab
 
         if (itemView.AbilityState.AbilityData.AbilityLevels.LastIndexOf(lastIndex) == itemView.AbilityState.CurrentLevel)
         {
-            itemView.UpgradeButtonClick -= OnUpgradeAbility;
+            itemView.UpgradeButtonClicked -= OnUpgradeAbility;
             return;
         }
 

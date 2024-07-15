@@ -24,8 +24,8 @@ public class AbilityPanelItemView : MonoBehaviour
 
     private AbilityState _abilityState;
 
-    public event Action<AbilityPanelItemView> BuyButtonClick;
-    public event Action<AbilityPanelItemView> UpgradeButtonClick;
+    public event Action<AbilityPanelItemView> BuyButtonClicked;
+    public event Action<AbilityPanelItemView> UpgradeButtonClicked;
 
     public AbilityState AbilityState => _abilityState;
 
@@ -90,12 +90,12 @@ public class AbilityPanelItemView : MonoBehaviour
 
     private void OnButtonClick()
     {
-        BuyButtonClick?.Invoke(this);
+        BuyButtonClicked?.Invoke(this);
     }
 
     private void OnUpgradeButtonClick()
     {
-        UpgradeButtonClick?.Invoke(this);
+        UpgradeButtonClicked?.Invoke(this);
         UpdateStats(_abilityState);
     }
 

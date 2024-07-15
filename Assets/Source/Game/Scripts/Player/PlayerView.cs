@@ -20,9 +20,6 @@ public class PlayerView : MonoBehaviour
     [SerializeField] private Text _playerDamage;
     [SerializeField] private Text _playerArmor;
 
-    private readonly string _nameExperienceParametr = "XP";
-    private readonly string _nameGoldParametr = "G";
-
     enum TransitionParametr
     {
         Take
@@ -69,13 +66,13 @@ public class PlayerView : MonoBehaviour
 
     private void OnChangeExperience(int target)
     {
-        SetTextStats(_countExperienceUpdate, target.ToString(), _nameExperienceParametr, _experienceUpdateAnimator);
+        SetTextStats(_countExperienceUpdate, target.ToString(), _experienceUpdateAnimator);
         _sliderXP.value += target;
     }
 
     private void OnChangeGold(int target)
     {
-        SetTextStats(_countGoldUpdate, target.ToString(), _nameGoldParametr, _goldUpdateAnimator);
+        SetTextStats(_countGoldUpdate, target.ToString(), _goldUpdateAnimator);
     }
 
     private void OnChangeHealth(int target)
@@ -83,9 +80,9 @@ public class PlayerView : MonoBehaviour
         _sliderHP.value = target;
     }
 
-    private void SetTextStats(Text template, string text, string nameStats, Animator animator)
+    private void SetTextStats(Text template, string text, Animator animator)
     {
-        template.text = "+" + text + " " + nameStats;
         animator.SetTrigger(TransitionParametr.Take.ToString());
+        template.text = "+" + text;
     }
 }

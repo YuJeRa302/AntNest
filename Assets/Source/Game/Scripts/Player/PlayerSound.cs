@@ -18,10 +18,9 @@ public class PlayerSound : MonoBehaviour
     public AudioClip FootStep => _footStep;
     public AudioSource AudioSourceAxe => _audioSourceAxe;
     public AudioSource AudioSourceStep => _audioStep;
-    public AudioSource AudioPlayerState => _audioPlayerState;
     public AudioSource AudioPlayerAbility => _audioPlayerAbility;
 
-    public void Initialize(float value)
+    public void SetSoundValue(float value)
     {
         _audioSourceAxe.volume = value;
         _audioStep.volume = value;

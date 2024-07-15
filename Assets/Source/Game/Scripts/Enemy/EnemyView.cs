@@ -29,10 +29,10 @@ public class EnemyView : MonoBehaviour
 
     private void OnDestroy()
     {
-        _enemy.ChangedHealth -= OnChangeHealth;
+        _enemy.HealthChanged -= OnChangeHealth;
         _enemy.HitTaking -= OnHitTaking;
         _enemy.EnemyMovement.EnemyDying -= OnEnemyDying;
-        _enemy.EnemyAbility.AbilityUsing -= OnUseAbility;
+        _enemy.EnemyAbility.AbilityUsed -= OnUseAbility;
     }
 
     private void LateUpdate()
@@ -52,10 +52,10 @@ public class EnemyView : MonoBehaviour
 
     private void AddListener()
     {
-        _enemy.ChangedHealth += OnChangeHealth;
+        _enemy.HealthChanged += OnChangeHealth;
         _enemy.HitTaking += OnHitTaking;
         _enemy.EnemyMovement.EnemyDying += OnEnemyDying;
-        _enemy.EnemyAbility.AbilityUsing += OnUseAbility;
+        _enemy.EnemyAbility.AbilityUsed += OnUseAbility;
     }
 
     private void Fill(EnemyData enemyData)

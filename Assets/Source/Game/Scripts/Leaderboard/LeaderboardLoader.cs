@@ -8,6 +8,8 @@ public class LeaderboardLoader : MonoBehaviour
     private const string AnonynousName = "Anonymous";
     private const string LeaderboardName = "Leaderboard";
 
+    private readonly List<LeaderboardPlayer> _leaderboardPlayers = new();
+
     [Header("[LeaderboardView]")]
     [SerializeField] private LeaderboardView _leaderboardView;
     [Header("[Dialog Panel]")]
@@ -17,8 +19,6 @@ public class LeaderboardLoader : MonoBehaviour
     [Header("[Buttons]")]
     [SerializeField] private Button _openButton;
     [SerializeField] private Button _openAuthorize;
-
-    private readonly List<LeaderboardPlayer> _leaderboardPlayers = new();
 
     private void Awake()
     {

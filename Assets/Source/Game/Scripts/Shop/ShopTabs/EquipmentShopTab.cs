@@ -14,7 +14,8 @@ public class EquipmentShopTab : ShopTab
     {
         if (ItemType == TypeItem.Armor)
             _equipmentItemStates = _player.PlayerInventory.ListArmor;
-        else _equipmentItemStates = _player.PlayerInventory.ListWeapon;
+        else
+            _equipmentItemStates = _player.PlayerInventory.ListWeapon;
 
         Fill();
     }
@@ -32,8 +33,8 @@ public class EquipmentShopTab : ShopTab
             EquipmentPanelItemView view = Instantiate(_itemView, ItemContainer.transform);
             _views.Add(view);
             view.Initialize(equipmentItemState, _player);
-            view.BuyButtonClick += OnBuyEquipment;
-            view.ChangeCurrentEquipment += OnChangeEquipment;
+            view.BuyButtonClicked += OnBuyEquipment;
+            view.CurrentEquipmentChanged += OnChangeEquipment;
         }
     }
 
@@ -41,8 +42,8 @@ public class EquipmentShopTab : ShopTab
     {
         foreach (EquipmentPanelItemView itemView in _views)
         {
-            itemView.BuyButtonClick -= OnBuyEquipment;
-            itemView.ChangeCurrentEquipment -= OnChangeEquipment;
+            itemView.BuyButtonClicked -= OnBuyEquipment;
+            itemView.CurrentEquipmentChanged -= OnChangeEquipment;
             Destroy(itemView.gameObject);
         }
 

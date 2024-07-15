@@ -8,6 +8,11 @@ using Source.Game.Scripts;
 
 public class LevelObserver : MonoBehaviour
 {
+    private readonly int _levelCompleteBonus = 150;
+    private readonly string _menuScene = "Menu";
+    private readonly float _maxLoadProgressValue = 0.9f;
+    private readonly float _pauseValue = 0;
+
     [Header("[Level Entities]")]
     [SerializeField] private EnemySpawner _enemySpawner;
     [SerializeField] private LevelView _levelView;
@@ -28,11 +33,6 @@ public class LevelObserver : MonoBehaviour
     [SerializeField] private LeanLocalization _leanLocalization;
     [Space(50)]
     [SerializeField] private PauseHandler _pauseHandler;
-
-    private readonly int _levelCompleteBonus = 150;
-    private readonly string _menuScene = "Menu";
-    private readonly float _maxLoadProgressValue = 0.9f;
-    private readonly float _pauseValue = 0;
 
     private bool _isMuteSound = false;
     private int _countKillEnemy = 0;
@@ -67,7 +67,7 @@ public class LevelObserver : MonoBehaviour
         AddPanelListener();
         _enemySpawner.EnemyDied += OnEnemyDied;
         _enemySpawner.LastEnemyDied += GiveWinPlayer;
-        _player.PlayerStats.PlayerHealth.PlayerDie += OnPlayerDied;
+        _player.PlayerStats.PlayerHealth.PlayerDied += OnPlayerDied;
         _player.Wallet.GoldenRuneTaked += OnGoldenRuneTaked;
         _soundButton.onClick.AddListener(MuteSound);
         _closeGameButton.onClick.AddListener(ExitGame);
@@ -78,7 +78,7 @@ public class LevelObserver : MonoBehaviour
         RemovePanelListener();
         _enemySpawner.EnemyDied -= OnEnemyDied;
         _enemySpawner.LastEnemyDied -= GiveWinPlayer;
-        _player.PlayerStats.PlayerHealth.PlayerDie -= OnPlayerDied;
+        _player.PlayerStats.PlayerHealth.PlayerDied -= OnPlayerDied;
         _player.Wallet.GoldenRuneTaked -= OnGoldenRuneTaked;
         _soundButton.onClick.RemoveListener(MuteSound);
         _closeGameButton.onClick.RemoveListener(ExitGame);
@@ -96,6 +96,7 @@ public class LevelObserver : MonoBehaviour
         _loadConfig.SetPauseGameState(false);
         _enemySpawner.Initialize(loadConfig, _player);
         _runeSpawner.Initialize();
+        _player.PlayerSounds.SetSoundValue(loadConfig.AmbientVolume);
         _player.PlayerStats.Initialize(_loadConfig.PlayerLevel, _loadConfig.PlayerExperience, _loadConfig.PlayerScore);
         _player.Wallet.Initialize(_loadConfig.PlayerCoins);
         LoadGamePanels();
@@ -128,8 +129,8 @@ public class LevelObserver : MonoBehaviour
 
             panel.PanelOpened += PauseGame;
             panel.PanelClosed += ResumeGame;
-            panel.OpenAd += OnOpenAd;
-            panel.CloseAd += OnCloseAd;
+            panel.AdOpened += OnOpenAd;
+            panel.AdClosed += OnCloseAd;
         }
     }
 
@@ -148,8 +149,8 @@ public class LevelObserver : MonoBehaviour
 
             panel.PanelOpened -= PauseGame;
             panel.PanelClosed -= ResumeGame;
-            panel.OpenAd -= OnOpenAd;
-            panel.CloseAd -= OnCloseAd;
+            panel.AdOpened -= OnOpenAd;
+            panel.AdClosed -= OnCloseAd;
         }
     }
 
@@ -238,6 +239,7 @@ public class LevelObserver : MonoBehaviour
     {
         _loadConfig.SetPauseGameState(false);
         _pauseHandler.ResumeGame();
+        _player.PlayerSounds.SetSoundValue(_loadConfig.AmbientVolume);
         GameResumed?.Invoke();
     }
 

@@ -9,15 +9,15 @@ public class DotView : MonoBehaviour
     private const float _defaultHorizontalValue = 0f;
     private const float _defaultVerticalValue = 1f;
 
+    private readonly Color _defaultColor = Color.white;
+    private readonly Color _selectedColor = Color.green;
+
     [Header("[Slider]")]
     [SerializeField] private Slider _slider;
     [Header("[Dots Image]")]
     [SerializeField] private Image _firstDot;
     [SerializeField] private Image _middleDot;
     [SerializeField] private Image _lastDot;
-
-    private readonly Color _defaultColor = Color.white;
-    private readonly Color _selectedColor = Color.green;
 
     private ScrollRect _scroll;
 

@@ -61,7 +61,7 @@ public class RewardPanel : GamePanels
     {
 #if UNITY_EDITOR
         Debug.Log("InterstitialAd.Show");
-        CloseAd?.Invoke();
+        AdClosed?.Invoke();
         RewardPanelClosed?.Invoke();
 #else
         InterstitialAd.Show(OnOpenAdCallback, OnCloseInterstitialAdCallback, OnErrorCallback);
@@ -89,14 +89,14 @@ public class RewardPanel : GamePanels
 
     private void OnOpenAdCallback()
     {
-        OpenAd?.Invoke();
+        AdOpened?.Invoke();
     }
 
     private void OnCloseAdCallback() { }
 
     private void OnCloseInterstitialAdCallback(bool state)
     {
-        CloseAd?.Invoke();
+        AdClosed?.Invoke();
         RewardPanelClosed?.Invoke();
     }
 

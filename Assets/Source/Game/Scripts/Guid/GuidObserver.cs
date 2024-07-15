@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GuidObserver : MonoBehaviour
 {
+    private readonly string _menuScene = "Menu";
+    private readonly float _maxLoadProgressValue = 0.9f;
+
     [Header("[Level Entities]")]
     [SerializeField] private GuidSoundController _guidSoundController;
     [SerializeField] private GuidView _guidView;
@@ -17,9 +20,6 @@ public class GuidObserver : MonoBehaviour
     [SerializeField] private Button _openSettings;
     [SerializeField] private Button _closeSettings;
     [SerializeField] private Button _soundButton;
-
-    private readonly string _menuScene = "Menu";
-    private readonly float _maxLoadProgressValue = 0.9f;
 
     private bool _isMuteSound = false;
     private int _guidIndex = 0;

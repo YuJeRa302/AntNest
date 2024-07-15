@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private readonly float _maxVectorValue = 1f;
+    private readonly float _minVectorValue = 0.0f;
+
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private Animator _animator;
     [SerializeField] private Joystick _joystick;
     [SerializeField] private Camera _cameraPlayer;
     [SerializeField] private Player _player;
-
-    private readonly float _maxVectorValue = 1f;
-    private readonly float _minVectorValue = 0.0f;
 
     private Vector3 _moveVector;
     private float _speed;

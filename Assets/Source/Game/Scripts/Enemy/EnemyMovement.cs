@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+    private readonly float _delay = 0.75f;
+
     [Header("[Animator]")]
     [SerializeField] protected Animator Animator;
     [Header("[Enemy]")]
     [SerializeField] private Enemy _enemy;
-
-    private readonly float _delay = 0.75f;
 
     private IEnumerator _makeDamage;
     private Player _target;

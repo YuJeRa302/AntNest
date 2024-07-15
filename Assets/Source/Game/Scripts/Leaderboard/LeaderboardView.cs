@@ -12,17 +12,6 @@ public class LeaderboardView : MenuTab
 
     private List<LeaderboardElement> _leaderboardElements = new();
 
-    protected override void Awake()
-    {
-        gameObject.SetActive(false);
-        CloseButton.onClick.AddListener(CloseTab);
-    }
-
-    protected override void OnDestroy()
-    {
-        CloseButton.onClick.RemoveListener(CloseTab);
-    }
-
     public void FillingLeaderboard(List<LeaderboardPlayer> leaderboardPlayers)
     {
         ClearLeaderboard();

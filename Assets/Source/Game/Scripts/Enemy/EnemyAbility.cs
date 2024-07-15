@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class EnemyAbility : MonoBehaviour
 {
+    private readonly int _minValue = 0;
+    private readonly int _maxValue = 1;
+
     [Header("[Stats]")]
     [SerializeField] private float _coolDown;
     [SerializeField] private int _damage;
     [Header("[Enemy]")]
     [SerializeField] private Enemy _enemy;
 
-    private readonly int _minValue = 0;
-    private readonly int _maxValue = 1;
-
     private bool _isUseAbility = true;
 
-    public event Action AbilityUsing;
+    public event Action AbilityUsed;
 
     private void Start()
     {
@@ -29,7 +29,7 @@ public class EnemyAbility : MonoBehaviour
             if (_isUseAbility == false)
                 CastAbility(player);
         }
-        else 
+        else
             return;
     }
 
@@ -55,7 +55,7 @@ public class EnemyAbility : MonoBehaviour
 
     private void CastAbility(Player player)
     {
-        AbilityUsing.Invoke();
+        AbilityUsed.Invoke();
         player.PlayerStats.PlayerHealth.TakeDamage(_damage);
         UpdateValue(true, _maxValue);
         _enemy.EnemyView.CoolDownImage.sprite = _enemy.EnemyView.CancelSprite;

@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class GuidSoundController : MonoBehaviour
 {
+    private readonly float _pauseValue = 0;
+    private readonly float _resumeValue = 1f;
+
     [Header("[Level Entities]")]
     [SerializeField] private GuidObserver _guidObserver;
     [Header("[Audio Source]")]
@@ -14,9 +17,6 @@ public class GuidSoundController : MonoBehaviour
     [Header("[Sliders]")]
     [SerializeField] private Slider _ambientSoundsSlider;
     [SerializeField] private Slider _buttonFXSlider;
-
-    private readonly float _pauseValue = 0;
-    private readonly float _resumeValue = 1f;
 
     private LoadConfig _loadConfig;
 

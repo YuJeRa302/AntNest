@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SoundController : MonoBehaviour
 {
+    private readonly float _pauseValue = 0;
+    private readonly float _resumeValue = 1f;
+
     [Header("[Audio Source]")]
     [SerializeField] private AudioSource _ambientAudioSource;
     [SerializeField] private AudioSource _interfaceAudioSource;
@@ -19,9 +22,6 @@ public class SoundController : MonoBehaviour
     [SerializeField] private AudioClip _rewardAudio;
     [SerializeField] private AudioClip _winAudio;
     [SerializeField] private AudioClip _loseAudio;
-
-    private readonly float _pauseValue = 0;
-    private readonly float _resumeValue = 1f;
 
     public AudioSource InterfaceAudioSource => _interfaceAudioSource;
     public AudioClip AudioButtonHover => _audioButtonHover;

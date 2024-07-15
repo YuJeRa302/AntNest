@@ -14,7 +14,7 @@ public class ConsumablePanelItemView : MonoBehaviour
 
     private ConsumableItemState _consumableItemState;
 
-    public event Action<ConsumablePanelItemView> BuyButtonClick;
+    public event Action<ConsumablePanelItemView> BuyButtonClicked;
 
     public ConsumableItemState ConsumableItemState => _consumableItemState;
 
@@ -46,6 +46,6 @@ public class ConsumablePanelItemView : MonoBehaviour
 
     private void OnButtonClick()
     {
-        BuyButtonClick?.Invoke(this);
+        BuyButtonClicked?.Invoke(this);
     }
 }

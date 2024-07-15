@@ -8,6 +8,9 @@ using UnityEngine.AI;
 [RequireComponent(typeof(EnemyAbility))]
 public class Enemy : MonoBehaviour
 {
+    private readonly int _minHealth = 0;
+    private readonly int _delayDestroy = 1;
+
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [Header("[Enemy Entities]")]
     [SerializeField] private EnemyView _enemyView;
@@ -15,9 +18,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyMovement _enemyMovement;
     [SerializeField] private EnemyAbility _enemyAbility;
     [SerializeField] private Transform _particleContainer;
-
-    private readonly int _minHealth = 0;
-    private readonly int _delayDestroy = 1;
 
     private ParticleSystem _dieParticle;
     private ParticleSystem _hitParticle;
@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
     public EnemyAbility EnemyAbility => _enemyAbility;
     public EnemySound EnemySound => _enemySound;
 
-    public event Action<int> ChangedHealth;
+    public event Action<int> HealthChanged;
     public event Action<Enemy> Dying;
     public event Action HitTaking;
 
@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
     {
         _health = Mathf.Clamp(_health - damage, _minHealth, _health);
         HitTaking.Invoke();
-        ChangedHealth.Invoke(_health);
+        HealthChanged.Invoke(_health);
     }
 
     private void OnAttackingEnemyRemoved()

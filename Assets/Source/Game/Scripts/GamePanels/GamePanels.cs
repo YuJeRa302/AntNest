@@ -8,8 +8,8 @@ public abstract class GamePanels : MonoBehaviour
 
     public Action PanelOpened;
     public Action PanelClosed;
-    public Action OpenAd;
-    public Action CloseAd;
+    public Action AdOpened;
+    public Action AdClosed;
 
     public virtual void Initialize(Player player, LevelObserver levelObserver)
     {
