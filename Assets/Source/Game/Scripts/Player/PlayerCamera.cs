@@ -1,20 +1,22 @@
 using UnityEngine;
 
-public class PlayerCamera : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [Header("PlayerTransform")]
-    [SerializeField] private Transform _playerTransform;
-
-    private Vector3 _deltaPosition;
-
-    private void Awake()
+    public class PlayerCamera : MonoBehaviour
     {
-        _deltaPosition = transform.position - _playerTransform.position;
-    }
+        [SerializeField] private Transform _playerTransform;
 
-    private void LateUpdate()
-    {
-        if (_playerTransform != null)
-            transform.position = _playerTransform.position + _deltaPosition;
+        private Vector3 _deltaPosition;
+
+        private void Awake()
+        {
+            _deltaPosition = transform.position - _playerTransform.position;
+        }
+
+        private void LateUpdate()
+        {
+            if (_playerTransform != null)
+                transform.position = _playerTransform.position + _deltaPosition;
+        }
     }
 }

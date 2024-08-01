@@ -21,4 +21,4 @@ MonoBehaviour:
   _level: 1
   _shopIcon: {fileID: 21300000, guid: 9f332e1e62761be4ebd3e3b01e11e4ce, type: 3}
   _levelAvailableText: EquipmentAvailable
-  _itemGameObject: {fileID: 7834785824381755173, guid: b929351b4bbad6440b309722599438bf, type: 3}
+  _item: {fileID: 7834785824381755173, guid: b929351b4bbad6440b309722599438bf, type: 3}

@@ -1,16 +1,19 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LeaderboardElement : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private Text _playerName;
-    [SerializeField] private Text _playerRank;
-    [SerializeField] private Text _playerScore;
-
-    public void Initialize(string name, int rank, int score)
+    public class LeaderboardElement : MonoBehaviour
     {
-        _playerName.text = name;
-        _playerRank.text = rank.ToString();
-        _playerScore.text = score.ToString();
+        [SerializeField] private Text _playerName;
+        [SerializeField] private Text _playerRank;
+        [SerializeField] private Text _playerScore;
+
+        public void Initialize(string name, int rank, int score)
+        {
+            _playerName.text = name;
+            _playerRank.text = rank.ToString();
+            _playerScore.text = score.ToString();
+        }
     }
 }

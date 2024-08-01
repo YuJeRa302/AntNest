@@ -1,1 +1,4 @@
-public class Armor : EquipmentItemGameObject { }
+namespace Assets.Source.Game.Scripts
+{
+    public class Armor : EquipmentItem { }
+}

@@ -2,39 +2,40 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuView : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [Header("[Menu Panel]")]
-    [SerializeField] private MenuPanel _menuPanel;
-    [Header("[Mute Button]")]
-    [SerializeField] private Button _soundButton;
-    [Header("[Mute Button Image]")]
-    [SerializeField] private Image _imageButton;
-    [Header("[Sprite Mute Button]")]
-    [SerializeField] private Sprite _muteButtonSprite;
-    [SerializeField] private Sprite _unmuteButtonSprite;
-
-    public event Action<bool> SoundStateChanged;
-
-    private void Awake()
+    public class MenuView : MonoBehaviour
     {
-        _soundButton.onClick.AddListener(SetSoundState);
-    }
+        [SerializeField] private MenuPanel _menuPanel;
+        [SerializeField] private Button _soundButton;
+        [SerializeField] private Image _imageButton;
+        [SerializeField] private Sprite _muteButtonSprite;
+        [SerializeField] private Sprite _unmuteButtonSprite;
 
-    private void OnDestroy()
-    {
-        _soundButton.onClick.RemoveListener(SetSoundState);
-    }
+        public event Action<bool> SoundStateChanged;
 
-    public void Initialize()
-    {
-        _imageButton.sprite = _menuPanel.Config.IsSoundOn == true ? _unmuteButtonSprite : _muteButtonSprite;
-    }
+        private void Awake()
+        {
+            _soundButton.onClick.AddListener(SetSoundState);
+        }
 
-    private void SetSoundState()
-    {
-        bool state = _menuPanel.Config.IsSoundOn != true;
-        _imageButton.sprite = state == true ? _unmuteButtonSprite : _muteButtonSprite;
-        SoundStateChanged?.Invoke(state);
+        private void OnDestroy()
+        {
+            _soundButton.onClick.RemoveListener(SetSoundState);
+        }
+
+        public void Initialize()
+        {
+            _imageButton.sprite = _menuPanel.Config.IsSoundOn == true ? _unmuteButtonSprite : _muteButtonSprite;
+        }
+
+        private void SetSoundState()
+        {
+            bool state = _menuPanel.Config.IsSoundOn != true;
+            _imageButton.sprite = state == true ? _unmuteButtonSprite : _muteButtonSprite;
+
+            if (SoundStateChanged != null)
+                SoundStateChanged?.Invoke(state);
+        }
     }
 }

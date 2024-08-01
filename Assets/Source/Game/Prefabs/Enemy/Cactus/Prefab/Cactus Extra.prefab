@@ -10814,6 +10814,7 @@ GameObject:
   - component: {fileID: 4420993650759025493}
   - component: {fileID: 2677516010533391972}
   - component: {fileID: 4984209483485535469}
+  - component: {fileID: 4128394565608312113}
   m_Layer: 6
   m_Name: Cactus Extra
   m_TagString: Untagged
@@ -11014,10 +11015,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 7948567476314781472}
-  _enemyView: {fileID: 2677516010533391972}
-  _enemySound: {fileID: 7990490371120635816}
+  _enemyHealthBar: {fileID: 2677516010533391972}
+  _enemySoundPlayer: {fileID: 7990490371120635816}
   _enemyMovement: {fileID: 4420993650759025493}
-  _enemyAbility: {fileID: 4984209483485535469}
+  _enemyAbilityCaster: {fileID: 4984209483485535469}
+  _enemyAttacker: {fileID: 4128394565608312113}
   _particleContainer: {fileID: 8437894380813215363}
 --- !u!114 &7990490371120635816
 MonoBehaviour:
@@ -11031,10 +11033,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dded5180b448484cb733aa12837b316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 6761239155510970422}
   _audioSource: {fileID: 11884743036155961}
-  _audioClipDie: {fileID: 0}
-  _hitPlayer: {fileID: 0}
+  _audioClipDie: {fileID: 8300000, guid: 14ce90e2a5361d548bdf6c2c126e0233, type: 3}
+  _hitPlayer: {fileID: 8300000, guid: 0ebfed3c99aaf5c43b2bd86ed7a3aad6, type: 3}
+  _enemy: {fileID: 6761239155510970422}
 --- !u!114 &4420993650759025493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11047,7 +11049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff312fac800d904db6a82fec96852f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 7948567476314781478}
+  _animator: {fileID: 7948567476314781478}
   _enemy: {fileID: 6761239155510970422}
 --- !u!114 &2677516010533391972
 MonoBehaviour:
@@ -11061,7 +11063,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c98bd8638dff443b410678dfbd5b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyCanvas: {fileID: 0}
   _sliderHP: {fileID: 956432684164916731}
   _enemy: {fileID: 6761239155510970422}
   _level: {fileID: 5813284449416896008}
@@ -11083,8 +11084,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668ba0d9728263a40bab034e883c2b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coolDown: 0
-  _damage: 0
+  _coolDown: 25
+  _damage: 25
+  _enemy: {fileID: 6761239155510970422}
+--- !u!114 &4128394565608312113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7102059859799532375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd45163695dfc3e4091416bbc29e1007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _enemy: {fileID: 6761239155510970422}
 --- !u!1 &7161319977952507242
 GameObject:

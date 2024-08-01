@@ -1,28 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogPanel : GamePanels
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private Button _buttonClose;
-
-    private void Awake()
+    public class DialogPanel : GamePanels
     {
-        gameObject.SetActive(false);
-        _buttonClose.onClick.AddListener(Close);
-    }
+        [SerializeField] private Button _buttonClose;
 
-    private void OnDestroy()
-    {
-        _buttonClose.onClick.RemoveListener(Close);
-    }
+        private void Awake()
+        {
+            gameObject.SetActive(false);
+            _buttonClose.onClick.AddListener(Close);
+        }
 
-    public void OpenPanel()
-    {
-        gameObject.SetActive(true);
-    }
+        private void OnDestroy()
+        {
+            _buttonClose.onClick.RemoveListener(Close);
+        }
 
-    protected override void Close()
-    {
-        gameObject.SetActive(false);
+        public void OpenPanel()
+        {
+            gameObject.SetActive(true);
+        }
+
+        protected override void Close()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

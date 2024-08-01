@@ -1,36 +1,37 @@
 using UnityEngine;
 
-public class RuneSpawn : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    private readonly System.Random rnd = new();
-    private readonly Vector3 _fixRotation = new(-90, 0, 0);
-
-    [Header("[Spawn Position]")]
-    [SerializeField] private Transform[] _position;
-    [Header("[List Runes]")]
-    [SerializeField] private Rune[] _listRunes;
-
-    public void Initialize()
+    public class RuneSpawn : MonoBehaviour
     {
-        var childrenTransform = gameObject.GetComponentInChildren<Transform>();
-        _position = new Transform[childrenTransform.childCount];
+        private readonly System.Random rnd = new ();
+        private readonly Vector3 _fixRotation = new (-90, 0, 0);
 
-        for (int i = 0; i < childrenTransform.childCount; i++)
+        [SerializeField] private Transform[] _position;
+        [SerializeField] private Rune[] _listRunes;
+
+        public void Initialize()
         {
-            _position[i] = childrenTransform.GetChild(i);
+            var childrenTransform = gameObject.GetComponentInChildren<Transform>();
+            _position = new Transform[childrenTransform.childCount];
+
+            for (int i = 0; i < childrenTransform.childCount; i++)
+            {
+                _position[i] = childrenTransform.GetChild(i);
+            }
+
+            Spawn();
         }
 
-        Spawn();
-    }
+        private void Spawn()
+        {
+            foreach (Transform positinon in _position)
+                CreateRunes(positinon, rnd.Next(_listRunes.Length));
+        }
 
-    private void Spawn()
-    {
-        foreach (Transform positinon in _position)
-            CreateRunes(positinon, rnd.Next(_listRunes.Length));
-    }
-
-    private void CreateRunes(Transform runePosition, int value)
-    {
-        Instantiate(_listRunes[value], new Vector3(runePosition.localPosition.x, runePosition.localPosition.y, runePosition.localPosition.z), Quaternion.Euler(_fixRotation));
+        private void CreateRunes(Transform runePosition, int value)
+        {
+            Instantiate(_listRunes[value], new Vector3(runePosition.localPosition.x, runePosition.localPosition.y, runePosition.localPosition.z), Quaternion.Euler(_fixRotation));
+        }
     }
 }

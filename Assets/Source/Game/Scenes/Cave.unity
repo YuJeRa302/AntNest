@@ -10577,6 +10577,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 418559946}
     - target: {fileID: 7297858956163358945, guid: af04da77dd8bba64bb1181a68d8578bc, type: 3}
+      propertyPath: _objectDisabler
+      value: 
+      objectReference: {fileID: 1134209798}
+    - target: {fileID: 7297858956163358945, guid: af04da77dd8bba64bb1181a68d8578bc, type: 3}
       propertyPath: _closeGameButton
       value: 
       objectReference: {fileID: 1450311931}
@@ -33751,6 +33755,10 @@ PrefabInstance:
       propertyPath: _levelObserver
       value: 
       objectReference: {fileID: 418559944}
+    - target: {fileID: 6579283653709203225, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
+      propertyPath: _objectDisabler
+      value: 
+      objectReference: {fileID: 1134209798}
     - target: {fileID: 6579283653709203230, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_Camera
       value: 

@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 
-namespace Source.Game.Scripts
+namespace Assets.Source.Game.Scripts
 {
     public class PauseHandler : MonoBehaviour
     {
         private static float s_pauseValue = 0;
         private static float s_resumeValue = 1f;
 
-        [SerializeField] private LoadConfig _config;
-
         private readonly int _valueWithGamePause = 1;
         private readonly int _valueWithoutGamePause = 0;
+
+        [SerializeField] private LoadConfig _config;
 
         private int _sourceCounter;
 

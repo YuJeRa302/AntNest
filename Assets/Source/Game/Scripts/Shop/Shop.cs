@@ -2,82 +2,86 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Shop : GamePanels
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private Button _openButton;
-    [SerializeField] private Button _closeButton;
-    [SerializeField] private DialogPanel _dialogPanel;
-    [SerializeField] private ShopTab[] _shopTabs;
-
-    public event Action<int, int> PlayerResourceChanged;
-
-    private void Awake()
+    public class Shop : GamePanels
     {
-        gameObject.SetActive(false);
-        AddPanelsListener();
-        _openButton.onClick.AddListener(Open);
-        _closeButton.onClick.AddListener(Close);
-    }
+        [SerializeField] private Button _openButton;
+        [SerializeField] private Button _closeButton;
+        [SerializeField] private DialogPanel _dialogPanel;
+        [SerializeField] private ShopTab[] _shopTabs;
 
-    private void OnDestroy()
-    {
-        RemovePanelsListener();
-        _openButton.onClick.RemoveListener(Open);
-        _closeButton.onClick.RemoveListener(Close);
-    }
+        public event Action<int, int> PlayerResourceChanged;
 
-    protected override void Open()
-    {
-        base.Open();
-        gameObject.SetActive(true);
-        ChangePlayerResourceValue();
-        InitializeShopTabs();
-        CloseTabs();
-    }
-
-    protected override void Close()
-    {
-        base.Close();
-        gameObject.SetActive(false);
-        Player.PlayerView.UpdatePlayerStats();
-    }
-
-    private void ChangePlayerResourceValue()
-    {
-        PlayerResourceChanged?.Invoke(Player.Wallet.Coins, Player.Wallet.Points);
-    }
-
-    private void InitializeShopTabs()
-    {
-        foreach (var tab in _shopTabs)
+        private void Awake()
         {
-            tab.Initialize(_dialogPanel);
+            gameObject.SetActive(false);
+            AddPanelsListener();
+            _openButton.onClick.AddListener(Open);
+            _closeButton.onClick.AddListener(Close);
         }
-    }
 
-    private void AddPanelsListener()
-    {
-        foreach (var tab in _shopTabs)
+        private void OnDestroy()
         {
-            tab.TabOpened += CloseTabs;
-            tab.PlayerResourceUpdated += ChangePlayerResourceValue;
+            RemovePanelsListener();
+            _openButton.onClick.RemoveListener(Open);
+            _closeButton.onClick.RemoveListener(Close);
         }
-    }
 
-    private void RemovePanelsListener()
-    {
-        foreach (var tab in _shopTabs)
+        protected override void Open()
         {
-            tab.TabOpened -= CloseTabs;
-            tab.PlayerResourceUpdated -= ChangePlayerResourceValue;
+            base.Open();
+            gameObject.SetActive(true);
+            ChangePlayerResourceValue();
+            InitializeShopTabs();
+            CloseTabs();
         }
-    }
 
-    private void CloseTabs()
-    {
-        foreach (var tab in _shopTabs)
+        protected override void Close()
         {
-            tab.gameObject.SetActive(false);
+            base.Close();
+            gameObject.SetActive(false);
+            Player.PlayerView.UpdatePlayerStats();
+        }
+
+        private void ChangePlayerResourceValue()
+        {
+            if (PlayerResourceChanged != null)
+                PlayerResourceChanged?.Invoke(Player.Wallet.Coins, Player.Wallet.Points);
+        }
+
+        private void InitializeShopTabs()
+        {
+            foreach (var tab in _shopTabs)
+            {
+                tab.Initialize(_dialogPanel);
+            }
+        }
+
+        private void AddPanelsListener()
+        {
+            foreach (var tab in _shopTabs)
+            {
+                tab.TabOpened += CloseTabs;
+                tab.PlayerResourceUpdated += ChangePlayerResourceValue;
+            }
+        }
+
+        private void RemovePanelsListener()
+        {
+            foreach (var tab in _shopTabs)
+            {
+                tab.TabOpened -= CloseTabs;
+                tab.PlayerResourceUpdated -= ChangePlayerResourceValue;
+            }
+        }
+
+        private void CloseTabs()
+        {
+            foreach (var tab in _shopTabs)
+            {
+                tab.gameObject.SetActive(false);
+            }
         }
     }
 }

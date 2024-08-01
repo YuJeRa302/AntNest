@@ -21,13 +21,16 @@ MonoBehaviour:
   _description: AttackAbilityDescription
   _upgradePrice: 1
   _abilityDuration: 5
-  _abilityLevels:
-  - {fileID: 11400000, guid: 53e60453205ce7c40a816249cfec6c01, type: 2}
-  - {fileID: 11400000, guid: 8d159a0bc290882468570723cc123e53, type: 2}
-  - {fileID: 11400000, guid: b995ca54ff756c04199ec7054b22569a, type: 2}
+  _abilityParameters:
+  - AbilityValue: 10
+    Delay: 20
+  - AbilityValue: 15
+    Delay: 30
+  - AbilityValue: 20
+    Delay: 35
   _shopSprite: {fileID: -1924776931, guid: 78cddcb7597c45f4fadca13f5d8b4606, type: 3}
   _sound: {fileID: 8300000, guid: 66f653a2ec5f60e4eb740ac6b1b412c0, type: 3}
-  _itemGameObject: {fileID: 6460560653073127413, guid: cb61322894b5ca04295cd7c887c18033, type: 3}
+  _abilityItem: {fileID: 6460560653073127413, guid: cb61322894b5ca04295cd7c887c18033, type: 3}
   _particleSystem: {fileID: 19800002, guid: 7287839e5686fda4980364f46913c400, type: 3}
   _typeEffect: 0
   _typeAbility: 1

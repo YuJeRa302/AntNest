@@ -1,129 +1,67 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    private readonly float _delay = 0.75f;
-
-    [Header("[Animator]")]
-    [SerializeField] protected Animator Animator;
-    [Header("[Enemy]")]
-    [SerializeField] private Enemy _enemy;
-
-    private IEnumerator _makeDamage;
-    private Player _target;
-    private bool _isAttack = false;
-    private bool _isDead = false;
-
-    public event Action EnemyDying;
-    public event Action AttackingEnemyRemoved;
-
-    private void OnDestroy()
+    public class EnemyMovement : MonoBehaviour
     {
-        _enemy.HitTaking -= TakeHit;
-    }
+        [SerializeField] private Animator _animator;
+        [SerializeField] private Enemy _enemy;
 
-    private void Update()
-    {
-        if (_isDead != true)
+        private Player _target;
+
+        public event Action AttackingEnemyRemoved;
+
+        public bool IsDead { get; private set; } = false;
+        public Animator Animator => _animator;
+
+        private void OnDestroy()
         {
-            CheckEnemyHealth();
-            CheckEnemyTarget();
-
-            if (_isAttack != true)
-                Move();
+            _enemy.HitTaking -= TakeHit;
+            _enemy.Dying -= OnEnemyDying;
         }
-    }
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (_isDead != true)
+        private void Update()
         {
-            if (collision.TryGetComponent(out Player player))
-                Attack(player);
+            if (IsDead != true)
+            {
+                CheckEnemyTarget();
+
+                if (_enemy.EnemyAttacker.IsAttack != true)
+                    Move();
+            }
         }
-        else
-            return;
-    }
 
-    private void CheckEnemyTarget()
-    {
-        if (_target != null)
-            return;
-        else
-            AttackingEnemyRemoved?.Invoke();
-    }
-
-    private void OnTriggerExit(Collider collision)
-    {
-        if (collision.TryGetComponent(out Player player))
+        public void Initialize(Player player)
         {
-            _isAttack = false;
-
-            if (_makeDamage != null)
-                StopCoroutine(_makeDamage);
+            _target = player;
+            _enemy.HitTaking += TakeHit;
+            _enemy.Dying += OnEnemyDying;
         }
-    }
 
-    public void Initialize(Player player)
-    {
-        _target = player;
-        _enemy.HitTaking += TakeHit;
-    }
-
-    private void CheckEnemyHealth()
-    {
-        if (_enemy.Health == _enemy.MinHealth)
-            Die();
-        else
-            return;
-    }
-
-    private void Attack(Player player)
-    {
-        _isAttack = true;
-
-        if (_makeDamage != null)
-            StopCoroutine(_makeDamage);
-
-        _makeDamage = AttackPlayer(player);
-        StartCoroutine(_makeDamage);
-    }
-
-    private IEnumerator AttackPlayer(Player player)
-    {
-        while (_isAttack == true)
+        private void CheckEnemyTarget()
         {
-            Animator.Play(EnemyTransitionParameter.Attack.ToString());
-            player.PlayerStats.PlayerHealth.TakeDamage(_enemy.Damage);
-            yield return new WaitForSeconds(_delay);
+            if (_target != null)
+                return;
+            else
+                AttackingEnemyRemoved?.Invoke();
         }
-    }
 
-    private void Die()
-    {
-        if (_makeDamage != null)
-            StopCoroutine(_makeDamage);
+        private void OnEnemyDying(Enemy enemy)
+        {
+            IsDead = true;
+            _animator.Play(EnemyTransitionParameter.Die.ToString());
+        }
 
-        _isDead = true;
-        Animator.Play(EnemyTransitionParameter.Die.ToString());
-        EnemyDying.Invoke();
-    }
+        private void Move()
+        {
+            _enemy.NavMeshAgent.SetDestination(_target.transform.position);
+            _animator.Play(EnemyTransitionParameter.Run.ToString());
+        }
 
-    private void Move()
-    {
-        _enemy.NavMeshAgent.SetDestination(_target.transform.position);
-        Animator.Play(EnemyTransitionParameter.Run.ToString());
-    }
-
-    private void TakeHit()
-    {
-        Animator.SetTrigger(EnemyTransitionParameter.Hit.ToString());
-    }
-
-    private void HitPlayer()
-    {
-        _enemy.EnemySound.PlayHitSound();
+        private void TakeHit()
+        {
+            _animator.SetTrigger(EnemyTransitionParameter.Hit.ToString());
+        }
     }
 }

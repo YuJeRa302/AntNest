@@ -4,103 +4,114 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GuidObserver : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    private readonly string _menuScene = "Menu";
-    private readonly float _maxLoadProgressValue = 0.9f;
-
-    [Header("[Level Entities]")]
-    [SerializeField] private GuidSoundController _guidSoundController;
-    [SerializeField] private GuidView _guidView;
-    [SerializeField] private SaveProgress _saveProgress;
-    [SerializeField] private LoadConfig _loadConfig;
-    [SerializeField] private CanvasLoader _canvasLoader;
-    [Header("[Buttonsl]")]
-    [SerializeField] private Button _guidButton;
-    [SerializeField] private Button _openSettings;
-    [SerializeField] private Button _closeSettings;
-    [SerializeField] private Button _soundButton;
-
-    private bool _isMuteSound = false;
-    private int _guidIndex = 0;
-    private AsyncOperation _load;
-
-    public event Action<bool> SoundMuted;
-    public event Action<int> GuidUpdated;
-    public event Action SettingsOpened;
-    public event Action SettingsClosed;
-    public event Action MobileInterfaceEnabled;
-
-    private void Awake()
+    public class GuidObserver : MonoBehaviour
     {
-        if (_loadConfig.TypeDevice == TypeDevice.Mobile)
-            MobileInterfaceEnabled?.Invoke();
+        private readonly string _menuScene = "Menu";
+        private readonly float _maxLoadProgressValue = 0.9f;
 
-        _guidSoundController.Initialize(_loadConfig);
-        _guidView.Initialize(_loadConfig, _guidIndex);
-        _soundButton.onClick.AddListener(MuteSound);
-        _openSettings.onClick.AddListener(OpenSettings);
-        _closeSettings.onClick.AddListener(CloseSettings);
-        _guidButton.onClick.AddListener(GuidUpdate);
-    }
+        [Header("[Level Entities]")]
+        [SerializeField] private GuidSoundController _guidSoundController;
+        [SerializeField] private GuidView _guidView;
+        [SerializeField] private SaveProgress _saveProgress;
+        [SerializeField] private LoadConfig _loadConfig;
+        [SerializeField] private ObjectDisabler _objectDisabler;
+        [Header("[Buttonsl]")]
+        [SerializeField] private Button _guidButton;
+        [SerializeField] private Button _openSettings;
+        [SerializeField] private Button _closeSettings;
+        [SerializeField] private Button _soundButton;
 
-    private void OnDestroy()
-    {
-        _soundButton.onClick.RemoveListener(MuteSound);
-        _guidButton.onClick.RemoveListener(GuidUpdate);
-        _openSettings.onClick.RemoveListener(OpenSettings);
-        _closeSettings.onClick.RemoveListener(CloseSettings);
-    }
+        private bool _isMuteSound = false;
+        private int _guidIndex = 0;
+        private AsyncOperation _load;
 
-    private void MuteSound()
-    {
-        _isMuteSound = _loadConfig.IsSoundOn != true;
-        _loadConfig.SetSoundState(_isMuteSound);
-        SoundMuted?.Invoke(_isMuteSound);
-    }
+        public event Action<bool> SoundMuted;
+        public event Action<int> GuidUpdated;
+        public event Action SettingsOpened;
+        public event Action SettingsClosed;
+        public event Action MobileInterfaceEnabled;
 
-    private void GuidUpdate()
-    {
-        if (_guidIndex < _guidView.DescriptionLength - 1)
-            _guidIndex++;
-        else
-            StartCoroutine(EndGuid());
-
-        GuidUpdated?.Invoke(_guidIndex);
-    }
-
-    private IEnumerator EndGuid()
-    {
-        _loadConfig.SetSessionState(false);
-        yield return _saveProgress.SaveApplicationParameters(_loadConfig);
-        StartCoroutine(LoadScreenLevel(SceneManager.LoadSceneAsync(_menuScene)));
-    }
-
-    private void OpenSettings()
-    {
-        SettingsOpened?.Invoke();
-    }
-
-    private void CloseSettings()
-    {
-        SettingsClosed?.Invoke();
-    }
-
-    private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)
-    {
-        if (_load != null)
-            yield break;
-
-        _canvasLoader.gameObject.SetActive(true);
-        _load = asyncOperation;
-        _load.allowSceneActivation = false;
-
-        while (_load.progress < _maxLoadProgressValue)
+        private void Awake()
         {
-            yield return null;
+            if (_loadConfig.TypeDevice == TypeDevice.Mobile)
+            {
+                if (MobileInterfaceEnabled != null)
+                    MobileInterfaceEnabled?.Invoke();
+            }
+
+            _guidSoundController.Initialize(_loadConfig);
+            _guidView.Initialize(_loadConfig, _guidIndex);
+            _soundButton.onClick.AddListener(MuteSound);
+            _openSettings.onClick.AddListener(OpenSettings);
+            _closeSettings.onClick.AddListener(CloseSettings);
+            _guidButton.onClick.AddListener(GuidUpdate);
         }
 
-        _load.allowSceneActivation = true;
-        _load = null;
+        private void OnDestroy()
+        {
+            _soundButton.onClick.RemoveListener(MuteSound);
+            _guidButton.onClick.RemoveListener(GuidUpdate);
+            _openSettings.onClick.RemoveListener(OpenSettings);
+            _closeSettings.onClick.RemoveListener(CloseSettings);
+        }
+
+        private void MuteSound()
+        {
+            _isMuteSound = _loadConfig.IsSoundOn != true;
+            _loadConfig.SetSoundState(_isMuteSound);
+
+            if (SoundMuted != null)
+                SoundMuted?.Invoke(_isMuteSound);
+        }
+
+        private void GuidUpdate()
+        {
+            if (_guidIndex < _guidView.DescriptionLength - 1)
+                _guidIndex++;
+            else
+                StartCoroutine(EndGuid());
+
+            if (GuidUpdated != null)
+                GuidUpdated?.Invoke(_guidIndex);
+        }
+
+        private IEnumerator EndGuid()
+        {
+            _loadConfig.SetSessionState(false);
+            yield return _saveProgress.SaveApplicationParameters(_loadConfig);
+            StartCoroutine(LoadScreenLevel(SceneManager.LoadSceneAsync(_menuScene)));
+        }
+
+        private void OpenSettings()
+        {
+            if (SettingsOpened != null)
+                SettingsOpened?.Invoke();
+        }
+
+        private void CloseSettings()
+        {
+            if (SettingsClosed != null)
+                SettingsClosed?.Invoke();
+        }
+
+        private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)
+        {
+            if (_load != null)
+                yield break;
+
+            _objectDisabler.gameObject.SetActive(true);
+            _load = asyncOperation;
+            _load.allowSceneActivation = false;
+
+            while (_load.progress < _maxLoadProgressValue)
+            {
+                yield return null;
+            }
+
+            _load.allowSceneActivation = true;
+            _load = null;
+        }
     }
 }

@@ -1,18 +1,14 @@
-using UnityEngine;
-
-public class DamageAbility : AbilityItemGameObject
+namespace Assets.Source.Game.Scripts
 {
-    [Header("[Hit Count]")]
-    [SerializeField] private int _hitCount;
-
-    protected override void Use()
+    public class DamageAbility : AbilityItem
     {
-        if (IsUseAbility == false)
+        protected override void Use()
         {
-            Player.PlayerStats.UseAbility(TypeAbility, CurrentDuration, CurrentAbilityValue);
-            ApplyAbility();
+            if (IsUseAbility == false)
+            {
+                Player.PlayerStats.PlayerAbilityCaster.UseAbility(TypeAbility, CurrentDuration, CurrentAbilityValue);
+                ApplyAbility();
+            }
         }
-        else
-            return;
     }
 }

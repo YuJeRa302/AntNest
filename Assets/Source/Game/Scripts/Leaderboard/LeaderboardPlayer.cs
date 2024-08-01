@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class LeaderboardPlayer : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    public LeaderboardPlayer(int rank, string name, int score)
+    public class LeaderboardPlayer : MonoBehaviour
     {
-        this.Rank = rank;
-        this.Name = name;
-        this.Score = score;
-    }
+        public LeaderboardPlayer(int rank, string name, int score)
+        {
+            this.Rank = rank;
+            this.Name = name;
+            this.Score = score;
+        }
 
-    public int Rank { get; private set; }
-    public string Name { get; private set; }
-    public int Score { get; private set; }
+        public int Rank { get; private set; }
+        public string Name { get; private set; }
+        public int Score { get; private set; }
+    }
 }

@@ -1,18 +1,14 @@
-using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New LangButton", menuName = "Create LangButton", order = 51)]
-public class LanguageButtonData : ScriptableObject
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private string _nameLanguage;
-    [SerializeField] private Sprite _iconLanguage;
+    [CreateAssetMenu(fileName = "New LangButton", menuName = "Create LangButton", order = 51)]
+    public class LanguageButtonData : ScriptableObject
+    {
+        [SerializeField] private string _nameLanguage;
+        [SerializeField] private Sprite _iconLanguage;
 
-    public string NameLanguage => _nameLanguage;
-    public Sprite IconLanguage => _iconLanguage;
-}
-
-[Serializable]
-public class LanguageButtonState
-{
-    public LanguageButtonData LanguageButtonData;
+        public string NameLanguage => _nameLanguage;
+        public Sprite IconLanguage => _iconLanguage;
+    }
 }

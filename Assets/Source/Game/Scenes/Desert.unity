@@ -2320,19 +2320,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 71522909188477514, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 71522909188477514, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 71522909188477514, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 217.4725
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 71522909188477514, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 304514262924650082, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2456,19 +2456,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3660723652254243930, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3660723652254243930, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3660723652254243930, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 217.4725
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3660723652254243930, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -490
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3731931976904065037, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3006,6 +3006,10 @@ PrefabInstance:
       propertyPath: _levelObserver
       value: 
       objectReference: {fileID: 2031170241}
+    - target: {fileID: 6579283653709203225, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
+      propertyPath: _objectDisabler
+      value: 
+      objectReference: {fileID: 1192485207}
     - target: {fileID: 6579283653709203230, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_Camera
       value: 
@@ -3300,19 +3304,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7568575539236353216, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7568575539236353216, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7568575539236353216, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 217.4725
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7568575539236353216, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -290
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7674257181238390783, guid: 0e39899073ef93c428ac9b3146067750, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4676,6 +4680,10 @@ PrefabInstance:
       objectReference: {fileID: 1409863023}
     - target: {fileID: 7297858956163358945, guid: af04da77dd8bba64bb1181a68d8578bc, type: 3}
       propertyPath: _canvasLoader
+      value: 
+      objectReference: {fileID: 1192485207}
+    - target: {fileID: 7297858956163358945, guid: af04da77dd8bba64bb1181a68d8578bc, type: 3}
+      propertyPath: _objectDisabler
       value: 
       objectReference: {fileID: 1192485207}
     - target: {fileID: 7297858956163358945, guid: af04da77dd8bba64bb1181a68d8578bc, type: 3}

@@ -2720,7 +2720,7 @@ GameObject:
   - component: {fileID: 6039582120408191661}
   - component: {fileID: 2188662625080234530}
   - component: {fileID: 7579361462551254245}
-  - component: {fileID: 3175903979444715957}
+  - component: {fileID: 1701327982077695615}
   m_Layer: 5
   m_Name: buttonGrenade
   m_TagString: Untagged
@@ -2830,7 +2830,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &3175903979444715957
+--- !u!114 &1701327982077695615
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2839,10 +2839,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1698715226180569502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1663bbe4594b7f1419fa072cdbc4ff8e, type: 3}
+  m_Script: {fileID: 11500000, guid: f917e056ed78bab4399d10d65362a288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useConsumableButton: {fileID: 7579361462551254245}
+  UseConsumableButton: {fileID: 7579361462551254245}
   _countConsumableItem: {fileID: 3218281850338587070}
   _reloadingImage: {fileID: 7628124846511719766}
 --- !u!1 &1760553281040936593
@@ -9700,7 +9700,7 @@ GameObject:
   - component: {fileID: 8994564265215883245}
   - component: {fileID: 7187431284935993703}
   - component: {fileID: 3346407535932926928}
-  - component: {fileID: 1173137545353509279}
+  - component: {fileID: 2519174065062357624}
   m_Layer: 5
   m_Name: buttonHealthPotion
   m_TagString: Untagged
@@ -9810,7 +9810,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1173137545353509279
+--- !u!114 &2519174065062357624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9819,10 +9819,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6231548438929497979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 112f68a99c5f6c1478c9ab0fe1ca897d, type: 3}
+  m_Script: {fileID: 11500000, guid: f917e056ed78bab4399d10d65362a288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useConsumableButton: {fileID: 3346407535932926928}
+  UseConsumableButton: {fileID: 3346407535932926928}
   _countConsumableItem: {fileID: 5168660908420538279}
   _reloadingImage: {fileID: 8495874104437368104}
 --- !u!1 &6238199673954723780
@@ -10198,7 +10198,7 @@ GameObject:
   - component: {fileID: 4283110742060163774}
   - component: {fileID: 4030546555244016936}
   - component: {fileID: 388677686039673931}
-  - component: {fileID: 2028181584770432510}
+  - component: {fileID: 4972667701368933646}
   m_Layer: 5
   m_Name: buttonMine
   m_TagString: Untagged
@@ -10308,7 +10308,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2028181584770432510
+--- !u!114 &4972667701368933646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10317,10 +10317,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6451239321114128799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76466ae735e51e6458194aae69d6f710, type: 3}
+  m_Script: {fileID: 11500000, guid: f917e056ed78bab4399d10d65362a288, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useConsumableButton: {fileID: 388677686039673931}
+  UseConsumableButton: {fileID: 388677686039673931}
   _countConsumableItem: {fileID: 2925436254480953956}
   _reloadingImage: {fileID: 4075564776317558357}
 --- !u!1 &6567681661697186050
@@ -10829,7 +10829,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _openButton: {fileID: 6579283653907755645}
   _closeButton: {fileID: 1392405345152479626}
-  _soundButton: {fileID: 5821172477353552073}
   _imageButton: {fileID: 3452618526565270296}
   _muteButton: {fileID: 21300000, guid: e66abfd6c95ed384c8dc0513b8fe6b17, type: 3}
   _unmuteButton: {fileID: 21300000, guid: fcd1395f90da4cf4f87cad33e5881c5c, type: 3}
@@ -11457,7 +11456,6 @@ MonoBehaviour:
   ItemType: 1
   ItemContainer: {fileID: 6579283653714403307}
   _openButton: {fileID: 6579283653283257970}
-  _shop: {fileID: 6579283654000373080}
   _leanText: {fileID: 7332424691368142327}
   _translationText: AttentionObjects
   _player: {fileID: 0}
@@ -13603,7 +13601,7 @@ RectTransform:
   - {fileID: 6579283654000373087}
   - {fileID: 4084762235943934251}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -13714,7 +13712,7 @@ MonoBehaviour:
   _imageEnemy: {fileID: 6579283653554757790}
   _enemiesCount: {fileID: 1327574350625495740}
   _coinCount: {fileID: 3794766887099123743}
-  _canvasLoader: {fileID: 0}
+  _objectDisabler: {fileID: 0}
   _waveNumber: {fileID: 7628578790326579615}
   _waveName: {fileID: 2399055212072743731}
   _extraWaveIcon: {fileID: 8830310691897067125}
@@ -15123,7 +15121,6 @@ MonoBehaviour:
   ItemType: 0
   ItemContainer: {fileID: 6579283653496742777}
   _openButton: {fileID: 6579283653558988095}
-  _shop: {fileID: 6579283654000373080}
   _leanText: {fileID: 7332424691368142327}
   _translationText: AttentionObjects
   _player: {fileID: 0}
@@ -15222,7 +15219,6 @@ MonoBehaviour:
   ItemType: 3
   ItemContainer: {fileID: 6579283653440795304}
   _openButton: {fileID: 6579283653264149510}
-  _shop: {fileID: 6579283654000373080}
   _leanText: {fileID: 7332424691368142327}
   _translationText: AttentionObjects
   _player: {fileID: 0}
@@ -18244,7 +18240,6 @@ MonoBehaviour:
   ItemType: 2
   ItemContainer: {fileID: 1426738952945098823}
   _openButton: {fileID: 2941669130565871806}
-  _shop: {fileID: 6579283654000373080}
   _leanText: {fileID: 7332424691368142327}
   _translationText: AttentionAbility
   _player: {fileID: 0}

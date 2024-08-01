@@ -10,8 +10,8 @@
 
 namespace IJunior.TypedScenes
 {
+    using Assets.Source.Game.Scripts;
     using UnityEngine.SceneManagement;
-    
     
     public class Forest : TypedScene
     {

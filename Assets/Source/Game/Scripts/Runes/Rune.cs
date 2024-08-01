@@ -1,45 +1,46 @@
 using UnityEngine;
 
-public class Rune : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private ParticleSystem[] _particles;
-    [SerializeField] private TypeRune _typeRune;
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _audioClip;
-    [SerializeField] private int _healing = 20;
-    [SerializeField] private int _coins = 50;
-
-    private float _destroyDelay = 0.38f;
-
-    private void OnTriggerEnter(Collider collision)
+    public class Rune : MonoBehaviour
     {
-        if (collision.gameObject.TryGetComponent(out Player player))
+        [SerializeField] private ParticleSystem[] _particles;
+        [SerializeField] private TypeRune _typeRune;
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _audioClip;
+        [SerializeField] private int _healing = 20;
+        [SerializeField] private int _coins = 50;
+
+        private float _destroyDelay = 0.38f;
+
+        private void OnTriggerEnter(Collider collision)
         {
-            if (player.PlayerStats.PlayerHealth.CurrentHealth < player.PlayerStats.PlayerHealth.MaxHealth || _typeRune != TypeRune.Healing)
+            if (collision.gameObject.TryGetComponent(out Player player))
             {
-                TakeRune(_typeRune, player);
-                Destroy(gameObject, _destroyDelay);
+                if (player.PlayerStats.PlayerHealth.CurrentHealth < player.PlayerStats.PlayerHealth.MaxHealth || _typeRune != TypeRune.Healing)
+                {
+                    TakeRune(_typeRune, player);
+                    Destroy(gameObject, _destroyDelay);
+                }
             }
-            else
-                return;
         }
-    }
 
-    private void TakeRune(TypeRune typeRune, Player player)
-    {
-        _audioSource.PlayOneShot(_audioClip);
-
-        foreach (var particle in _particles)
-            particle.Play();
-
-        switch (typeRune)
+        private void TakeRune(TypeRune typeRune, Player player)
         {
-            case TypeRune.Healing:
-                player.PlayerStats.PlayerHealth.TakeHealRune(_healing);
-                break;
-            case TypeRune.Gold:
-                player.Wallet.TakeGoldenRune(_coins);
-                break;
+            _audioSource.PlayOneShot(_audioClip);
+
+            foreach (var particle in _particles)
+                particle.Play();
+
+            switch (typeRune)
+            {
+                case TypeRune.Healing:
+                    player.PlayerStats.PlayerHealth.TakeHealRune(_healing);
+                    break;
+                case TypeRune.Gold:
+                    player.Wallet.TakeGoldenRune(_coins);
+                    break;
+            }
         }
     }
 }

@@ -203,17 +203,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5939660}
   m_CullTransparentMesh: 1
---- !u!114 &8413798 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1058745113766757270, guid: f481e37e246f6634084432d8b3308d8b, type: 3}
-  m_PrefabInstance: {fileID: 1315575033}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eb86c345e244674c9a675c7afa45cfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &16466496
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,10 +2044,9 @@ MonoBehaviour:
   _enemy: {fileID: 1190186595}
   _enemyButton: {fileID: 265188277}
   _scrollEnemyInfo: {fileID: 1190186597}
-  _menuPanel: {fileID: 593471591}
   _dotView: {fileID: 134470937}
   _openGuidButton: {fileID: 138026918}
-  _canvasLoader: {fileID: 279233018}
+  _objectDisabler: {fileID: 0}
 --- !u!114 &134470937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3742,7 +3730,7 @@ MonoBehaviour:
   MenuPanel: {fileID: 593471591}
   _closeButton: {fileID: 1341098516}
   _openButton: {fileID: 1195713958}
-  _canvasLoader: {fileID: 8413798}
+  _objectDisabler: {fileID: 279233018}
   _defaultLanguageButtonState:
     LanguageButtonState:
     - LanguageButtonData: {fileID: 11400000, guid: 906e5dae1dfc16b469ddd7f25a0a5292, type: 2}
@@ -6188,7 +6176,7 @@ MonoBehaviour:
   _closeButton: {fileID: 523889249}
   _openButton: {fileID: 1052027918}
   _questPanelView: {fileID: 565113793}
-  _canvasLoader: {fileID: 279233018}
+  _objectDisabler: {fileID: 279233018}
   _loadConfig: {fileID: 11400000, guid: 75d2504d597f3e34db96d6bbe3f485be, type: 2}
   _buttonsContainer: {fileID: 1095544847}
   _defaultLevelState:
@@ -6718,7 +6706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _saveProgress: {fileID: 1916783023}
   _config: {fileID: 11400000, guid: 75d2504d597f3e34db96d6bbe3f485be, type: 2}
-  _menuSound: {fileID: 1390287172}
+  _menuSoundPlayer: {fileID: 1390287172}
   _menuView: {fileID: 593471592}
   _settingsPanel: {fileID: 286695069}
   _leanLocalization: {fileID: 693494696}

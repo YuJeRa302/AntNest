@@ -1,59 +1,61 @@
 using UnityEngine;
 using Agava.WebUtility;
-using Source.Game.Scripts;
 
-[RequireComponent(typeof(PauseHandler))]
-public class FocusObserver : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private PauseHandler _pauseHandler;
-
-    private void Awake()
+    [RequireComponent(typeof(PauseHandler))]
+    public class FocusObserver : MonoBehaviour
     {
-        if (Application.isFocused == false)
-            ChangeFocus(Application.isFocused);
-    }
+        [SerializeField] private PauseHandler _pauseHandler;
 
-    private void OnEnable()
-    {
-        Application.focusChanged += OnInBackgroundChangeApp;
-        WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeWeb;
-    }
+        private void Awake()
+        {
+            if (Application.isFocused == false)
+                ChangeFocus(Application.isFocused);
+        }
 
-    private void OnDisable()
-    {
-        Application.focusChanged -= OnInBackgroundChangeApp;
-        WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeWeb;
-    }
+        private void OnEnable()
+        {
+            Application.focusChanged += OnInBackgroundChangeApp;
+            WebApplication.InBackgroundChangeEvent += OnInBackgroundChangeWeb;
+        }
 
-    private void OnInBackgroundChangeApp(bool inApp)
-    {
-        ChangeFocus(inApp);
-    }
+        private void OnDisable()
+        {
+            Application.focusChanged -= OnInBackgroundChangeApp;
+            WebApplication.InBackgroundChangeEvent -= OnInBackgroundChangeWeb;
+        }
 
-    private void OnInBackgroundChangeWeb(bool inBackground)
-    {
-        ChangeFocus(!inBackground);
-    }
+        private void OnInBackgroundChangeApp(bool inApp)
+        {
+            ChangeFocus(inApp);
+        }
 
-    private void ChangeFocus(bool state)
-    {
-        if (state)
-            _pauseHandler.ResumeGame();
-        else
-            _pauseHandler.PauseGame();
-    }
+        private void OnInBackgroundChangeWeb(bool inBackground)
+        {
+            ChangeFocus(!inBackground);
+        }
 
-    [ContextMenu("Loose Focus")]
-    public void LooseFocus()
-    {
-        OnInBackgroundChangeApp(false);
-        OnInBackgroundChangeWeb(true);
-    }
+        private void ChangeFocus(bool state)
+        {
+            if (state)
+                _pauseHandler.ResumeGame();
+            else
+                _pauseHandler.PauseGame();
+        }
 
-    [ContextMenu("Get Focus")]
-    public void GetFocus()
-    {
-        OnInBackgroundChangeApp(true);
-        OnInBackgroundChangeWeb(false);
+        [ContextMenu("Loose Focus")]
+        public void LooseFocus()
+        {
+            OnInBackgroundChangeApp(false);
+            OnInBackgroundChangeWeb(true);
+        }
+
+        [ContextMenu("Get Focus")]
+        public void GetFocus()
+        {
+            OnInBackgroundChangeApp(true);
+            OnInBackgroundChangeWeb(false);
+        }
     }
 }

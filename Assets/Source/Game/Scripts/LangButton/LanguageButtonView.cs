@@ -3,49 +3,53 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LanguageButtonView : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private Button _button;
-    [SerializeField] private Image _image;
-
-    private string _languageTag;
-    private AudioClip _hover;
-    private AudioClip _click;
-    private AudioSource _audioSource;
-
-    public event Action<string> LanguageSelected;
-
-    private void Awake()
+    public class LanguageButtonView : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler
     {
-        _button.onClick.AddListener(OnSelectLanguage);
-    }
+        [SerializeField] private Button _button;
+        [SerializeField] private Image _image;
 
-    private void OnDestroy()
-    {
-        _button.onClick.RemoveListener(OnSelectLanguage);
-    }
+        private string _languageTag;
+        private AudioClip _hover;
+        private AudioClip _click;
+        private AudioSource _audioSource;
 
-    public void Initialize(LanguageButtonState languageButtonState, AudioSource audioSource, AudioClip click, AudioClip hover)
-    {
-        _image.sprite = languageButtonState.LanguageButtonData.IconLanguage;
-        _languageTag = languageButtonState.LanguageButtonData.NameLanguage;
-        _audioSource = audioSource;
-        _hover = hover;
-        _click = click;
-    }
+        public event Action<string> LanguageSelected;
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _audioSource.PlayOneShot(_hover);
-    }
+        private void Awake()
+        {
+            _button.onClick.AddListener(OnSelectLanguage);
+        }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        _audioSource.PlayOneShot(_click);
-    }
+        private void OnDestroy()
+        {
+            _button.onClick.RemoveListener(OnSelectLanguage);
+        }
 
-    private void OnSelectLanguage()
-    {
-        LanguageSelected.Invoke(_languageTag);
+        public void Initialize(LanguageButtonState languageButtonState, AudioSource audioSource, AudioClip click, AudioClip hover)
+        {
+            _image.sprite = languageButtonState.LanguageButtonData.IconLanguage;
+            _languageTag = languageButtonState.LanguageButtonData.NameLanguage;
+            _audioSource = audioSource;
+            _hover = hover;
+            _click = click;
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _audioSource.PlayOneShot(_hover);
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            _audioSource.PlayOneShot(_click);
+        }
+
+        private void OnSelectLanguage()
+        {
+            if (LanguageSelected != null)
+                LanguageSelected.Invoke(_languageTag);
+        }
     }
 }

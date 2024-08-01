@@ -1,28 +1,29 @@
 using UnityEngine;
 
-public class PlayerEquipment : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [Header("[Player Entity]")]
-    [SerializeField] private Player _player;
-    [Header("[Containers]")]
-    [SerializeField] private Transform _equipmentObjectContainer;
-
-    private EquipmentItemGameObject _equipmentObject;
-
-    public void BuyItem(EquipmentItemState equipmentItemState)
+    public class PlayerEquipment : MonoBehaviour
     {
-        equipmentItemState.IsBuyed = true;
-    }
+        [SerializeField] private Player _player;
+        [SerializeField] private Transform _equipmentObjectContainer;
 
-    public void EquipItem(EquipmentItemState equipmentItemState)
-    {
-        if (equipmentItemState == null)
-            return;
+        private EquipmentItem _equipmentItem;
 
-        if (_equipmentObject != null)
-            Destroy(_equipmentObject.gameObject);
+        public void BuyItem(EquipmentItemState equipmentItemState)
+        {
+            equipmentItemState.IsBuyed = true;
+        }
 
-        _player.PlayerInventory.EquipItem(equipmentItemState);
-        _equipmentObject = Instantiate(equipmentItemState.ItemData.ItemGameObject as EquipmentItemGameObject, _equipmentObjectContainer);
+        public void EquipItem(EquipmentItemState equipmentItemState)
+        {
+            if (equipmentItemState == null)
+                return;
+
+            if (_equipmentItem != null)
+                Destroy(_equipmentItem.gameObject);
+
+            _player.PlayerInventory.EquipItem(equipmentItemState);
+            _equipmentItem = Instantiate(equipmentItemState.ItemData.Item as EquipmentItem, _equipmentObjectContainer);
+        }
     }
 }

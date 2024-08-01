@@ -1,13 +1,14 @@
-public class Healing : AbilityItemGameObject
+namespace Assets.Source.Game.Scripts
 {
-    protected override void Use()
+    public class Healing : AbilityItem
     {
-        if (IsUseAbility == false && Player.PlayerStats.PlayerHealth.CurrentHealth < Player.PlayerStats.PlayerHealth.MaxHealth)
+        protected override void Use()
         {
-            Player.PlayerStats.PlayerHealth.ChangeHealth(CurrentAbilityValue);
-            ApplyAbility();
+            if (IsUseAbility == false && Player.PlayerStats.PlayerHealth.CurrentHealth < Player.PlayerStats.PlayerHealth.MaxHealth)
+            {
+                Player.PlayerStats.PlayerHealth.ChangeHealth(CurrentAbilityValue);
+                ApplyAbility();
+            }
         }
-        else
-            return;
     }
 }

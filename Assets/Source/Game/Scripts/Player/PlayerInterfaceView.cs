@@ -1,20 +1,21 @@
 using UnityEngine;
 
-public class PlayerInterfaceView : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [Header("[Mobile Interface GameObject]")]
-    [SerializeField] private GameObject _mobileInterface;
-    [Header("[Desktop Interface GameObject]")]
-    [SerializeField] private GameObject[] _keyCodes;
-
-    public void SetMobileInterface()
+    public class PlayerInterfaceView : MonoBehaviour
     {
-        _mobileInterface.SetActive(true);
-    }
+        [SerializeField] private GameObject _mobileInterface;
+        [SerializeField] private GameObject[] _keyCodes;
 
-    public void SetDesktopInterface()
-    {
-        foreach (var keyCode in _keyCodes)
-            keyCode.SetActive(true);
+        public void SetMobileInterface()
+        {
+            _mobileInterface.SetActive(true);
+        }
+
+        public void SetDesktopInterface()
+        {
+            foreach (var keyCode in _keyCodes)
+                keyCode.SetActive(true);
+        }
     }
 }

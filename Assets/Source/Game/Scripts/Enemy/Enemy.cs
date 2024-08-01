@@ -2,101 +2,104 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(EnemySound))]
-[RequireComponent(typeof(EnemyMovement))]
-[RequireComponent(typeof(EnemyView))]
-[RequireComponent(typeof(EnemyAbility))]
-public class Enemy : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    private readonly int _minHealth = 0;
-    private readonly int _delayDestroy = 1;
-
-    [SerializeField] private NavMeshAgent _navMeshAgent;
-    [Header("[Enemy Entities]")]
-    [SerializeField] private EnemyView _enemyView;
-    [SerializeField] private EnemySound _enemySound;
-    [SerializeField] private EnemyMovement _enemyMovement;
-    [SerializeField] private EnemyAbility _enemyAbility;
-    [SerializeField] private Transform _particleContainer;
-
-    private ParticleSystem _dieParticle;
-    private ParticleSystem _hitParticle;
-    private ParticleSystem _abilityParticle;
-    private int _level;
-    private int _damage;
-    private int _health;
-    private int _goldReward;
-    private int _experienceReward;
-    private int _score;
-
-    public int Level => _level;
-    public int Damage => _damage;
-    public int Health => _health;
-    public int MinHealth => _minHealth;
-    public int GoldReward => _goldReward;
-    public int ExperienceReward => _experienceReward;
-    public int Score => _score;
-    public NavMeshAgent NavMeshAgent => _navMeshAgent;
-    public EnemyView EnemyView => _enemyView;
-    public EnemyMovement EnemyMovement => _enemyMovement;
-    public EnemyAbility EnemyAbility => _enemyAbility;
-    public EnemySound EnemySound => _enemySound;
-
-    public event Action<int> HealthChanged;
-    public event Action<Enemy> Dying;
-    public event Action HitTaking;
-
-    private void OnDestroy()
+    [RequireComponent(typeof(EnemySoundPlayer))]
+    [RequireComponent(typeof(EnemyMovement))]
+    [RequireComponent(typeof(EnemyHealthBar))]
+    [RequireComponent(typeof(EnemyAbilityCaster))]
+    [RequireComponent(typeof(EnemyAttacker))]
+    public class Enemy : MonoBehaviour
     {
-        _enemyMovement.EnemyDying -= OnEnemyDying;
-        _enemyMovement.AttackingEnemyRemoved -= OnAttackingEnemyRemoved;
-    }
+        private readonly int _minHealth = 0;
+        private readonly int _delayDestroy = 1;
 
-    public void Initialize(EnemyData enemyData, float soundVolume, Player player)
-    {
-        CreateParticleSystem(_particleContainer, enemyData.EnemyDieParticleSystem, enemyData.EnemyHitParticleSystem, enemyData.EnemyAbilityParticleSystem);
-        Fill(enemyData);
-        _enemySound.Initialize(soundVolume, enemyData);
-        _enemyView.Initialize(enemyData, _dieParticle, _hitParticle, _abilityParticle, player.PlayerUICamera);
-        _enemyAbility.Initialize(enemyData);
-        _enemyMovement.Initialize(player);
-        _enemyMovement.EnemyDying += OnEnemyDying;
-        _enemyMovement.AttackingEnemyRemoved += OnAttackingEnemyRemoved;
-    }
+        [SerializeField] private NavMeshAgent _navMeshAgent;
+        [Header("[Enemy Entities]")]
+        [SerializeField] private EnemyHealthBar _enemyHealthBar;
+        [SerializeField] private EnemySoundPlayer _enemySoundPlayer;
+        [SerializeField] private EnemyMovement _enemyMovement;
+        [SerializeField] private EnemyAbilityCaster _enemyAbilityCaster;
+        [SerializeField] private EnemyAttacker _enemyAttacker;
+        [SerializeField] private Transform _particleContainer;
 
-    public void TakeDamage(int damage)
-    {
-        _health = Mathf.Clamp(_health - damage, _minHealth, _health);
-        HitTaking.Invoke();
-        HealthChanged.Invoke(_health);
-    }
+        private ParticleSystem _dieParticle;
+        private ParticleSystem _hitParticle;
+        private ParticleSystem _abilityParticle;
+        private int _health;
+        private EnemyData _enemyData;
 
-    private void OnAttackingEnemyRemoved()
-    {
-        Destroy(gameObject);
-    }
+        public event Action<int> HealthChanged;
+        public event Action<Enemy> Dying;
+        public event Action HitTaking;
 
-    private void OnEnemyDying()
-    {
-        _enemySound.PlayDieSound();
-        Dying.Invoke(this);
-        Destroy(gameObject, _delayDestroy);
-    }
+        public int Damage => _enemyData.Damage;
+        public int GoldReward => _enemyData.GoldReward;
+        public int ExperienceReward => _enemyData.ExperienceReward;
+        public int Score => _enemyData.Score;
+        public NavMeshAgent NavMeshAgent => _navMeshAgent;
+        public EnemyHealthBar EnemyHealthBar => _enemyHealthBar;
+        public EnemyMovement EnemyMovement => _enemyMovement;
+        public EnemyAttacker EnemyAttacker => _enemyAttacker;
 
-    private void CreateParticleSystem(Transform container, ParticleSystem particleDie, ParticleSystem particleHit, ParticleSystem particleAbility)
-    {
-        _dieParticle = Instantiate(particleDie, container);
-        _hitParticle = Instantiate(particleHit, container);
-        _abilityParticle = Instantiate(particleAbility, container);
-    }
+        private void OnDestroy()
+        {
+            _enemyMovement.AttackingEnemyRemoved -= OnAttackingEnemyRemoved;
+        }
 
-    private void Fill(EnemyData enemyData)
-    {
-        _level = enemyData.Level;
-        _damage = enemyData.Damage;
-        _health = enemyData.Health;
-        _goldReward = enemyData.GoldReward;
-        _experienceReward = enemyData.ExperienceReward;
-        _score = enemyData.Score;
+        public void Initialize(EnemyData enemyData, float soundVolume, Player player)
+        {
+            CreateParticleSystem(_particleContainer, enemyData.EnemyDieParticleSystem, enemyData.EnemyHitParticleSystem, enemyData.EnemyAbilityParticleSystem);
+            Fill(enemyData);
+            _enemySoundPlayer.Initialize(soundVolume, enemyData);
+            _enemyHealthBar.Initialize(enemyData, player.PlayerUICamera);
+            _enemyAbilityCaster.Initialize(enemyData, _abilityParticle);
+            _enemyMovement.Initialize(player);
+            _enemyMovement.AttackingEnemyRemoved += OnAttackingEnemyRemoved;
+        }
+
+        public void TakeDamage(int damage)
+        {
+            _health = Mathf.Clamp(_health - damage, _minHealth, _health);
+
+            if (_health == _minHealth)
+                EnemyDied();
+
+            _hitParticle.Play();
+
+            if (HitTaking != null)
+                HitTaking.Invoke();
+
+            if (HealthChanged != null)
+                HealthChanged.Invoke(_health);
+        }
+
+        private void OnAttackingEnemyRemoved()
+        {
+            Destroy(gameObject);
+        }
+
+        private void EnemyDied()
+        {
+            if (Dying != null)
+                Dying.Invoke(this);
+
+            _dieParticle.Play();
+            _hitParticle.gameObject.SetActive(false);
+            Destroy(gameObject, _delayDestroy);
+        }
+
+        private void CreateParticleSystem(Transform container, ParticleSystem particleDie, ParticleSystem particleHit, ParticleSystem particleAbility)
+        {
+            _dieParticle = Instantiate(particleDie, container);
+            _hitParticle = Instantiate(particleHit, container);
+            _abilityParticle = Instantiate(particleAbility, container);
+        }
+
+        private void Fill(EnemyData enemyData)
+        {
+            _health = enemyData.Health;
+            _enemyData = enemyData;
+        }
     }
 }

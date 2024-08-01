@@ -717,6 +717,7 @@ GameObject:
   - component: {fileID: 6549311387692370547}
   - component: {fileID: 2851838012690918809}
   - component: {fileID: 8725826129267128959}
+  - component: {fileID: 1370048920337583089}
   m_Layer: 6
   m_Name: MushroomBoss
   m_TagString: Untagged
@@ -820,10 +821,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dded5180b448484cb733aa12837b316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 8725826129267128959}
   _audioSource: {fileID: 4450427725307593128}
-  _audioClipDie: {fileID: 0}
-  _hitPlayer: {fileID: 0}
+  _audioClipDie: {fileID: 8300000, guid: 14ce90e2a5361d548bdf6c2c126e0233, type: 3}
+  _hitPlayer: {fileID: 8300000, guid: 0ebfed3c99aaf5c43b2bd86ed7a3aad6, type: 3}
+  _enemy: {fileID: 8725826129267128959}
 --- !u!114 &7545358783759109272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -836,7 +837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff312fac800d904db6a82fec96852f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 7956253346445797527}
+  _animator: {fileID: 7956253346445797527}
   _enemy: {fileID: 8725826129267128959}
 --- !u!114 &6549311387692370547
 MonoBehaviour:
@@ -850,7 +851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c98bd8638dff443b410678dfbd5b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyCanvas: {fileID: 0}
   _sliderHP: {fileID: 7129778430347299368}
   _enemy: {fileID: 8725826129267128959}
   _level: {fileID: 3406436801154485210}
@@ -858,7 +858,7 @@ MonoBehaviour:
   _enemyIcon: {fileID: 9153341692117087907}
   _coolDownImage: {fileID: 8155144495672048487}
   _abilityImage: {fileID: 3582231017923333632}
-  _cancelSprite: {fileID: 0}
+  _cancelSprite: {fileID: 21300000, guid: 2fa77160cc27ae141bb7899263c99c48, type: 3}
   _enemyViewGameObject: {fileID: 3028676675135136588}
 --- !u!114 &2851838012690918809
 MonoBehaviour:
@@ -872,8 +872,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668ba0d9728263a40bab034e883c2b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coolDown: 0
-  _damage: 0
+  _coolDown: 25
+  _damage: 25
   _enemy: {fileID: 8725826129267128959}
 --- !u!114 &8725826129267128959
 MonoBehaviour:
@@ -888,11 +888,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 7956253346445797513}
-  _enemyView: {fileID: 6549311387692370547}
-  _enemySound: {fileID: 4299953359034682392}
+  _enemyHealthBar: {fileID: 6549311387692370547}
+  _enemySoundPlayer: {fileID: 4299953359034682392}
   _enemyMovement: {fileID: 7545358783759109272}
-  _enemyAbility: {fileID: 2851838012690918809}
+  _enemyAbilityCaster: {fileID: 2851838012690918809}
+  _enemyAttacker: {fileID: 1370048920337583089}
   _particleContainer: {fileID: 918047798383265042}
+--- !u!114 &1370048920337583089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3729462333746423895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd45163695dfc3e4091416bbc29e1007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemy: {fileID: 8725826129267128959}
 --- !u!1 &4477161416102117415
 GameObject:
   m_ObjectHideFlags: 0

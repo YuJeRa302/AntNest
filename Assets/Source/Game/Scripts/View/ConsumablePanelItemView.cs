@@ -1,51 +1,55 @@
-using Lean.Localization;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using Lean.Localization;
 
-public class ConsumablePanelItemView : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private Text _itemPrice;
-    [SerializeField] private Text _itemValue;
-    [SerializeField] private Image _itemIcon;
-    [SerializeField] private Image _shopIcon;
-    [SerializeField] private Button _buyButton;
-    [SerializeField] private LeanLocalizedText _itemName;
-
-    private ConsumableItemState _consumableItemState;
-
-    public event Action<ConsumablePanelItemView> BuyButtonClicked;
-
-    public ConsumableItemState ConsumableItemState => _consumableItemState;
-
-    private void OnDestroy()
+    public class ConsumablePanelItemView : MonoBehaviour
     {
-        _buyButton.onClick.RemoveListener(OnButtonClick);
-    }
+        [SerializeField] private Text _itemPrice;
+        [SerializeField] private Text _itemValue;
+        [SerializeField] private Image _itemIcon;
+        [SerializeField] private Image _shopIcon;
+        [SerializeField] private Button _buyButton;
+        [SerializeField] private LeanLocalizedText _itemName;
 
-    public void Initialize(ConsumableItemState consumableItemState)
-    {
-        _consumableItemState = consumableItemState;
-        AddListener();
-        Fill(consumableItemState);
-    }
+        private ConsumableItemState _consumableItemState;
 
-    private void Fill(ConsumableItemState consumableItemState)
-    {
-        _itemName.TranslationName = consumableItemState.ConsumableItemData.Name;
-        _itemPrice.text = consumableItemState.ConsumableItemData.Price.ToString();
-        _itemValue.text = consumableItemState.ConsumableItemData.Value.ToString();
-        _shopIcon.sprite = consumableItemState.ConsumableItemData.SpriteShopItem;
-        _itemIcon.sprite = consumableItemState.ConsumableItemData.ItemIcon;
-    }
+        public event Action<ConsumablePanelItemView> BuyButtonClicked;
 
-    private void AddListener()
-    {
-        _buyButton.onClick.AddListener(OnButtonClick);
-    }
+        public ConsumableItemState ConsumableItemState => _consumableItemState;
 
-    private void OnButtonClick()
-    {
-        BuyButtonClicked?.Invoke(this);
+        private void OnDestroy()
+        {
+            _buyButton.onClick.RemoveListener(OnButtonClick);
+        }
+
+        public void Initialize(ConsumableItemState consumableItemState)
+        {
+            _consumableItemState = consumableItemState;
+            AddListener();
+            Fill(consumableItemState);
+        }
+
+        private void Fill(ConsumableItemState consumableItemState)
+        {
+            _itemName.TranslationName = consumableItemState.ConsumableItemData.Name;
+            _itemPrice.text = consumableItemState.ConsumableItemData.Price.ToString();
+            _itemValue.text = consumableItemState.ConsumableItemData.Value.ToString();
+            _shopIcon.sprite = consumableItemState.ConsumableItemData.SpriteShopItem;
+            _itemIcon.sprite = consumableItemState.ConsumableItemData.ItemIcon;
+        }
+
+        private void AddListener()
+        {
+            _buyButton.onClick.AddListener(OnButtonClick);
+        }
+
+        private void OnButtonClick()
+        {
+            if (BuyButtonClicked != null)
+                BuyButtonClicked?.Invoke(this);
+        }
     }
 }

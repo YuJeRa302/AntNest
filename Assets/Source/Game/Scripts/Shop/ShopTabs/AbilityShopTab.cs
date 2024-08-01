@@ -1,102 +1,109 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class AbilityShopTab : ShopTab
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private Player _player;
-    [SerializeField] private AbilityPanelItemView _itemView;
-    [SerializeField] private ScrollRect _scroll;
-
-    private List<AbilityPanelItemView> _views = new();
-
-    private void Start()
+    public class AbilityShopTab : ShopTab
     {
-        Fill();
-    }
+        [SerializeField] private Player _player;
+        [SerializeField] private AbilityPanelItemView _itemView;
+        [SerializeField] private ScrollRect _scroll;
 
-    private new void OnDestroy()
-    {
-        base.OnDestroy();
-        Clear();
-    }
+        private List<AbilityPanelItemView> _views = new ();
 
-    protected override void OpenTab()
-    {
-        base.OpenTab();
-    }
-
-    private void Fill()
-    {
-        foreach (AbilityState abilityState in _player.PlayerInventory.ListAbilities)
+        private void Start()
         {
-            AbilityPanelItemView view = Instantiate(_itemView, ItemContainer.transform);
-            _views.Add(view);
-            view.Initialize(abilityState, _player);
-            view.BuyButtonClicked += OnBuyAbility;
-            view.UpgradeButtonClicked += OnUpgradeAbility;
-        }
-    }
-
-    private void Clear()
-    {
-        foreach (AbilityPanelItemView itemView in _views)
-        {
-            itemView.BuyButtonClicked -= OnBuyAbility;
-            itemView.UpgradeButtonClicked -= OnUpgradeAbility;
-            Destroy(itemView.gameObject);
+            Fill();
         }
 
-        _views.Clear();
-    }
-
-    private void ClearUnnecessaryAbility()
-    {
-        foreach (AbilityPanelItemView itemView in _views)
+        private new void OnDestroy()
         {
-            if (itemView.AbilityState.IsBuyed == false)
+            base.OnDestroy();
+            Clear();
+        }
+
+        protected override void OpenTab()
+        {
+            base.OpenTab();
+        }
+
+        private void Fill()
+        {
+            foreach (AbilityState abilityState in _player.PlayerInventory.ListAbilities)
+            {
+                AbilityPanelItemView view = Instantiate(_itemView, ItemContainer.transform);
+                _views.Add(view);
+                view.Initialize(abilityState, _player);
+                view.BuyButtonClicked += OnBuyAbility;
+                view.UpgradeButtonClicked += OnUpgradeAbility;
+            }
+        }
+
+        private void Clear()
+        {
+            foreach (AbilityPanelItemView itemView in _views)
             {
                 itemView.BuyButtonClicked -= OnBuyAbility;
                 itemView.UpgradeButtonClicked -= OnUpgradeAbility;
                 Destroy(itemView.gameObject);
-                _player.PlayerInventory.RemoveUnnecessaryAbility(itemView.AbilityState);
+            }
+
+            _views.Clear();
+        }
+
+        private void ClearUnnecessaryAbility()
+        {
+            foreach (AbilityPanelItemView itemView in _views)
+            {
+                if (itemView.AbilityState.IsBuyed == false)
+                {
+                    itemView.BuyButtonClicked -= OnBuyAbility;
+                    itemView.UpgradeButtonClicked -= OnUpgradeAbility;
+                    Destroy(itemView.gameObject);
+                    _player.PlayerInventory.RemoveUnnecessaryAbility(itemView.AbilityState);
+                }
             }
         }
-    }
 
-    private void OnBuyAbility(AbilityPanelItemView itemView)
-    {
-        if (itemView.AbilityState.AbilityData.Price <= _player.Wallet.Points)
+        private void OnBuyAbility(AbilityPanelItemView itemView)
         {
-            _player.Wallet.BuyAbility(itemView.AbilityState.AbilityData.UpgradePrice);
-            _player.PlayerStats.PlayerAbility.BuyAbility(itemView.AbilityState);
-            UpdatePlayerResourceValue();
-            ClearUnnecessaryAbility();
-            Clear();
-            Fill();
-        }
-        else DialogPanel.OpenPanel();
-    }
+            if (itemView.AbilityState.AbilityData.Price > _player.Wallet.Points)
+                DialogPanel.OpenPanel();
 
-    private void OnUpgradeAbility(AbilityPanelItemView itemView)
-    {
-        var lastIndex = itemView.AbilityState.AbilityData.AbilityLevels.LastOrDefault();
-
-        if (itemView.AbilityState.AbilityData.AbilityLevels.LastIndexOf(lastIndex) == itemView.AbilityState.CurrentLevel)
-        {
-            itemView.UpgradeButtonClicked -= OnUpgradeAbility;
-            return;
+            if (itemView.AbilityState.AbilityData.Price <= _player.Wallet.Points)
+            {
+                _player.Wallet.BuyAbility(itemView.AbilityState.AbilityData.UpgradePrice);
+                _player.PlayerStats.PlayerAbilityCaster.BuyAbility(itemView.AbilityState);
+                UpdatePlayerResourceValue();
+                ClearUnnecessaryAbility();
+                Clear();
+                Fill();
+            }
         }
 
-        if (itemView.AbilityState.AbilityData.UpgradePrice <= _player.Wallet.Points)
+        private void OnUpgradeAbility(AbilityPanelItemView itemView)
         {
-            _player.Wallet.BuyAbility(itemView.AbilityState.AbilityData.UpgradePrice);
-            _player.PlayerStats.PlayerAbility.UpgradeAbility(itemView.AbilityState);
-            UpdatePlayerResourceValue();
-            Clear();
-            Fill();
+            var lastIndex = itemView.AbilityState.AbilityData.AbilityLevels.LastOrDefault();
+
+            if (itemView.AbilityState.AbilityData.AbilityLevels.LastIndexOf(lastIndex) == itemView.AbilityState.CurrentLevel)
+            {
+                itemView.UpgradeButtonClicked -= OnUpgradeAbility;
+                return;
+            }
+
+            if (itemView.AbilityState.AbilityData.UpgradePrice > _player.Wallet.Points)
+                DialogPanel.OpenPanel();
+
+            if (itemView.AbilityState.AbilityData.UpgradePrice <= _player.Wallet.Points)
+            {
+                _player.Wallet.BuyAbility(itemView.AbilityState.AbilityData.UpgradePrice);
+                _player.PlayerStats.PlayerAbilityCaster.UpgradeAbility(itemView.AbilityState);
+                UpdatePlayerResourceValue();
+                Clear();
+                Fill();
+            }
         }
-        else DialogPanel.OpenPanel();
     }
 }

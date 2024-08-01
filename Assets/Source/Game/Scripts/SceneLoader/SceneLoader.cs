@@ -1,12 +1,15 @@
 using IJunior.TypedScenes;
 using UnityEngine;
 
-public class SceneLoader : MonoBehaviour, ISceneLoadHandler<LoadConfig>
+namespace Assets.Source.Game.Scripts
 {
-    [SerializeField] private LevelInizialisator _levelInizialisator;
-
-    public void OnSceneLoaded(LoadConfig loadConfig)
+    public class SceneLoader : MonoBehaviour, ISceneLoadHandler<LoadConfig>
     {
-        _levelInizialisator.Initialize(loadConfig);
+        [SerializeField] private LevelInizialisator _levelInizialisator;
+
+        public void OnSceneLoaded(LoadConfig loadConfig)
+        {
+            _levelInizialisator.Initialize(loadConfig);
+        }
     }
 }

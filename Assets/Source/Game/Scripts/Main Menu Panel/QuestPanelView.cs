@@ -2,56 +2,53 @@ using UnityEngine;
 using UnityEngine.UI;
 using Lean.Localization;
 
-public class QuestPanelView : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [Header("[Text]")]
-    [SerializeField] private Text _playerGold;
-    [SerializeField] private Text _playerLevel;
-    [SerializeField] private LeanLocalizedText _description;
-    [SerializeField] private Text _waveCount;
-    [Header("[Dialog Panel]")]
-    [SerializeField] private GameObject _dialogPanel;
-    [Header("[Endless Image]")]
-    [SerializeField] private Image _endlessImage;
-    [Header("[ScrollRect]")]
-    [SerializeField] private ScrollRect _scroll;
-    [Header("[DotView]")]
-    [SerializeField] private DotView _dotView;
-
-    public void Initialize(int coins, int playerLevel)
+    public class QuestPanelView : MonoBehaviour
     {
-        _playerGold.text = coins.ToString();
-        _playerLevel.text = playerLevel.ToString();
-        _dotView.SetScrollRect(_scroll);
-    }
+        [SerializeField] private Text _playerGold;
+        [SerializeField] private Text _playerLevel;
+        [SerializeField] private LeanLocalizedText _description;
+        [SerializeField] private Text _waveCount;
+        [SerializeField] private GameObject _dialogPanel;
+        [SerializeField] private Image _endlessImage;
+        [SerializeField] private ScrollRect _scroll;
+        [SerializeField] private DotView _dotView;
 
-    public void SetTextValue(string value, int waveCount)
-    {
-        _description.TranslationName = value;
-
-        if (waveCount > 0)
+        public void Initialize(int coins, int playerLevel)
         {
-            SetActiveState(false, true);
-            _waveCount.text = waveCount.ToString();
+            _playerGold.text = coins.ToString();
+            _playerLevel.text = playerLevel.ToString();
+            _dotView.SetScrollRect(_scroll);
         }
-        else SetActiveState(true, false);
-    }
 
-    public void OpenDialogPanel()
-    {
-        _dialogPanel.SetActive(true);
-        _scroll.gameObject.SetActive(false);
-    }
+        public void SetTextValue(string value, int waveCount)
+        {
+            _description.TranslationName = value;
 
-    public void CloseDialogPanel()
-    {
-        _dialogPanel.SetActive(false);
-        _scroll.gameObject.SetActive(true);
-    }
+            if (waveCount > 0)
+            {
+                SetActiveState(false, true);
+                _waveCount.text = waveCount.ToString();
+            }
+        }
 
-    private void SetActiveState(bool imageState, bool textState)
-    {
-        _endlessImage.gameObject.SetActive(imageState);
-        _waveCount.gameObject.SetActive(textState);
+        public void OpenDialogPanel()
+        {
+            _dialogPanel.SetActive(true);
+            _scroll.gameObject.SetActive(false);
+        }
+
+        public void CloseDialogPanel()
+        {
+            _dialogPanel.SetActive(false);
+            _scroll.gameObject.SetActive(true);
+        }
+
+        private void SetActiveState(bool imageState, bool textState)
+        {
+            _endlessImage.gameObject.SetActive(imageState);
+            _waveCount.gameObject.SetActive(textState);
+        }
     }
 }

@@ -1,27 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopView : MonoBehaviour
+namespace Assets.Source.Game.Scripts
 {
-    [Header("[Shop]")]
-    [SerializeField] private Shop _shop;
-    [Header("[Text]")]
-    [SerializeField] private Text _coins;
-    [SerializeField] private Text _points;
-
-    private void Awake()
+    public class ShopView : MonoBehaviour
     {
-        _shop.PlayerResourceChanged += PlayerResourceUpdate;
-    }
+        [SerializeField] private Shop _shop;
+        [SerializeField] private Text _coins;
+        [SerializeField] private Text _points;
 
-    private void OnDestroy()
-    {
-        _shop.PlayerResourceChanged -= PlayerResourceUpdate;
-    }
+        private void Awake()
+        {
+            _shop.PlayerResourceChanged += PlayerResourceUpdate;
+        }
 
-    private void PlayerResourceUpdate(int coins, int abilityPoints)
-    {
-        _coins.text = coins.ToString();
-        _points.text = abilityPoints.ToString();
+        private void OnDestroy()
+        {
+            _shop.PlayerResourceChanged -= PlayerResourceUpdate;
+        }
+
+        private void PlayerResourceUpdate(int coins, int abilityPoints)
+        {
+            _coins.text = coins.ToString();
+            _points.text = abilityPoints.ToString();
+        }
     }
 }

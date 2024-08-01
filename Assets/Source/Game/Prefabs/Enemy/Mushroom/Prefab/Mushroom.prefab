@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 4237731758712549162}
   - component: {fileID: 7117950752886080295}
   - component: {fileID: 7128720785151103110}
+  - component: {fileID: 1854274305404966237}
   m_Layer: 6
   m_Name: Mushroom
   m_TagString: Untagged
@@ -299,10 +300,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 7822319042453602259}
-  _enemyView: {fileID: 7117950752886080295}
-  _enemySound: {fileID: 4999564741263756826}
+  _enemyHealthBar: {fileID: 7117950752886080295}
+  _enemySoundPlayer: {fileID: 4999564741263756826}
   _enemyMovement: {fileID: 4237731758712549162}
-  _enemyAbility: {fileID: 7128720785151103110}
+  _enemyAbilityCaster: {fileID: 7128720785151103110}
+  _enemyAttacker: {fileID: 1854274305404966237}
   _particleContainer: {fileID: 3601010005725800831}
 --- !u!114 &4999564741263756826
 MonoBehaviour:
@@ -316,10 +318,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dded5180b448484cb733aa12837b316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 3676382707236482304}
   _audioSource: {fileID: 5083718277962334571}
   _audioClipDie: {fileID: 8300000, guid: 14ce90e2a5361d548bdf6c2c126e0233, type: 3}
   _hitPlayer: {fileID: 8300000, guid: 0ebfed3c99aaf5c43b2bd86ed7a3aad6, type: 3}
+  _enemy: {fileID: 3676382707236482304}
 --- !u!114 &4237731758712549162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,7 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ff312fac800d904db6a82fec96852f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animator: {fileID: 5959168360038282494}
+  _animator: {fileID: 5959168360038282494}
   _enemy: {fileID: 3676382707236482304}
 --- !u!114 &7117950752886080295
 MonoBehaviour:
@@ -346,7 +348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c98bd8638dff443b410678dfbd5b84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyCanvas: {fileID: 6438855052847772408}
   _sliderHP: {fileID: 5475343489655073175}
   _enemy: {fileID: 3676382707236482304}
   _level: {fileID: 4382002000720312606}
@@ -370,6 +371,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coolDown: 10
   _damage: 15
+  _enemy: {fileID: 3676382707236482304}
+--- !u!114 &1854274305404966237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087835316650882110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd45163695dfc3e4091416bbc29e1007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _enemy: {fileID: 3676382707236482304}
 --- !u!1 &1249046513857024460
 GameObject:
