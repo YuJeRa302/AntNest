@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,8 +9,7 @@ namespace Assets.Source.Game.Scripts
         private const int DefaultItemLevel = 1;
 
         [SerializeField] private Player _player;
-        [SerializeField] private PlayerEquipment _weaponPlayerEquipment;
-        [SerializeField] private PlayerEquipment _armorPlayerEquipment;
+        [SerializeField] private PlayerEquipment _playerEquipment;
         [SerializeField] private PlayerEquipmentState _defaultPlayerEquipmentState;
         [SerializeField] private PlayerAbilityState _defaultAbilityState;
         [SerializeField] private PlayerConsumableState _defaultConsumableState;
@@ -30,27 +28,11 @@ namespace Assets.Source.Game.Scripts
         private void Awake()
         {
             LoadDefaultState();
+            _playerEquipment.Initialize(_playerEquipmentState);
+            _player.PlayerConsumablesUser.Initialize();
             AddDefaultEquipment(ListWeapon);
             AddDefaultEquipment(ListArmor);
             _player.PlayerView.UpdatePlayerStats();
-            _player.PlayerConsumablesUser.Initialize();
-        }
-
-        public void EquipItem(EquipmentItemState equipmentItemState)
-        {
-            if (equipmentItemState.ItemData.ItemType == TypeItem.Weapon)
-            {
-                if (CurrentWeapon != null)
-                    CurrentWeapon.IsEquipped = false;
-            }
-            else
-            {
-                if (CurrentArmor != null)
-                    CurrentArmor.IsEquipped = false;
-            }
-
-            equipmentItemState.IsEquipped = true;
-            _player.PlayerStats.ChangeEquipment();
         }
 
         public void RemoveUnnecessaryAbility(AbilityState abilityState)
@@ -76,36 +58,8 @@ namespace Assets.Source.Game.Scripts
 
         private void AddEquipment(EquipmentItemState equipmentItemState)
         {
-            if (equipmentItemState.ItemData.ItemType == TypeItem.Weapon)
-            {
-                _weaponPlayerEquipment.BuyItem(equipmentItemState);
-                _weaponPlayerEquipment.EquipItem(equipmentItemState);
-            }
-            else
-            {
-                _armorPlayerEquipment.BuyItem(equipmentItemState);
-                _armorPlayerEquipment.EquipItem(equipmentItemState);
-            }
+            _playerEquipment.BuyItem(equipmentItemState);
+            _playerEquipment.AddItem(equipmentItemState);
         }
-    }
-
-    [Serializable]
-    public struct PlayerEquipmentState
-    {
-        public List<EquipmentItemState> Items;
-        public EquipmentItemState EquippedWeapon => Items.FirstOrDefault(item => item.IsEquipped && item.ItemData.ItemType == TypeItem.Weapon);
-        public EquipmentItemState EquippedArmor => Items.FirstOrDefault(item => item.IsEquipped && item.ItemData.ItemType == TypeItem.Armor);
-    }
-
-    [Serializable]
-    public struct PlayerAbilityState
-    {
-        public List<AbilityState> Items;
-    }
-
-    [Serializable]
-    public struct PlayerConsumableState
-    {
-        public List<ConsumableItemState> Items;
     }
 }

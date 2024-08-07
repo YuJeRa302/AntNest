@@ -69,7 +69,7 @@ namespace Assets.Source.Game.Scripts
 
         private void OnChangeEquipment(EquipmentPanelItemView equipmentPanelItemView)
         {
-            _playerEquipment.EquipItem(equipmentPanelItemView.EquipmentItemState);
+            _playerEquipment.AddItem(equipmentPanelItemView.EquipmentItemState);
             Clear();
             Fill();
         }
