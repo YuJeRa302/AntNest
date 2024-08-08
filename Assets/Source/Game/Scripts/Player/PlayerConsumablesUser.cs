@@ -40,8 +40,7 @@ namespace Assets.Source.Game.Scripts
 
         public void BuyItem(ConsumableItemState consumableItemState)
         {
-            if (ConsumableBuyed != null)
-                ConsumableBuyed?.Invoke(consumableItemState.ConsumableItemData.TypeConsumable);
+            ConsumableBuyed?.Invoke(consumableItemState.ConsumableItemData.TypeConsumable);
         }
 
         private void AddListener()
@@ -56,33 +55,31 @@ namespace Assets.Source.Game.Scripts
             if (_player.PlayerStats.PlayerHealth.CurrentHealth != _player.PlayerStats.PlayerHealth.MaxHealth)
             {
                 _player.PlayerStats.PlayerHealth.ChangeHealth(consumableItemData.Value);
-
-                if (ConsumableUsed != null)
-                    ConsumableUsed?.Invoke(consumableItemData.TypeConsumable);
+                ConsumableUsed?.Invoke(consumableItemData.TypeConsumable);
             }
         }
 
         private void UseMine(ConsumableItemData consumableItemData)
         {
-            Item item = Instantiate(consumableItemData.Item,
+            Item item = Instantiate(
+                consumableItemData.Item,
                 new Vector3(_player.transform.localPosition.x, _minValue, _player.transform.localPosition.z),
                 Quaternion.identity);
-            (item as FieldMine).Initialize(consumableItemData);
 
-            if (ConsumableUsed != null)
-                ConsumableUsed?.Invoke(consumableItemData.TypeConsumable);
+            (item as FieldMine).Initialize(consumableItemData);
+            ConsumableUsed?.Invoke(consumableItemData.TypeConsumable);
         }
 
         private void UseGrenade(ConsumableItemData consumableItemData)
         {
-            Item item = Instantiate(consumableItemData.Item,
+            Item item = Instantiate(
+                consumableItemData.Item,
                 new Vector3(_throwPoint.position.x, _throwPoint.position.y, _throwPoint.position.z),
                 Quaternion.identity);
+
             (item as Grenade).Initialize(consumableItemData);
             (item as Grenade).Rigidbody.AddForce(_throwPoint.forward * (item as Grenade).ThrowForce, ForceMode.VelocityChange);
-
-            if (ConsumableUsed != null)
-                ConsumableUsed?.Invoke(consumableItemData.TypeConsumable);
+            ConsumableUsed?.Invoke(consumableItemData.TypeConsumable);
         }
     }
 }

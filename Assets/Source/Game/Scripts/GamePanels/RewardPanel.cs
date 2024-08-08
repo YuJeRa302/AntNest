@@ -1,7 +1,7 @@
 using System;
-using UnityEngine;
 using Agava.YandexGames;
 using Lean.Localization;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Game.Scripts
@@ -61,12 +61,8 @@ namespace Assets.Source.Game.Scripts
         protected override void Close()
         {
 #if UNITY_EDITOR
-
-            if (AdClosed != null)
-                AdClosed?.Invoke();
-
-            if (RewardPanelClosed != null)
-                RewardPanelClosed?.Invoke();
+            AdClosed?.Invoke();
+            RewardPanelClosed?.Invoke();
 #else
         InterstitialAd.Show(OnOpenAdCallback, OnCloseInterstitialAdCallback, OnErrorCallback);
 #endif
@@ -74,9 +70,7 @@ namespace Assets.Source.Game.Scripts
 
         private void OpenRewardScreen()
         {
-            if (RewardScreenOpened != null)
-                RewardScreenOpened?.Invoke(_levelObserver.CountMoneyEarned);
-
+            RewardScreenOpened?.Invoke(_levelObserver.CountMoneyEarned);
             _rewardScreen.gameObject.SetActive(true);
             _countCoinPerReward.text = "+ " + _levelObserver.CountMoneyEarned.ToString();
             _openAdButton.gameObject.SetActive(false);
@@ -87,7 +81,9 @@ namespace Assets.Source.Game.Scripts
         {
             _closePanelButton.gameObject.SetActive(true);
             _rewardScreen.gameObject.SetActive(false);
-            SetReawrdValue(_coinsRewardWithAds,
+
+            SetReawrdValue(
+                _coinsRewardWithAds,
                 _expRewardWithAds,
                 _countKillEnemiesWithAds,
                 _levelObserver.CountMoneyEarned,
@@ -99,25 +95,22 @@ namespace Assets.Source.Game.Scripts
 
         private void OnOpenAdCallback()
         {
-            if (AdOpened != null)
-                AdOpened?.Invoke();
+            AdOpened?.Invoke();
         }
 
-        private void OnCloseAdCallback() { }
+        private void OnCloseAdCallback() 
+        {
+        }
 
         private void OnCloseInterstitialAdCallback(bool state)
         {
-            if (AdClosed != null)
-                AdClosed?.Invoke();
-
-            if (RewardPanelClosed != null)
-                RewardPanelClosed?.Invoke();
+            AdClosed?.Invoke();
+            RewardPanelClosed?.Invoke();
         }
 
         private void OnErrorCallback(string state)
         {
-            if (RewardPanelClosed != null)
-                RewardPanelClosed?.Invoke();
+            RewardPanelClosed?.Invoke();
         }
 
         private void OnRewardCallback()
@@ -127,11 +120,11 @@ namespace Assets.Source.Game.Scripts
 
         private void GetReawrdValue(bool state)
         {
-            if (RewardPanelOpened != null)
-                RewardPanelOpened?.Invoke(state);
-
+            RewardPanelOpened?.Invoke(state);
             SetEndingImage(state);
-            SetReawrdValue(_coinsRewardWithAds,
+
+            SetReawrdValue(
+                _coinsRewardWithAds,
                 _expRewardWithAds,
                 _countKillEnemiesWithAds,
                 _levelObserver.CountMoneyEarned,

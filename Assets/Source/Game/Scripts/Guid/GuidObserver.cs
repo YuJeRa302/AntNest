@@ -36,10 +36,7 @@ namespace Assets.Source.Game.Scripts
         private void Awake()
         {
             if (_loadConfig.TypeDevice == TypeDevice.Mobile)
-            {
-                if (MobileInterfaceEnabled != null)
-                    MobileInterfaceEnabled?.Invoke();
-            }
+                MobileInterfaceEnabled?.Invoke();
 
             _guidSoundController.Initialize(_loadConfig);
             _guidView.Initialize(_loadConfig, _guidIndex);
@@ -61,9 +58,7 @@ namespace Assets.Source.Game.Scripts
         {
             _isMuteSound = _loadConfig.IsSoundOn != true;
             _loadConfig.SetSoundState(_isMuteSound);
-
-            if (SoundMuted != null)
-                SoundMuted?.Invoke(_isMuteSound);
+            SoundMuted?.Invoke(_isMuteSound);
         }
 
         private void GuidUpdate()
@@ -73,8 +68,7 @@ namespace Assets.Source.Game.Scripts
             else
                 StartCoroutine(EndGuid());
 
-            if (GuidUpdated != null)
-                GuidUpdated?.Invoke(_guidIndex);
+            GuidUpdated?.Invoke(_guidIndex);
         }
 
         private IEnumerator EndGuid()
@@ -86,14 +80,12 @@ namespace Assets.Source.Game.Scripts
 
         private void OpenSettings()
         {
-            if (SettingsOpened != null)
-                SettingsOpened?.Invoke();
+            SettingsOpened?.Invoke();
         }
 
         private void CloseSettings()
         {
-            if (SettingsClosed != null)
-                SettingsClosed?.Invoke();
+            SettingsClosed?.Invoke();
         }
 
         private IEnumerator LoadScreenLevel(AsyncOperation asyncOperation)

@@ -33,9 +33,7 @@ namespace Assets.Source.Game.Scripts
         {
             bool state = _menuPanel.Config.IsSoundOn != true;
             _imageButton.sprite = state == true ? _unmuteButtonSprite : _muteButtonSprite;
-
-            if (SoundStateChanged != null)
-                SoundStateChanged?.Invoke(state);
+            SoundStateChanged?.Invoke(state);
         }
     }
 }

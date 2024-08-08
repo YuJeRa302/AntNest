@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -27,7 +27,6 @@ namespace Assets.Source.Game.Scripts
         [SerializeField] private ObjectDisabler _objectDisabler;
 
         private AsyncOperation _load;
-
 
         private new void Awake()
         {

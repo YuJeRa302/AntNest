@@ -46,8 +46,7 @@ namespace Assets.Source.Game.Scripts
 
         private void ChangePlayerResourceValue()
         {
-            if (PlayerResourceChanged != null)
-                PlayerResourceChanged?.Invoke(Player.Wallet.Coins, Player.Wallet.Points);
+            PlayerResourceChanged?.Invoke(Player.Wallet.Coins, Player.Wallet.Points);
         }
 
         private void InitializeShopTabs()

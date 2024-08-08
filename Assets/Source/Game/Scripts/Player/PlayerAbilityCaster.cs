@@ -20,9 +20,7 @@ namespace Assets.Source.Game.Scripts
                 return;
 
             abilityState.IsBuyed = true;
-
-            if (AbilityBuyed != null)
-                AbilityBuyed?.Invoke(abilityState);
+            AbilityBuyed?.Invoke(abilityState);
         }
 
         public void UpgradeAbility(AbilityState abilityState)
@@ -35,9 +33,7 @@ namespace Assets.Source.Game.Scripts
         {
             _abilityDuration = AbilityDuration(typeAbility, abilityDuration, abilityValue);
             StartCoroutine(_abilityDuration);
-
-            if (AbilityUsed != null)
-                AbilityUsed?.Invoke(typeAbility, abilityValue);
+            AbilityUsed?.Invoke(typeAbility, abilityValue);
         }
 
         private IEnumerator AbilityDuration(TypeAbility typeAbility, float abilityDuration, int abilityValue)
@@ -50,9 +46,7 @@ namespace Assets.Source.Game.Scripts
 
             _player.PlayerView.AbilityEffect.Stop();
             StopCoroutine(_abilityDuration);
-
-            if (AbilityEnded != null)
-                AbilityEnded?.Invoke(typeAbility, abilityValue);
+            AbilityEnded?.Invoke(typeAbility, abilityValue);
         }
     }
 }

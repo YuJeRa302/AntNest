@@ -50,7 +50,7 @@ namespace Assets.Source.Game.Scripts
                     enemy.TakeDamage(_damage);
                     _explosion.Play();
                     _audioSource.PlayOneShot(_explosionAudio);
-                    Destroy(gameObject, _explosion.duration);
+                    Destroy(gameObject, _explosion.main.duration);
                 }
             }
         }

@@ -24,9 +24,7 @@ namespace Assets.Source.Game.Scripts
         public void BuyItem(int value)
         {
             _currentCoins = Mathf.Clamp(_currentCoins - value, _minValue, _currentCoins);
-
-            if (CoinCountChanged != null)
-                CoinCountChanged?.Invoke(_currentCoins);
+            CoinCountChanged?.Invoke(_currentCoins);
         }
 
         public void BuyAbility(int value)
@@ -37,20 +35,14 @@ namespace Assets.Source.Game.Scripts
         public void TakeGoldenRune(int value)
         {
             _currentCoins += value;
-
-            if (GoldenRuneTaked != null)
-                GoldenRuneTaked?.Invoke(value);
-
-            if (CoinCountChanged != null)
-                CoinCountChanged?.Invoke(_currentCoins);
+            GoldenRuneTaked?.Invoke(value);
+            CoinCountChanged?.Invoke(_currentCoins);
         }
 
         public void TakeCoins(int value)
         {
             _currentCoins += value;
-
-            if (CoinCountChanged != null)
-                CoinCountChanged?.Invoke(_currentCoins);
+            CoinCountChanged?.Invoke(_currentCoins);
         }
 
         public void SetDefaultAbilityPoints(int value)

@@ -172,15 +172,12 @@ namespace Assets.Source.Game.Scripts
 
         private void OnOpenAd()
         {
-            if (SoundMuted != null)
-                SoundMuted?.Invoke(false);
+            SoundMuted?.Invoke(false);
         }
 
         private void OnCloseAd()
         {
-            if (GameClosed != null)
-                GameClosed?.Invoke();
-
+            GameClosed?.Invoke();
             LoadLevel();
         }
 
@@ -190,9 +187,7 @@ namespace Assets.Source.Game.Scripts
             _countExpEarned += enemy.ExperienceReward;
             _countKillEnemy++;
             _player.PlayerStats.EnemyDied(enemy);
-
-            if (KillCountUpdated != null)
-                KillCountUpdated?.Invoke(_countKillEnemy);
+            KillCountUpdated?.Invoke(_countKillEnemy);
         }
 
         private void OnPlayerDied(int playerCoins, int playerLevel, int playerExpirience, int playerScore)
@@ -212,24 +207,16 @@ namespace Assets.Source.Game.Scripts
             _countMoneyEarned += _levelCompleteBonus;
             _playerCoins += _levelCompleteBonus;
             _loadConfig.LevelDataState.IsComplete = true;
-
-            if (LevelCompleted != null)
-                LevelCompleted?.Invoke(true);
-
-            if (GameEnded != null)
-                GameEnded?.Invoke();
+            LevelCompleted?.Invoke(true);
+            GameEnded?.Invoke();
         }
 
         private void GiveWinEnemy()
         {
             Time.timeScale = _pauseValue;
             CloseAllGamePanels();
-
-            if (LevelCompleted != null)
-                LevelCompleted?.Invoke(false);
-
-            if (GameEnded != null)
-                GameEnded?.Invoke();
+            LevelCompleted?.Invoke(false);
+            GameEnded?.Invoke();
         }
 
         private void GetPlayerResources()
@@ -244,9 +231,7 @@ namespace Assets.Source.Game.Scripts
         {
             _loadConfig.SetPauseGameState(true);
             _pauseHandler.PauseGame();
-
-            if (GamePaused != null)
-                GamePaused?.Invoke();
+            GamePaused?.Invoke();
         }
 
         private void ResumeGame()
@@ -254,18 +239,13 @@ namespace Assets.Source.Game.Scripts
             _loadConfig.SetPauseGameState(false);
             _pauseHandler.ResumeGame();
             _player.PlayerSounds.SetSoundValue(_loadConfig.AmbientVolume);
-
-            if (GameResumed != null)
-                GameResumed?.Invoke();
+            GameResumed?.Invoke();
         }
 
         private void MuteSound()
         {
             _isMuteSound = _loadConfig.IsSoundOn != true;
-
-            if (SoundMuted != null)
-                SoundMuted?.Invoke(_isMuteSound);
-
+            SoundMuted?.Invoke(_isMuteSound);
             _loadConfig.SetSoundState(_isMuteSound);
         }
 
@@ -277,10 +257,7 @@ namespace Assets.Source.Game.Scripts
         private IEnumerator CloseGame()
         {
             yield return _saveProgress.SaveApplicationParameters(_loadConfig);
-
-            if (GameClosed != null)
-                GameClosed?.Invoke();
-
+            GameClosed?.Invoke();
             LoadLevel();
         }
 
@@ -288,10 +265,7 @@ namespace Assets.Source.Game.Scripts
         {
             var level = _loadConfig.LevelDataState.IsComplete ? _playerLevel : _loadConfig.PlayerLevel;
             _saveProgress.Save(_playerCoins, level, _playerExpirience, _playerScore, _loadConfig);
-
-            if (GameClosed != null)
-                GameClosed?.Invoke();
-
+            GameClosed?.Invoke();
             LoadLevel();
         }
 

@@ -15,6 +15,7 @@ namespace Assets.Source.Game.Scripts
                 : loadConfig.LevelDataState.LevelData.EndlessSprite;
             _soundController.Initialize(loadConfig);
             _levelObserver.Initialize(loadConfig);
+
             _levelView.Initialize(
                 loadConfig.LevelDataState.LevelData.NameScene,
                 nameEnemy,

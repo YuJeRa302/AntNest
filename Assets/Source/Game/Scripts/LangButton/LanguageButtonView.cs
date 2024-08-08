@@ -48,8 +48,7 @@ namespace Assets.Source.Game.Scripts
 
         private void OnSelectLanguage()
         {
-            if (LanguageSelected != null)
-                LanguageSelected.Invoke(_languageTag);
+            LanguageSelected?.Invoke(_languageTag);
         }
     }
 }

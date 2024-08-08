@@ -1,8 +1,8 @@
 using System.Collections;
-using UnityEngine;
-using Lean.Localization;
-using Agava.YandexGames;
 using Agava.WebUtility;
+using Agava.YandexGames;
+using Lean.Localization;
+using UnityEngine;
 
 namespace Assets.Source.Game.Scripts
 {

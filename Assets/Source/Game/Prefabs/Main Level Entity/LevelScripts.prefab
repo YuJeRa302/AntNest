@@ -37,7 +37,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1747327917629962778
 MonoBehaviour:
@@ -86,7 +86,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   _playerInterfaceView: {fileID: 0}
   _soundController: {fileID: 972409558029132792}
-  _canvasLoader: {fileID: 0}
+  _objectDisabler: {fileID: 0}
   _panels:
   - {fileID: 0}
   - {fileID: 0}
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPoint: {fileID: 0}
-  _delayEnemySpawn: 15
+  _delayEnemySpawn: 8
   _levelObserver: {fileID: 7297858956163358945}
 --- !u!114 &972409558029132792
 MonoBehaviour:

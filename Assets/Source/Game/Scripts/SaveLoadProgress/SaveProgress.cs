@@ -1,6 +1,6 @@
 using System.Collections;
-using UnityEngine;
 using Agava.YandexGames;
+using UnityEngine;
 
 namespace Assets.Source.Game.Scripts
 {
@@ -45,7 +45,9 @@ namespace Assets.Source.Game.Scripts
             loadConfig.UpdateListPlayerLevels(levelsComplete);
             loadConfig.SetAmbientVolume(loadConfig.AmbientVolume);
             loadConfig.SetIterfaceVolume(loadConfig.InterfaceVolume);
-            SetConfigParameters(loadConfig.Language,
+
+            SetConfigParameters(
+                loadConfig.Language,
                 playerCoins,
                 playerLevel,
                 playerExperience,
@@ -103,7 +105,9 @@ namespace Assets.Source.Game.Scripts
             loadConfig.UpdateListPlayerLevels(_loadConfig.LevelsComplete);
             loadConfig.SetAmbientVolume(ambientVolume);
             loadConfig.SetIterfaceVolume(interfaceVolume);
-            SetConfigParameters(language,
+
+            SetConfigParameters(
+                language,
                 _loadConfig.PlayerCoins,
                 _loadConfig.PlayerLevel,
                 _loadConfig.PlayerExperience,

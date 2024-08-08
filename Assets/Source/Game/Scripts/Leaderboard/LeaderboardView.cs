@@ -19,7 +19,6 @@ namespace Assets.Source.Game.Scripts
             {
                 LeaderboardElement leaderboardElementInstance = Instantiate(_leaderboardElementPrefab, _leaderboardContainer.transform);
                 leaderboardElementInstance.Initialize(player.Name, player.Rank, player.Score);
-
                 _leaderboardElements.Add(leaderboardElementInstance);
             }
         }

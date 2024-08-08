@@ -1,7 +1,7 @@
 using System;
+using Lean.Localization;
 using UnityEngine;
 using UnityEngine.UI;
-using Lean.Localization;
 
 namespace Assets.Source.Game.Scripts
 {
@@ -48,8 +48,7 @@ namespace Assets.Source.Game.Scripts
 
         private void OnButtonClick()
         {
-            if (BuyButtonClicked != null)
-                BuyButtonClicked?.Invoke(this);
+            BuyButtonClicked?.Invoke(this);
         }
     }
 }

@@ -74,8 +74,13 @@ namespace Assets.Source.Game.Scripts
             {
                 LanguageButtonView view = Instantiate(_languageButtonView, _buttonsContainer.transform);
                 _languageButtonViews.Add(view);
-                view.Initialize(languageButtonState, LevelObserver.SoundController.InterfaceAudioSource,
-                    LevelObserver.SoundController.AudioButtonClick, LevelObserver.SoundController.AudioButtonHover);
+
+                view.Initialize(
+                    languageButtonState,
+                    LevelObserver.SoundController.InterfaceAudioSource,
+                    LevelObserver.SoundController.AudioButtonClick,
+                    LevelObserver.SoundController.AudioButtonHover);
+
                 view.LanguageSelected += OnLanguageChanged;
             }
         }
@@ -93,25 +98,19 @@ namespace Assets.Source.Game.Scripts
 
         private void OnLanguageChanged(string value)
         {
-            if (LanguageChanged != null)
-                LanguageChanged.Invoke(value);
-
+            LanguageChanged?.Invoke(value);
             LevelObserver.LoadConfig.SetCurrentLanguage(value);
         }
 
         private void OnAmbientSoundVolumeChanged(float value)
         {
-            if (AmbientSoundVolumeChanged != null)
-                AmbientSoundVolumeChanged.Invoke(value);
-
+            AmbientSoundVolumeChanged?.Invoke(value);
             LevelObserver.LoadConfig.SetAmbientVolume(value);
         }
 
         private void OnButtonSoundVolumeChanged(float value)
         {
-            if (ButtonSoundVolumeChanged != null)
-                ButtonSoundVolumeChanged.Invoke(value);
-
+            ButtonSoundVolumeChanged?.Invoke(value);
             LevelObserver.LoadConfig.SetIterfaceVolume(value);
         }
 

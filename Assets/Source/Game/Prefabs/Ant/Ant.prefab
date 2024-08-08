@@ -3430,7 +3430,7 @@ Transform:
   - {fileID: 7026735058215002245}
   - {fileID: 1240909117737621990}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7762064549988829407
 Animator:
@@ -3532,9 +3532,9 @@ MonoBehaviour:
   _playerMovement: {fileID: 7762064549988829403}
   _playerSound: {fileID: 6626579373589028082}
   _playerView: {fileID: 0}
-  _playerConsumablesUser: {fileID: 0}
+  _playerConsumablesUser: {fileID: 3976628562072849500}
   _playerInventory: {fileID: 1026262736642019320}
-  _playerEquipment: {fileID: 0}
+  _playerEquipment: {fileID: 7751455257654607889}
   _playerInput: {fileID: 4143283319701920303}
   _playerUICamera: {fileID: 0}
 --- !u!114 &7762064549988829405
@@ -3550,7 +3550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 7762064549988829404}
-  _playerAbilityCaster: {fileID: 0}
+  _playerAbilityCaster: {fileID: 6198664025126081742}
   _playerHealth: {fileID: 3744200491489372025}
   _speed: 2
   _maxPlayerLevel: 5
@@ -3683,9 +3683,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b291cc20c7b7a964f9ceb3bda3c7bc71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slotComponents: []
+  _slotComponents:
+  - {fileID: 6585295147819338041}
+  - {fileID: 2230586073984574157}
   _player: {fileID: 7762064549988829404}
-  _equipmentObjectContainer: {fileID: 7597173455443938265}
 --- !u!114 &1026262736642019320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3699,8 +3700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 7762064549988829404}
-  _weaponPlayerEquipment: {fileID: 0}
-  _armorPlayerEquipment: {fileID: 7751455257654607889}
+  _playerEquipment: {fileID: 7751455257654607889}
   _defaultPlayerEquipmentState:
     Items:
     - ItemData: {fileID: 11400000, guid: 635ba52f71549944c8151a0ffb39bb1b, type: 2}

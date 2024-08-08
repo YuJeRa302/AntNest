@@ -24,13 +24,13 @@ namespace Assets.Source.Game.Scripts
         private ParticleSystem _abilityEffect;
         private AbilityItem _abilityItem;
 
-        public ParticleSystem AbilityEffect => _abilityEffect;
-        public AbilityItem AbilityItem => _abilityItem;
-
         private enum TransitionParametr
         {
             Take
         }
+
+        public ParticleSystem AbilityEffect => _abilityEffect;
+        public AbilityItem AbilityItem => _abilityItem;
 
         private void Awake()
         {

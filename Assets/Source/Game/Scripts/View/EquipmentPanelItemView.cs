@@ -1,7 +1,7 @@
 using System;
+using Lean.Localization;
 using UnityEngine;
 using UnityEngine.UI;
-using Lean.Localization;
 
 namespace Assets.Source.Game.Scripts
 {
@@ -99,14 +99,12 @@ namespace Assets.Source.Game.Scripts
 
         private void OnChangeCurrentEquipment()
         {
-            if (CurrentEquipmentChanged != null)
-                CurrentEquipmentChanged?.Invoke(this);
+            CurrentEquipmentChanged?.Invoke(this);
         }
 
         private void OnButtonClick()
         {
-            if (BuyButtonClicked != null)
-                BuyButtonClicked?.Invoke(this);
+            BuyButtonClicked?.Invoke(this);
         }
 
         private void CheckEquipState()

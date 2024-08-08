@@ -80,9 +80,7 @@ namespace Assets.Source.Game.Scripts
 
         private void OnEnemyDie(Enemy enemy)
         {
-            if (EnemyDied != null)
-                EnemyDied?.Invoke(enemy);
-
+            EnemyDied?.Invoke(enemy);
             enemy.Dying -= OnEnemyDie;
 
             if (_levelDataState.IsStandart == true)
@@ -92,10 +90,7 @@ namespace Assets.Source.Game.Scripts
         private void CheckCountEnemy()
         {
             if (_totalCountEnemy == _levelObserver.CountKillEnemy)
-            {
-                if (LastEnemyDied != null)
-                    LastEnemyDied?.Invoke();
-            }
+                LastEnemyDied?.Invoke();
         }
 
         private void SpawnNextWave(List<WaveData> waveDatas)

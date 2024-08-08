@@ -62,7 +62,9 @@ namespace Assets.Source.Game.Scripts
             _reloadingImage = reloadingImage;
         }
 
-        protected virtual void Use() { }
+        protected virtual void Use() 
+        {
+        }
 
         protected void ApplyAbility()
         {

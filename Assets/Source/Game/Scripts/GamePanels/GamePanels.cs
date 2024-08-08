@@ -23,18 +23,14 @@ namespace Assets.Source.Game.Scripts
         {
             gameObject.SetActive(true);
             LevelObserver.PlayerInterfaceView.gameObject.SetActive(false);
-
-            if (PanelOpened != null)
-                PanelOpened?.Invoke();
+            PanelOpened?.Invoke();
         }
 
         protected virtual void Close()
         {
             gameObject.SetActive(false);
             LevelObserver.PlayerInterfaceView.gameObject.SetActive(true);
-
-            if (PanelClosed != null)
-                PanelClosed?.Invoke();
+            PanelClosed?.Invoke();
         }
     }
 }

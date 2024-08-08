@@ -1,6 +1,6 @@
+using Lean.Localization;
 using UnityEngine;
 using UnityEngine.UI;
-using Lean.Localization;
 
 namespace Assets.Source.Game.Scripts
 {

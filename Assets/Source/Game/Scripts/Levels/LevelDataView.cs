@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using Lean.Localization;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Source.Game.Scripts
@@ -120,34 +120,29 @@ namespace Assets.Source.Game.Scripts
             if (_levelDataState.IsStandart != false || _levelDataState.IsEndless != false)
             {
                 _loadConfig.LoadLevelData(_levelDataState);
-
-                if (LevelLoading != null)
-                    LevelLoading.Invoke(_levelDataState.LevelData.NameScene, _loadConfig);
+                LevelLoading?.Invoke(_levelDataState.LevelData.NameScene, _loadConfig);
             }
-            else
+            else 
+            {
                 ShowHints();
+            }
         }
 
         private void SelectStandartLevel()
         {
             SetModeParameters(true, false, _standartLevelDescription, _levelDataState.LevelData.WaveData.Count);
-
-            if (LevelModChanged != null)
-                LevelModChanged.Invoke(_standartLevelDescription, _levelDataState.LevelData.WaveData.Count);
+            LevelModChanged?.Invoke(_standartLevelDescription, _levelDataState.LevelData.WaveData.Count);
         }
 
         private void SelectEndlessLevel()
         {
             SetModeParameters(false, true, _endlessLevelDescription, _zeroWave);
-
-            if (LevelModChanged != null)
-                LevelModChanged.Invoke(_endlessLevelDescription, _zeroWave);
+            LevelModChanged?.Invoke(_endlessLevelDescription, _zeroWave);
         }
 
         private void ShowHints()
         {
-            if (HintsShowed != null)
-                HintsShowed.Invoke(_hintsText, _zeroWave);
+            HintsShowed?.Invoke(_hintsText, _zeroWave);
 
             foreach (var animator in _animators)
             {

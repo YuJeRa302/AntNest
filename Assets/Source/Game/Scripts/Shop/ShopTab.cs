@@ -1,7 +1,7 @@
 using System;
+using Lean.Localization;
 using UnityEngine;
 using UnityEngine.UI;
-using Lean.Localization;
 
 namespace Assets.Source.Game.Scripts
 {
@@ -39,17 +39,13 @@ namespace Assets.Source.Game.Scripts
         protected virtual void OpenTab()
         {
             _leanText.TranslationName = _translationText;
-
-            if (TabOpened != null)
-                TabOpened?.Invoke();
-
+            TabOpened?.Invoke();
             gameObject.SetActive(true);
         }
 
         protected virtual void UpdatePlayerResourceValue()
         {
-            if (PlayerResourceUpdated != null)
-                PlayerResourceUpdated.Invoke();
+            PlayerResourceUpdated?.Invoke();
         }
     }
 }

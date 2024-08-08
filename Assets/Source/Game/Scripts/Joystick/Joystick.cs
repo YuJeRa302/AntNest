@@ -36,7 +36,9 @@ namespace Assets.Source.Game.Scripts
                 position.y /= _joystickBackgorund.rectTransform.sizeDelta.y;
                 _inputVector = new Vector2(position.x * _multiplier, position.y * _multiplier);
                 _inputVector = (_inputVector.magnitude > _defaultValueMagnitude) ? _inputVector.normalized : _inputVector;
-                _joystick.rectTransform.anchoredPosition = new Vector2(_inputVector.x * (_joystickBackgorund.rectTransform.sizeDelta.x / _multiplier),
+
+                _joystick.rectTransform.anchoredPosition = new Vector2(
+                    _inputVector.x * (_joystickBackgorund.rectTransform.sizeDelta.x / _multiplier),
                     _inputVector.y * (_joystickBackgorund.rectTransform.sizeDelta.y / _multiplier));
             }
         }

@@ -1,6 +1,6 @@
 using System.Collections;
-using UnityEngine;
 using Agava.YandexGames;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Assets.Source.Game.Scripts

@@ -36,7 +36,7 @@ namespace Assets.Source.Game.Scripts
                     currentDamage = _minHealth;
 
                 _currentHealth = Mathf.Clamp(_currentHealth - currentDamage, _minHealth, _maxHealth);
-                ChangedHealth.Invoke(_currentHealth);
+                ChangedHealth?.Invoke(_currentHealth);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Assets.Source.Game.Scripts
         public void ChangeHealth(int value)
         {
             _currentHealth = Mathf.Clamp(_currentHealth + value, _minHealth, _maxHealth);
-            ChangedHealth.Invoke(_currentHealth);
+            ChangedHealth?.Invoke(_currentHealth);
         }
 
         private void SetPlayerDie()

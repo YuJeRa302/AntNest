@@ -66,12 +66,8 @@ namespace Assets.Source.Game.Scripts
                 EnemyDied();
 
             _hitParticle.Play();
-
-            if (HitTaking != null)
-                HitTaking.Invoke();
-
-            if (HealthChanged != null)
-                HealthChanged.Invoke(_health);
+            HitTaking?.Invoke();
+            HealthChanged?.Invoke(_health);
         }
 
         private void OnAttackingEnemyRemoved()
@@ -81,9 +77,7 @@ namespace Assets.Source.Game.Scripts
 
         private void EnemyDied()
         {
-            if (Dying != null)
-                Dying.Invoke(this);
-
+            Dying?.Invoke(this);
             _dieParticle.Play();
             _hitParticle.gameObject.SetActive(false);
             Destroy(gameObject, _delayDestroy);

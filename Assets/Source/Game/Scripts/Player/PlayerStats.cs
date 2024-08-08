@@ -59,13 +59,8 @@ namespace Assets.Source.Game.Scripts
         {
             _currentExperience += enemy.ExperienceReward;
             _player.Wallet.TakeCoins(enemy.GoldReward);
-
-            if (GoldValueChanged != null)
-                GoldValueChanged.Invoke(enemy.GoldReward);
-
-            if (ExperienceValueChanged != null)
-                ExperienceValueChanged.Invoke(enemy.ExperienceReward);
-
+            GoldValueChanged?.Invoke(enemy.GoldReward);
+            ExperienceValueChanged?.Invoke(enemy.ExperienceReward);
             _score += enemy.Score;
             SetNewPlayerLevel(_currentLevel);
         }

@@ -23,11 +23,6 @@ namespace Assets.Source.Game.Scripts
 
         public event Action<ConsumableItemData> ConsumableUsed;
 
-        private void Awake()
-        {
-            _useConsumableButton.onClick.AddListener(Use);
-        }
-
         private void OnEnable()
         {
             _coolDown = StartCoroutine(Delay());
@@ -60,14 +55,12 @@ namespace Assets.Source.Game.Scripts
         private void Use()
         {
             if (_countConsumableItem > _minValue && _isUseConsumable == false)
-            {
-                if (ConsumableUsed != null)
-                    ConsumableUsed?.Invoke(_consumableItemData);
-            }
+                ConsumableUsed?.Invoke(_consumableItemData);
         }
 
         private void AddListener()
         {
+            _useConsumableButton.onClick.AddListener(Use);
             _player.PlayerConsumablesUser.ConsumableBuyed += OnBuyConsumable;
             _player.PlayerConsumablesUser.ConsumableUsed += ApplyConsumable;
         }

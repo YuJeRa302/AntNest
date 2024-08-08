@@ -44,14 +44,16 @@ namespace Assets.Source.Game.Scripts
             FindAttackedEnemy();
             CreateEffect();
             _audioSource.PlayOneShot(_explosionAudio);
-            Destroy(gameObject, _explosion.duration);
+            Destroy(gameObject, _explosion.main.duration);
         }
 
         private void CreateEffect()
         {
-            _explosion = Instantiate(_explosion,
+            _explosion = Instantiate(
+                _explosion,
                 new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z),
-                    Quaternion.identity);
+                Quaternion.identity);
+
             _explosion.Play();
         }
 
